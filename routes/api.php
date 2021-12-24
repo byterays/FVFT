@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::prefix('company')->group(function(){
-    require_once 'web/company.php';
-});
+
 Route::prefix('v1')->group(function(){
     require_once 'v1/v1-api.php';
 });
