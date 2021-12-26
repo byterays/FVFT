@@ -12,10 +12,24 @@ class NewsController extends Controller
     public function index($id){
         $jobs= DB::table('news')->
         find($id);
-        return $this->sendResponse($jobs,"News Fetched.");
+        return $this->sendResponse($this->process($jobs),"News Fetched.");
     }
     public function list(){
+        $results=[];
         $jobs= DB::table('news')->orderBy('id', 'DESC')->get();
-        return $this->sendResponse($jobs,"News List.");
+        foreach($jobs as $index=>$job){
+            $results[$index]=$this->process($job);
+        }
+        return $this->sendResponse($results,"News List.");
+    }
+    public function process($news){
+        return [
+            "id"=>$news->id,
+            "title"=>$news->title,
+            "body"=>json_decode($news->body),
+            "feature_img"=>$news->feature_img,
+            "created_at"=>$news->created_at,
+            "updated_at"=>$news->updated_at
+        ];
     }
 }
