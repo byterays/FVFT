@@ -9,7 +9,7 @@ use DB;
 use App\Models\Job;
 use App\Models\Employe;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\API\Candidates\Jobs\JobsListController;
 class JobApplicationController extends Controller
 {
     use ApiMethods;
@@ -36,8 +36,9 @@ class JobApplicationController extends Controller
         // dd($request);
         $jobs = [];
         $job_applications= DB::table('job_applications')->where('status',$request->status)->get();
+        $jobcontroller=new JobsListController();
         foreach($job_applications as $index=>$application){
-            $jobs[$index]=Job::find($application->job_id);
+            $jobs[$index]=$jobcontroller->process(Job::find($application->job_id));
         }
         return $this->sendResponse($jobs,"Jobs Applications List.");
     }
