@@ -33,7 +33,15 @@ class AuthController extends Controller
                 'user_id' => $user->id
             ]
         );
-        return $this->login($request);
+        $login=$request->validate([
+            'email'=>'required|string',
+            'password'=>'required|string',
+        ]);
+        if(!Auth::attempt($login)){
+            return  $this->failed_response();
+        }else{
+            return  $this->success_response("Sign Up Succesful !");
+        }
     }
  
     /**
@@ -47,7 +55,7 @@ class AuthController extends Controller
         if(!Auth::attempt($login)){
             return  $this->failed_response();
         }else{
-            return  $this->success_response();
+            return  $this->success_response("");
         }
     }
 
@@ -58,7 +66,7 @@ class AuthController extends Controller
         ]);
         return $credentials;
     }
-    public function success_response(){
+    public function success_response($message){
         $user=Auth::user();
         $employe= Employe::where('user_id',$user->id)->first();
         $accesstoken = $user->createToken('FVFT_AcessToken')->accessToken;
@@ -66,13 +74,15 @@ class AuthController extends Controller
         return  
             [
                 'success'=>true,
-                'message'=>'Logined Succesful !',
+                'message'=>$message,
                 'data'=>[
                     'user'=>[
                         "user_id"=>$user->id,
-                        "fullname"=>$employe->first_name." ".$employe->middle_name." ".$employe->last_name,
+                        "first_name"=>$employe->first_name,
+                        "middle_name"=>$employe->middle_name,
+                        "last_name"=>$employe->last_name,
                         "email"=>$user->email,
-                        "imageurl"=>$employe->avatar,
+                        "image_url"=>$employe->avatar,
                         "user_type"=>$user->user_type
                     ],
                     'token'=> $accesstoken
