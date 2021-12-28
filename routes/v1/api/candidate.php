@@ -6,6 +6,8 @@ use App\Http\Controllers\API\Candidates\Jobs\JobsListController;
 use App\Http\Controllers\API\Candidates\Jobs\JobApplicationController;
 use App\Http\Controllers\API\Candidates\Jobs\JobCategoryController;
 use App\Http\Controllers\API\Candidates\News\NewsController;
+use App\Http\Controllers\API\Candidates\News\NewsCategoryController;
+
 Route::post('login',[AuthController::class,'login']);
 Route::post('register',[AuthController::class,'register']);
 
@@ -20,5 +22,7 @@ Route::middleware('auth:api')->group(function () {
 Route::get('job-list',[JobsListController::class,'list']);
 Route::get('job-categories',[JobCategoryController::class,'list']);
 
+
+Route::get('news-categories',[NewsCategoryController::class,'list']);
 Route::get('news',[NewsController::class,'list']);
 Route::get('news/{id}',[NewsController::class,'index']);
