@@ -10,12 +10,23 @@ class JobCategoryController extends Controller
 {
     use ApiMethods;
     public function index(Request $request){
-        $jobs= DB::table('job_categories')->
+        $job_category= DB::table('job_categories')->
         find($request->job_categoriy_id);
-        return $this->sendResponse($jobs,"Jobs Category List.");
+        return $this->sendResponse($this->process($job_category),"Jobs Category List.");
     }
     public function list(){
-        $jobs= DB::table('job_categories')->get();
-        return $this->sendResponse($jobs,"Jobs Category List.");
+        $results=[];
+        $job_categorys= DB::table('job_categories')->get();
+        foreach($job_categorys as $index=>$category){
+            $results[$index]=$this->process($category);
+        }
+        return $this->sendResponse($results,"Jobs Category List.");
+    }
+    public function process($category){
+        return [
+            "id" => $category->id,
+            "category" => $category->functional_area,
+            "sort_order"=>$category->sort_order
+        ];
     }
 }
