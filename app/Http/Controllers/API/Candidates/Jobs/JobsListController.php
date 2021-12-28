@@ -49,7 +49,8 @@ class JobsListController extends Controller
             "company"=>($company?[
                 "id"=>$company->id,
                 "compeny_name"=>$company->compeny_name,
-                "compeny_logo"=>$company->company_logo,
+                "compeny_logo_url"=>$company->company_logo,
+                "compeny_cover_image_url"=>$company->company_cover,
                 "compeny_phone"=>$company->compeny_phone,
                 "compeny_email"=>$company->compeny_email
             ]:null),
@@ -66,10 +67,10 @@ class JobsListController extends Controller
             "expiry_date"=> $job->expiry_date,
             "education_level"=>@DB::table('experiencelevels')->find($job->education_level_id)->title,
             "job_experience"=> @DB::table('educationlevels')->find($job->job_experience_id)->title,
-            "is_active"=> $job->is_active,
-            "is_featured"=> $job->is_featured,
-            "created_at"=> $job->created_at,
-            "updated_at"=> $job->updated_at,
+            "is_active"=>$job->is_active==1?true:false,
+            "is_featured"=>$job->is_featured==1?true:false,
+            // "created_at"=> $job->created_at,
+            // "updated_at"=> $job->updated_at,
         ];
     }
 
