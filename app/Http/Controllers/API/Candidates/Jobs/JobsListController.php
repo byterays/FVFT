@@ -32,7 +32,7 @@ class JobsListController extends Controller
         if($request->has("id")){
             $jobs->where('id',$request->id);
         }
-        $j=$jobs->get();
+        $j=$jobs->where("is_active",true)->get();
         // dd($j);
         $results = [];
         foreach($j as $index=>$job){
@@ -48,17 +48,17 @@ class JobsListController extends Controller
             "id"=> $job->id,
             "company"=>($company?[
                 "id"=>$company->id,
-                "compeny_name"=>$company->compeny_name,
-                "compeny_logo_url"=>$company->company_logo,
-                "compeny_cover_image_url"=>$company->company_cover,
-                "compeny_phone"=>$company->compeny_phone,
-                "compeny_email"=>$company->compeny_email
+                "name"=>$company->compeny_name,
+                "logo_url"=>$company->company_logo,
+                "cover_image_url"=>$company->company_cover,
+                "phone"=>$company->compeny_phone,
+                "email"=>$company->compeny_email
             ]:null),
             "title"=> $job->title,
             "description"=> $job->description,
             "benefits"=>$job->benefits,
-            "salary_from"=> $job->salary_from,
-            "salary_to"=> $job->salary_to,
+            "salary_from"=> $job->hide_salary==1?$job->salary_from:null,
+            "salary_to"=> $job->hide_salary==1?$job->salary_to:null,
             "hide_salary"=> $job->hide_salary,
             "salary_currency"=> $job->salary_currency,
             "job_categories"=> $job->job_categories_id,
