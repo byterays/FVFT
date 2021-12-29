@@ -14,6 +14,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('profile',[ProfileController::class,'save_profile']);
     Route::post('job-application',[JobApplicationController::class,'apply']);
     Route::post('job-application-list',[JobApplicationController::class,'list']);
+    Route::post('change-password',[ProfileController::class,'change_password']);
 });
 // Listing
 Route::get('job-list',[JobsListController::class,'list']);

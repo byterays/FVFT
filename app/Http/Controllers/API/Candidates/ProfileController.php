@@ -23,11 +23,8 @@ class ProfileController extends Controller
     public function save_profile(Request $request){        
         $employe= Employe::where('user_id',Auth::user()->id)->first();
         $user=User::find(Auth::user()->id);
-        if($request->has('email')){
-            $user->update(["email"=>$request->email]);
-        }
-        if($request->has('password')){
-            $user->update(["password"=>bcrypt($request->password)]);
+        if($request->has('phone')){
+            $employe->update(["mobile_phone"=>$request->phone]);
         }
         if($request->has('first_name')){
             $employe->update(["first_name"=>$request->first_name]);
@@ -35,7 +32,7 @@ class ProfileController extends Controller
         if($request->has('middle_name')){
             $employe->update(["middle_name"=>$request->middle_name]);
         }
-        if($request->has('middle_name')){
+        if($request->has('last_name')){
             $employe->update([ "last_name"=>$request->last_name]);
         }
         if($request->has('profile_img')){
@@ -59,10 +56,36 @@ class ProfileController extends Controller
             "middle_name"=>$employe->middle_name,
             "last_name"=>$employe->last_name,
             "email"=>$user->email,
+            "phone"=>$employe->mobile_phone,
             "user_type"=>$user->user_type,
             'is_verified'=>$employe->is_verified==1?true:false,
             'image_url'=>$employe->avatar,
         ];
+    }
+
+    public function change_password(Request $request){
+        // return $request;
+        $this->validate($request, [
+            'old_password' => 'required',
+            'new_password' => 'required'
+        ]);
+        
+        if(\Hash::check($request->old_password, auth()->user()->password)){
+            $authuser=Auth::user();
+            $user=User::find($authuser->id);
+            $user->update([
+                "password"=>bcrypt($request->new_password)
+            ]);
+            $employe= Employe::where('user_id',$user->id)->first();
+            $token = $authuser->token();
+            $token->revoke();
+            $accesstoken = $authuser->createToken('FVFT_AcessToken')->accessToken;
+            return $this->sendResponse([
+                "token" => $accesstoken
+            ],"Password Changed!");
+        }else{
+            return $this->sendError("Password Not Matched !");
+        }
     }
     public function upload($img)
     {
