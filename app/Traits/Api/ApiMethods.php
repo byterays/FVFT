@@ -18,7 +18,7 @@ trait ApiMethods{
     {
         $response = [
             'success' => false,
-            'message' => ['error' => [$error]],
+            'message' => $error,
             'code' => $code
         ];
         if (!empty($errorMessages)) {
