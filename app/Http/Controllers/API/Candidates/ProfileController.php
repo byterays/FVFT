@@ -95,7 +95,7 @@ class ProfileController extends Controller
         $image_type = $image_type_aux[1];
         $image_base64 = base64_decode($image_parts[1]);
         $file = $folderPath . sha1(time()).'.'.$image_type;
-        file_put_contents($file, $image_base64);
+        file_put_contents(public_path("/").$file, $image_base64);
         return $file;
     }
 }
