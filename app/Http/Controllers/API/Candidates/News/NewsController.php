@@ -31,7 +31,14 @@ class NewsController extends Controller
         return $this->sendResponse($results,"News List.");
     }
     public function process($news){
+        $categories_processed=[];
         $categories=DB::select("SELECT nc.id, nc.title FROM `manage_news_categories` AS mnc INNER JOIN news_categories AS nc ON nc.id=mnc.category_id WHERE `news_id` =?",[$news->id]);
+        foreach($categories as $index=>$category){
+            $categories_processed[$index]=[
+                "id"=>(int)$category->id,
+                "title"=>$category->title
+            ];
+        }
         $posted_by=[
             "name" =>"FreeVisFreeTicket",
             "profile_url"=>"/uploads/site/fvft_logo.jpeg"
@@ -41,7 +48,7 @@ class NewsController extends Controller
             "title"=>$news->title,
             "body"=>json_decode($news->body),
             "feature_img"=>$news->feature_img,
-            "categories"=>$categories,
+            "categories"=>$categories_processed,
             "posted_by"=>$posted_by,
             "created_at"=>$news->created_at,
             "updated_at"=>$news->updated_at
