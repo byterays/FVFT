@@ -67,20 +67,21 @@ class JobsListController extends Controller
             "id"=> $job->id,
             "company"=>($company?[
                 "id"=>$company->id,
-                "compeny_name"=>$company->compeny_name,
-                "compeny_logo"=>$company->company_logo,
-                "compeny_phone"=>$company->compeny_phone,
-                "compeny_email"=>$company->compeny_email
+                "name"=>$company->compeny_name,
+                "logo_url"=>$company->company_logo,
+                "cover_image_url"=>$company->company_cover,
+                "phone"=>$company->compeny_phone,
+                "email"=>$company->compeny_email
             ]:null),
             "title"=> $job->title,
             "description"=> $job->description,
             "feature_image_url"=> $job->feature_image_url,
             "benefits"=>$job->benefits,
-            "salary_from"=> $job->salary_from,
-            "salary_to"=> $job->salary_to,
-            "hide_salary"=> $job->hide_salary,
+            "salary_from"=> $job->hide_salary==1?$job->salary_from:null,
+            "salary_to"=> $job->hide_salary==1?$job->salary_to:null,
+            "hide_salary"=> $job->hide_salary==1?true:false,
             "salary_currency"=> $job->salary_currency,
-            "job_categories"=>  @DB::table('job_categories')->find($job->job_categories_id)->functional_area,
+            "job_category"=> @DB::table('job_categories')->find($job->job_categories_id)->functional_area,
             "job_shifts"=> $jobshifts,
             "num_of_positions"=> $job->num_of_positions,
             "expiry_date"=> $job->expiry_date,
@@ -88,8 +89,10 @@ class JobsListController extends Controller
             "job_experience"=> @DB::table('educationlevels')->find($job->job_experience_id)->title,
             "is_active"=> $job->is_active,
             "is_featured"=> $job->is_featured,
-            "created_at"=> $job->created_at,
-            "updated_at"=> $job->updated_at,
+            "is_active"=>$job->is_active==1?true:false,
+            "is_featured"=>$job->is_featured==1?true:false,
+            // "created_at"=> $job->created_at,
+            // "updated_at"=> $job->updated_at,
         ];
     }
 
