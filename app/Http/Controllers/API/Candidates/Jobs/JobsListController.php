@@ -39,6 +39,17 @@ class JobsListController extends Controller
                 $jobs->where('expiry_date',">=",date("Y-m-d",$t));
             }
         }
+        if($request->has('country_id')){
+            $jobs->where('country_id',$request->country_id);
+        }
+        if($request->has('state_id')){
+            $jobs->where('state_id',$request->state_id);
+        }
+        if($request->has('city_id')){
+            $jobs->where('city_id',$request->city_id);
+        }
+        $total_records=$jobs->count();
+        // dd($total_records);
         if($request->has("page_no")){
             $jobs->limit($limit)->offset($request->page_no>=1?$request->page_no*10:1);
         }else{
@@ -51,7 +62,7 @@ class JobsListController extends Controller
         foreach($j as $index=>$job){
             $results[$index] = $this->process($job);
         }
-        $total_records=DB::select('SELECT COUNT(*) as total_pages FROM `jobs`')["0"]->total_pages;
+        
         // dd($total_records);
         $total_page_no=(int)($total_records/$limit);
         $page_no=$request->has("page_no")?$request->page_no:1;
@@ -92,8 +103,8 @@ class JobsListController extends Controller
         $experiencelevels=DB::table('experiencelevels')->find($job->job_experience_id);
         $country=DB::table('countries')->find($job->country_id);
 
-        // dd($country->iso3);
-        $country=DB::table('states')->find($job->state_id);
+        // dd($country);
+        $state=DB::table('states')->find($job->state_id);
         $city=DB::table('cities')->find($job->city_id);
 
         return [
@@ -118,19 +129,25 @@ class JobsListController extends Controller
             "job_category"=>  @DB::table('job_categories')->find($job->job_categories_id)->functional_area,
             "job_shifts"=> $jobshifts,
             "country_id"=>$job->country_id,
-            "state_id"=>$job->state_id,
-            "city_id"=>$job->city_id,
             "num_of_positions"=> (int)$job->num_of_positions,
             "expiry_date"=> $job->expiry_date,
             "education_level"=>isset($educationlevels->title)?$educationlevels->title:"No Education Background.",
             "job_experience"=>isset($experiencelevels->title)?$experiencelevels->title:"Fresh",
             "site_location"=>[
-                "country"=>$country
-                // [
-                //     "name"=>$country->name,
-                //     "country_code"=>$country->iso3,
-                //     "flag"=>$country->emoji,
-                //     ]
+                "country"=>[
+                    "id"=>(int)$country->id,
+                    "name"=>$country->name,
+                    "country_code"=>$country->iso3,
+                    "flag"=>$country->emoji
+                ],
+                "state"=>[
+                    "id"=>(int)$state->id,
+                    "name"=>$state->name,
+                ],
+                "city"=>[
+                    "id"=>(int)$city->id,
+                    "name"=>$city->name,
+                ]
             ],
             "is_active"=> (boolean)$job->is_active,
             "is_featured"=>(boolean)$job->is_featured
