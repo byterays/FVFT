@@ -26,6 +26,7 @@ class JobCategoryController extends Controller
         return [
             "id" => $category->id,
             "category" => $category->functional_area,
+            "image_url" => $category->image_url,
             "sort_order"=>$category->sort_order
         ];
     }
