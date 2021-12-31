@@ -13,6 +13,7 @@ class JobsListController extends Controller
     use ApiMethods;
     public function list(Request $request){
         // dd($request);
+        $limit= $request->has("limit")?$request->limit:10;
         $jobs =Job::query();
         if($request->has("is_active")){
             $jobs->where('is_active',$request->is_active);
@@ -38,13 +39,50 @@ class JobsListController extends Controller
                 $jobs->where('expiry_date',">=",date("Y-m-d",$t));
             }
         }
+        if($request->has('country_id')){
+            $jobs->where('country_id',$request->country_id);
+        }
+        if($request->has('state_id')){
+            $jobs->where('state_id',$request->state_id);
+        }
+        if($request->has('city_id')){
+            $jobs->where('city_id',$request->city_id);
+        }
+        $total_records=$jobs->count();
+        // dd($total_records);
+        if($request->has("page_no")){
+            $jobs->limit($limit)->offset($request->page_no>=1?$request->page_no*10:1);
+        }else{
+            $jobs->limit($limit);
+        }
+        
         $j=$jobs->get();
         // dd($j);
         $results = [];
         foreach($j as $index=>$job){
             $results[$index] = $this->process($job);
         }
-        return $this->sendResponse($results,"Jobs List.");
+        
+        // dd($total_records);
+        $total_page_no=(int)($total_records/$limit);
+        $page_no=$request->has("page_no")?$request->page_no:1;
+        $pagination=[
+            "total_records"=>$total_records,
+            "total_pages"=>$total_page_no,
+            "limit"=>$limit,
+            "page_no"=>$page_no,
+        ];
+        $page_no>1?
+        $pagination=array_merge(
+        $pagination,
+        ["previous"=>$page_no-1]
+        ):null;
+        $page_no<$total_page_no?
+        $pagination=array_merge(
+        $pagination,
+        ["next"=>$page_no+1]
+        ):null;
+        return $this->sendResponse($results,"Jobs List.",$pagination);
     }
     public function process($job){
         $company=DB::table('companies')->find($job->company_id);
@@ -56,42 +94,63 @@ class JobsListController extends Controller
                 if($jobshift){
                     $jobshifts[$index]=
                         [
-                            "id"=>$jobshift->id,
+                            "id"=>(int)$jobshift->id,
                             "shift"=>$jobshift->job_shift
                         ];
                 }
             }
         $educationlevels=DB::table('educationlevels')->find($job->education_level_id);
         $experiencelevels=DB::table('experiencelevels')->find($job->job_experience_id);
+        $country=DB::table('countries')->find($job->country_id);
+
+        // dd($country);
+        $state=DB::table('states')->find($job->state_id);
+        $city=DB::table('cities')->find($job->city_id);
+
         return [
-            "id"=> $job->id,
+            "id"=> (int)$job->id,
             "company"=>($company?[
-                "id"=>$company->id,
+                "id"=>(int)$company->id,
                 "name"=>$company->compeny_name,
-                "logo_url"=>$company->company_logo,
-                "cover_image_url"=>$company->company_cover,
+                "logo_url"=>env("APP_URL").$company->company_logo,
+                "cover_image_url"=>env("APP_URL").$company->company_cover,
                 "phone"=>$company->compeny_phone,
                 "email"=>$company->compeny_email
             ]:null),
             "title"=> $job->title,
             "description"=> $job->description,
-            "feature_image_url"=> $job->feature_image_url,
+            "feature_image_url"=> env("APP_URL").$job->feature_image_url,
             "benefits"=>$job->benefits,
-            "salary_from"=>$job->hide_salary==0?$job->salary_from:"Hidden",
+            "salary_from"=>(boolean)$job->hide_salary?0.0:floatval($job->salary_from),
             // "salary_from"=> (int)$job->hide_salary==1?$job->salary_from:"Hidden",
-            "salary_to"=> $job->hide_salary==0?$job->salary_to:"Hidden",
-            "hide_salary"=> $job->hide_salary==1?true:false,
-            "salary_currency"=> $job->salary_currency,
-            "job_category"=> @DB::table('job_categories')->find($job->job_categories_id)->functional_area,
+            "salary_to"=> (boolean)$job->hide_salary?0.0:floatval($job->salary_to),
+            "hide_salary"=> (boolean)$job->hide_salary,
+            "salary_currency"=>$job->salary_currency,
+            "job_category"=>  @DB::table('job_categories')->find($job->job_categories_id)->functional_area,
             "job_shifts"=> $jobshifts,
-            "num_of_positions"=> $job->num_of_positions,
+            "country_id"=>$job->country_id,
+            "num_of_positions"=> (int)$job->num_of_positions,
             "expiry_date"=> $job->expiry_date,
             "education_level"=>isset($educationlevels->title)?$educationlevels->title:"No Education Background.",
             "job_experience"=>isset($experiencelevels->title)?$experiencelevels->title:"Fresh",
-            "is_active"=> $job->is_active,
-            "is_featured"=> $job->is_featured,
-            "is_active"=>$job->is_active==1?true:false,
-            "is_featured"=>$job->is_featured==1?true:false,
+            "site_location"=>[
+                "country"=>[
+                    "id"=>(int)$country->id,
+                    "name"=>$country->name,
+                    "country_code"=>$country->iso3,
+                    "flag"=>$country->emoji
+                ],
+                "state"=>[
+                    "id"=>(int)$state->id,
+                    "name"=>$state->name,
+                ],
+                "city"=>[
+                    "id"=>(int)$city->id,
+                    "name"=>$city->name,
+                ]
+            ],
+            "is_active"=> (boolean)$job->is_active,
+            "is_featured"=>(boolean)$job->is_featured
             // "created_at"=> $job->created_at,
             // "updated_at"=> $job->updated_at,
         ];

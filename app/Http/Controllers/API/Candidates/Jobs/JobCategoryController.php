@@ -24,9 +24,10 @@ class JobCategoryController extends Controller
     }
     public function process($category){
         return [
-            "id" => $category->id,
+            "id" => (int)$category->id,
             "category" => $category->functional_area,
-            "sort_order"=>$category->sort_order
+            "image_url" => $category->image_url,
+            "sort_order"=>(int)$category->sort_order
         ];
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\API\Candidates\Jobs\JobApplicationController;
 use App\Http\Controllers\API\Candidates\Jobs\JobCategoryController;
 use App\Http\Controllers\API\Candidates\News\NewsController;
 use App\Http\Controllers\API\Candidates\News\NewsCategoryController;
+use App\Http\Controllers\API\Candidates\BannerController;
 
 Route::post('login',[AuthController::class,'login']);
 Route::post('register',[AuthController::class,'register']);
@@ -27,3 +28,5 @@ Route::get('job-categories',[JobCategoryController::class,'list']);
 Route::get('news-categories',[NewsCategoryController::class,'list']);
 Route::get('news',[NewsController::class,'list']);
 Route::get('news/{id}',[NewsController::class,'index']);
+
+Route::get('banners',[BannerController::class,'list']);
