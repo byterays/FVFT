@@ -3,14 +3,20 @@
 namespace App\Traits\API;
 use Illuminate\Http\Response;
 trait ApiMethods{
-    function sendResponse($result, $message=null)
+    function sendResponse($result, $message=null,$pagination=null)
     {
-        $response = [
-            'success' => true,
+        // dd($pagination?$pagination:"not found");
+        $response =[
+            'success' => true
+        ];
+        $pagination?$response= array_merge($response,[
+            "meta"=>$pagination
+        ]):null;
+        $response=array_merge($response,[
             'data' => $result,
             'message' => $message,
             'code' => Response::HTTP_OK
-        ];
+        ]);
         return response()->json($response, Response::HTTP_OK, $headers = [], JSON_PRETTY_PRINT);
     }
 
