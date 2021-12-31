@@ -1,0 +1,159 @@
+<?php
+
+namespace App\Http\Controllers\API\Candidates\Jobs;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Job;
+use App\Traits\Api\ApiMethods;
+use DB;
+
+class JobsListController extends Controller
+{
+    use ApiMethods;
+    public function list(Request $request){
+        // dd($request);
+        $limit= $request->has("limit")?$request->limit:10;
+        $jobs =Job::query();
+        if($request->has("is_active")){
+            $jobs->where('is_active',$request->is_active);
+        }
+        if($request->has("is_featured")){
+            $jobs->where('is_featured',$request->is_featured);
+        }
+        if($request->has("job_experience_id")){
+            $jobs->where('job_experience_id',$request->job_experience_id);
+        }
+        if($request->has("job_categories_id")){
+            $jobs->where('job_categories_id',$request->job_categories_id);
+        }
+        if($request->has("slug")){
+            $jobs->where('slug',$request->slug);
+        }
+        if($request->has("id")){
+            $jobs->where('id',$request->id);
+        }
+        if($request->has("only_latest")){
+            if($request->only_latest==true){
+                $t=time();
+                $jobs->where('expiry_date',">=",date("Y-m-d",$t));
+            }
+        }
+        if($request->has('country_id')){
+            $jobs->where('country_id',$request->country_id);
+        }
+        if($request->has('state_id')){
+            $jobs->where('state_id',$request->state_id);
+        }
+        if($request->has('city_id')){
+            $jobs->where('city_id',$request->city_id);
+        }
+        $total_records=$jobs->count();
+        // dd($total_records);
+        if($request->has("page_no")){
+            $jobs->limit($limit)->offset($request->page_no>=1?$request->page_no*10:1);
+        }else{
+            $jobs->limit($limit);
+        }
+        
+        $j=$jobs->get();
+        // dd($j);
+        $results = [];
+        foreach($j as $index=>$job){
+            $results[$index] = $this->process($job);
+        }
+        
+        // dd($total_records);
+        $total_page_no=(int)($total_records/$limit);
+        $page_no=$request->has("page_no")?$request->page_no:1;
+        $pagination=[
+            "total_records"=>$total_records,
+            "total_pages"=>$total_page_no,
+            "limit"=>$limit,
+            "page_no"=>$page_no,
+        ];
+        $page_no>1?
+        $pagination=array_merge(
+        $pagination,
+        ["previous"=>$page_no-1]
+        ):null;
+        $page_no<$total_page_no?
+        $pagination=array_merge(
+        $pagination,
+        ["next"=>$page_no+1]
+        ):null;
+        return $this->sendResponse($results,"Jobs List.",$pagination);
+    }
+    public function process($job){
+        $company=DB::table('companies')->find($job->company_id);
+        $jobshifts=[];
+        $job_shifts=DB::table("manage_job_shifts")->where("job_id",$job->id)->get();
+        // dd($job_shifts);
+            foreach($job_shifts as $index=>$shift){
+                $jobshift= DB::table('job_shifts')->find($shift->job_shifts_id);
+                if($jobshift){
+                    $jobshifts[$index]=
+                        [
+                            "id"=>(int)$jobshift->id,
+                            "shift"=>$jobshift->job_shift
+                        ];
+                }
+            }
+        $educationlevels=DB::table('educationlevels')->find($job->education_level_id);
+        $experiencelevels=DB::table('experiencelevels')->find($job->job_experience_id);
+        $country=DB::table('countries')->find($job->country_id);
+
+        // dd($country);
+        $state=DB::table('states')->find($job->state_id);
+        $city=DB::table('cities')->find($job->city_id);
+
+        return [
+            "id"=> (int)$job->id,
+            "company"=>($company?[
+                "id"=>(int)$company->id,
+                "name"=>$company->compeny_name,
+                "logo_url"=>env("APP_URL").$company->company_logo,
+                "cover_image_url"=>env("APP_URL").$company->company_cover,
+                "phone"=>$company->compeny_phone,
+                "email"=>$company->compeny_email
+            ]:null),
+            "title"=> $job->title,
+            "description"=> $job->description,
+            "feature_image_url"=> env("APP_URL").$job->feature_image_url,
+            "benefits"=>$job->benefits,
+            "salary_from"=>(boolean)$job->hide_salary?0.0:floatval($job->salary_from),
+            // "salary_from"=> (int)$job->hide_salary==1?$job->salary_from:"Hidden",
+            "salary_to"=> (boolean)$job->hide_salary?0.0:floatval($job->salary_to),
+            "hide_salary"=> (boolean)$job->hide_salary,
+            "salary_currency"=>$job->salary_currency,
+            "job_category"=>  @DB::table('job_categories')->find($job->job_categories_id)->functional_area,
+            "job_shifts"=> $jobshifts,
+            "country_id"=>$job->country_id,
+            "num_of_positions"=> (int)$job->num_of_positions,
+            "expiry_date"=> $job->expiry_date,
+            "education_level"=>isset($educationlevels->title)?$educationlevels->title:"No Education Background.",
+            "job_experience"=>isset($experiencelevels->title)?$experiencelevels->title:"Fresh",
+            "site_location"=>[
+                "country"=>[
+                    "id"=>(int)$country->id,
+                    "name"=>$country->name,
+                    "country_code"=>$country->iso3,
+                    "flag"=>$country->emoji
+                ],
+                "state"=>[
+                    "id"=>(int)$state->id,
+                    "name"=>$state->name,
+                ],
+                "city"=>[
+                    "id"=>(int)$city->id,
+                    "name"=>$city->name,
+                ]
+            ],
+            "is_active"=> (boolean)$job->is_active,
+            "is_featured"=>(boolean)$job->is_featured
+            // "created_at"=> $job->created_at,
+            // "updated_at"=> $job->updated_at,
+        ];
+    }
+
+}
