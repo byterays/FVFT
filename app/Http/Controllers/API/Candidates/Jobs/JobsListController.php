@@ -56,7 +56,7 @@ class JobsListController extends Controller
                 if($jobshift){
                     $jobshifts[$index]=
                         [
-                            "id"=>$jobshift->id,
+                            "id"=>(int)$jobshift->id,
                             "shift"=>$jobshift->job_shift
                         ];
                 }
@@ -64,34 +64,32 @@ class JobsListController extends Controller
         $educationlevels=DB::table('educationlevels')->find($job->education_level_id);
         $experiencelevels=DB::table('experiencelevels')->find($job->job_experience_id);
         return [
-            "id"=> $job->id,
+            "id"=> (int)$job->id,
             "company"=>($company?[
-                "id"=>$company->id,
+                "id"=>(int)$company->id,
                 "name"=>$company->compeny_name,
-                "logo_url"=>$company->company_logo,
-                "cover_image_url"=>$company->company_cover,
+                "logo_url"=>env("APP_URL").$company->company_logo,
+                "cover_image_url"=>env("APP_URL").$company->company_cover,
                 "phone"=>$company->compeny_phone,
                 "email"=>$company->compeny_email
             ]:null),
             "title"=> $job->title,
             "description"=> $job->description,
-            "feature_image_url"=> $job->feature_image_url,
+            "feature_image_url"=> env("APP_URL").$job->feature_image_url,
             "benefits"=>$job->benefits,
-            "salary_from"=>$job->hide_salary==0?$job->salary_from:"Hidden",
+            "salary_from"=>(double)$job->hide_salary==0?$job->salary_from:0.0,
             // "salary_from"=> (int)$job->hide_salary==1?$job->salary_from:"Hidden",
-            "salary_to"=> $job->hide_salary==0?$job->salary_to:"Hidden",
-            "hide_salary"=> $job->hide_salary==1?true:false,
-            "salary_currency"=> $job->salary_currency,
-            "job_category"=> @DB::table('job_categories')->find($job->job_categories_id)->functional_area,
+            "salary_to"=> (double)$job->hide_salary==0?$job->salary_to:0.0,
+            "hide_salary"=> (boolean)$job->hide_salary,
+            "salary_currency"=>(double) $job->salary_currency,
+            "job_category"=>  @DB::table('job_categories')->find($job->job_categories_id)->functional_area,
             "job_shifts"=> $jobshifts,
-            "num_of_positions"=> $job->num_of_positions,
+            "num_of_positions"=> (int)$job->num_of_positions,
             "expiry_date"=> $job->expiry_date,
             "education_level"=>isset($educationlevels->title)?$educationlevels->title:"No Education Background.",
             "job_experience"=>isset($experiencelevels->title)?$experiencelevels->title:"Fresh",
-            "is_active"=> $job->is_active,
-            "is_featured"=> $job->is_featured,
-            "is_active"=>$job->is_active==1?true:false,
-            "is_featured"=>$job->is_featured==1?true:false,
+            "is_active"=> (boolean)$job->is_active,
+            "is_featured"=>(boolean)$job->is_featured
             // "created_at"=> $job->created_at,
             // "updated_at"=> $job->updated_at,
         ];
