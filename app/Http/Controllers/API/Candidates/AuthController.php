@@ -77,13 +77,15 @@ class AuthController extends Controller
                 'message'=>$message,
                 'data'=>[
                     'user'=>[
-                        "user_id"=>$user->id,
+                        "user_id"=>(int)$user->id,
                         "first_name"=>$employe->first_name,
                         "middle_name"=>$employe->middle_name,
                         "last_name"=>$employe->last_name,
                         "email"=>$user->email,
-                        "image_url"=>$employe->avatar,
-                        "user_type"=>$user->user_type
+                        "phone"=>$employe->mobile_phone,
+                        "user_type"=>$user->user_type,
+                        'is_verified'=>(boolean)$employe->is_verified,
+                        'image_url'=>env("APP_URL").$employe->avatar,
                     ],
                     'token'=> $accesstoken
                 ]
