@@ -13,6 +13,7 @@ class JobsListController extends Controller
     use ApiMethods;
     public function list(Request $request){
         // dd($request);
+        $limit= $request->has("limit")?$request->limit:10;
         $jobs =Job::query();
         if($request->has("is_active")){
             $jobs->where('is_active',$request->is_active);
@@ -38,13 +39,39 @@ class JobsListController extends Controller
                 $jobs->where('expiry_date',">=",date("Y-m-d",$t));
             }
         }
+        if($request->has("page_no")){
+            $jobs->limit($limit)->offset($request->page_no>=1?$request->page_no*10:1);
+        }else{
+            $jobs->limit($limit);
+        }
+        
         $j=$jobs->get();
         // dd($j);
         $results = [];
         foreach($j as $index=>$job){
             $results[$index] = $this->process($job);
         }
-        return $this->sendResponse($results,"Jobs List.");
+        $total_records=DB::select('SELECT COUNT(*) as total_pages FROM `jobs`')["0"]->total_pages;
+        // dd($total_records);
+        $total_page_no=(int)($total_records/$limit);
+        $page_no=$request->has("page_no")?$request->page_no:1;
+        $pagination=[
+            "total_records"=>$total_records,
+            "total_pages"=>$total_page_no,
+            "limit"=>$limit,
+            "page_no"=>$page_no,
+        ];
+        $page_no>1?
+        $pagination=array_merge(
+        $pagination,
+        ["previous"=>$page_no-1]
+        ):null;
+        $page_no<$total_page_no?
+        $pagination=array_merge(
+        $pagination,
+        ["next"=>$page_no+1]
+        ):null;
+        return $this->sendResponse($results,"Jobs List.",$pagination);
     }
     public function process($job){
         $company=DB::table('companies')->find($job->company_id);
@@ -63,6 +90,12 @@ class JobsListController extends Controller
             }
         $educationlevels=DB::table('educationlevels')->find($job->education_level_id);
         $experiencelevels=DB::table('experiencelevels')->find($job->job_experience_id);
+        $country=DB::table('countries')->find($job->country_id);
+
+        // dd($country->iso3);
+        $country=DB::table('states')->find($job->state_id);
+        $city=DB::table('cities')->find($job->city_id);
+
         return [
             "id"=> (int)$job->id,
             "company"=>($company?[
@@ -84,10 +117,21 @@ class JobsListController extends Controller
             "salary_currency"=>$job->salary_currency,
             "job_category"=>  @DB::table('job_categories')->find($job->job_categories_id)->functional_area,
             "job_shifts"=> $jobshifts,
+            "country_id"=>$job->country_id,
+            "state_id"=>$job->state_id,
+            "city_id"=>$job->city_id,
             "num_of_positions"=> (int)$job->num_of_positions,
             "expiry_date"=> $job->expiry_date,
             "education_level"=>isset($educationlevels->title)?$educationlevels->title:"No Education Background.",
             "job_experience"=>isset($experiencelevels->title)?$experiencelevels->title:"Fresh",
+            "site_location"=>[
+                "country"=>$country
+                // [
+                //     "name"=>$country->name,
+                //     "country_code"=>$country->iso3,
+                //     "flag"=>$country->emoji,
+                //     ]
+            ],
             "is_active"=> (boolean)$job->is_active,
             "is_featured"=>(boolean)$job->is_featured
             // "created_at"=> $job->created_at,
