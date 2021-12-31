@@ -59,7 +59,7 @@ class ProfileController extends Controller
             "phone"=>$employe->mobile_phone,
             "user_type"=>$user->user_type,
             'is_verified'=>$employe->is_verified==1?true:false,
-            'image_url'=>$employe->avatar,
+            'image_url'=>env("APP_URL").$employe->avatar,
         ];
     }
 
