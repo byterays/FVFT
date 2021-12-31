@@ -14,13 +14,39 @@ class JobCategoryController extends Controller
         find($request->job_categoriy_id);
         return $this->sendResponse($this->process($job_category),"Jobs Category List.");
     }
-    public function list(){
+    public function list(Request $request){
         $results=[];
-        $job_categorys= DB::table('job_categories')->get();
-        foreach($job_categorys as $index=>$category){
+        $limit= $request->has("limit")?$request->limit:10;
+        $job_categorys= DB::table('job_categories');
+        $total_records=$job_categorys->count();
+        if($request->has("page_no")){
+            $job_categorys->limit($limit)->offset($request->page_no>=1?$request->page_no*10:1);
+        }else{
+            $job_categorys->limit($limit);
+        }
+        foreach($job_categorys->get() as $index=>$category){
             $results[$index]=$this->process($category);
         }
-        return $this->sendResponse($results,"Jobs Category List.");
+        $total_page_no=(int)($total_records/$limit);
+        $page_no=$request->has("page_no")?$request->page_no:1;
+        $pagination=[
+            "total_records"=>$total_records,
+            "total_pages"=>$total_page_no,
+            "limit"=>$limit,
+            "page_no"=>$page_no,
+        ];
+        $page_no>1?
+        $pagination=array_merge(
+        $pagination,
+        ["previous"=>$page_no-1]
+        ):null;
+        $page_no<$total_page_no?
+        $pagination=array_merge(
+        $pagination,
+        ["next"=>$page_no+1]
+        ):null;
+
+        return $this->sendResponse($results,"Jobs Category List.",$pagination);
     }
     public function process($category){
         return [
