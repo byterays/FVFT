@@ -12,12 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// Auth 
+Auth::routes();
 Route::get('/', function () {
     return view('welcome');
 });
 require_once 'v1/v1-web.php';
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
