@@ -15,7 +15,13 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            return route('login');
+            $url=$request->getRequestUri();
+            // dd($url);
+            if($url=="/admin" || $url=="/admin/"){
+                return route('admin.login');
+            }else{
+                return route('login');
+            }
         }
     }
 }
