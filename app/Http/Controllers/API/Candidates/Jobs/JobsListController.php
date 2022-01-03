@@ -51,7 +51,7 @@ class JobsListController extends Controller
         $total_records=$jobs->count();
         // dd($total_records);
         if($request->has("page_no")){
-            $jobs->limit($limit)->offset($request->page_no>=1?$request->page_no*10:1);
+            $jobs->limit($limit)->offset($request->page_no>=1?($request->page_no-1)*10:1);
         }else{
             $jobs->limit($limit);
         }
@@ -67,10 +67,10 @@ class JobsListController extends Controller
         $total_page_no=(int)($total_records/$limit);
         $page_no=$request->has("page_no")?$request->page_no:1;
         $pagination=[
-            "total_records"=>$total_records,
-            "total_pages"=>$total_page_no,
-            "limit"=>$limit,
-            "page_no"=>$page_no,
+            "total_records"=>(int)$total_records,
+            "total_pages"=>(int)$total_page_no,
+            "limit"=>(int)$limit,
+            "page_no"=>(int)$page_no,
         ];
         $page_no>1?
         $pagination=array_merge(
