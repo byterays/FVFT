@@ -20,7 +20,7 @@ class JobCategoryController extends Controller
         $job_categorys= DB::table('job_categories');
         $total_records=$job_categorys->count();
         if($request->has("page_no")){
-            $job_categorys->limit($limit)->offset($request->page_no>=1?$request->page_no*10:1);
+            $job_categorys->limit($limit)->offset($request->page_no>=1?($request->page_no-1)*$limit:1);
         }else{
             $job_categorys->limit($limit);
         }
