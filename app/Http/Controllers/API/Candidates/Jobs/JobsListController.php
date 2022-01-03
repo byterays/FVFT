@@ -64,7 +64,7 @@ class JobsListController extends Controller
         }
         
         // dd($total_records);
-        $total_page_no=(int)($total_records/$limit)+1;
+        $total_page_no=(int)($total_records/$limit);
         $page_no=$request->has("page_no")?$request->page_no:1;
         $pagination=[
             "total_records"=>(int)$total_records,
