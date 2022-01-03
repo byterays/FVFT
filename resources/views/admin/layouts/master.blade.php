@@ -13,7 +13,7 @@
 		<meta name="HandheldFriendly" content="True">
 		<meta name="MobileOptimized" content="320">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-		<link rel="icon" href="{{asset('uploads/imgs/')}}/fvft_favicon.png" type="image/x-icon"/>
+		<link rel="icon" href="{{asset('/uploads/site/fvft_favicon.png')}}" type="image/x-icon"/>
 		<link rel="shortcut icon" type="image/x-icon" href="{{asset('uploads/imgs/')}}/fvft_favicon.png"/>
 		<!-- Title -->
 	    <title>FVFT-Admin</title>

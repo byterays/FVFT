@@ -14,6 +14,15 @@ class DashboardController extends Controller
     }
 
     public function index(){
-        return view('admin.dashboard');
-    }
+        $user= \Auth::user();
+        $admin= \DB::table('admin_profiles')->where('user_id',$user->id)->first();
+        return view('admin.dashboard',['user'=>[
+            "user_id"=>$user->id,
+            "user_email"=>$user->email,
+            "admin_id"=>$admin->id,
+            "name"=>$admin->name,
+            "profile"=>$admin->avatar,
+            "cover"=>$admin->cover
+            ]]);
+        }
 }

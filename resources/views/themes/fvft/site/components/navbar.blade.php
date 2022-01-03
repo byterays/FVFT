@@ -1,17 +1,7 @@
 <nav class="horizontalMenu clearfix d-md-flex">
     <ul class="horizontalMenu-list">
-        <li><a href="#">Home <span class="fa fa-caret-down m-0"></span></a>
-            <ul class="sub-menu">
-                <li><a href="index.html">Home Deafult</a></li>
-                <li><a href="index2.html">Home Style 02</a></li>
-                <li><a href="index3.html">Home Style 03</a></li>
-                <li><a href="index4.html">Home Style 04</a></li>
-                <li><a href="index5.html">Home Style 05</a></li>
-                <li><a href="index6.html">Home Style 06</a></li>
-                <li><a href="index7.html">Home Style 07</a></li>
-                <li><a href="intro-page.html">Home Intro Page</a></li>
-                <li><a href="popup-login.html">Home Pop-up login</a></li>
-            </ul>
+        <li><a href="#">Home </a>
+            
         </li>
         <li><a href="about.html">About Us </a></li>
         <li><a href="#">Pages <span class="fa fa-caret-down m-0"></span></a>
@@ -149,10 +139,16 @@
         </li>
         <li><a href="contact.html"> Contact Us <span class="horizontal-arrow"></span></a></li>
         <li class="pt-0  pb-2 mt-lg-0 create-submit-btn">
-            <span><a class="btn btn-secondary ad-post mt-1" href="ad-posts.html"><i class="fa fa-briefcase"></i> Submit a Job</a></span>
+            <span>
+                <a class="btn btn-secondary ad-post mt-1" href="#">
+                    <i class="fa fa-briefcase"></i> Submit a Job</a>
+                </span>
         </li>
         <li class="mt-0 pt-0  pb-5 mt-lg-0 create-resume-btn">
-            <span><a class="btn btn-info ad-post mt-1" href="create-resume.html"><i class="fa fa-edit"></i> Create Resume</a></span>
+            <span>
+                <a class="btn btn-info ad-post mt-1" href="#">
+                    <i class="fa fa-edit"></i> Create Resume</a>
+            </span>
         </li>
     </ul>
 </nav>
