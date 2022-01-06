@@ -17,31 +17,37 @@
 		<link rel="shortcut icon" type="image/x-icon" href="{{asset('uploads/imgs/')}}/fvft_favicon.png"/>
 		<!-- Title -->
 	    <title>FVFT-Admin</title>
-
 		<link rel="stylesheet" href="{{asset('themes/fvft/')}}/assets/fonts/fonts/font-awesome.min.css">
-
-
 		<!-- Bootstrap Css -->
 		<link href="{{asset('themes/fvft/')}}/assets/plugins/bootstrap-4.3.1-dist/css/bootstrap.min.css" rel="stylesheet" />
-
+		<!-- Sidemenu Css -->
+		<link href="{{asset('themes/fvft/')}}/assets/css/sidemenu.css" rel="stylesheet" />
 		<!-- Dashboard Css -->
 		<link href="{{asset('themes/fvft/')}}/assets/css/style.css" rel="stylesheet" />
 		<link href="{{asset('themes/fvft/')}}/assets/css/admin-custom.css" rel="stylesheet" />
-
-		<!-- Sidemenu Css -->
-		<link href="{{asset('themes/fvft/')}}/assets/css/sidemenu.css" rel="stylesheet" />
-
+		<!-- c3.js Charts Plugin -->
+		<link href="{{asset('themes/fvft/')}}/assets/plugins/charts-c3/c3-chart.css" rel="stylesheet" />
+		<!-- select2 Plugin -->
+		<link href="{{asset('themes/fvft/')}}/assets/plugins/select2/select2.min.css" rel="stylesheet" />
+		<!-- Time picker Plugin -->
+		<link href="{{asset('themes/fvft/')}}/assets/plugins/time-picker/jquery.timepicker.css" rel="stylesheet" />
+		<!-- Date Picker Plugin -->
+		<link href="{{asset('themes/fvft/')}}/assets/plugins/date-picker/spectrum.css" rel="stylesheet" />
+		<!--Bootstrap-datepicker css-->
+		<link rel="stylesheet" href="{{asset('themes/fvft/')}}/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.css">
+		<!--Bootstrap-datepicker css-->
+		<link rel="stylesheet" href="{{asset('themes/fvft/')}}/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.css">
 		<!-- p-scroll bar css-->
 		<link href="{{asset('themes/fvft/')}}/assets/plugins/pscrollbar/pscrollbar.css" rel="stylesheet" />
-
+		<!-- file Uploads -->
+        <link href="{{asset('themes/fvft/')}}/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
 		<!---Font icons-->
 		<link href="{{asset('themes/fvft/')}}/assets/css/icons.css" rel="stylesheet"/>
-		<link href="{{asset('themes/fvft/')}}/assets/plugins/iconfonts/icons.css" rel="stylesheet" />
-
-
 		<!-- Color-Skins -->
 		<link id="theme" rel="stylesheet" type="text/css" media="all" href="{{asset('themes/fvft/')}}/assets/color-skins/color-skins/color10.css" />
-        @yield('style')
+		<link href="{{asset('/')}}css/main.css" rel="stylesheet"/>
+		
+		@yield('style')
 	</head>
 	<body class="app sidebar-mini">
 
@@ -71,43 +77,45 @@
 		<a href="#top" id="back-to-top" ><i class="fa fa-rocket"></i></a>
 
 
-		<!-- Dashboard Core -->
-		<script src="{{asset('themes/fvft/')}}/assets/js/vendors/jquery-3.2.1.min.js"></script>
-		<script src="{{asset('themes/fvft/')}}/assets/plugins/bootstrap-4.3.1-dist/js/popper.min.js"></script>
-		<script src="{{asset('themes/fvft/')}}/assets/plugins/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
-		<script src="{{asset('themes/fvft/')}}/assets/js/vendors/jquery.sparkline.min.js"></script>
-		<script src="{{asset('themes/fvft/')}}/assets/js/vendors/selectize.min.js"></script>
-		<script src="{{asset('themes/fvft/')}}/assets/js/vendors/jquery.tablesorter.min.js"></script>
-		<script src="{{asset('themes/fvft/')}}/assets/js/vendors/circle-progress.min.js"></script>
-		<script src="{{asset('themes/fvft/')}}/assets/plugins/rating/jquery.rating-stars.js"></script>
-
-		<!--Counters -->
-		<script src="{{asset('themes/fvft/')}}/assets/plugins/counters/counterup.min.js"></script>
-		<script src="{{asset('themes/fvft/')}}/assets/plugins/counters/waypoints.min.js"></script>
-		<script src="{{asset('themes/fvft/')}}/assets/plugins/counters/numeric-counter.js"></script>
-
-		<!-- Fullside-menu Js-->
-		<script src="{{asset('themes/fvft/')}}/assets/plugins/toggle-sidebar/sidemenu.js"></script>
-
-		<!-- CHARTJS CHART -->
-		<script src="{{asset('themes/fvft/')}}/assets/plugins/chart/Chart.bundle.js"></script>
-		<script src="{{asset('themes/fvft/')}}/assets/plugins/chart/utils.js"></script>
-
-		<!-- p-scroll bar Js-->
-		<script src="{{asset('themes/fvft/')}}/assets/plugins/pscrollbar/pscrollbar.js"></script>
-		<script src="{{asset('themes/fvft/')}}/assets/plugins/pscrollbar/pscroll.js"></script>
-
-		<!-- ECharts Plugin -->
-		<script src="{{asset('themes/fvft/')}}/assets/plugins/echarts/echarts.js"></script>
-		<script src="{{asset('themes/fvft/')}}/assets/plugins/echarts/echarts.js"></script>
-		<script src="{{asset('themes/fvft/')}}/assets/js/index1.js"></script>
-		{{-- Datatable.js --}}
-		<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-		<!-- Custom Js-->
-		<script src="{{asset('themes/fvft/')}}/assets/js/admin-custom.js"></script>
-
-		
-        @yield('script')
-
-	</body>
+<!-- Dashboard Css -->
+<script src="{{asset('themes/fvft/')}}/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<script src="{{asset('themes/fvft/')}}/assets/plugins/bootstrap-4.3.1-dist/js/popper.min.js"></script>
+<script src="{{asset('themes/fvft/')}}/assets/plugins/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+<script src="{{asset('themes/fvft/')}}/assets/js/vendors/jquery.sparkline.min.js"></script>
+<script src="{{asset('themes/fvft/')}}/assets/js/vendors/selectize.min.js"></script>
+<script src="{{asset('themes/fvft/')}}/assets/js/vendors/jquery.tablesorter.min.js"></script>
+<script src="{{asset('themes/fvft/')}}/assets/js/vendors/circle-progress.min.js"></script>
+<script src="{{asset('themes/fvft/')}}/assets/plugins/rating/jquery.rating-stars.js"></script>
+<!-- Fullside-menu Js-->
+<script src="{{asset('themes/fvft/')}}/assets/plugins/toggle-sidebar/sidemenu.js"></script>
+<!--Select2 js -->
+<script src="{{asset('themes/fvft/')}}/assets/plugins/select2/select2.full.min.js"></script>
+<!-- Timepicker js -->
+<script src="{{asset('themes/fvft/')}}/assets/plugins/time-picker/jquery.timepicker.js"></script>
+<script src="{{asset('themes/fvft/')}}/assets/plugins/time-picker/toggles.min.js"></script>
+<!-- Datepicker js -->
+<script src="{{asset('themes/fvft/')}}/assets/plugins/date-picker/spectrum.js"></script>
+<script src="{{asset('themes/fvft/')}}/assets/plugins/date-picker/jquery-ui.js"></script>
+<script src="{{asset('themes/fvft/')}}/assets/plugins/input-mask/jquery.maskedinput.js"></script>
+<!-- Inline js -->
+<script src="{{asset('themes/fvft/')}}/assets/js/select2.js"></script>
+<script src="{{asset('themes/fvft/')}}/assets/js/formelements.js"></script>
+<!-- file uploads js -->
+<script src="{{asset('themes/fvft/')}}/assets/plugins/fileuploads/js/dropify.js"></script>
+<!--InputMask Js-->
+<script src="{{asset('themes/fvft/')}}/assets/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js"></script>
+<!-- p-scroll bar Js-->
+<script src="{{asset('themes/fvft/')}}/assets/plugins/pscrollbar/pscrollbar.js"></script>
+<script src="{{asset('themes/fvft/')}}/assets/plugins/pscrollbar/pscroll.js"></script>
+<!--Bootstrap-datepicker js-->
+<script src="{{asset('themes/fvft/')}}/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+<!--Counters -->
+<script src="{{asset('themes/fvft/')}}/assets/plugins/counters/counterup.min.js"></script>
+<script src="{{asset('themes/fvft/')}}/assets/plugins/counters/waypoints.min.js"></script>
+<script src="{{asset('themes/fvft/')}}/assets/plugins/counters/numeric-counter.js"></script>
+<!-- Custom Js-->
+<script src="{{asset('themes/fvft/')}}/assets/js/admin-custom.js"></script>
+<script src="{{asset('js/main.js')}}"></script>
+@yield('script')
+</body>
 </html>
