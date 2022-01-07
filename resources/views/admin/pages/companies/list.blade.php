@@ -9,10 +9,10 @@
 @section('main')
 @if($delete)
     @if($delete["status"]=="success")
-        <div id="statusmsg" class="alert alert-success fade show" role="alert" style="display:fixed;position: absolute;z-index: 11;top: 60px !important;right:20px;"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <div id="statusmsg" class="alert alert-success fade show flash" role="alert" style="display:fixed;position: absolute;z-index: 11;top: 60px !important;right:20px;"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <i class="fa fa-check-circle-o mr-2" aria-hidden="true"></i> Job Deleted.</div>
     @else
-        <div id="statusmsg" class="alert alert-danger fade show" role="alert" style="display:fixed;position: absolute;z-index: 11;top: 60px !important;right:20px;">
+        <div id="statusmsg" class="alert alert-danger fade show flash" role="alert" style="display:fixed;position: absolute;z-index: 11;top: 60px !important;right:20px;">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="fa fa-frown-o mr-2" aria-hidden="true"></i>Failed ! To Delete.</div>
     @endif
 @endif
@@ -20,7 +20,7 @@
     <h4 class="page-title">Jobs</h4>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Modules</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Jobs</li>
+        <li class="breadcrumb-item" aria-current="page"><a href="/admin/companies/">Company</a></li>
     </ol>
 </div>
 <div class="row">
@@ -88,4 +88,13 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script>
+    window.setTimeout(function() {
+        $(".flash").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove();
+        });
+        }, 5000);
+</script>
 @endsection
