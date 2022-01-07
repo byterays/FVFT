@@ -44,8 +44,8 @@
 							<a class="side-menu__item" data-toggle="slide" href="#">
                                 <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Candidates</span><i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
-								<li><a class="slide-item" href="admin-pricing.html">List Candidates</a></li>
-								<li><a class="slide-item" href="Ads.html">Add Candidate</a></li>
+								<li><a class="slide-item" href="/admin/candidates/">List Candidates</a></li>
+								<li><a class="slide-item" href="/admin/candidates/new">Add Candidate</a></li>
 							</ul>
 						</li> 
                         <li class="slide">
