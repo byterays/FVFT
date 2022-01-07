@@ -2,6 +2,14 @@
 /public/hot
 /public/storage
 /public/uploads/candidates/profiles
+/public/uploads/compeny
+/public/uploads/banners
+/public/uploads/jobcategory
+/public/uploads/jobs
+/public/uploads/news
+/public/uploads/newscat
+/public/uploads/site
+/public/uploads/admin
 /storage/*.key
 /vendor
 .env

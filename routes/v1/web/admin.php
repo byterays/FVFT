@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Jobs\JobsAjaxController;
 use App\Http\Controllers\Admin\Location\LocationAjaxController;
 
 use App\Http\Controllers\Admin\Companies\CompanyController;
+use App\Http\Controllers\Admin\Candidates\CandidateController;
 
 Route::get('login',function()
 {
@@ -30,6 +31,16 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::get('delete/{id}',[CompanyController::class,'delete'])->name('admin.companies.delete');
         Route::post('save',[CompanyController::class,'save']);
     });
+
+    // Candidate Crude
+    Route::prefix('candidates')->group(function(){
+        Route::get('/',[CandidateController::class,'list'])->name('admin.candidates.list');
+        Route::get('new',[CandidateController::class,'new'])->name('admin.candidates.new');
+        Route::get('edit/{id}',[CandidateController::class,'edit'])->name('admin.candidates.edit');
+        Route::get('delete/{id}',[CandidateController::class,'delete'])->name('admin.candidates.delete');
+        Route::post('save',[CandidateController::class,'save']);
+    });
+    
     Route::post('logout',[AuthController::class,'logout']);
     // Ajax Requests
 });
