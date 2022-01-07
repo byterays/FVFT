@@ -1,3 +1,9 @@
+@php
+ $countries = \DB::table('countries')->get();
+ $states = \DB::table('states')->where('country_id',$job->country_id)->get();
+ $cities = \DB::table('cities')->where('state_id',$job->state_id)->get();
+
+@endphp
 <div id="EditJob{{$job->id}}" class="modal fade" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content ">
@@ -72,29 +78,26 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Country</label>
-                                <select name="country" id="select-countries" class="form-control select2 ">
-                                    <option value="br" >Brazil</option>
-                                    <option value="cz">Czech Republic</option>
-                                    <option value="de" >Germany</option>
-                                    <option value="pl" selected>Poland</option>
+                                <select name="country" id="select-countries-{{$job->id}}" class="form-control select2 ">
+                                    @foreach ($countries as $item)
+                                      <option value="{{$item->id}}" {{$item->id==$job->country_id?"selected":""}}>{{$item->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">States</label>
-                                <select name="state" id="select-countries" class="form-control select2 ">
-                                    <option value="br" >Brazil</option>
-                                    <option value="cz">Czech Republic</option>
-                                    <option value="de" >Germany</option>
-                                    <option value="pl" selected>Poland</option>
+                                <select name="state" id="select-states-{{$job->id}}" class="form-control select2 ">
+                                    @foreach ($states as $item)
+                                        <option value="{{$item->id}}" {{$item->id==$job->state_id?"selected":""}}>{{$item->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Cities</label>
-                                <select name="city" id="select-countries" class="form-control select2 ">
-                                    <option value="br" >Brazil</option>
-                                    <option value="cz">Czech Republic</option>
-                                    <option value="de" >Germany</option>
-                                    <option value="pl" selected>Poland</option>
+                                <select name="city" id="select-cities-{{$job->id}}" class="form-control select2 ">
+                                    @foreach ($cities as $item)
+                                    <option value="{{$item->id}}" {{$item->id==$job->city_id?"selected":""}}>{{$item->name}}</option>
+                                @endforeach
                                 </select>
                             </div>
                             <div class="form-group">

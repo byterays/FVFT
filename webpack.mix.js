@@ -14,4 +14,4 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .sourceMaps();
-mix.browserSync('http://192.168.1.74:8000');
+mix.browserSync('http://127.0.0.1:8000');

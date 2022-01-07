@@ -17,9 +17,20 @@ class JobsController extends Controller
         $this->job_categories=\DB::table('job_categories')->get();
     }
     public function index(){
-        
+        // if($request->action=="delete"){
+
+        // }
         return $this->view('admin.pages.jobs.jobs_list',[
             'jobs' => \DB::table('jobs')->paginate(10),
+            "companies"=>$this->companies,
+            "experiencelevels"=>$this->experiencelevels,
+            "job_shifts"=>$this->job_shifts,
+            "job_categories"=>$this->job_categories,
+            "educationlevels"=>$this->educationlevels,
+        ]);
+    }
+    public function edit(){
+        return $this->view('admin.pages.jobs.editadd',[
             "companies"=>$this->companies,
             "experiencelevels"=>$this->experiencelevels,
             "job_shifts"=>$this->job_shifts,
@@ -27,7 +38,7 @@ class JobsController extends Controller
             "educationlevels"=>$this->educationlevels
         ]);
     }
-    public function edit(){
+    public function new(){
         return $this->view('admin.pages.jobs.editadd',[
             "companies"=>$this->companies,
             "experiencelevels"=>$this->experiencelevels,
@@ -61,12 +72,27 @@ class JobsController extends Controller
         $request->has('city_id')?$job->job_experience_id =$request->job_experience_id:null;
         $request->has('search')?$job->is_active =$request->is_active:null;  
         $request->has('slug')?$job->slug =$request->slug:null;
-        // $job->save();
+        $job->save();
 
         return $request;
     }
     public function delete(Request $request){
-        return DB::table('jobs')->delete($request->id);
+
+        return $this->view('admin.pages.jobs.jobs_list',[
+            'jobs' => \DB::table('jobs')->paginate(10),
+            "companies"=>$this->companies,
+            "experiencelevels"=>$this->experiencelevels,
+            "job_shifts"=>$this->job_shifts,
+            "job_categories"=>$this->job_categories,
+            "educationlevels"=>$this->educationlevels,
+        ]);
+        try {
+            // DB::table('jobs')->delete($request->id);
+            // return redirect()->route('admin.jobs-list',["page"=>$request->from,"dstatus"=>"sucess"]);
+           
+        } catch (\Throwable $th) {
+            return redirect()->route('admin.jobs-list',["page"=>$request->from,"dstatus"=>"failed"]);
+        }
     }
     public function list(){
 
