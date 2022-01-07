@@ -48,6 +48,16 @@ class JobsListController extends Controller
         if($request->has('city_id')){
             $jobs->where('city_id',$request->city_id);
         }
+        if($request->has('include_applied')){
+            if($request->include_applied){
+                $jobs->whereNotExists(function($query)
+                  {
+                      $query->select(DB::raw(1))
+                            ->from('job_applications')
+                            ->whereRaw('jobs.id = job_applications.job_id');
+                  });
+            }
+        }
         $total_records=$jobs->count();
         // dd($total_records);
         if($request->has("page_no")){
