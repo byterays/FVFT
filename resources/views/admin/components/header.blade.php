@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="d-flex">
             <a class="header-brand" href="/admin/">
-                <img src="{{asset('uploads/imgs/')}}/fvft_logo.jpeg" class="header-brand-img" alt="Jobslist logo">
+                <img src="{{asset('/uploads/site/fvft_logo.jpeg')}}" class="header-brand-img" alt="Jobslist logo">
             </a>
             <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-toggle="sidebar" href="#"></a>
             <div class="header-navicon">
@@ -32,40 +32,16 @@
                             <strong class="text-dark">English</strong>
                         </div>
                     </a>
-                    <div class="language-width dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                    {{-- <div class="language-width dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                         <a href="#" class="dropdown-item d-flex pb-3">
-                            <img src="{{asset('themes/fvft/')}}/assets/images/french_flag.jpg" alt="flag-img" class="avatar  mr-3 align-self-center">
+                            <img src="{{asset('themes/fvft/')}}/assets/images/  Nepal_flag.jpg" alt="flag-img" class="avatar  mr-3 align-self-center">
                             <div>
-                                <strong>French</strong>
+                                <strong>    Nepali</strong>
                             </div>
                         </a>
-                        <a href="#" class="dropdown-item d-flex pb-3">
-                            <img src="{{asset('themes/fvft/')}}/assets/images/germany_flag.jpg" alt="flag-img" class="avatar  mr-3 align-self-center">
-                            <div>
-                                <strong>Germany</strong>
-                            </div>
-                        </a>
-                        <a href="#" class="dropdown-item d-flex pb-3">
-                            <img src="{{asset('themes/fvft/')}}/assets/images/italy_flag.jpg" alt="flag-img" class="avatar  mr-3 align-self-center">
-                            <div>
-                                <strong>Italy</strong>
-                            </div>
-                        </a>
-                        <a href="#" class="dropdown-item d-flex pb-3">
-                            <img src="{{asset('themes/fvft/')}}/assets/images/russia_flag.jpg" alt="flag-img" class="avatar  mr-3 align-self-center">
-                            <div>
-                                <strong>Russia</strong>
-                            </div>
-                        </a>
-                        <a href="#" class="dropdown-item d-flex pb-3">
-                            <img src="{{asset('themes/fvft/')}}/assets/images/spain_flag.jpg" alt="flag-img" class="avatar  mr-3 align-self-center">
-                            <div>
-                                <strong>Spain</strong>
-                            </div>
-                        </a>
-                    </div>
+                    </div> --}}
                 </div>
-                <div class="dropdown d-none d-md-flex">
+                {{-- <div class="dropdown d-none d-md-flex">
                     <a class="nav-link icon" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
                         <span class=" nav-unread badge badge-danger  badge-pill">4</span>
@@ -198,24 +174,27 @@
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item text-center">View all</a>
                     </div>
-                </div>
+                </div> --}}
                 <div class="dropdown ">
-                    <a href="#" class="nav-link pr-0 leading-none user-img" data-toggle="dropdown">
-                        <img src="{{asset('themes/fvft/')}}/assets/images/users/male/25.jpg" alt="profile-img" class="avatar avatar-md brround">
+                    <a href="/admin/profile" class="nav-link pr-0 leading-none user-img" data-toggle="dropdown">
+                        <img src="{{asset('/')}}{{ $user["profile"] }}" alt="profile-img" class="avatar avatar-md brround">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow ">
-                        <a class="dropdown-item" href="profile.html">
+                        <a class="dropdown-item" href="/admin/profile">
                             <i class="dropdown-icon icon icon-user"></i> My Profile
                         </a>
-                        <a class="dropdown-item" href="emailservices.html">
+                        {{-- <a class="dropdown-item" href="emailservices.html">
                             <i class="dropdown-icon icon icon-speech"></i> Inbox
-                        </a>
-                        <a class="dropdown-item" href="editprofile.html">
+                        </a> --}}
+                        <a class="dropdown-item" href="/admin/edit-profile">
                             <i class="dropdown-icon  icon icon-settings"></i> Account Settings
                         </a>
-                        <a class="dropdown-item" href="login.html">
+                        <form action="/admin/logout" method="post">
+                            @csrf
+                        <button type="submit" class="dropdown-item">
                             <i class="dropdown-icon icon icon-power"></i> Log out
-                        </a>
+                        </button>
+                        </form>
                     </div>
                 </div>
             </div>
