@@ -18,7 +18,10 @@ class DashboardController extends Controller
         $companies=\DB::table('companies');
         $jobs=\DB::table('jobs');
         $employes=\DB::table('employes');
-        return  $this->view('admin.dashboard',[
+        $applicants=\DB::table('job_applications')->distinct('employ_id');
+        return  $this->view('admin.dashboard',
+        [
+            "companies" => $companies->limit(10)->orderBy('id')->get(),
             "totals"=>[
                 [
                     "title"=>"Companies",
@@ -34,6 +37,11 @@ class DashboardController extends Controller
                     "title"=>"Candidates",
                     "links"=>"admin/candidates/",
                     "total"=>$employes->count()
+                ],
+                [
+                    "title"=>"Applicants",
+                    "links"=>"admin/applicants/",
+                    "total"=>$applicants->count()
                 ],
             ],
             "latest_jobs"=>$jobs->limit(2)->orderBy('id')->get()

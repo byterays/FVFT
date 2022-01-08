@@ -30,10 +30,10 @@
 
 
         <div class="row">
-            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+            <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">Interviewing Team</div>
+                        <div class="card-title">Companies</div>
                     </div>
                     <div class="card-body">
                         <div class="ibox teams mb-30 bg-boxshadow">
@@ -41,38 +41,37 @@
                             <div class="ibox-content teams">
                                 <!-- Members -->
                                 <div class="avatar-list avatar-list-stacked">
-                                    <span class="avatar brround cover-image cover-image" data-image-src="{{asset('themes/fvft/')}}/assets/images/users/female/12.jpg" style="background: url(&quot;{{asset('themes/fvft/')}}/assets/images/users/female/12.jpg&quot;) center center;"></span>
-                                    <span class="avatar brround cover-image cover-image" data-image-src="{{asset('themes/fvft/')}}/assets/images/users/female/21.jpg" style="background: url(&quot;{{asset('themes/fvft/')}}/assets/images/users/female/21.jpg&quot;) center center;"></span>
-                                    <span class="avatar brround cover-image cover-image" data-image-src="{{asset('themes/fvft/')}}/assets/images/users/female/29.jpg" style="background: url(&quot;{{asset('themes/fvft/')}}/assets/images/users/female/29.jpg&quot;) center center;"></span>
-                                    <span class="avatar brround cover-image cover-image" data-image-src="{{asset('themes/fvft/')}}/assets/images/users/female/2.jpg" style="background: url(&quot;{{asset('themes/fvft/')}}/assets/images/users/female/2.jpg&quot;) center center;"></span>
-                                    <span class="avatar brround cover-image cover-image" data-image-src="{{asset('themes/fvft/')}}/assets/images/users/male/34.jpg" style="background: url(&quot;{{asset('themes/fvft/')}}/assets/images/users/male/34.jpg&quot;) center center;"></span>
-                                    <span class="avatar brround cover-image cover-image">+8</span>
+                                    @foreach ($companies as $item)
+                                    <span class="avatar brround cover-image cover-image" data-image-src="{{asset('/')}}{{$item->company_logo}}" style="background: url(&quot;{{asset('themes/fvft/')}}/assets/images/users/female/12.jpg&quot;) center center;"></span>
+                                    @endforeach
+                                    
+                                    <span class="avatar brround cover-image cover-image">{{ $totals[0]["total"]-10 >0?"+".$totals[0]["total"]-10:"" }}</span>
                                 </div>
                                 <!-- Team Board Details -->
                                 <div class="teams-board-details mt-3">
-                                    <h4 class="font-weight-semibold">About Interviewing Team</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam velit quisquam veniam excepturi. Contrary to popular belief, Lorem Ipsum is not simply random text classical Latin </p>
+                                    <h4 class="font-weight-semibold">About Companies Team</h4>
+                                    <p>Companies are looking for employes .</p>
                                 </div>
                                 <!-- Progress Details -->
                                 <span class="font-weight-semibold">Status of current JobSeekers:</span>
                                 <div class="progress-details-teams mt-2 mb-4">
-                                    <div class="stat-percent mb-2">58%</div>
+                                    <div class="stat-percent mb-2">{{ round((($totals[2]["total"]-$totals[3]["total"])/$totals[1]["total"])*100,2) }}%</div>
                                     <div class="progress progress-sm ">
-                                        <div class="progress-bar bg-primary w-50" role="progressbar"></div>
+                                        <div class="progress-bar bg-primary w-{{ round((($totals[2]["total"]-$totals[3]["total"])/$totals[1]["total"])*100)}}" role="progressbar"></div>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-4">
-                                        <div class="teams-rank text-muted">Companies</div>
-                                        <span>24</span>
+                                        <div class="teams-rank text-muted">Jobs</div>
+                                        <span>{{$totals[1]["total"]}}</span>
                                     </div>
                                     <div class="col-4">
-                                        <div class="teams-rank text-muted">RANKING</div>
-                                        <span>3rd</span>
+                                        <div class="teams-rank text-muted">Candidates</div>
+                                        <span>{{$totals[2]["total"]}}</span>
                                     </div>
                                     <div class="col-4">
-                                        <div class="teams-rank text-muted">Placed Candidates</div>
-                                        <span>36,25,854</span>
+                                        <div class="teams-rank text-muted"> Application</div>
+                                        <span>{{$totals[3]["total"]}}</span>
                                     </div>
                                 </div>
                             </div>
