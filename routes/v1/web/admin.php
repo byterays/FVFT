@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\Location\LocationAjaxController;
 use App\Http\Controllers\Admin\Companies\CompanyController;
 use App\Http\Controllers\Admin\Candidates\CandidateController;
 use App\Http\Controllers\Admin\Pages\PageController;
+use App\Http\Controllers\Admin\SiteSettingController;
 
 Route::get('login',function()
 {
@@ -50,6 +51,9 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::post('save',[PageController::class,'save']);
     });
     
+    // Site Setting 
+    Route::get('site-settings',[SiteSettingController::class,'index']);
+    Route::post('site-settings',[SiteSettingController::class,'save']);
     Route::post('logout',[AuthController::class,'logout']);
     // Ajax Requests
 });
