@@ -4,25 +4,47 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Laravel\Ui\Presets\Vue;
+use App\Traits\Admin\AdminMethods;
 
 class DashboardController extends Controller
-{
+{   
+     use AdminMethods;
     public function __construct()
     {
         $this->middleware('is_admin');
     }
 
     public function index(){
-        $user= \Auth::user();
-        $admin= \DB::table('admin_profiles')->where('user_id',$user->id)->first();
-        return view('admin.dashboard',['user'=>[
-            "user_id"=>$user->id,
-            "user_email"=>$user->email,
-            "admin_id"=>$admin->id,
-            "name"=>$admin->name,
-            "profile"=>$admin->avatar,
-            "cover"=>$admin->cover
-            ]]);
-        }
+        $companies=\DB::table('companies');
+        $jobs=\DB::table('jobs');
+        $employes=\DB::table('employes');
+        $applicants=\DB::table('job_applications')->distinct('employ_id');
+        return  $this->view('admin.dashboard',
+        [
+            "companies" => $companies->limit(10)->orderBy('id')->get(),
+            "totals"=>[
+                [
+                    "title"=>"Companies",
+                    "links"=>"admin/companies/",
+                    "total"=>$companies->count()
+                ],
+                [
+                    "title"=>"Jobs",
+                    "links"=>"admin/jobs/",
+                    "total"=>$jobs->count()
+                ],
+                [
+                    "title"=>"Candidates",
+                    "links"=>"admin/candidates/",
+                    "total"=>$employes->count()
+                ],
+                [
+                    "title"=>"Applicants",
+                    "links"=>"admin/applicants/",
+                    "total"=>$applicants->count()
+                ],
+            ],
+            "latest_jobs"=>$jobs->limit(2)->orderBy('id')->get()
+        ]);
+    }
 }
