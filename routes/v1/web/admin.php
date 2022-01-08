@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Location\LocationAjaxController;
 
 use App\Http\Controllers\Admin\Companies\CompanyController;
 use App\Http\Controllers\Admin\Candidates\CandidateController;
+use App\Http\Controllers\Admin\Pages\PageController;
 
 Route::get('login',function()
 {
@@ -39,6 +40,14 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::get('edit/{id}',[CandidateController::class,'edit'])->name('admin.candidates.edit');
         Route::get('delete/{id}',[CandidateController::class,'delete'])->name('admin.candidates.delete');
         Route::post('save',[CandidateController::class,'save']);
+    });
+    //Pages Crude
+    Route::prefix('pages')->group(function(){
+        Route::get('/',[PageController::class,'list'])->name('admin.pages.list');
+        Route::get('new',[PageController::class,'new'])->name('admin.pages.new');
+        Route::get('edit/{id}',[PageController::class,'edit'])->name('admin.pages.edit');
+        Route::get('delete/{id}',[PageController::class,'delete'])->name('admin.pages.delete');
+        Route::post('save',[PageController::class,'save']);
     });
     
     Route::post('logout',[AuthController::class,'logout']);

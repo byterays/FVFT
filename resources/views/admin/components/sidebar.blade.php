@@ -52,8 +52,8 @@
 							<a class="side-menu__item" data-toggle="slide" href="#">
                                 <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Pages</span><i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
-								<li><a class="slide-item" href="admin-pricing.html">List Pages</a></li>
-								<li><a class="slide-item" href="Ads.html">Add Page</a></li>
+								<li><a class="slide-item" href="/admin/pages/">List Pages</a></li>
+								<li><a class="slide-item" href="/admin/pages/new">Add Page</a></li>
 							</ul>
 						</li> 
                         <li class="slide">
