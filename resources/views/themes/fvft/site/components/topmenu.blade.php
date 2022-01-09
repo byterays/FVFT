@@ -70,7 +70,7 @@
                     <ul class="custom">
                         @guest                            
                         <li>
-                            <a href="register.html" class=""><i class="fa fa-user mr-1"></i> <span>Register</span></a>
+                            <a href="/register" class=""><i class="fa fa-user mr-1"></i> <span>Register</span></a>
                         </li>
                         <li>
                             <a href="/login" class=""><i class="fa fa-sign-in mr-1"></i> <span>Login</span></a>

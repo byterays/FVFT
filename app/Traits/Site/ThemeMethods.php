@@ -6,9 +6,11 @@ use DB;
 trait ThemeMethods{
     public function site_view($path,$obj=[]){
         $theme="fvft";
+        $primary_menu=DB::table('menu_items')->where(["menu_id"=>1,"parent_id"=>0])->get();
         $countries=DB::table('countries')->where('is_active',1)->get();
         return view("themes.".$theme.".".$path,array_merge($obj,[
-            'countries'=>$countries
+            'countries'=>$countries,
+            'primary_menu'=>$primary_menu
         ]));
     }
 }
