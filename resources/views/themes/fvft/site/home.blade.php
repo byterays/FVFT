@@ -10,3 +10,12 @@
 		@include('themes.fvft.site.components.actions')
 		@include('themes.fvft.site.components.footer')
 @endsection
+@section('script')
+<script src="{{env('APP_URL')}}js/location.js"></script>
+<script>
+    const _token=$('meta[name="csrf-token"]')[0].content;
+    const state_id={{isset($candidate->state_id)?$candidate->state_id:"3871" }};
+    const city_id={{isset($candidate->city_id)?$candidate->city_id:"null" }};
+    const appurl="{{env('APP_URL')}}";
+</script>
+@endsection

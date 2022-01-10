@@ -6,29 +6,31 @@
         @auth
         <li><a href="#">My Dashboard <span class="fa fa-caret-down m-0"></span></a>
             <ul class="sub-menu">
+                @if(auth()->user()->user_type=='candidate')
                 <li>
-                    <a href="mydash.html">My Dashboard</a>
+                    <a href="/candidate/">My Dashboard</a>
                 </li>
                 <li>
-                    <a href="myjobs.html">My Jobs</a>
+                    <a href="/candidate/profile">Profile</a>
                 </li>
                 <li>
-                    <a href="myfavorite.html">Favorite Jobs</a>
+                    <a href="/candidate/myjobs">My Jobs</a>
                 </li>
                 <li>
-                    <a href="manged.html">Manged Jobs</a>
+                    <a href="/candidate/setting">Settings</a>
                 </li>
+                @elseif(auth()->user()->user_type=='compeny')
                 <li>
-                    <a href="payments.html">Payments</a>
+                    <a href="/compeny/">My Dashboard</a>
                 </li>
+                @endif
                 <li>
-                    <a href="orders.html"> Orders</a>
-                </li>
-                <li>
-                    <a href="settings.html"> Settings</a>
-                </li>
-                <li>
-                    <a href="tips.html">Tips</a>
+                    <form action="/logout" method="post">
+                      @csrf
+                      <button type="submit" class="btn btn-danger btn-sm text-white">
+                        <span class="icon1 " style="background: #ffffff00;color: #f3f6ff;"><i class="typcn typcn-power-outline fs-20"></i></span> Logout
+                    </button>
+                    </form>
                 </li>
             </ul>
         </li>
