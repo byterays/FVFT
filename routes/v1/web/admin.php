@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\Location\LocationAjaxController;
 use App\Http\Controllers\Admin\Companies\CompanyController;
 use App\Http\Controllers\Admin\Candidates\CandidateController;
 use App\Http\Controllers\Admin\Pages\PageController;
-
+use App\Http\Controllers\Admin\Applicants\ApplicantController;
 Route::get('login',function()
 {
     return view('admin.auth.login');
@@ -40,6 +40,14 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::get('edit/{id}',[CandidateController::class,'edit'])->name('admin.candidates.edit');
         Route::get('delete/{id}',[CandidateController::class,'delete'])->name('admin.candidates.delete');
         Route::post('save',[CandidateController::class,'save']);
+    });
+    // Applicants Crude
+    Route::prefix('applicants')->group(function(){
+        Route::get('/',[ApplicantController::class,'list'])->name('admin.applicants.list');
+        Route::get('new',[ApplicantController::class,'new'])->name('admin.applicants.new');
+        Route::get('edit/{id}',[ApplicantController::class,'edit'])->name('admin.applicants.edit');
+        Route::get('delete/{id}',[ApplicantController::class,'delete'])->name('admin.applicants.delete');
+        Route::post('save',[ApplicantController::class,'save']);
     });
     //Pages Crude
     Route::prefix('pages')->group(function(){
