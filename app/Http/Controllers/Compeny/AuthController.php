@@ -10,6 +10,9 @@ class AuthController extends Controller
 {
     use ThemeMethods;
     public function login(){
-        return $this->site_view('compeny.auth.auth');
+        return $this->site_view('company.auth.auth');
+    }
+    public function register() {
+        
     }
 }

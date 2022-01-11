@@ -99,10 +99,10 @@
                         </li>
                         @endauth
                         <li>
-                            <a href="/login-employer" class=""><i class="fa fa-black-tie mr-1"></i> <span>For Employer</span></a>
+                            <a href="/company/" class=""><i class="fa fa-black-tie mr-1"></i> <span>For Employer</span></a>
                         </li>
                         <li>
-                            <a href="login" class=""><i class="fa fa-users mr-1"></i> <span>For Employee</span></a>
+                            <a href="/candidate/" class=""><i class="fa fa-users mr-1"></i> <span>For Employee</span></a>
                         </li>
                     </ul>
                 </div>

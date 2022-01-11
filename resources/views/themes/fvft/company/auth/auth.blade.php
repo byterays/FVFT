@@ -54,7 +54,7 @@
                                                             </span>
                                                         @enderror
 														<input type="email" name="email">
-														<label>Mail or Username</label>
+														<label>Email</label>
 													</div>
 													<div class="passwd">
 														<input type="password" name="password">
@@ -87,15 +87,16 @@
 													</div>
 												</div>
 												<hr class="divider">
-												<form id="Register" class="card-body" tabindex="500" method="POST" action="{{ route('register') }}" >
+												<form id="Register" class="card-body" tabindex="500" method="POST" action="company/register" >
 													@csrf
+													<input type="hidden" name="user_type" value="compeny">
                                                     <div class="name">
 														<input type="text" name="name">
 														<label>Name</label>
 													</div>
 													<div class="mail">
 														<input type="email" name="email">
-														<label>Mail or Username</label>
+														<label>Email</label>
 													</div>
 													<div class="passwd">
 														<input type="password" name="password">

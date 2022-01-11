@@ -23,7 +23,7 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        return view('auth.login');
+        return redirect()->route('candidate.login');
     }
 
     /**
@@ -38,10 +38,10 @@ class LoginController extends Controller
             return '/admin/';
             break;
             case 'company':
-            return '/company/dashboard';
+            return '/company/';
             break; 
             default:
-            return '/candidate/dashboard'; 
+            return '/candidate/'; 
             break;
         }
     }
