@@ -15,6 +15,7 @@
             <form action="/admin/applicants/save" method="post"  enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="application_id" value="{{$application->id}}">
+                <input type="hidden" name="employ_id" value="{{ $application->employ_id }}">
                             <div   class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">{{$action}} Applicants</h3>
@@ -46,25 +47,33 @@
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
-                                                                <div class="form-group">
-                                                                   
-                                                                    <div class="custom-switches-stacked">
-                                                                        <div class="form-label">Status</div>
-                                                                        <label class="custom-switch">
-                                                                            <input type="radio" name="status" value="pending" class="custom-switch-input"  {{isset($application->status)?$application->status=="pending"?"checked":'':'checked'}}>
-                                                                            <span class="custom-switch-indicator"></span>
-                                                                            <span class="custom-switch-description">Pending</span>
-                                                                        </label>
-                                                                        <label class="custom-switch">
-                                                                            <input type="radio" name="status" value="onprocess" class="custom-switch-input"  {{isset($application->status)?$application->status=="onprocess"?"checked":'':'checked'}}>
-                                                                            <span class="custom-switch-indicator"></span>
-                                                                            <span class="custom-switch-description">ON Process</span>
-                                                                        </label>
-                                                                        <label class="custom-switch">
-                                                                            <input type="radio" name="status" value="accepted" class="custom-switch-input"  {{isset($application->status)?$application->status=="accepted"?"checked":'':'checked'}}>
-                                                                            <span class="custom-switch-indicator"></span>
-                                                                            <span class="custom-switch-description">Accepted</span>
-                                                                        </label>
+                                                                <div class="form-group p-3">
+                                                                    <label for="inputState" class="col-form-label">Status</label>
+                                                                    <select id="inputState" class="form-control select2 custom-select select2-hidden-accessible" data-select2-id="select2-data-inputState" tabindex="-1" aria-hidden="true" name="status">
+                                                                        <option data-select2-id="select2-data-5-o1jo"  value="pending" {{isset($application->status)?'pending'==$application->status?"selected":"":null}} >Pending</option>
+                                                                        <option data-select2-id="select2-data-43-0e3k" value="accepted" {{isset($application->status)?'accepted'==$application->status?"selected":"":null}}>Accepted</option>
+                                                                        <option data-select2-id="select2-data-44-q5hf" value="rejected" {{isset($application->status)?'rejected'==$application->status?"selected":"":null}}>Rejected</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group p-3">
+                                                                    <label for="inputState" class="col-form-label">Job Preferences</label>
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Job Category</label>
+                                                                        <div class="form-group">
+                                                                            <select class="form-control select2-flag-search" name="category" data-placeholder="Select Category">
+                                                                                @foreach ($job_categories as $category)
+                                                                                    <option value="{{$category->id}}" {{isset($job_preference->job_category_id)?$category->id==$job_preference->job_category_id?"selected":"":null}}>{{$category->functional_area}}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Country</label>
+                                                                        <select name="country_id" id="select-country" class="form-control select2 " value="{{isset($candidate->country_id)?$candidate->country_id:''}}" onchange="patchStates(this)">
+                                                                            @foreach ($countries as $item)
+                                                                                <option value="{{$item->id}}" {{isset($job_preference->country_id)?$item->id==$job_preference->country_id?"selected":"":null}}>{{$item->name}}</option>
+                                                                            @endforeach
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -112,7 +121,7 @@
                                 </div>
                                 <div class="card-footer text-right">
                                     <div class="d-flex">
-                                        <a href="/admin/candidates/" class="btn btn-link">Back</a>
+                                        <a href="/admin/applicants/" class="btn btn-link">Back</a>
                                         <button type="submit" class="btn btn-success ml-auto">Save </button>
                                     </div>
                                 </div>
