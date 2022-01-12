@@ -53,6 +53,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'user_type'=>['required', 'string']
         ]);
     }
 
@@ -64,10 +65,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $fields=[];
+        $fields['name']=$data['name'];
+        $fields['email']=$data['email'];
+        $fields['password']=Hash::make($data['password']);
+        
+        if($data['user_type']=="compeny" || $data['user_type']=="candidate"){
+            $fields['user_type']=$data['user_type'];
+            return User::create($fields);
+        }else{
+            return "You Cant Register As This User Type";
+        }
     }
 }
