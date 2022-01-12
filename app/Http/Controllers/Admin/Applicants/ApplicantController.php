@@ -51,11 +51,19 @@ class ApplicantController extends Controller
     public function save(Request $request){
         $fields=[];
         $preferences=[];
+        //Job Application
+        $request->has("employ_id")?$fields["employ_id"]=$request->employ_id:null;
+        $request->has("job_id")?$fields["job_id"]=$request->job_id:null;
         $request->has("status")?$fields["status"]=$request->status:null;
+        $request->has("interview_status")?$fields["interview_status"]=$request->interview_status:null;
+        $request->has("interview_date")?$fields["interview_date"]=$request->interview_date:null;
+        $request->has("interview_time")?$fields["interview_time"]=$request->interview_time:null;
+        // Job Preference
         $request->has("country_id")?$preferences["country_id"]=$request->country_id:null;
         $request->has("category")?$preferences["job_category_id"]=$request->category:null;
+
+        \DB::table('job_applications')->updateOrInsert(['id'=>$request->application_id],$fields);
         EmployJobPreference::updateOrCreate(['employ_id'=>$request->employ_id],$preferences);
-        JobApplication::updateOrCreate(['id'=>$request->application_id],$fields);
         return $this->edit($request->application_id);
     }
     public function delete($id){
