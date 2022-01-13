@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Candidates;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Traits\Site\ThemeMethods;
+use App\Traits\Site\CandidateMethods;
 use DB;
 use App\Models\Employe;
 class DashController extends Controller
 {
     use ThemeMethods;
+    use CandidateMethods;
 
     public function dashboard(){
         return $this->site_view('candidates.dash');
@@ -22,7 +24,7 @@ class DashController extends Controller
         $accepted_jobs=$this->jobsquery('accepted');
 
         // dd($onprocess_jobs);
-        return $this->site_view('candidates.jobs',[
+        return $this->client_view('candidates.jobs',[
             'all_jobs'=>$all_jobs,
             'onprocess_jobs'=>$onprocess_jobs,
             'pending_jobs'=>$pending_jobs,

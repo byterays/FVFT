@@ -1,3 +1,4 @@
+{{-- @dd(Route::currentRouteName()) --}}
 @extends('themes.fvft.layouts.master')
 {{-- @dd($countries) --}}
 @section('main')
@@ -24,7 +25,7 @@
 						<div class="row">
 							<div class="col-xl-12 col-md-12 col-md-12 register-right">
 								<ul class="nav nav-tabs nav-justified mb-5 p-2 border" id="myTab" role="tablist">
-									<li class="nav-item">
+									<li cla ss="nav-item">
 										<a class="nav-link m-1 active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Login</a>
 									</li>
 									<li class="nav-item">
@@ -54,7 +55,7 @@
                                                             </span>
                                                         @enderror
 														<input type="email" name="email">
-														<label>Mail or Username</label>
+														<label>Email</label>
 													</div>
 													<div class="passwd">
 														<input type="password" name="password">
@@ -87,20 +88,36 @@
 													</div>
 												</div>
 												<hr class="divider">
-												<form id="Register" class="card-body" tabindex="500" method="POST" action="{{ route('register') }}" >
+												<form id="Register" class="card-body" tabindex="500" method="POST" action="/candidate/register" >
 													@csrf
-                                                    <div class="name">
-														<input type="text" name="name">
-														<label>Name</label>
-													</div>
+													
+															<div class="form-group">
+																<input type="text" name="first_name">
+																<label>First Name</label>
+															</div>
+														
+															<div class="form-group">
+																<input type="text" name="middle_name">
+																<label>Middle Name</label>
+															</div>
+														
+															<div class="form-group">
+																<input type="text" name="last_name">
+																<label>Last Name</label>
+															</div>
 													<div class="mail">
 														<input type="email" name="email">
-														<label>Mail or Username</label>
+														<label>Email</label>
 													</div>
 													<div class="passwd">
 														<input type="password" name="password">
 														<label>Password</label>
 													</div>
+													<div class="passwd">
+														<input type="password" name="password_confirmation" required autocomplete="new-password">
+														<label>Conform Password</label>
+													</div>
+													
 													<div class="submit">
 														<button type="submit"class="btn btn-primary btn-block">Register</button>
 													</div>

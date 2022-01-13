@@ -6,9 +6,9 @@
             <div class="profile-pic">
                 <div class="profile-pic-img">
                     <span class="bg-success dots" data-toggle="tooltip" data-placement="top" title="" data-original-title="online"></span>
-                    <img src="../assets/images/users/male/25.jpg" class="brround" alt="user">
+                    <img src="/{{$employe->avatar}}" class="brround" alt="user">
                 </div>
-                <a href="userprofile.html" class="text-dark"><h4 class="mt-3 mb-0 font-weight-semibold">Robert McLean</h4></a>
+                <a href="userprofile.html" class="text-dark"><h4 class="mt-3 mb-0 font-weight-semibold">{{$employe->first_name}} {{$employe->middle_name}} {{$employe->last_name}}</h4></a>
             </div>
         </div>
         <div class="item1-links  mb-0">
@@ -20,6 +20,9 @@
             </a>
             <a href="/pages/tips" class="d-flex border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-flag-outline fs-20"></i></span> Safety Tips
+            </a>
+            <a href="/candidate/job-preferences" class="d-flex border-bottom">
+                <span class="icon1 mr-2"><i class="typcn typcn-cog-outline fs-20"></i></span> Job Preferences
             </a>
             <a href="/candidate/settings" class="d-flex border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-cog-outline fs-20"></i></span> Settings

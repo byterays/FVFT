@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use App\Models\Employe;
 class RegisterController extends Controller
 {
     /*
@@ -65,12 +65,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        dd($data);
         $fields=[];
         $fields['name']=$data['name'];
         $fields['email']=$data['email'];
         $fields['password']=Hash::make($data['password']);
         
         if($data['user_type']=="compeny" || $data['user_type']=="candidate"){
+            if ($data['user_type']=="candidate") {
+                $employe=Employe::create([
+                    'first_name'=>$data['first_name'],
+                    'middle_name'=>$data['middle_name'],
+                    'last_name'=>$data['last_name'],
+                ]);
+                $fields['employe_id']=$employe->id;
+            }
             $fields['user_type']=$data['user_type'];
             return User::create($fields);
         }else{
