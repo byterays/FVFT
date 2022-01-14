@@ -15,7 +15,7 @@
             <a href="/candidate/profile" class="d-flex border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-edit fs-20"></i></span> Profile
             </a>
-            <a href="/candidate/myjobs" class="active  d-flex  border-bottom">
+            <a href="/candidate/jobs" class="active  d-flex  border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> My Jobs
             </a>
             <a href="/pages/tips" class="d-flex border-bottom">

@@ -7,7 +7,7 @@
                 <h1 class="">My Jobs</h1>
                 <ol class="breadcrumb text-center">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">My Dashboard </a></li>
+                    <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
                     <li class="breadcrumb-item active text-white" aria-current="page">My Jobs</li>
                 </ol>
             </div>
@@ -42,7 +42,7 @@
                                         <thead>
                                             <tr>
                                                 <th></th>
-                                                <th class="w-100">Jobs</th>
+                                                <th class="w-100">All Jobs</th>
                                                 <th>Location</th>
                                                 <th>Date</th>
                                                 <th>Status</th>
@@ -92,10 +92,10 @@
                                         <thead>
                                             <tr>
                                                 <th></th>
-                                                <th class="w-100">Latest Jobs</th>
+                                                <th class="w-100">Jobs OnProcess</th>
                                                 <th>Location</th>
-                                                <th>Salary</th>
-                                                <th>Ad Status</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -143,10 +143,10 @@
                                         <thead>
                                             <tr>
                                                 <th></th>
-                                                <th class="w-100">Latest Jobs</th>
+                                                <th class="w-100">Accepted Jobs</th>
                                                 <th>Location</th>
-                                                <th>Salary</th>
-                                                <th>Ad Status</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -194,10 +194,10 @@
                                         <thead>
                                             <tr>
                                                 <th></th>
-                                                <th class="w-100">Latest Jobs</th>
+                                                <th class="w-100">Pending Jobs</th>
                                                 <th>Location</th>
-                                                <th>Salary</th>
-                                                <th>Ad Status</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
