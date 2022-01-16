@@ -18,9 +18,9 @@
             <a href="/candidate/jobs" class="active  d-flex  border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> My Jobs
             </a>
-            <a href="/pages/tips" class="d-flex border-bottom">
+            {{-- <a href="/pages/tips" class="d-flex border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-flag-outline fs-20"></i></span> Safety Tips
-            </a>
+            </a> --}}
             <a href="/candidate/job-preferences" class="d-flex border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-cog-outline fs-20"></i></span> Job Preferences
             </a>
