@@ -3,7 +3,7 @@
 			<div class="container" id="container1">
 				<div class="section-title center-block text-center">
 					<h1>Recent Jobs</h1>
-					<p>Mauris ut cursus nunc. Morbi eleifend, ligula at consectetur vehicula</p>
+					{{-- <p>Mauris ut cursus nunc. Morbi eleifend, ligula at consectetur vehicula</p> --}}
 				</div>
 				<div class="row">
 					<div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
