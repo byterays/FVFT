@@ -12,6 +12,7 @@ class HomeController extends Controller
     public function home()
     {
         $news = \DB::table('news')->where('is_active', 1)->orderBy('id', 'desc')->limit(10)->get();
-        return $this->site_view('site.home', ['news' => $news]);
+        $companies = \DB::table('companies')->where('is_active', 1)->orderBy('id', 'desc')->limit(10)->get();
+        return $this->site_view('site.home', ['news' => $news, 'companies' => $companies]);
     }
 }
