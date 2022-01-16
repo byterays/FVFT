@@ -9,6 +9,7 @@ use App\Traits\Site\CandidateMethods;
 use DB;
 use App\Models\Employe;
 use App\Models\EmployJobPreference;
+use App\Models\User;
 
 class DashController extends Controller
 {
@@ -103,5 +104,18 @@ class DashController extends Controller
             $jobs->where('job_applications.status', $status);
         }
         return $jobs->paginate(10);
+    }
+    public function settings()
+    {
+        return $this->client_view('candidates.settings');
+    }
+    public function saveSettings(Request $request)
+    {
+        $fields = [];
+        $user = User::find(auth()->user()->id);
+        // $request->has('email') ? $fields['email'] = $request->email : null;
+        $request->has('password') ? $fields['password'] = bcrypt($request->password) : null;
+        $user->update($fields);
+        return $this->client_view('candidates.settings');
     }
 }
