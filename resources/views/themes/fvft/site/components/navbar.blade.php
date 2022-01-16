@@ -14,10 +14,10 @@
                     <a href="/candidate/profile">Profile</a>
                 </li>
                 <li>
-                    <a href="/candidate/myjobs">My Jobs</a>
+                    <a href="/candidate/jobs">My Jobs</a>
                 </li>
                 <li>
-                    <a href="/candidate/setting">Settings</a>
+                    <a href="/candidate/settings">Settings</a>
                 </li>
                 @elseif(auth()->user()->user_type=='compeny')
                 <li>

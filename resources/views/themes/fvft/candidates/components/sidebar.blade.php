@@ -6,22 +6,25 @@
             <div class="profile-pic">
                 <div class="profile-pic-img">
                     <span class="bg-success dots" data-toggle="tooltip" data-placement="top" title="" data-original-title="online"></span>
-                    <img src="../assets/images/users/male/25.jpg" class="brround" alt="user">
+                    <img src="/{{$employe->avatar}}" class="brround" alt="user">
                 </div>
-                <a href="userprofile.html" class="text-dark"><h4 class="mt-3 mb-0 font-weight-semibold">Robert McLean</h4></a>
+                <a href="userprofile.html" class="text-dark"><h4 class="mt-3 mb-0 font-weight-semibold">{{$employe->first_name}} {{$employe->middle_name}} {{$employe->last_name}}</h4></a>
             </div>
         </div>
         <div class="item1-links  mb-0">
-            <a href="/candidate/profile" class="d-flex border-bottom">
+            <a href="/candidate/profile" class="@if(Route::currentRouteName()=="candidate.profile") active @endif d-flex border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-edit fs-20"></i></span> Profile
             </a>
-            <a href="/candidate/myjobs" class="active  d-flex  border-bottom">
+            <a href="/candidate/jobs" class="@if(Route::currentRouteName()=="candidate.jobs") active @endif   d-flex  border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> My Jobs
             </a>
-            <a href="/pages/tips" class="d-flex border-bottom">
+            {{-- <a href="/pages/tips" class="d-flex border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-flag-outline fs-20"></i></span> Safety Tips
+            </a> --}}
+            <a href="/candidate/job-preferences" class="@if(Route::currentRouteName()=="candidate.job-preferences") active @endif  d-flex border-bottom">
+                <span class="icon1 mr-2"><i class="typcn typcn-cog-outline fs-20"></i></span> Job Preferences
             </a>
-            <a href="/candidate/settings" class="d-flex border-bottom">
+            <a href="/candidate/settings" class="@if(Route::currentRouteName()=="candidate.settings") active @endif  d-flex border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-cog-outline fs-20"></i></span> Settings
             </a>
             <a  class="d-flex">
