@@ -30,4 +30,14 @@ class NewsController extends Controller
 
         return $this->site_view("site.news", $fields);
     }
+    public function getNews($slug)
+    {
+        $news = DB::table('news')->where('slug', $slug)->first();
+        $news_categories = DB::table('news_categories')->get();
+        $fields = [
+            "news" => $news,
+            "news_categories" => $news_categories
+        ];
+        return $this->site_view("site.news_view", $fields);
+    }
 }
