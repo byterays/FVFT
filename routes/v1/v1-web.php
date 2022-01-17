@@ -5,6 +5,7 @@ use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Admin\Location\LocationAjaxController;
 use App\Http\Controllers\Site\JobsController;
 use App\Http\Controllers\Site\NewsController;
+use App\Http\Controllers\Site\PageController;
 use App\Http\Controllers\Candidates\DashController;
 
 
@@ -27,6 +28,8 @@ Route::get('jobs/', [JobsController::class, 'index']);
 Route::get('job/{id}', [JobsController::class, 'jobindex']);
 Route::get('news/', [NewsController::class, 'index']);
 Route::get('news/{slug}', [NewsController::class, 'getNews']);
+Route::get('page/{slug}', [PageController::class, 'index']);
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/apply-job/{id}', [DashController::class, 'applyjob']);
