@@ -26,19 +26,22 @@ class DashController extends Controller
     }
     public function jobs()
     {
-        $employ = Employe::where('user_id', auth()->user()->id)->first();
+
         $all_jobs = $this->jobsquery('all', false);
-        $onprocess_jobs = $this->jobsquery('onprocess');
+        $rejected_jobs = $this->jobsquery('rejected');
         $pending_jobs = $this->jobsquery('pending');
         $accepted_jobs = $this->jobsquery('accepted');
-
-        // dd($onprocess_jobs);
-        return $this->client_view('candidates.jobs', [
+        $fields = [
             'all_jobs' => $all_jobs,
-            'onprocess_jobs' => $onprocess_jobs,
+            'rejected_jobs' => $rejected_jobs,
             'pending_jobs' => $pending_jobs,
             'accepted_jobs' => $accepted_jobs
-        ]);
+        ];
+        if (auth()->check()) {
+            $employ = Employe::where('user_id', auth()->user()->id)->first();
+            $fields['employ'] = $employ;
+        }
+        return $this->client_view('candidates.jobs', $fields);
     }
     public function profile()
     {

@@ -56,7 +56,11 @@
 														</div> --}}
 													</div>
 													<div class="icons">
+														@if($application)
+														<a href="/remove-job/{{$job->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
+														@else
 														<a href="/apply-job/{{$job->id}}" class="btn btn-info icons" ><i class="fa fa-check mr-1"></i> Apply</a>
+														@endif
 														<a href="#" class="btn btn-primary icons" data-toggle="modal" data-target="#contact"><i class="si si-phone mr-1"></i> Contact Now</a>
 													</div>
 												</div>
@@ -129,7 +133,11 @@
 							</div>
 							<div class="card-footer bg-light-50">
 								<div class="icons">
-									<a href="/apply-job/{{$job->id}}" class="btn btn-success icons mt-1 mb-1" ><i class="fa fa-check mr-1"></i> Apply</a>
+									@if($application)
+										<a href="/remove-job/{{$job->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
+									@else
+									<a href="/apply-job/{{$job->id}}" class="btn btn-info icons" ><i class="fa fa-check mr-1"></i> Apply</a>
+									@endif
 									<a href="#" class="btn btn-primary icons mt-1 mb-1"><i class="si si-share mr-1"></i> Share Job</a>
 									<a href="#" class="btn btn-info icons mt-1 mb-1"><i class="si si-printer  mr-1"></i> Print</a>
 									<a href="#" class="btn btn-danger icons mt-1 mb-1" data-toggle="modal" data-target="#report"><i class="icon icon-exclamation mr-1"></i> Report Abuse</a>
