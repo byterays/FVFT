@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Admin\Location\LocationAjaxController;
 use App\Http\Controllers\Site\JobsController;
+use App\Http\Controllers\Site\NewsController;
 use App\Http\Controllers\Candidates\DashController;
 
 
@@ -24,6 +25,8 @@ Route::get('/companies', [HomeController::class, 'companies']);
 Route::get('/company/{id}', [HomeController::class, 'company']);
 Route::get('jobs/', [JobsController::class, 'index']);
 Route::get('job/{id}', [JobsController::class, 'jobindex']);
+Route::get('news/', [NewsController::class, 'index']);
+Route::get('news/{slug}', [NewsController::class, 'getNews']);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/apply-job/{id}', [DashController::class, 'applyjob']);
