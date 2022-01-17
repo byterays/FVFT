@@ -21,4 +21,10 @@ class HomeController extends Controller
         $companies = \DB::table('companies')->paginate(10);
         return $this->site_view('site.companies', ["companies" => $companies]);
     }
+    public function company($id)
+    {
+        $company = \DB::table('companies')->find($id);
+        $company_jobs = \DB::table('jobs')->where("company_id", $id)->paginate(10);
+        return $this->site_view('site.compeny-view', ['company' => $company, "company_jobs" => $company_jobs]);
+    }
 }

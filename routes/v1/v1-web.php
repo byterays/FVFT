@@ -18,6 +18,7 @@ Auth::routes();
 // Site Routes
 Route::get('/', [HomeController::class, 'home']);
 Route::get('/companies', [HomeController::class, 'companies']);
+Route::get('/company/{id}', [HomeController::class, 'company']);
 
 
 Route::prefix('ajax')->group(function () {
