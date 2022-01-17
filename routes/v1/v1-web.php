@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Admin\Location\LocationAjaxController;
 use App\Http\Controllers\Site\JobsController;
+use App\Http\Controllers\Candidates\DashController;
+
 
 Route::prefix('admin')->group(function () {
     require_once 'web/admin.php';
@@ -24,7 +26,8 @@ Route::get('jobs/', [JobsController::class, 'index']);
 Route::get('job/{id}', [JobsController::class, 'jobindex']);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/apply-job/{id}', [JobsController::class, 'applyjob']);
+    Route::get('/apply-job/{id}', [DashController::class, 'applyjob']);
+    Route::get('/remove-application/{id}', [DashController::class, 'removeApplication']);
 });
 
 Route::prefix('ajax')->group(function () {

@@ -91,7 +91,20 @@
                                                                 </div>
                                                                 <div class="ml-auto">
                                                                     {{-- <a  class="mr-3"><i class="ion-checkmark-circled text-success mr-1"></i>Phone Verified</a> --}}
-                                                                    <a class="btn btn-primary mt-3 mt-md-0" href="apply-job/{{$item->id}}"   >Apply Now</a>
+                                                                   
+																	@auth
+																	@php 
+																		$application = \DB::table('job_applications')->where('job_id',$item->id)->where('employ_id', $employ->id)->first();
+																		// dd($application);
+																	@endphp
+																		@if($application)
+																			<a href="/remove-application/{{$item->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
+																		@else
+																		<a class="btn btn-primary mt-3 mt-md-0" href="/apply-job/{{$item->id}}"   >Apply Now</a>
+																		@endif
+																	@else
+																	<a class="btn btn-primary mt-3 mt-md-0" href="/apply-job/{{$item->id}}"   >Apply Now</a>
+																	@endauth
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -134,7 +147,19 @@
 														<div class="card-footer pt-3 pb-3">
 															<div class="item-card9-footer d-flex">
 																<div class="btn-block">
+																	@auth
+																	@php 
+																		$application = \DB::table('job_applications')->where('job_id',$item->id)->where('employ_id', $employ->id)->first();
+																		// dd($application);
+																	@endphp
+																		@if($application)
+																			<a href="/remove-application/{{$item->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
+																		@else
+																			<a href="/apply-job/{{$item->id}}" class="btn btn-block btn-primary"> Apply Now</a>
+																		@endif
+																	@else
 																	<a href="/apply-job/{{$item->id}}" class="btn btn-block btn-primary"> Apply Now</a>
+																	@endauth
 																</div>
 															</div>
 														</div>

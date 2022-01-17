@@ -31,213 +31,23 @@
                                 <!-- Tabs -->
                                 <ul class="nav panel-tabs">
                                     <li class=""><a href="#tab1" class="" data-toggle="tab">All Jobs</a></li>
-                                    <li><a href="#tab2" data-toggle="tab" class="active">On Process</a></li>
+                                    <li><a href="#tab2" data-toggle="tab" class="active">Pending</a></li>
                                     <li><a href="#tab3" data-toggle="tab" class="">Accepted</a></li>
                                     <li><a href="#tab4" data-toggle="tab" class="">Pending</a></li>
                                 </ul>
                             </div>
                             <div class="tab-content">
                                 <div class="tab-pane table-responsive border-top userprof-tab active" id="tab1">
-                                    <table class="table table-bordered table-hover mb-0 text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th class="w-100">All Jobs</th>
-                                                <th>Location</th>
-                                                <th>Date</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($all_jobs as $item)                                                
-                                            <tr>
-                                                <td>
-                                                    <label class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" name="checkbox" value="checkbox">
-                                                        <span class="custom-control-label"></span>
-                                                    </label>
-                                                </td>
-                                                <td>
-                                                    <div class="media mt-0 mb-0">
-                                                        <div class="media-body">
-                                                            <div class="card-item-desc p-0">
-                                                                <a href="#" class="text-dark"><h4 class="font-weight-semibold">{{ $item->title }}</h4></a>
-                                                                <a href="#"><i class="fa fa-tag w-4"></i> {{  \DB::table('job_categories')->where('id',$item->job_categories_id)->first()->functional_area}}</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td><i class="fa fa-map-marker mr-1 text-muted"></i>Ambrosia</td>
-                                                
-                                                <td>
-                                                    {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}
-                                                </td>
-                                                <td>{{ $item->status }}</td>
-                                                <td>
-                                                    <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View"><i class="fa fa-eye"></i></a>
-                                                    <a class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
-                                                    <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    <div class="d-flex justify-content-center mt-3">
-                                        {{ $all_jobs->links('vendor.pagination.bootstrap-4') }}
-                                    </div>
+                                    @include('themes.fvft.candidates.components.jobs.joblist',['items'=>$all_jobs,'action'=>'All Jobs'])  
                                 </div>
                                 <div class="tab-pane table-responsive border-top userprof-tab" id="tab2">
-                                    <table class="table table-bordered table-hover mb-0 text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th class="w-100">Jobs OnProcess</th>
-                                                <th>Location</th>
-                                                <th>Date</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($onprocess_jobs as $item)                                                
-                                            <tr>
-                                                <td>
-                                                    <label class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" name="checkbox" value="checkbox">
-                                                        <span class="custom-control-label"></span>
-                                                    </label>
-                                                </td>
-                                                <td>
-                                                    <div class="media mt-0 mb-0">
-                                                        <div class="media-body">
-                                                            <div class="card-item-desc p-0">
-                                                                <a href="#" class="text-dark"><h4 class="font-weight-semibold">{{ $item->title }}</h4></a>
-                                                                <a href="#"><i class="fa fa-tag w-4"></i> {{  \DB::table('job_categories')->where('id',$item->job_categories_id)->first()->functional_area}}</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td><i class="fa fa-map-marker mr-1 text-muted"></i>Ambrosia</td>
-                                                
-                                                <td>
-                                                    {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}
-                                                </td>
-                                                <td>{{ $item->status }}</td>
-                                                <td>
-                                                    <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View" href="/jobs/{{$item->id}}"><i class="fa fa-eye"></i></a>
-                                                    <a class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
-                                                    <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-    
-                                        </tbody>
-                                    </table>
-                                    <div class="d-flex justify-content-center mt-3">
-                                        {{ $onprocess_jobs->links('vendor.pagination.bootstrap-4') }}
-                                    </div>
+                                    @include('themes.fvft.candidates.components.jobs.joblist',['items'=>$pending_jobs,'action'=>'Pending Jobs '])
                                 </div>
                                 <div class="tab-pane table-responsive border-top userprof-tab" id="tab3">
-                                    <table class="table table-bordered table-hover  text-nowrap mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th class="w-100">Accepted Jobs</th>
-                                                <th>Location</th>
-                                                <th>Date</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($accepted_jobs as $item)                                                
-                                            <tr>
-                                                <td>
-                                                    <label class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" name="checkbox" value="checkbox">
-                                                        <span class="custom-control-label"></span>
-                                                    </label>
-                                                </td>
-                                                <td>
-                                                    <div class="media mt-0 mb-0">
-                                                        <div class="media-body">
-                                                            <div class="card-item-desc p-0">
-                                                                <a href="#" class="text-dark"><h4 class="font-weight-semibold">{{ $item->title }}</h4></a>
-                                                                <a href="#"><i class="fa fa-tag w-4"></i> {{  \DB::table('job_categories')->where('id',$item->job_categories_id)->first()->functional_area}}</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td><i class="fa fa-map-marker mr-1 text-muted"></i>Ambrosia</td>
-                                                
-                                                <td>
-                                                    {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}
-                                                </td>
-                                                <td>{{ $item->status }}</td>
-                                                <td>
-                                                    <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View"><i class="fa fa-eye"></i></a>
-                                                    <a class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
-                                                    <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-
-                                        </tbody>
-                                    </table>
-                                    <div class="d-flex justify-content-center mt-3">
-                                        {{ $accepted_jobs->links('vendor.pagination.bootstrap-4') }}
-                                    </div>
+                                    @include('themes.fvft.candidates.components.jobs.joblist',['items'=>$accepted_jobs,'action'=>'Accepted Jobs'])
                                 </div>
                                 <div class="tab-pane table-responsive border-top userprof-tab " id="tab4">
-                                    <table class="table table-bordered table-hover mb-0 text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th class="w-100">Pending Jobs</th>
-                                                <th>Location</th>
-                                                <th>Date</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($pending_jobs as $item)                                                
-                                            <tr>
-                                                <td>
-                                                    <label class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" name="checkbox" value="checkbox">
-                                                        <span class="custom-control-label"></span>
-                                                    </label>
-                                                </td>
-                                                <td>
-                                                    <div class="media mt-0 mb-0">
-                                                        <div class="media-body">
-                                                            <div class="card-item-desc p-0">
-                                                                <a href="#" class="text-dark"><h4 class="font-weight-semibold">{{ $item->title }}</h4></a>
-                                                                <a href="#"><i class="fa fa-tag w-4"></i> {{  \DB::table('job_categories')->where('id',$item->job_categories_id)->first()->functional_area}}</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td><i class="fa fa-map-marker mr-1 text-muted"></i>Ambrosia</td>
-                                                
-                                                <td>
-                                                    {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}
-                                                </td>
-                                                <td>{{ $item->status }}</td>
-                                                <td>
-                                                    <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View"><i class="fa fa-eye"></i></a>
-                                                    <a class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
-                                                    <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    <div class="d-flex justify-content-center mt-3">
-                                        {{ $pending_jobs->links('vendor.pagination.bootstrap-4') }}
-                                    </div>
+                                    @include('themes.fvft.candidates.components.jobs.joblist',['items'=>$rejected_jobs,'action'=>'Rejected Jobs'])
                                 </div>
                             </div>
                         </div>

@@ -26,19 +26,22 @@ class DashController extends Controller
     }
     public function jobs()
     {
-        $employ = Employe::where('user_id', auth()->user()->id)->first();
+
         $all_jobs = $this->jobsquery('all', false);
-        $onprocess_jobs = $this->jobsquery('onprocess');
+        $rejected_jobs = $this->jobsquery('rejected');
         $pending_jobs = $this->jobsquery('pending');
         $accepted_jobs = $this->jobsquery('accepted');
-
-        // dd($onprocess_jobs);
-        return $this->client_view('candidates.jobs', [
+        $fields = [
             'all_jobs' => $all_jobs,
-            'onprocess_jobs' => $onprocess_jobs,
+            'rejected_jobs' => $rejected_jobs,
             'pending_jobs' => $pending_jobs,
             'accepted_jobs' => $accepted_jobs
-        ]);
+        ];
+        if (auth()->check()) {
+            $employ = Employe::where('user_id', auth()->user()->id)->first();
+            $fields['employ'] = $employ;
+        }
+        return $this->client_view('candidates.jobs', $fields);
     }
     public function profile()
     {
@@ -117,5 +120,28 @@ class DashController extends Controller
         $request->has('password') ? $fields['password'] = bcrypt($request->password) : null;
         $user->update($fields);
         return $this->client_view('candidates.settings');
+    }
+    public function applyjob($id)
+    {
+        if (auth()->check() && auth()->user()->user_type == "candidate") {
+            $employ = \DB::table('employes')->where('user_id', auth()->user()->id)->first();
+            $is_exist = \DB::table("job_applications")->where('job_id', $id)->where('employ_id', $employ->id)->first();
+            if (!$is_exist) {
+                \DB::table("job_applications")->insert([
+                    "job_id" => $id,
+                    "employ_id" => $employ->id
+                ]);
+            }
+        }
+        return redirect()->route('candidate.dashboard');
+    }
+    public function removeApplication($id)
+    {
+        if (auth()->check() && auth()->user()->user_type == "candidate") {
+            $employ = \DB::table('employes')->where('user_id', auth()->user()->id)->first();
+            $job_application = DB::table('job_applications')->where(["employ_id" => $employ->id, "job_id" => $id]);
+            $job_application->delete();
+            return redirect()->back();
+        }
     }
 }
