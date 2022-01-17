@@ -23,6 +23,10 @@ Route::get('/company/{id}', [HomeController::class, 'company']);
 Route::get('jobs/', [JobsController::class, 'index']);
 Route::get('job/{id}', [JobsController::class, 'jobindex']);
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/apply-job/{id}', [JobsController::class, 'applyjob']);
+});
+
 Route::prefix('ajax')->group(function () {
     Route::post('/countries', [LocationAjaxController::class, 'countries']);
     Route::post('/states', [LocationAjaxController::class, 'states']);
