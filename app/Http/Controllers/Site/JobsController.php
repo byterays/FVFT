@@ -44,6 +44,14 @@ class JobsController extends Controller
     }
     public function jobindex($id)
     {
-        return $this->site_view("site.job_view");
+        $job = Job::find($id);
+        $company = DB::table('companies')->where('id', $job->company_id)->first();
+        $company_contact_persons = DB::table('company_contact_persons')->where('company_id', $job->company_id)->first();
+
+        return $this->site_view("site.job_view", [
+            "job" => $job,
+            "company_contact_persons" => $company_contact_persons,
+            "company" => $company
+        ]);
     }
 }
