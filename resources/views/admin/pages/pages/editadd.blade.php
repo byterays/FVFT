@@ -33,6 +33,7 @@
                                             
                                             <input type="text" name="id" style="display:none;" value="{{isset($page->id)?$page->id:''}}">
                                             <input type="text" name="body" id="body_id" style="display:none;" value="{{isset($page->body)?$page->body:null}}">
+                                            <input type="text" name="html_content" id="html_content_id" style="display:none;" value="{{isset($page->html_content)?$page->html_content:null}}">
                                             <div class="form-group">
                                                 <label class="form-label">Title</label>
                                                 <input type="text" class="form-control" name="title" placeholder="Title" value="{{isset($page->title)?$page->title:''}}" required>
@@ -101,6 +102,7 @@
     quill.on('text-change', function() {
         body=JSON.stringify(quill.getContents());
         $("#body_id")[0].value=body;
+        $("#html_content_id")[0].value=$(".ql-editor")[0];
     });
     quill.setContents(JSON.parse($("#body_id")[0].value))
 </script>

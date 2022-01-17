@@ -10,7 +10,7 @@
 								</div>
 								<h6 class="card-title mb-4">Do You Want to Find a Job?</h6>
 								<p>it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text</p>
-								<a href="jobs-list.html" class="btn btn-primary text-white">Find Job</a>
+								<a href="/jobs/" class="btn btn-primary text-white">Find Job</a>
 							</div>
 						</div>
 					</div>
@@ -22,7 +22,7 @@
 								</div>
 								<h6 class="card-title  mb-4">Are You Looking For A Candidate?</h6>
 								<p>it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text</p>
-								<a href="candidate-listing.html" class="btn btn-primary text-white">Find Candidate</a>
+								<a href="/company/" class="btn btn-primary text-white">Find Candidate</a>
 							</div>
 						</div>
 					</div>
