@@ -119,7 +119,7 @@
 																						</div>
 																						<div class="ml-auto">
 																							{{-- <a  class="mr-3"><i class="ion-checkmark-circled text-success mr-1"></i>Phone Verified</a> --}}
-																							<a class="btn btn-primary mt-3 mt-md-0" href="apply-job/{{$item->id}}"   >Apply Now</a>
+																							<a class="btn btn-primary mt-3 mt-md-0" href="/apply-job/{{$item->id}}"   >Apply Now</a>
 																						</div>
 																					</div>
 																				</div>

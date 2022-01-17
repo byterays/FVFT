@@ -134,7 +134,7 @@
 														<div class="card-footer pt-3 pb-3">
 															<div class="item-card9-footer d-flex">
 																<div class="btn-block">
-																	<a href="apply-job/{{$item->id}}" class="btn btn-block btn-primary"> Apply Now</a>
+																	<a href="/apply-job/{{$item->id}}" class="btn btn-block btn-primary"> Apply Now</a>
 																</div>
 															</div>
 														</div>
