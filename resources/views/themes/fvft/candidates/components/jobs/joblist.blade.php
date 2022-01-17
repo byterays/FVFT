@@ -37,7 +37,7 @@
             <td>
                 <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View" href="/job/{{ $item->job_id}}"><i class="fa fa-eye"></i></a>
                 {{-- <a class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i></a> --}}
-                <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-original-title="Delete" ><i class="fa fa-trash-o"></i></a>
+                <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-original-title="Delete" href="/remove-application/{{$item->job_id}}"><i class="fa fa-trash-o"></i></a>
             </td>
         </tr>
         @endforeach

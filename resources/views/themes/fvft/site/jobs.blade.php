@@ -98,7 +98,7 @@
 																		// dd($application);
 																	@endphp
 																		@if($application)
-																			<a href="/remove-job/{{$item->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
+																			<a href="/remove-application/{{$item->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
 																		@else
 																		<a class="btn btn-primary mt-3 mt-md-0" href="/apply-job/{{$item->id}}"   >Apply Now</a>
 																		@endif
@@ -153,7 +153,7 @@
 																		// dd($application);
 																	@endphp
 																		@if($application)
-																			<a href="/remove-job/{{$item->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
+																			<a href="/remove-application/{{$item->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
 																		@else
 																			<a href="/apply-job/{{$item->id}}" class="btn btn-block btn-primary"> Apply Now</a>
 																		@endif

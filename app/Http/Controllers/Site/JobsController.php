@@ -67,16 +67,4 @@ class JobsController extends Controller
             return abort(404);
         }
     }
-    public function applyjob($id)
-    {
-        $employ = \DB::table('employes')->where('user_id', auth()->user()->id)->first();
-        $is_exist = \DB::table("job_applications")->where('job_id', $id)->where('employ_id', $employ->id)->first();
-        if (!$is_exist) {
-            \DB::table("job_applications")->insert([
-                "job_id" => $id,
-                "employ_id" => $employ->id
-            ]);
-        }
-        return redirect()->route('candidate.dashboard');
-    }
 }
