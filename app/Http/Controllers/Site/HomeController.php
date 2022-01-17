@@ -16,4 +16,9 @@ class HomeController extends Controller
         $latest_jobs = \DB::table('jobs')->where('is_active', 1)->orderBy('id', 'desc')->limit(10)->get();
         return $this->site_view('site.home', ['news' => $news, 'companies' => $companies, 'latest_jobs' => $latest_jobs]);
     }
+    public function companies(Request $request)
+    {
+        $companies = \DB::table('companies')->paginate(10);
+        return $this->site_view('site.companies', ["companies" => $companies]);
+    }
 }
