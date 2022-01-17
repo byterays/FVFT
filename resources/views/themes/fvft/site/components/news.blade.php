@@ -23,7 +23,7 @@
 								<div class="d-flex align-items-center pt-2 mt-auto">
 									<img src="{{asset('/')}}uploads/site/fvft_favicon.png" class="avatar brround avatar-md mr-3" alt="avatar-img">
 									<div>
-										<a href="profile.html" class="text-default">FreeVisaFreeTicket</a>
+										<a href="#" class="text-default">FreeVisaFreeTicket</a>
 										<small class="d-block text-muted">{{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</small>
 									</div>
 									
