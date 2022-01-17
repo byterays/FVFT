@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Admin\Location\LocationAjaxController;
+use App\Http\Controllers\Site\JobsController;
 
 Route::prefix('admin')->group(function () {
     require_once 'web/admin.php';
@@ -19,7 +20,8 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'home']);
 Route::get('/companies', [HomeController::class, 'companies']);
 Route::get('/company/{id}', [HomeController::class, 'company']);
-
+Route::get('jobs/', [JobsController::class, 'index']);
+Route::get('job/{id}', [JobsController::class, 'jobindex']);
 
 Route::prefix('ajax')->group(function () {
     Route::post('/countries', [LocationAjaxController::class, 'countries']);
