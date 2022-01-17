@@ -37,16 +37,29 @@
 			animationSpeed: 0.5
 		});
 	}
+	let salary_from =$("#salary_from").val();
+	let salary_to =$("#salary_to").val();
+	if($("#salary_from").val()==""){
+		salary_from=19999;
+		$("#salary_from").val(salary_from);
+	}
+	if($("#salary_to").val()==""){
+		salary_to=49999;
+		$("#salary_to").val(salary_to);
+	}
+	
 	$( "#mySlider" ).slider({
 		range: true,
-		min: 10,
-		max: 999,
-		values: [ 200, 500 ],
+		min: 5000,
+		max: 500000,
+		values: [ salary_from, salary_to],
 		slide: function( event, ui ) {
-			$( "#price" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+			 $("#salary_from").val(ui.values[ 0 ]);
+			 $("#salary_to").val(ui.values[ 1 ]);
+			$( "#price" ).val( "Rs." + ui.values[ 0 ] + " - Rs." + ui.values[ 1 ] );
 		}
 	});
 
-	$( "#price" ).val( "$" + $( "#mySlider" ).slider( "values", 0 ) +
-			   " - $" + $( "#mySlider" ).slider( "values", 1 ) );
+	$( "#price" ).val("Rs."+$( "#mySlider" ).slider( "values", 0 ) +
+			   "- Rs."+ $( "#mySlider" ).slider( "values", 1 ) );
 })(jQuery);
