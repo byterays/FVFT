@@ -56,7 +56,7 @@
 														</div> --}}
 													</div>
 													<div class="icons">
-														@if($application)
+														@if(isset($application))
 														<a href="/remove-application/{{$job->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
 														@else
 														<a href="/apply-job/{{$job->id}}" class="btn btn-info icons" ><i class="fa fa-check mr-1"></i> Apply</a>
@@ -133,7 +133,7 @@
 							</div>
 							<div class="card-footer bg-light-50">
 								<div class="icons">
-									@if($application)
+									@if(isset($application))
 										<a href="/remove-application/{{$job->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
 									@else
 									<a href="/apply-job/{{$job->id}}" class="btn btn-info icons" ><i class="fa fa-check mr-1"></i> Apply</a>
