@@ -16,9 +16,9 @@ class IsCompany
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->user_type == "compeny"){
+        if (auth()->user()->user_type == "company") {
             return $next($request);
         }
-        return redirect()->route('company.login')->with('error',"You don't have compeny access.");
+        return redirect()->route('company.login')->with('error', "You don't have company access.");
     }
 }

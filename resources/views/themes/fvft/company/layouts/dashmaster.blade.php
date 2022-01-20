@@ -1,4 +1,7 @@
 @extends('themes.fvft.layouts.master')
+@section('style')
+	@yield('css')
+@endsection
 @section('main')
         @include('themes.fvft.site.components.header')
         @include('themes.fvft.site.components.breadcrumb',[
@@ -22,4 +25,7 @@
 			</div>
 		</section>
 		@include('themes.fvft.site.components.footer')
+@endsection
+@section('script')
+		@yield('js')
 @endsection

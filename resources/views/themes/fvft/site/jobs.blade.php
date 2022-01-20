@@ -72,7 +72,7 @@
                                                             <div class="item-card9">
                                                                 <a href="/job/{{$item->id}}" class="text-dark"><h4 class="font-weight-semibold mt-1">{{ $item->title}}</h4></a>
                                                                 <div class="mt-2 mb-2">
-                                                                    <a href="/company/{{$company->id}}" class="mr-4"><span><i class="fa fa-building-o text-muted mr-1"></i> {{ $company->compeny_name}}</span></a>
+                                                                    @isset($company)<a href="/company-view/{{$company->id}}" class="mr-4"><span><i class="fa fa-building-o text-muted mr-1"></i> {{ $company->compeny_name}}</span></a>@endisset
                                                                     <a class="mr-4"><span><i class="fa fa-map-marker text-muted mr-1"></i>{{@DB::table('cities')->find($item->city_id)->name.","}} {{@DB::table('countries')->find($item->country_id)->name}} </span></a>
                                                                     <a class="mr-4"><span><i class="fa fa fa-usd text-muted mr-1"></i> {{ $item->salary_from}} - {{ $item->salary_to}}</span></a>
                                                                     <a  class="mr-4"><span><i class="fa fa-clock-o text-muted mr-1"></i> {{@DB::table('job_shifts')->find($item->job_shift_id)->job_shift}}</span></a>
@@ -85,7 +85,7 @@
                                                             <div class="item-card9-footer d-sm-flex">
                                                                 <div class="d-flex align-items-center mb-3 mb-md-0 mt-auto posted">
                                                                     <div>
-                                                                        <a href="/company/{{$company->id}}" class="text-muted fs-12 mb-1">Posted by </a><span class="ml-0 fs-13"> {{ $company->compeny_name}}</span>
+                                                                        @if(isset($company))<a href="/company-view/{{$company->id}}" class="text-muted fs-12 mb-1">Posted by </a><span class="ml-0 fs-13"> {{ $company->compeny_name}}</span>@endif
                                                                         <small class="d-block text-default">{{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</small>
                                                                     </div>
                                                                 </div>
@@ -93,18 +93,22 @@
                                                                     {{-- <a  class="mr-3"><i class="ion-checkmark-circled text-success mr-1"></i>Phone Verified</a> --}}
                                                                    
 																	@auth
-																	@php 
-																		$application = \DB::table('job_applications')->where('job_id',$item->id)->where('employ_id', $employ->id)->first();
-																		// dd($application);
-																	@endphp
-																		@if($application)
-																			<a href="/remove-application/{{$item->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
+																	  @if(auth()->user()->user_type == 'candidate')																	  	 
+																		@php 
+																			$application = \DB::table('job_applications')->where('job_id',$item->id)->where('employ_id', $employ->id)->first();
+																		@endphp
+																			@if($application)
+																				<a href="/remove-application/{{$item->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
+																			@else
+																				<a href="/apply-job/{{$item->id}}" class="btn btn-block btn-primary"> Apply Now</a>
+																			@endif
 																		@else
-																		<a class="btn btn-primary mt-3 mt-md-0" href="/apply-job/{{$item->id}}"   >Apply Now</a>
+																				<a href="/job/{{$item->id}}" class="btn btn-block btn-primary">View</a>
 																		@endif
 																	@else
-																	<a class="btn btn-primary mt-3 mt-md-0" href="/apply-job/{{$item->id}}"   >Apply Now</a>
+																	      <a href="/apply-job/{{$item->id}}" class="btn btn-block btn-primary"> Apply Now</a>
 																	@endauth
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -148,17 +152,20 @@
 															<div class="item-card9-footer d-flex">
 																<div class="btn-block">
 																	@auth
-																	@php 
-																		$application = \DB::table('job_applications')->where('job_id',$item->id)->where('employ_id', $employ->id)->first();
-																		// dd($application);
-																	@endphp
-																		@if($application)
-																			<a href="/remove-application/{{$item->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
+																	  @if(auth()->user()->user_type == 'candidate')																	  	 
+																		@php 
+																			$application = \DB::table('job_applications')->where('job_id',$item->id)->where('employ_id', $employ->id)->first();
+																		@endphp
+																			@if($application)
+																				<a href="/remove-application/{{$item->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
+																			@else
+																				<a href="/apply-job/{{$item->id}}" class="btn btn-block btn-primary"> Apply Now</a>
+																			@endif
 																		@else
-																			<a href="/apply-job/{{$item->id}}" class="btn btn-block btn-primary"> Apply Now</a>
+																				<a href="/job/{{$item->id}}" class="btn btn-block btn-primary">View</a>
 																		@endif
 																	@else
-																	<a href="/apply-job/{{$item->id}}" class="btn btn-block btn-primary"> Apply Now</a>
+																	      <a href="/apply-job/{{$item->id}}" class="btn btn-block btn-primary"> Apply Now</a>
 																	@endauth
 																</div>
 															</div>
