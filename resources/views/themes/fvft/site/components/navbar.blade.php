@@ -19,9 +19,26 @@
                 <li>
                     <a href="/candidate/settings">Settings</a>
                 </li>
-                @elseif(auth()->user()->user_type=='compeny')
+                @elseif(auth()->user()->user_type=='company')
                 <li>
-                    <a href="/compeny/">My Dashboard</a>
+                    <a href="/company/">My Dashboard</a>
+                </li>
+                <li>
+                    <a href="/company/profile">Edit Profile</a>
+                </li>
+                <li>
+                    <a href="/company/jobs">My Jobs</a>
+                </li>
+                <li>
+                    <a href="/company/applicants">Applicants</a>
+                </li>
+                
+                <li>
+                    <a href="/company/settings">Settings</a>
+                </li>
+                @elseif(auth()->user()->user_type=='admin')
+                <li>
+                    <a href="/admin/">My Dashboard</a>
                 </li>
                 @endif
                 <li>

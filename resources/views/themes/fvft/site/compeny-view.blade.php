@@ -100,7 +100,7 @@
 																					<div class="item-card9">
 																						<a href="/job/{{$item->id}}" class="text-dark"><h4 class="font-weight-semibold mt-1">{{ $item->title}}</h4></a>
 																						<div class="mt-2 mb-2">
-																							<a href="/company/{{$company->id}}" class="mr-4"><span><i class="fa fa-building-o text-muted mr-1"></i> {{ $company->compeny_name}}</span></a>
+																							<a href="/company-view/{{$company->id}}" class="mr-4"><span><i class="fa fa-building-o text-muted mr-1"></i> {{ $company->compeny_name}}</span></a>
 																							<a class="mr-4"><span><i class="fa fa-map-marker text-muted mr-1"></i>{{@DB::table('cities')->find($item->city_id)->name.","}} {{@DB::table('countries')->find($item->country_id)->name}} </span></a>
 																							<a class="mr-4"><span><i class="fa fa fa-usd text-muted mr-1"></i> {{ $item->salary_from}} - {{ $item->salary_to}}</span></a>
 																							<a  class="mr-4"><span><i class="fa fa-clock-o text-muted mr-1"></i> {{@DB::table('job_shifts')->find($item->job_shift_id)->job_shift}}</span></a>

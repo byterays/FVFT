@@ -87,20 +87,24 @@
 													</div>
 												</div>
 												<hr class="divider">
-												<form id="Register" class="card-body" tabindex="500" method="POST" action="company/register" >
+												<form id="Register" class="card-body" tabindex="500" method="POST" action="/company/register" >
 													@csrf
 													<input type="hidden" name="user_type" value="compeny">
                                                     <div class="name">
 														<input type="text" name="name">
-														<label>Name</label>
+														<label>Company Name</label>
 													</div>
 													<div class="mail">
 														<input type="email" name="email">
-														<label>Email</label>
+														<label>Company Email</label>
 													</div>
 													<div class="passwd">
 														<input type="password" name="password">
 														<label>Password</label>
+													</div>
+													<div class="passwd">
+														<input type="password" name="password_confirmation" required autocomplete="new-password">
+														<label>Conform Password</label>
 													</div>
 													<div class="submit">
 														<button type="submit"class="btn btn-primary btn-block">Register</button>
