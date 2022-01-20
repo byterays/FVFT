@@ -9,9 +9,15 @@ use App\Traits\Site\ThemeMethods;
 trait CompanyMethods
 {
     use ThemeMethods;
+
+    public function company()
+    {
+        return @Company::where('user_id', \Auth::user()->id)->first();
+    }
+
     public function compeny_view($path, $obj = [])
     {
-        $company = @Company::where('user_id', \Auth::user()->id)->first();
+        $company = $this->company();
         return $this->site_view($path, array_merge($obj, ["company" => $company]));
     }
 }
