@@ -10,6 +10,7 @@
 /public/uploads/newscat
 /public/uploads/site
 /public/uploads/admin
+/public/uploads/cv
 /storage/*.key
 /vendor
 .env
