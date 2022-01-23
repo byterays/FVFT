@@ -43,8 +43,7 @@
                                
                             </div>
                             <a href="#" class="text-dark"><h2 class="font-weight-semibold">{{ $news->title}}</h2></a>
-
-                            {!! $news->html_content !!}
+                           {!! html_entity_decode($news->html_content) !!}
                         </div>
                     </div>
                     
