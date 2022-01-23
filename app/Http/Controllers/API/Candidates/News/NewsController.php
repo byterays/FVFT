@@ -50,7 +50,7 @@ class NewsController extends Controller
         return [
             "id" => (int)$news->id,
             "title" => $news->title,
-            "body" => $news->html_content,
+            "body" => htmlspecialchars_decode($news->html_content),
             "feature_img" => $news->feature_img,
             "categories" => $categories_processed,
             "posted_by" => $posted_by,
