@@ -27,6 +27,10 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/cv', [CvController::class, 'upload'])->name('candidate.cv.upload');
     // Fetch CV
     Route::get('/cv', [CvController::class, 'fetch'])->name('candidate.cv.fetch');
+    // Edit CV
+    Route::patch('/cv', [CvController::class, 'edit'])->name('candidate.cv.edit');
+    // Delete CV
+    Route::delete('/cv/{id}', [CvController::class, 'delete'])->name('candidate.cv.delete');
 });
 // Listing
 Route::get('job-list', [JobsListController::class, 'list']);
