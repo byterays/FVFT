@@ -10,6 +10,8 @@ use App\Http\Controllers\API\Candidates\News\NewsController;
 use App\Http\Controllers\API\Candidates\News\NewsCategoryController;
 use App\Http\Controllers\API\Candidates\BannerController;
 use App\Http\Controllers\API\Candidates\CvController;
+use App\Http\Controllers\API\Candidates\PreferenceController;
+
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
@@ -31,6 +33,17 @@ Route::middleware('auth:api')->group(function () {
     Route::patch('/cv', [CvController::class, 'edit'])->name('candidate.cv.edit');
     // Delete CV
     Route::delete('/cv/{id}', [CvController::class, 'delete'])->name('candidate.cv.delete');
+    // Job Preferences
+    // employer_job_category
+    Route::get('/preference/job-category', [PreferenceController::class, 'get_employes_job_category'])->name('candidate.preference.job_category');
+    Route::post('/preference/job-category', [PreferenceController::class, 'add_employes_job_category'])->name('candidate.preference.job-category.add');
+    Route::patch('/preference/job-category', [PreferenceController::class, 'update_employes_job_category'])->name('candidate.preference.job-category.update');
+    Route::delete('/preference/job-category/{id}', [PreferenceController::class, 'delete_employes_job_category'])->name('candidate.preference.job-category.delete');
+    // employer_country
+    Route::get('/preference/country', [PreferenceController::class, 'get_employes_country'])->name('candidate.preference.employer_country');
+    Route::post('/preference/country', [PreferenceController::class, 'add_employes_country'])->name('candidate.preference.country.add');
+    Route::patch('/preference/country', [PreferenceController::class, 'update_employes_country'])->name('candidate.preference.country.update');
+    Route::delete('/preference/country/{id}', [PreferenceController::class, 'delete_employes_country'])->name('candidate.preference.country.delete');
 });
 // Listing
 Route::get('job-list', [JobsListController::class, 'list']);
