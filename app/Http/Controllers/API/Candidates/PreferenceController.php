@@ -13,11 +13,6 @@ use App\Traits\Api\ApiMethods;
 class PreferenceController extends Controller
 {
     use ApiMethods;
-    public function __construct()
-    {
-        // dd(auth()->user());
-        // $employ = Employe::where('user_id', \Auth::user()->id)->first();
-    }
     // Get employes job category
     public function get_employes_job_category()
     {
@@ -207,19 +202,19 @@ class PreferenceController extends Controller
     public function process_employees_country($employes_country)
     {
         return [
-            "id" => $employes_country->id,
+            "id" => (int)$employes_country->id,
             // "employ_id" => $employes_country->employ_id,
-            "country_id" => $employes_country->country_id,
-            "order_by" => $employes_country->order_by,
+            "country_id" => (int)$employes_country->country_id,
+            "order_by" => (int)$employes_country->order_by,
         ];
     }
     public function process_employees_job_category($employes_job_category)
     {
         return [
-            "id" => $employes_job_category->id,
+            "id" => (int)$employes_job_category->id,
             // "employ_id" => $employes_job_category->employ_id,
-            "job_category_id" => $employes_job_category->job_category_id,
-            "order_by" => $employes_job_category->order_by,
+            "job_category_id" => (int)$employes_job_category->job_category_id,
+            "order_by" => (int)$employes_job_category->order_by,
         ];
     }
 }
