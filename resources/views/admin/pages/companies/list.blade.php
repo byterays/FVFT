@@ -55,9 +55,9 @@
                             <tr>
                                 {{-- <td>{{$company->id}}</td> --}}
                                 <td><img src="/{{$company->company_logo}}" alt="" srcset="" width="50px"></td>
-                                <td>{{$company->compeny_name}}</td>
-                                <td>{{$company->compeny_email}}</td>
-                                <td>{{$company->compeny_phone}}</td>
+                                <td>{{$company->company_name}}</td>
+                                <td>{{$company->company_email}}</td>
+                                <td>{{$company->company_phone}}</td>
                                 <td>{{$company->is_featured?"Featured":"Not Featured"}}</td>
                                 <td> @if ($company->is_active)
                                     <i class='fa fa-circle' style='color:green;font-size: 8px; padding:.5rem;'></i>

@@ -28,7 +28,7 @@
                                 <div class="form-group">
                                     <select class="form-control select2-flag-search" data-placeholder="Select Company" name="company_id">
                                         @foreach ($companies as $company)
-                                            <option value="{{$company->id}}" {{$job->company_id==$company->id?'selected':''}}>{{$company->compeny_name}}</option>
+                                            <option value="{{$company->id}}" {{$job->company_id==$company->id?'selected':''}}>{{$company->company_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>

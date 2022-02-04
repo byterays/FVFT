@@ -49,7 +49,7 @@
                                 {{-- <td>{{$job->id}}</td> --}}
                                 <td><img src="/{{$job->feature_image_url}}" alt="" srcset="" width="50px"></td>
                                 <td>{{$job->title}}</td>
-                                <td>{{DB::table('companies')->find($job->company_id)->compeny_name}}</td>
+                                <td>{{DB::table('companies')->find($job->company_id)->company_name}}</td>
                                 <td>{{$job->is_featured?"Featured":"Not Featured"}}</td>
                                 <td> @if ($job->is_active)
                                     <i class='fa fa-circle' style='color:green;font-size: 8px; padding:.5rem;'></i>

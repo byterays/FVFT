@@ -30,7 +30,7 @@
                                                 <div class="form-group">
                                                     <select class="form-control select2-flag-search" data-placeholder="Select Company" name="company">
                                                         @foreach ($companies as $company)
-                                                            <option value="{{$company->id}}">{{$company->compeny_name}}</option>
+                                                            <option value="{{$company->id}}">{{$company->company_name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
