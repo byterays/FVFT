@@ -75,6 +75,7 @@ class JobsController extends Controller
         $job->save();
 
         return $request;
+        
     }
     public function delete(Request $request){
 
