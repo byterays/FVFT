@@ -89,7 +89,7 @@
 												<hr class="divider">
 												<form id="Register" class="card-body" tabindex="500" method="POST" action="/company/register" >
 													@csrf
-													<input type="hidden" name="user_type" value="compeny">
+													<input type="hidden" name="user_type" value="company">
                                                     <div class="name">
 														<input type="text" name="name">
 														<label>Company Name</label>

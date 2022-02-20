@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Compeny;
+namespace App\Http\Controllers\company;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,13 +14,13 @@ class DashController extends Controller
     use CompanyMethods;
     public function dashboard()
     {
-        return $this->compeny_view('company.dash');
+        return $this->company_view('company.dash');
     }
     public function profile()
     {
         $company = @Company::where('user_id', \Auth::user()->id)->first();
         $contact_person = @DB::table('company_contact_persons')->where('company_id', $company->id)->first();
-        return $this->compeny_view('company.profile', ['contact_person' => $contact_person]);
+        return $this->company_view('company.profile', ['contact_person' => $contact_person]);
     }
     public function saveProfile(Request $request)
     {
@@ -29,24 +29,24 @@ class DashController extends Controller
             'company_cover' => 'required|image|mimes:jpg,png,jpeg|max:99999|dimensions:min_width=100,min_height=100',
         ]);
         $userfield = [];
-        $request->compeny_password ? $userfield['password'] = bcrypt($request->compeny_password) : null;
-        $userfield['email'] = $request->compeny_email;
+        $request->company_password ? $userfield['password'] = bcrypt($request->company_password) : null;
+        $userfield['email'] = $request->company_email;
         $user = auth()->user();
         // dd($user);
         $request->company_logo ? $logofile = time() . '_' . $request->company_logo->getClientOriginalName() : null;
         $request->company_cover ? $coverfile = time() . '_' . $request->company_cover->getClientOriginalName() : null;
 
-        $request->company_logo ? $request->company_logo->move(public_path('uploads/compeny', 'public'), $logofile) : null;
-        $request->company_cover ? $request->company_cover->move(public_path('uploads/compeny', 'public'), $coverfile) : null;
+        $request->company_logo ? $request->company_logo->move(public_path('uploads/company', 'public'), $logofile) : null;
+        $request->company_cover ? $request->company_cover->move(public_path('uploads/company', 'public'), $coverfile) : null;
         $fields = [];
-        $request->compeny_name ? $fields['compeny_name'] = $request->compeny_name : null;
-        $request->company_logo ? $fields['company_logo'] = 'uploads/compeny/' . $logofile : null;
-        $request->company_cover ? $fields['company_cover'] = 'uploads/compeny/' . $coverfile : null;
-        $request->compeny_phone ? $fields['compeny_phone'] = $request->compeny_phone : null;
-        $request->compeny_email ? $fields['compeny_email'] = $request->compeny_email : null;
+        $request->company_name ? $fields['company_name'] = $request->company_name : null;
+        $request->company_logo ? $fields['company_logo'] = 'uploads/company/' . $logofile : null;
+        $request->company_cover ? $fields['company_cover'] = 'uploads/company/' . $coverfile : null;
+        $request->company_phone ? $fields['company_phone'] = $request->company_phone : null;
+        $request->company_email ? $fields['company_email'] = $request->company_email : null;
         $request->industry_id ? $fields['industry_id'] = $request->industry_id : null;
-        $request->compeny_details ? $fields['compeny_details'] = $request->compeny_details : null;
-        $request->compeny_address ? $fields['compeny_address'] = $request->compeny_address : null;
+        $request->company_details ? $fields['company_details'] = $request->company_details : null;
+        $request->company_address ? $fields['company_address'] = $request->company_address : null;
         $request->country_id ? $fields['country_id'] = $request->country_id : null;
         $request->city_id ? $fields['city_id'] = $request->city_id : null;
         $request->is_active ? $fields['is_active'] = $request->is_active == "on" ? true : false : null;

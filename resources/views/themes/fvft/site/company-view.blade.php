@@ -13,7 +13,7 @@
 										<div class="col-lg-6 col-md-12">
 											<div class="wideget-user-desc d-sm-flex">
 												<div class="wideget-user-img mr-5 noborder"><img class="w-125 noborder" src="{{asset("/")}}{{$company->company_logo}}"> </div>
-												<div class="user-wrap wideget-user-info"> <a href="#" class="text-dark"><h4 class="font-weight-semibold mb-2">{{$company->compeny_name}}</h4></a>
+												<div class="user-wrap wideget-user-info"> <a href="#" class="text-dark"><h4 class="font-weight-semibold mb-2">{{$company->company_name}}</h4></a>
 													<h6 class="text-muted mb-1"><span class="text-dark">Member Since : </span>{{ \Carbon\Carbon::parse($company->created_at)->diffForHumans() }}</h6>
 													{{-- <div class="wideget-user-rating"> <a href="#"><i class="fa fa-star text-warning"></i></a> <a href="#"><i class="fa fa-star text-warning"></i></a> <a href="#"><i class="fa fa-star text-warning"></i></a> <a href="#"><i class="fa fa-star text-warning"></i></a> <a href="#"><i class="fa fa-star-o text-warning mr-1"></i></a> <span>5 (3876 Reviews)</span> </div> --}}
 													<div class="wideget-user-icons mt-2"> <a href="#" class="facebook-bg mt-0"><i class="fa fa-facebook"></i></a> <a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a> <a href="#" class="google-bg"><i class="fa fa-google"></i></a> <a href="#" class="dribbble-bg"><i class="fa fa-dribbble"></i></a> </div>
@@ -50,15 +50,15 @@
 											<ul class="usertab-list mb-0">
 												<li><a href="#" class="text-dark"><span class="font-weight-semibold w100">Location :</span> {{@DB::table('cities')->find($company->city_id)->name.","}} {{@DB::table('countries')->find($company->country_id)->name}}</a></li>
 												{{-- <li><a href="#" class="text-dark"><span class="font-weight-semibold w100">Website :</span> {{ $company->website}}</a></li> --}}
-												<li><a href="#" class="text-dark"><span class="font-weight-semibold w100">Email :</span>{{ $company->compeny_email}}</a></li>
-												<li><a href="#" class="text-dark"><span class="font-weight-semibold w100">Phone :</span>{{ $company->compeny_phone}} </a></li>
+												<li><a href="#" class="text-dark"><span class="font-weight-semibold w100">Email :</span>{{ $company->company_email}}</a></li>
+												<li><a href="#" class="text-dark"><span class="font-weight-semibold w100">Phone :</span>{{ $company->company_phone}} </a></li>
 											</ul>
 											<div class="row profie-img">
 												<div class="col-md-12">
 													<div class="media-heading">
 														<h3 class="card-title mb-3 mt-5 font-weight-bold">Company Info</h3>
 													</div>
-													<p>{{ $company->compeny_details}}</p>
+													<p>{{ $company->company_details}}</p>
 												
 												</div>
 											</div>
@@ -100,7 +100,7 @@
 																					<div class="item-card9">
 																						<a href="/job/{{$item->id}}" class="text-dark"><h4 class="font-weight-semibold mt-1">{{ $item->title}}</h4></a>
 																						<div class="mt-2 mb-2">
-																							<a href="/company-view/{{$company->id}}" class="mr-4"><span><i class="fa fa-building-o text-muted mr-1"></i> {{ $company->compeny_name}}</span></a>
+																							<a href="/company-view/{{$company->id}}" class="mr-4"><span><i class="fa fa-building-o text-muted mr-1"></i> {{ $company->company_name}}</span></a>
 																							<a class="mr-4"><span><i class="fa fa-map-marker text-muted mr-1"></i>{{@DB::table('cities')->find($item->city_id)->name.","}} {{@DB::table('countries')->find($item->country_id)->name}} </span></a>
 																							<a class="mr-4"><span><i class="fa fa fa-usd text-muted mr-1"></i> {{ $item->salary_from}} - {{ $item->salary_to}}</span></a>
 																							<a  class="mr-4"><span><i class="fa fa-clock-o text-muted mr-1"></i> {{@DB::table('job_shifts')->find($item->job_shift_id)->job_shift}}</span></a>
@@ -113,7 +113,7 @@
 																					<div class="item-card9-footer d-sm-flex">
 																						<div class="d-flex align-items-center mb-3 mb-md-0 mt-auto posted">
 																							<div>
-																								<a href="profile.html" class="text-muted fs-12 mb-1">Posted by </a><span class="ml-0 fs-13"> {{ $company->compeny_name}}</span>
+																								<a href="profile.html" class="text-muted fs-12 mb-1">Posted by </a><span class="ml-0 fs-13"> {{ $company->company_name}}</span>
 																								<small class="d-block text-default">{{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</small>
 																							</div>
 																						</div>

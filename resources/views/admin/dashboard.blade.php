@@ -107,8 +107,8 @@
                             <ul class="icon-card mb-0">
                                 <li class=""><a href="#" class="icons"><i class="si si-location-pin text-muted mr-1"></i>{{\DB::table('cities')->find($item->city_id)->name}},{{\DB::table('countries')->find($item->country_id)->name}}</a></li>
                                 <li><a href="#" class="icons"><i class="si si-event text-muted mr-1"></i> {{$item->updated_at}}</a></li>
-                                <li class="mb-0"><a href="#" class="icons"><i class="si si-user text-muted mr-1"></i>{{$company->compeny_name}}</a></li>
-                                <li class="mb-0"><a href="#" class="icons"><i class="si si-phone text-muted mr-1"></i> {{$company->compeny_phone}}</a></li>
+                                <li class="mb-0"><a href="#" class="icons"><i class="si si-user text-muted mr-1"></i>{{$company->company_name}}</a></li>
+                                <li class="mb-0"><a href="#" class="icons"><i class="si si-phone text-muted mr-1"></i> {{$company->company_phone}}</a></li>
                             </ul>
                         </div>
                     </div>

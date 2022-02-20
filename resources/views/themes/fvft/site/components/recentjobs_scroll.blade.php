@@ -24,7 +24,7 @@
                                         <ul class="icon-card mb-0">
                                             <li class=""><a href="#" class="icons"><i class="si si-location-pin text-muted mr-1"></i>  {{@DB::table('countries')->find($item->country_id)->name}}</a></li>
                                             <li><a href="#" class="icons"><i class="si si-event text-muted mr-1"></i>{{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</a></li>
-                                            <li class="mb-0"><a href="#" class="icons"><i class="si si-user text-muted mr-1"></i>{{@DB::table('companies')->find($item->company_id)->compeny_name}}</a></li>
+                                            <li class="mb-0"><a href="#" class="icons"><i class="si si-user text-muted mr-1"></i>{{@DB::table('companies')->find($item->company_id)->company_name}}</a></li>
                                             <li class="mb-2"><a href="#" class="icons"><i class="si si-briefcase text-muted mr-1"></i> {{ \Carbon\Carbon::parse($item->expiry_date)->diffForHumans() }} </a></li>
                                         </ul>
                                     </div>

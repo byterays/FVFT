@@ -10,6 +10,6 @@ class Company extends Model
     use HasFactory;
     public $timestamps = true;
     protected $fillable = [
-        'compeny_name', 'company_logo', 'company_cover', 'compeny_banner', 'user_id', 'compeny_phone', 'compeny_email', 'industry_id', 'compeny_details', 'country_id', 'city_id', 'compeny_address', 'is_active', 'is_featured','updated_at'
+        'company_name', 'company_logo', 'company_cover', 'company_banner', 'user_id', 'company_phone', 'company_email', 'industry_id', 'company_details', 'country_id', 'city_id', 'company_address', 'is_active', 'is_featured','updated_at'
     ];
 }

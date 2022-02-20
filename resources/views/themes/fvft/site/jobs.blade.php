@@ -72,7 +72,7 @@
                                                             <div class="item-card9">
                                                                 <a href="/job/{{$item->id}}" class="text-dark"><h4 class="font-weight-semibold mt-1">{{ $item->title}}</h4></a>
                                                                 <div class="mt-2 mb-2">
-                                                                    @isset($company)<a href="/company-view/{{$company->id}}" class="mr-4"><span><i class="fa fa-building-o text-muted mr-1"></i> {{ $company->compeny_name}}</span></a>@endisset
+                                                                    @isset($company)<a href="/company-view/{{$company->id}}" class="mr-4"><span><i class="fa fa-building-o text-muted mr-1"></i> {{ $company->company_name}}</span></a>@endisset
                                                                     <a class="mr-4"><span><i class="fa fa-map-marker text-muted mr-1"></i>{{@DB::table('cities')->find($item->city_id)->name.","}} {{@DB::table('countries')->find($item->country_id)->name}} </span></a>
                                                                     <a class="mr-4"><span><i class="fa fa fa-usd text-muted mr-1"></i> {{ $item->salary_from}} - {{ $item->salary_to}}</span></a>
                                                                     <a  class="mr-4"><span><i class="fa fa-clock-o text-muted mr-1"></i> {{@DB::table('job_shifts')->find($item->job_shift_id)->job_shift}}</span></a>
@@ -85,7 +85,7 @@
                                                             <div class="item-card9-footer d-sm-flex">
                                                                 <div class="d-flex align-items-center mb-3 mb-md-0 mt-auto posted">
                                                                     <div>
-                                                                        @if(isset($company))<a href="/company-view/{{$company->id}}" class="text-muted fs-12 mb-1">Posted by </a><span class="ml-0 fs-13"> {{ $company->compeny_name}}</span>@endif
+                                                                        @if(isset($company))<a href="/company-view/{{$company->id}}" class="text-muted fs-12 mb-1">Posted by </a><span class="ml-0 fs-13"> {{ $company->company_name}}</span>@endif
                                                                         <small class="d-block text-default">{{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</small>
                                                                     </div>
                                                                 </div>
@@ -136,7 +136,7 @@
 															<div class="item-card9">
 																<a href="jobs.html" class="text-dark mt-2"><h4 class="font-weight-semibold mt-1 mb-2">{{ $item->title}}</h4></a>
 																<ul class="icon-card mb-0 mt-1">
-																	<li class=""><a href="#" class="icons"><i class="fa fa-building-o text-muted mr-1"></i> {{ $company->compeny_name}}</a></li>
+																	<li class=""><a href="#" class="icons"><i class="fa fa-building-o text-muted mr-1"></i> {{ $company->company_name}}</a></li>
 																	<li><a href="#" class="icons"><i class="fa fa-map-marker text-muted mr-1"></i> {{@DB::table('cities')->find($item->city_id)->name.","}} {{@DB::table('countries')->find($item->country_id)->name}}</a></li>
 																	<li class="mb-0"><a href="#" class="icons"><i class="fa fa-usd text-muted mr-1"></i>  {{ $item->salary_from}} - {{ $item->salary_to}}</a></li>
 																	<li class="mb-0"><a href="#" class="icons"><i class="fa fa-clock-o text-muted mr-1"></i> {{@DB::table('job_shifts')->find($item->job_shift_id)->job_shift}}</a></li>

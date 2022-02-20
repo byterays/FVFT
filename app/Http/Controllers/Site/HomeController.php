@@ -25,6 +25,6 @@ class HomeController extends Controller
     {
         $company = \DB::table('companies')->find($id);
         $company_jobs = \DB::table('jobs')->where("company_id", $id)->paginate(10);
-        return $this->site_view('site.compeny-view', ['company' => $company, "company_jobs" => $company_jobs]);
+        return $this->site_view('site.company-view', ['company' => $company, "company_jobs" => $company_jobs]);
     }
 }
