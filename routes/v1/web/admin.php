@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Jobs\AjaxJobController;
@@ -80,6 +81,11 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::match(['put', 'patch'], 'update/{id}', [IndustryController::class, "update"])->name("update");
         Route::delete('delete/{id}', [IndustryController::class, "delete"])->name("delete");
         Route::post('update-status', [IndustryController::class, "updateStatus"])->name("updateStatus");
+    });
+
+    Route::group(['prefix' => 'user/', 'as' => 'admin.user.'], function(){
+        Route::get('profile', [AdminController::class, "profile"])->name("profile");
+        Route::put('update-profile', [AdminController::class, "updateProfile"])->name("updateProfile");
     });
 
     Route::post('logout', [AuthController::class, 'logout']);
