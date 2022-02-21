@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\Candidates\CandidateController;
 use App\Http\Controllers\Admin\Pages\PageController;
 use App\Http\Controllers\Admin\Applicants\ApplicantController;
 use App\Http\Controllers\Admin\News\NewsController;
+use App\Http\Controllers\Admin\Industry\IndustryController;
 
 Route::get('login', function () {
     return view('admin.auth.login');
@@ -66,6 +67,17 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::get('edit/{id}', [NewsController::class, 'edit'])->name('admin.news.edit');
         Route::get('delete/{id}', [NewsController::class, 'delete'])->name('admin.news.delete');
         Route::post('save', [NewsController::class, 'save']);
+    });
+
+    // Industry Crud
+    
+    Route::group(['prefix' => 'industry/', 'as' => 'industry.'], function(){
+        Route::get('', [IndustryController::class, "index"])->name("index");
+        Route::get('create', [IndustryController::class, "create"])->name("create");
+        Route::post('store', [IndustryController::class, "store"])->name("store");
+        Route::get("edit/{id}", [IndustryController::class, "edit"])->name("edit");
+        Route::match(['put', 'patch'], 'update/{id}', [IndustryController::class, "update"])->name("update");
+        Route::delete('delete/{id}', [IndustryController::class, "delete"])->name("delete");
     });
 
     Route::post('logout', [AuthController::class, 'logout']);

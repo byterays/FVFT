@@ -46,7 +46,7 @@ class CompanyController extends Controller
         // if($request->company_user_id !== null){
         //     $userData = User::where("id", $request->company_user_id)->first();
         // } 
-        $request->company_user_id !== null ? $userData = User::where("id", $request->company_user_id)->first() : '';
+        $request->company_user_id !== null ? $userData = User::where("id", $request->company_user_id)->first() : $userData = '';
         $userData !== '' ? $oldPassword = $userData->password : '';
         $userfield = [];
         $request->company_password ? $userfield['password'] = bcrypt($request->company_password) : $oldPassword;
