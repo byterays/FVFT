@@ -73,6 +73,14 @@
 							</ul>
 						</li>  
 						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="#">
+                                <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Industry</span><i class="angle fa fa-angle-right"></i></a>
+							<ul class="slide-menu">
+								<li><a class="slide-item" href="{{ route('admin.industry.index') }}">List Industries</a></li>
+								<li><a class="slide-item" href="{{ route('admin.industry.create') }}">Add New</a></li>
+							</ul>
+						</li> 
+						<li class="slide">
 							<span class="side-menu__item">
                                 <span class="side-menu__label">MANAGE</span>
                             </span>

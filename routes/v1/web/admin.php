@@ -71,13 +71,14 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
     // Industry Crud
     
-    Route::group(['prefix' => 'industry/', 'as' => 'industry.'], function(){
+    Route::group(['prefix' => 'industry/', 'as' => 'admin.industry.'], function(){
         Route::get('', [IndustryController::class, "index"])->name("index");
         Route::get('create', [IndustryController::class, "create"])->name("create");
         Route::post('store', [IndustryController::class, "store"])->name("store");
         Route::get("edit/{id}", [IndustryController::class, "edit"])->name("edit");
         Route::match(['put', 'patch'], 'update/{id}', [IndustryController::class, "update"])->name("update");
         Route::delete('delete/{id}', [IndustryController::class, "delete"])->name("delete");
+        Route::post('update-status', [IndustryController::class, "updateStatus"])->name("updateStatus");
     });
 
     Route::post('logout', [AuthController::class, 'logout']);

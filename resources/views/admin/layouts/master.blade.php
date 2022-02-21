@@ -46,7 +46,7 @@
 		<!-- Color-Skins -->
 		<link id="theme" rel="stylesheet" type="text/css" media="all" href="{{asset('themes/fvft/')}}/assets/color-skins/color-skins/color10.css" />
 		<link href="{{asset('/')}}css/main.css" rel="stylesheet"/>
-		
+		<link rel="stylesheet" href="{{ asset('/') }}css/admin/style.css">
 		@yield('style')
 	</head>
 	<body class="app sidebar-mini">

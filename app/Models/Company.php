@@ -12,4 +12,9 @@ class Company extends Model
     protected $fillable = [
         'company_name', 'company_logo', 'company_cover', 'company_banner', 'user_id', 'company_phone', 'company_email', 'industry_id', 'company_details', 'country_id', 'city_id', 'company_address', 'is_active', 'is_featured','updated_at'
     ];
+
+    public function industry()
+    {
+        return $this->belongsTo('App\Models\Industry', 'industry_id', 'id');
+    }
 }

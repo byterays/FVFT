@@ -9,6 +9,7 @@ use DB;
 use App\Models\User;
 use App\Models\Company;
 use App\Models\CompanyContactPerson;
+use App\Models\Industry;
 
 class CompanyController extends Controller
 {
@@ -17,18 +18,21 @@ class CompanyController extends Controller
     {
 
         $this->countries = DB::table('countries')->get();
+        $this->industries = Industry::get();
     }
     public function list()
     {
         return $this->view('admin.pages.companies.list', [
-            'companies' => DB::table('companies')->paginate(10)
+            'companies' => Company::with('industry')->paginate(10)
+            // 'companies' => DB::table('companies')->paginate(10)
         ]);
     }
     public function new()
     {
         return $this->view('admin.pages.companies.editadd', [
             'action' => "New",
-            'countries' => $this->countries
+            'countries' => $this->countries,
+            'industries' => $this->industries,
         ]);
     }
     public function edit($id)
@@ -38,7 +42,8 @@ class CompanyController extends Controller
             'company' => $company,
             'contact_person' => DB::table('company_contact_persons')->where(['company_id' => $company->id])->first(),
             'action' => "Edit",
-            'countries' => $this->countries
+            'countries' => $this->countries,
+            'industries' => $this->industries,
         ]);
     }
     public function save(Request $request)
@@ -88,7 +93,8 @@ class CompanyController extends Controller
             'company' => $company,
             'contact_person' => $contact_person->first(),
             'action' => "Edit",
-            'countries' => $this->countries
+            'countries' => $this->countries,
+            'industries' => $this->industries,
         ]);
     }
     public function delete($id)

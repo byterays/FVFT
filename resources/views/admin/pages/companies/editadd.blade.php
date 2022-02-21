@@ -28,36 +28,46 @@
                                 <div class="form-group">
                                     <label class="form-label">Company Name</label>
                                     <input type="text" class="form-control" name="company_name" placeholder="Company Name"
-                                        value="{{ isset($company->company_name) ? $company->company_name : '' }}" required>
+                                        value="{{ isset($company->company_name) ? $company->company_name : '' }}"
+                                        required>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Company Phone</label>
                                     <input type="text" class="form-control" name="company_phone"
                                         placeholder="Company Phone"
-                                        value="{{ isset($company->company_phone) ? $company->company_phone : '' }}" required>
+                                        value="{{ isset($company->company_phone) ? $company->company_phone : '' }}"
+                                        required>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Company Email</label>
                                     <input type="text" class="form-control" name="company_email"
                                         placeholder="Company Email"
-                                        value="{{ isset($company->company_email) ? $company->company_email : '' }}" required>
+                                        value="{{ isset($company->company_email) ? $company->company_email : '' }}"
+                                        required>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Password</label>
                                     <input type="password" class="form-control" name="company_password"
-                                        placeholder="Password" value="" {{ request()->route()->getName() == 'admin.companies.edit' ? '' : 'required' }}>
+                                        placeholder="Password" value=""
+                                        {{ request()->route()->getName() == 'admin.companies.edit'? '': 'required' }}>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="form-label">Industry</label>
                                     <div class="form-group">
-                                        <select class="form-control select2-flag-search" data-placeholder="Select Company"
+                                        <select class="form-control select2-flag-search" data-placeholder="Select Industry"
+                                            name="industry_id">
+                                            @foreach ($industries as $industry)
+                                                <option value="{{ $industry->id }}" {{ isset($company->industry_id) ? ($industry->id == $company->industry_id ? 'selected' : '') : '' }}>{{ $industry->title }}</option>
+                                            @endforeach
+                                        </select>
+                                        {{-- <select class="form-control select2-flag-search" data-placeholder="Select Industry"
                                             name="industry_id"
                                             value="{{ isset($company->industry_id) ? $company->industry_id : '' }}">
-                                            {{-- @foreach ($industries as $industry)
-                                                            <option value="{{$industry->id}}">{{$industry->company_name}}</option>
-                                                        @endforeach --}}
-                                        </select>
+                                            @foreach ($industries as $industry)
+                                                <option value="{{ $industry->id }}">{{ $industry->title }}</option>
+                                            @endforeach
+                                        </select> --}}
                                     </div>
                                 </div>
 
@@ -120,19 +130,22 @@
                                         <label class="form-label">Name</label>
                                         <input type="text" class="form-control" name="contact_person_name"
                                             placeholder="Name"
-                                            value="{{ isset($contact_person->name) ? $contact_person->name : '' }}" required>
+                                            value="{{ isset($contact_person->name) ? $contact_person->name : '' }}"
+                                            required>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Email</label>
                                         <input type="text" class="form-control" name="contact_person_email"
                                             placeholder="Email"
-                                            value="{{ isset($contact_person->email) ? $contact_person->email : '' }}" required>
+                                            value="{{ isset($contact_person->email) ? $contact_person->email : '' }}"
+                                            required>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Phone</label>
                                         <input type="text" class="form-control" name="contact_person_phone"
                                             placeholder="Phone"
-                                            value="{{ isset($contact_person->phone) ? $contact_person->phone : '' }}" required>
+                                            value="{{ isset($contact_person->phone) ? $contact_person->phone : '' }}"
+                                            required>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Position</label>

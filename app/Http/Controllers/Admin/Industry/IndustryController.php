@@ -38,8 +38,9 @@ class IndustryController extends Controller
         if($validator->passes()){
             $input = $request->except('_token');
             $input['slug'] = createSlug($request->title);
+            $input['is_active'] = $request->is_active !== null ? 1 : 0;
             $industry = Industry::create($input);
-            return response()->json(['msg' => 'Industry created successfully', 'redirectTo' => route($this->redirectTo)]);
+            return response()->json(['msg' => 'Industry created successfully', 'redirectRoute' => route($this->redirectTo)]);
         }
     }
 
@@ -63,8 +64,9 @@ class IndustryController extends Controller
             $industry = Industry::find($id);
             $input = $request->except('_token');
             $input['slug'] = createSlug($request->title);
+            $input['is_active'] = $request->is_active !== null ? 1 : 0;
             $industry ->update($input);
-            return response()->json(['msg' => 'Industry updated successfully', 'redirectTo' => route($this->redirectTo)]);
+            return response()->json(['msg' => 'Industry updated successfully', 'redirectRoute' => route($this->redirectTo)]);
         }
     }
 
@@ -72,5 +74,20 @@ class IndustryController extends Controller
     {
         Industry::destroy($id);
         return redirect()->back();
+    }
+
+
+    public function updateStatus(Request $request)
+    {
+        $industry = Industry::where("id", $request->industry_id)->first();
+        if($industry->is_active == 0){
+            $industry->update(["is_active"=>1]);
+            $msg = "Industry is active";
+        } else {
+            $industry->update(["is_active"=>0]);
+            $msg = "Industry is inactive";
+        }
+        $status = $industry->is_active;
+        return response()->json(["msg"=>$msg, "status"=>$status]);
     }
 }
