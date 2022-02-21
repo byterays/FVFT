@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Compeny\AuthController;
-use App\Http\Controllers\Compeny\DashController;
+use App\Http\Controllers\Company\AuthController;
+use App\Http\Controllers\Company\DashController;
 
 Route::get('/login', [AuthController::class, 'login'])->name('company.login');
 Route::post('/register', [AuthController::class, 'register'])->name('company.register');
