@@ -66,12 +66,24 @@
                                                             <option data-select2-id="select2-data-5-o1jo" value="pending"
                                                                 {{ isset($application->status) ? ('pending' == $application->status ? 'selected' : '') : null }}>
                                                                 Pending</option>
+                                                            <option data-select2-id="select2-data-5-o1j" value="shortlisted"
+                                                                {{ isset($application->status) ? ('shortlisted' == $application->status ? 'selected' : '') : null }}>
+                                                                Shortlisted</option>
+                                                            <option data-select2-id="select2-data-5-o1k" value="selectedForInterview"
+                                                                {{ isset($application->status) ? ('selectedForInterview' == $application->status ? 'selected' : '') : null }}>
+                                                                Selected For Interview</option>
+                                                            <option data-select2-id="select2-data-5-o1u" value="interviewed"
+                                                                {{ isset($application->status) ? ('interviewed' == $application->status ? 'selected' : '') : null }}>
+                                                                Interviewed</option>
                                                             <option data-select2-id="select2-data-43-0e3k" value="accepted"
                                                                 {{ isset($application->status) ? ('accepted' == $application->status ? 'selected' : '') : null }}>
                                                                 Accepted</option>
                                                             <option data-select2-id="select2-data-44-q5hf" value="rejected"
                                                                 {{ isset($application->status) ? ('rejected' == $application->status ? 'selected' : '') : null }}>
                                                                 Rejected</option>
+                                                            <option data-select2-id="select2-data-44-q5hi" value="redlisted"
+                                                                {{ isset($application->status) ? ('redlisted' == $application->status ? 'selected' : '') : null }}>
+                                                                Red Listed</option>
                                                         </select>
                                                     </div>
                                                     <div class="form-group p-2">
