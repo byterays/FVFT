@@ -48,7 +48,7 @@
                                             </div>
                                             <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
                                                 data-original-title="Delete"
-                                                href="{{ route('admin.industry.delete', $industry->id) }}"><i
+                                                href="javascript:void(0);" onclick="deleteData({{ $industry->id }}, $(this));"><i
                                                     class="fa fa-trash-o"></i></a><br>
                                         </td>
                                     </tr>
@@ -83,6 +83,23 @@
                             el.removeClass('label-warning').addClass('label-success');
                         }
                         // toastr.success(data.msg);
+                    }
+                });
+            }
+        }
+
+        function deleteData(id, el){
+            if(id){
+                var url = "{{ route('admin.industry.delete', ':id') }}",
+                url = url.replace(":id", id);
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data:{
+                        _method: 'DELETE',
+                    },
+                    success: function(data){
+                        el.closest('tr').remove();
                     }
                 });
             }
