@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\company;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Traits\Site\CompanyMethods;
-use DB;
 use App\Models\Company;
 use App\Models\CompanyContactPerson;
+use App\Traits\Site\CompanyMethods;
+use DB;
+use Illuminate\Http\Request;
 
 class DashController extends Controller
 {
@@ -24,14 +24,17 @@ class DashController extends Controller
     }
     public function saveProfile(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'company_logo' => 'required|image|mimes:jpg,png,jpeg,|max:99999|dimensions:min_width=100,min_height=100',
             'company_cover' => 'required|image|mimes:jpg,png,jpeg|max:99999|dimensions:min_width=100,min_height=100',
         ]);
-        $userfield = [];
-        $request->company_password ? $userfield['password'] = bcrypt($request->company_password) : null;
-        $userfield['email'] = $request->company_email;
         $user = auth()->user();
+        $oldPassword = $user->password;
+        // dd($oldPassword);
+        $userfield = [];
+        $request->company_password ? $userfield['password'] = bcrypt($request->company_password) : $oldPassword;
+        $userfield['email'] = $request->company_email;
         // dd($user);
         $request->company_logo ? $logofile = time() . '_' . $request->company_logo->getClientOriginalName() : null;
         $request->company_cover ? $coverfile = time() . '_' . $request->company_cover->getClientOriginalName() : null;

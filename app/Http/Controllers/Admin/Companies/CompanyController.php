@@ -43,9 +43,14 @@ class CompanyController extends Controller
     }
     public function save(Request $request)
     {
-
+        // if($request->company_user_id !== null){
+        //     $userData = User::where("id", $request->company_user_id)->first();
+        // } 
+        $request->company_user_id !== null ? $userData = User::where("id", $request->company_user_id)->first() : '';
+        $userData !== '' ? $oldPassword = $userData->password : '';
         $userfield = [];
-        $request->company_password ? $userfield['password'] = bcrypt($request->company_password) : null;
+        $request->company_password ? $userfield['password'] = bcrypt($request->company_password) : $oldPassword;
+        // $request->company_password ? $userfield['password'] = bcrypt($request->company_password) : null;
         $userfield['email'] = $request->company_email;
         $user = User::updateOrCreate(['id' => $request->company_user_id], $userfield);
         // dd($user);
