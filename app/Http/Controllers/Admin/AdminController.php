@@ -43,6 +43,9 @@ class AdminController extends Controller
                 $avatar = $request->file('avatar');
                 $avatarName = time().'_'.$avatar->getClientOriginalName();
                 $avatarInpt = 'uploads/admin/'.$avatarName;
+                if($oldAvatar != null && file_exists($oldAvatar)){
+                    unlink($oldAvatar);
+                }
             } else {
                 $avatarInpt = $oldAvatar;
             }
