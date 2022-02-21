@@ -114,4 +114,10 @@ class CompanyController extends Controller
                 ]]);
         }
     }
+
+    public function show($id)
+    {
+        $company = Company::where('id', $id)->with(['industry', 'company_contact_person', 'user'])->firstOrFail();
+        return $this->view('admin.pages.companies.show', ['company' => $company]);
+    }
 }

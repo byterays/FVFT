@@ -17,4 +17,15 @@ class Company extends Model
     {
         return $this->belongsTo('App\Models\Industry', 'industry_id', 'id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo("App\Models\User", "user_id", "id");
+    }
+
+    public function company_contact_person()
+    {
+        return $this->hasOne("App\Models\CompanyContactPerson", "company_id", "id");
+    }
+    
 }

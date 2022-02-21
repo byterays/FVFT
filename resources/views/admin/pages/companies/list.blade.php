@@ -69,7 +69,9 @@ session()->forget('delete');
                                     <span class="label label-{{$company->is_active?'success':'warning'}}">{{$company->is_active?"Active":"Inactive"}}</span>
                                 </td>
                                 <td>
-
+                                    <div data-toggle="tooltip" data-original-title="View" style="display: inline-block;">
+                                        <a class="btn btn-primary btn-sm text-white mb-1"  href="{{ route('admin.companies.show', $company->id) }}" ><i class="fa fa-eye"></i></a>
+                                    </div>
                                     <div data-toggle="tooltip" data-original-title="Edit" style="display: inline-block;">
                                         <a class="btn btn-success btn-sm text-white mb-1" href="/admin/companies/edit/{{$company->id}}"><i class="fa fa-pencil"></i></a>
                                     </div>
