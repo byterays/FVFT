@@ -75,6 +75,7 @@ class JobsController extends Controller
             "job_shifts" => $this->job_shifts,
             "job_categories" => $this->job_categories,
             "educationlevels" => $this->educationlevels,
+            "countries" => $this->countries,
         ]);
     }
     public function save(Request $request)

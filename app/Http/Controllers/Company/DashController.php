@@ -5,6 +5,7 @@ namespace App\Http\Controllers\company;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\CompanyContactPerson;
+use App\Models\Job;
 use App\Traits\Site\CompanyMethods;
 use DB;
 use Illuminate\Http\Request;
@@ -66,5 +67,36 @@ class DashController extends Controller
         );
 
         return $this->profile();
+    }
+
+
+
+    public function jobs()
+    {
+        $all_jobs = $this->jobsquery('all', false);
+        // $rejected_jobs = $this->jobsquery('rejected');
+        // $pending_jobs = $this->jobsquery('pending');
+        // $accepted_jobs = $this->jobsquery('accepted');
+        $fields = [
+            'all_jobs' => $all_jobs
+            // 'rejected_jobs' => $rejected_jobs,
+            // 'pending_jobs' => $pending_jobs,
+            // 'accepted_jobs' => $accepted_jobs
+        ];
+        if (auth()->check()) {
+            $company = Company::where('user_id', auth()->user()->id)->first();
+            $fields['company'] = $company;
+        }
+        return $this->company_view('company.jobs', $fields);
+    }
+
+    private function jobsquery($status, $filter = true)
+    {
+        $company = Company::where('user_id', auth()->user()->id)->first();
+        $jobs = Job::where('company_id', $company->id);
+        if($filter){
+            $jobs->where('status', $status);
+        }
+        return $jobs->paginate(10);
     }
 }

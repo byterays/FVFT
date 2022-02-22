@@ -18,7 +18,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-3 col-lg-12 col-md-12">
-                @include('themes.fvft.candidates.components.sidebar')
+                @include('themes.fvft.company.components.sidebar')
             </div>
             <div class="col-xl-9 col-lg-12 col-md-12">
                 <div class="card mb-0">
@@ -31,24 +31,24 @@
                                 <!-- Tabs -->
                                 <ul class="nav panel-tabs">
                                     <li class=""><a href="#tab1" class="" data-toggle="tab">All Jobs</a></li>
-                                    <li><a href="#tab2" data-toggle="tab" class="active">Pending</a></li>
+                                    {{-- <li><a href="#tab2" data-toggle="tab" class="active">Pending</a></li>
                                     <li><a href="#tab3" data-toggle="tab" class="">Accepted</a></li>
-                                    <li><a href="#tab4" data-toggle="tab" class="">Rejected</a></li>
+                                    <li><a href="#tab4" data-toggle="tab" class="">Rejected</a></li> --}}
                                 </ul>
                             </div>
                             <div class="tab-content">
                                 <div class="tab-pane table-responsive border-top userprof-tab active" id="tab1">
-                                    @include('themes.fvft.candidates.components.jobs.joblist',['items'=>$all_jobs,'action'=>'All Jobs'])  
+                                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$all_jobs,'action'=>'All Jobs'])  
                                 </div>
-                                <div class="tab-pane table-responsive border-top userprof-tab" id="tab2">
-                                    @include('themes.fvft.candidates.components.jobs.joblist',['items'=>$pending_jobs,'action'=>'Pending Jobs '])
+                                {{-- <div class="tab-pane table-responsive border-top userprof-tab" id="tab2">
+                                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$pending_jobs,'action'=>'Pending Jobs '])
                                 </div>
                                 <div class="tab-pane table-responsive border-top userprof-tab" id="tab3">
-                                    @include('themes.fvft.candidates.components.jobs.joblist',['items'=>$accepted_jobs,'action'=>'Accepted Jobs'])
+                                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$accepted_jobs,'action'=>'Accepted Jobs'])
                                 </div>
                                 <div class="tab-pane table-responsive border-top userprof-tab " id="tab4">
-                                    @include('themes.fvft.candidates.components.jobs.joblist',['items'=>$rejected_jobs,'action'=>'Rejected Jobs'])
-                                </div>
+                                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$rejected_jobs,'action'=>'Rejected Jobs'])
+                                </div> --}}
                             </div>
                         </div>
                     </div>
