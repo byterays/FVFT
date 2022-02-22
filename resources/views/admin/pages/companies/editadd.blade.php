@@ -58,7 +58,9 @@
                                         <select class="form-control select2-flag-search" data-placeholder="Select Industry"
                                             name="industry_id">
                                             @foreach ($industries as $industry)
-                                                <option value="{{ $industry->id }}" {{ isset($company->industry_id) ? ($industry->id == $company->industry_id ? 'selected' : '') : '' }}>{{ $industry->title }}</option>
+                                                <option value="{{ $industry->id }}"
+                                                    {{ isset($company->industry_id) ? ($industry->id == $company->industry_id ? 'selected' : '') : '' }}>
+                                                    {{ $industry->title }}</option>
                                             @endforeach
                                         </select>
                                         {{-- <select class="form-control select2-flag-search" data-placeholder="Select Industry"
@@ -81,7 +83,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Country</label>
-                                    <select name="country_id" id="select-country" class="form-control select2 "
+                                    <select name="country_id" id="select-country" class="form-control select2"
                                         value="{{ isset($company->country_id) ? $company->country_id : '' }}"
                                         onchange="patchStates(this)">
                                         @foreach ($countries as $item)
@@ -94,14 +96,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">States</label>
-                                    <select name="state_id" id="select-state" class="form-control select2 "
+                                    <select name="state_id" id="select-state" class="form-control select2"
                                         value="{{ isset($company->state_id) ? $company->state_id : '' }}"
                                         onchange="patchCities(this)">
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Cities</label>
-                                    <select name="city_id" id="select-city" class="form-control select2 "
+                                    <select name="city_id" id="select-city" class="form-control select2"
                                         value="{{ isset($company->city_id) ? $company->city_id : '' }}">
                                     </select>
                                 </div>
