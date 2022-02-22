@@ -52,6 +52,7 @@ class DashController extends Controller
         $request->company_address ? $fields['company_address'] = $request->company_address : null;
         $request->country_id ? $fields['country_id'] = $request->country_id : null;
         $request->city_id ? $fields['city_id'] = $request->city_id : null;
+        $request->state_id ? $fields['state_id'] = $request->state_id : null;
         $request->is_active ? $fields['is_active'] = $request->is_active == "on" ? true : false : null;
         $company = Company::updateOrCreate(['user_id' => $user->id], $fields);
         CompanyContactPerson::updateOrCreate(
