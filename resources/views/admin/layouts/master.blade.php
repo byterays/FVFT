@@ -51,8 +51,22 @@
     <!-- Color-Skins -->
     <link id="theme" rel="stylesheet" type="text/css" media="all"
         href="{{ asset('themes/fvft/') }}/assets/color-skins/color-skins/color10.css" />
+    <!-- Data table css -->
+    <link href="{{ asset('themes/fvft/') }}/assets/plugins/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="{{ asset('themes/fvft/') }}/assets/plugins/datatable/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="{{ asset('/') }}css/main.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('/') }}css/admin/style.css">
+    <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
+    <style>
+        .toast-top-container {
+            position: absolute;
+            top: 65px;
+            width: 280px;
+            right: 40px;
+            height: auto;
+        }
+
+    </style>
     @yield('style')
 </head>
 
@@ -126,9 +140,13 @@
     <script src="{{ asset('themes/fvft/') }}/assets/plugins/counters/counterup.min.js"></script>
     <script src="{{ asset('themes/fvft/') }}/assets/plugins/counters/waypoints.min.js"></script>
     <script src="{{ asset('themes/fvft/') }}/assets/plugins/counters/numeric-counter.js"></script>
+    <!-- Data tables -->
+    <script src="{{ asset('themes/fvft/') }}/assets/plugins/datatable/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('themes/fvft/') }}/assets/plugins/datatable/dataTables.bootstrap4.min.js"></script>
     <!-- Custom Js-->
     <script src="{{ asset('themes/fvft/') }}/assets/js/admin-custom.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/toastr.min.js') }}"></script>
 
     <script>
         $.ajaxSetup({
@@ -151,6 +169,45 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+    </script>
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-container",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+        @if (Session::has('message'))
+            var type = "{{ Session::get('alert-type', 'info') }}";
+            switch (type) {
+            case 'info':
+            toastr.info("{{ Session::get('message') }}");
+            break;
+        
+            case 'warning':
+            toastr.warning("{{ Session::get('message') }}");
+            break;
+        
+            case 'success':
+            toastr.success("{{ Session::get('message') }}");
+            break;
+        
+            case 'error':
+            toastr.error("{{ Session::get('message') }}");
+            break;
+            }
+        @endif
     </script>
     @yield('script')
 </body>

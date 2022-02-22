@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\Pages\PageController;
 use App\Http\Controllers\Admin\Applicants\ApplicantController;
 use App\Http\Controllers\Admin\News\NewsController;
 use App\Http\Controllers\Admin\Industry\IndustryController;
+use App\Http\Controllers\Admin\Training\TrainingController;
 
 Route::get('login', function () {
     return view('admin.auth.login');
@@ -81,6 +82,16 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::match(['put', 'patch'], 'update/{id}', [IndustryController::class, "update"])->name("update");
         Route::delete('delete/{id}', [IndustryController::class, "delete"])->name("delete");
         Route::post('update-status', [IndustryController::class, "updateStatus"])->name("updateStatus");
+    });
+
+    Route::group(['prefix' => 'training/', 'as' => 'admin.training.'], function(){
+        Route::get('', [TrainingController::class, "index"])->name("index");
+        Route::get("create", [TrainingController::class, "create"])->name("create");
+        Route::post("store", [TrainingController::class, "store"])->name("store");
+        Route::get("edit/{id}", [TrainingController::class, "edit"])->name("edit");
+        Route::match(['put', 'patch'], "update/{id}", [TrainingController::class, "update"])->name("update");
+        Route::post('update-status', [TrainingController::class, "updateStatus"])->name("updateStatus");
+        Route::delete('delete/{id}', [TrainingController::class, "delete"])->name("delete");
     });
 
     Route::group(['prefix' => 'user/', 'as' => 'admin.user.'], function(){
