@@ -28,16 +28,20 @@
                     </div>
                 </div>
             </td>
-            <td><i class="fa fa-map-marker mr-1 text-muted"></i>Ambrosia</td>
+            @php
+             $country_name = \DB::table('countries')->where('id', $item->country_id)->first()->name;   
+            @endphp
+            <td><i class="fa fa-map-marker mr-1 text-muted"></i>{{ $country_name ? $country_name : '' }}</td>
             
             <td>
                 {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}
             </td>
             <td>{{ $item->status }}</td>
             <td>
-                <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View" href="/job/{{ $item->job_id}}"><i class="fa fa-eye"></i></a>
+                <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View" href="/job/{{ $item->id}}"><i class="fa fa-eye"></i></a>
+                <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View" href="{{ route('company.editjob', $item->id) }}"><i class="fa fa-edit"></i></a>
                 {{-- <a class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i></a> --}}
-                <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-original-title="Delete" href="/remove-application/{{$item->job_id}}"><i class="fa fa-trash-o"></i></a>
+                {{-- <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-original-title="Delete" href="/remove-application/{{$item->id}}"><i class="fa fa-trash-o"></i></a> --}}
             </td>
         </tr>
         @endforeach

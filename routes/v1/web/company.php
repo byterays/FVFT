@@ -13,6 +13,7 @@ Route::middleware(['auth', 'is_company'])->group(function () {
     Route::post('/profile', [DashController::class, 'saveProfile'])->name('company.save_profile');
 
     Route::get('/jobs', [DashController::class, 'jobs'])->name('company.jobs');
+    Route::get('/edit/job/{id}', [DashController::class, 'edit'])->name('company.editjob');
     Route::get('/applicants', [DashController::class, 'applicants'])->name('company.applicants');
     Route::get('/settings', [DashController::class, 'profile'])->name('company.settings');
 });

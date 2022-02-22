@@ -80,7 +80,8 @@ class JobsController extends Controller
     }
     public function save(Request $request)
     {
-        $job = DB::table('jobs');
+        $job = new Job();
+        // $job = DB::table('jobs');
         $request->has('company_id') ? $job->company_id = $request->company_id : null;
         $request->has('title') ? $job->title = $request->title : null;
         $request->has('description') ? $job->description = $request->description : null;

@@ -27,5 +27,10 @@ class Company extends Model
     {
         return $this->hasOne("App\Models\CompanyContactPerson", "company_id", "id");
     }
+
+    public function jobs()
+    {
+        return $this->hasMany("App\Models\Job", "company_id", "id");
+    }
     
 }

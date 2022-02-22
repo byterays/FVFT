@@ -13,6 +13,14 @@ use Illuminate\Http\Request;
 class DashController extends Controller
 {
     use CompanyMethods;
+    public function __construct()
+    {
+        $this->experiencelevels = \DB::table('experiencelevels')->get();
+        $this->educationlevels = \DB::table('educationlevels')->get();
+        $this->job_shifts = \DB::table('job_shifts')->get();
+        $this->job_categories = \DB::table('job_categories')->get();
+        $this->countries = \DB::table('countries')->get();   
+    }
     public function dashboard()
     {
         return $this->company_view('company.dash');
@@ -88,6 +96,21 @@ class DashController extends Controller
             $fields['company'] = $company;
         }
         return $this->company_view('company.jobs', $fields);
+    }
+
+
+    public function edit($id)
+    {
+        $job = Job::findOrFail($id);
+        $fields = [
+            "job" => $job,
+            "experiencelevels" => $this->experiencelevels,
+            "job_shifts" => $this->job_shifts,
+            "job_categories" => $this->job_categories,
+            "educationlevels" => $this->educationlevels,
+            "countries" => $this->countries,
+        ];
+        return $this->company_view('company.editjob', $fields);
     }
 
     private function jobsquery($status, $filter = true)
