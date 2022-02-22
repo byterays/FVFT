@@ -40,4 +40,4 @@ Route::prefix('ajax')->group(function () {
     Route::post('/countries', [LocationAjaxController::class, 'countries']);
     Route::post('/states', [LocationAjaxController::class, 'states']);
     Route::post('/cities', [LocationAjaxController::class, 'cities']);
-});g
+});
