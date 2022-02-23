@@ -49,6 +49,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::get('delete/{id}', [CandidateController::class, 'delete'])->name('admin.candidates.delete');
         Route::post('save', [CandidateController::class, 'save']);
         Route::post('store', [CandidateController::class, 'store'])->name('admin.canidates.store');
+        Route::put('update-candidate/{id}', [CandidateController::class, 'update'])->name('admin.canidates.update');
     });
     // Applicants Crude
     Route::prefix('applicants')->group(function () {

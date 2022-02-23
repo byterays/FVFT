@@ -87,10 +87,10 @@ if (session()->get('delete')) {
                                                     href="/admin/candidates/edit/{{ $candidate->id }}"><i
                                                         class="fa fa-pencil"></i></a> --}}
                                             </div>
-                                            <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
+                                            {{-- <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
                                                 data-original-title="Delete"
                                                 href="/admin/candidates/delete/{{ $candidate->id }}"><i
-                                                    class="fa fa-trash-o"></i></a><br>
+                                                    class="fa fa-trash-o"></i></a><br> --}}
                                         </td>
                                     </tr>
                                 @endforeach

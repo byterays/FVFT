@@ -60,7 +60,7 @@ class CandidateController extends Controller
 
     public function editCandidate($id)
     {
-        $employ = Employe::where('id', $id)->with('user')->first(); 
+        $employ = Employe::where('id', $id)->with('user')->first();
         return $this->view('admin.pages.candidates.edit', [
             'action' => "Edit",
             'employ' => $employ,
@@ -72,7 +72,7 @@ class CandidateController extends Controller
             'languages' => $this->languages,
             'job_categories' => $this->job_categories,
             'jobs' => $this->jobs,
-            'employ_experiences' => DB::table('employes_experience')->where("employ_id", $employ->id)->get()
+            'employ_experiences' => DB::table('employes_experience')->where("employ_id", $employ->id)->get(),
         ]);
     }
 
@@ -80,10 +80,15 @@ class CandidateController extends Controller
     {
         // if (!empty($request->language)) {
         //     foreach ($request->language as $key => $language) {
-        //         $languageData[$language] = $request->get('language_level')[$key];
+        //         $languageData[] = [
+        //             'language_id' => $language,
+        //             'language_level' => $request->get('language_level')[$key]
+        //         ];
+        //         // $languageData[$language] = $request->get('language_level')[$key];
         //         // $languageData[] = $request->get('language_level')[$key];
         //     }
         //     $data = json_encode($languageData);
+        //     dd(json_decode($data, true));
         //     dd($data);
         // }
         // dd($request->all());
@@ -129,6 +134,180 @@ class CandidateController extends Controller
 
     private $destination = 'uploads/candidates/profiles/';
     private $fullPictureDestination = 'uploads/candidates/full_picture/';
+
+    public function update(Request $request, $id)
+    {
+        $employe = Employe::where('id', $id)->first();
+        $validator = Validator::make($request->all(), [
+            'first_name' => ['required'],
+            'last_name' => ['required'],
+            'english_dob' => ['required'],
+            'gender' => ['required'],
+            'marital_status' => ['required'],
+            'education_level_id' => ['required'],
+            'mobile_number1' => ['required'],
+            'email' => ['required', 'unique:users,email,' . $employe->user_id],
+            'profile_picture' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:12096'],
+            'full_picture' => ['nullable'],
+            'full_picture.*' => ['image', 'mimes:jpeg,png,jpg', 'max:12096'],
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()]);
+        }
+
+        if ($validator->passes()) {
+            try {
+                \DB::beginTransaction();
+                $user = User::find($employe->user_id);
+                $user->email = $request->email;
+                $user->update([
+                    'email' => $request->email,
+                    'user_type' => 'candidate',
+                ]);
+                $this->__updateEmployee($id, $user->id, $request);
+                \DB::commit();
+                return response()->json(['msg' => 'Candidate updated successfully', 'redirectRoute' => route($this->redirectTo)]);
+            } catch (\Exception $e) {
+                \DB::rollBack();
+                return response()->json(['db_error' => $e->getMessage()]);
+                // return redirect()->back();
+            }
+        }
+    }
+
+    private function __updateEmployee($employe_id, $user_id, $request)
+    {
+        $employe = Employe::find($employe_id);
+        $employe->first_name = $request->first_name;
+        $employe->middle_name = $request->middle_name;
+        $employe->last_name = $request->last_name;
+        $employe->dob = $request->english_dob;
+        $employe->gender = $request->gender;
+        $employe->marital_status = $request->marital_status;
+        $employe->state_id = $request->state_id;
+        $employe->mobile_phone = $request->mobile_number1;
+        $employe->user_id = $user_id;
+        $employe->address = $request->address_line;
+        $employe->city_street = $request->city_street;
+        $employe->height = $request->height;
+        $employe->weight = $request->weight;
+        $employe->is_active = '1';
+        $employe->is_verified = '1';
+        if ($request->hasFile('profile_picture')) {
+            $prf = $request->file('profile_picture');
+            $prfName = time() . '_' . $prf->getClientOriginalName();
+            $employe->avatar = $this->destination . $prfName;
+            $prf->move(public_path($this->destination, 'public'), $prfName);
+        }
+
+        if ($request->hasFile('full_picture')) {
+            foreach ($request->file('full_picture') as $file) {
+                $photoName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path($this->fullPictureDestination, 'public'), $photoName);
+                $photoData[] = $this->fullPictureDestination . $photoName;
+            }
+            $employe->full_picture = json_encode($photoData);
+        }
+
+        $employe->education_level_id = $request->education_level_id;
+        $employe->dob_in_bs = $request->nepali_dob;
+        $employe->mobile_phone2 = $request->mobile_number2;
+        $employe->district_id = $request->district_id;
+        $employe->municipality = $request->municipality;
+        $employe->ward = $request->ward;
+        $employe->passport_number = $request->passport_number;
+        $employe->passport_expiry_date = $request->passport_expiry_date;
+        $employe->is_experience = $request->is_experience !== null ? 1 : 0;
+        if (!empty($request->training)) {
+            foreach ($request->training as $key => $training) {
+                $trainingData[] = $training;
+            }
+            $employe->trainings = json_encode($trainingData);
+        }
+        if (!empty($request->skill)) {
+            foreach ($request->skill as $key => $skill) {
+                $skillData[] = $skill;
+            }
+            $employe->skills = json_encode($skillData);
+        }
+
+        if (!empty($request->language)) {
+            foreach ($request->language as $key => $language) {
+                $languageData[] = [
+                    'language_id' => $language,
+                    'language_level' => $request->get('language_level')[$key],
+                ];
+            }
+            $employe->languages = json_encode($languageData);
+        }
+
+        if ($request->is_experience != null && !empty($request->country_id)) {
+            foreach ($request->country_id as $key => $country) {
+                $experienceData[] =
+                    [
+                    'country_id' => $country,
+                    'job_category_id' => $request->get('job_category_id')[$key],
+                    'job_title_id' => $request->get('job_title')[$key],
+                    'working_year' => $request->get('working_year')[$key],
+                    'working_month' => $request->get('working_month')[$key],
+                ];
+            }
+            $employe->experiences = json_encode($experienceData);
+        }
+        $employe->save();
+
+        $this->__updateExperience($employe->id, $request);
+        $this->__updateEmployeSkill($employe->id, $request);
+        $this->__updateEmployeLanguage($employe->id, $request);
+        
+    }
+
+    public function __updateExperience($employ_id, $request)
+    {
+        DB::table('employes_experience')->where('employ_id', $employ_id)->delete();
+       
+        $fields = [];
+        if ($request->is_experience != null) {
+            foreach ($request->country_id as $key => $country) {
+                $fields['employ_id'] = $employ_id;
+                $fields['country_id'] = $country;
+                $fields['job_category_id'] = $request->get('job_category_id')[$key];
+                $fields['job_title_id'] = $request->get('job_title')[$key];
+                $fields['working_year'] = $request->get('working_year')[$key];
+                $fields['working_month'] = $request->geT('working_month')[$key];
+                DB::table('employes_experience')->insert($fields);
+            }
+
+        }
+    }
+
+
+    private function __updateEmployeSkill($employ_id, $request){
+        DB::table('employes_skills')->where('employ_id', $employ_id)->delete();
+        $fields = [];
+        foreach ($request->skill as $key => $skill) {
+            $fields['employ_id'] = $employ_id;
+            $fields['skills_id'] = $skill;
+            \DB::table('employes_skills')->insert($fields);
+        }
+    }
+
+
+    private function __updateEmployeLanguage($employ_id, $request)
+    {
+        DB::table('employes_languages')->where('employ_id', $employ_id)->delete();
+        $fields = [];
+        foreach ($request->language as $key => $language) {
+            $fields['employ_id'] = $employ_id;
+            $fields['language_id'] = $language;
+            $fields['language_level'] = $request->get('language_level')[$key];
+            // $fields['language_level'] = $request->get('language_level_'.$language)[0];
+            DB::table('employes_languages')->insert($fields);
+        }
+
+    }
+
+    
 
     private function __saveEmployee($user_id, $request)
     {
@@ -191,21 +370,33 @@ class CandidateController extends Controller
             foreach ($request->language as $key => $language) {
                 // $languageData[] = $language;
                 // $languageData[] = $request->get('language_level')[$key];
-                $languageData[$language] = $request->get('language_level')[$key];
+                // $languageData[$language] = $request->get('language_level')[$key];
+                $languageData[] = [
+                    'language_id' => $language,
+                    'language_level' => $request->get('language_level')[$key],
+                ];
             }
             $employe->languages = json_encode($languageData);
         }
 
-        if($request->is_experience != null && !empty($request->country_id)){
-            foreach($request->country_id as $key => $country){
-                $experienceData[$country] = 
+        if ($request->is_experience != null && !empty($request->country_id)) {
+            foreach ($request->country_id as $key => $country) {
+                $experienceData[] =
                     [
-                        'job_category_id' => $request->get('job_category_id')[$key],
-                        'job_title_id' => $request->get('job_title')[$key],
-                        'working_year' => $request->get('working_year')[$key],
-                        'working_month' => $request->get('working_month')[$key],
-                    ];
-                
+                    'country_id' => $country,
+                    'job_category_id' => $request->get('job_category_id')[$key],
+                    'job_title_id' => $request->get('job_title')[$key],
+                    'working_year' => $request->get('working_year')[$key],
+                    'working_month' => $request->get('working_month')[$key],
+                ];
+                // $experienceData[$country] =
+                //     [
+                //         'job_category_id' => $request->get('job_category_id')[$key],
+                //         'job_title_id' => $request->get('job_title')[$key],
+                //         'working_year' => $request->get('working_year')[$key],
+                //         'working_month' => $request->get('working_month')[$key],
+                //     ];
+
             }
             $employe->experiences = json_encode($experienceData);
         }

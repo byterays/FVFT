@@ -27,8 +27,9 @@
     <div class="alert alert-secondary d-none" role="alert"><button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">×</button><span id="db_error" class="db_error">Secondary alert—At vero eos et accusamus
             praesentium!</span></div>
-    <form action="{{ route('admin.canidates.store') }}" method="POST" enctype="multipart/form-data" id="candidateForm">
+    <form action="{{ route('admin.canidates.update', $employ->id) }}" method="POST" enctype="multipart/form-data" id="candidateForm">
         @csrf
+        @method('put')
         <div class="row">
             <div class="col-md-12">
                 <div class="card m-b-20">
@@ -267,7 +268,7 @@
                                         class="form-control" placeholder="City/Street/Tole/Town/Village">
                                 </div>
                                 <div class="col-12 mt-3">
-                                    <input type="text" name="address_line" value="{{ $employ->address_line }}"
+                                    <input type="text" name="address_line" value="{{ $employ->address }}"
                                         class="form-control" placeholder="Address Line">
                                 </div>
                             </div>
@@ -334,7 +335,7 @@
                                                     <option value="">Select Country</option>
                                                     @foreach ($countries as $country)
                                                         <option value="{{ $country->id }}"
-                                                            {{ $country->id == $key ? 'selected' : '' }}>
+                                                            {{ $country->id == $employ_experience['country_id'] ? 'selected' : '' }}>
                                                             {{ $country->name }}</option>
                                                     @endforeach
                                                 </select>
@@ -489,16 +490,16 @@
                                     <select name="language[]" class="form-control select2">
                                         <option value="">Select Language</option>
                                         @foreach ($languages as $language)
-                                            <option value="{{ $language->id }}" {{ $language->id == $key ? "selected" : "" }}>{{ $language->lang }}</option>
+                                            <option value="{{ $language->id }}" {{ $language->id == $employ_language['language_id'] ? "selected" : "" }}>{{ $language->lang }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6">
                                     <select name="language_level[]" class="form-control select2">
                                         <option value="">Select Level</option>
-                                        <option value="Very Good" {{ $employ_language == 'Very Good' ? 'selected' : '' }}>Very Good</option>
-                                        <option value="Good" {{ $employ_language == 'Good' ? 'selected' : '' }}>Good</option>
-                                        <option value="Fair" {{ $employ_language == 'Fair' ? 'selected' : '' }}>Fair</option>
+                                        <option value="Very Good" {{ $employ_language['language_level'] == 'Very Good' ? 'selected' : '' }}>Very Good</option>
+                                        <option value="Good" {{ $employ_language['language_level'] == 'Good' ? 'selected' : '' }}>Good</option>
+                                        <option value="Fair" {{ $employ_language['language_level'] == 'Fair' ? 'selected' : '' }}>Fair</option>
                                     </select>
                                 </div>
                             </div>
@@ -608,9 +609,13 @@
             e.preventDefault();
             $('.require').css('display', 'none');
             let url = $("#candidateForm").attr('action');
+            var data = new FormData($("#candidateForm")[0]);
+            data.append('_method', 'put');
             $.ajax({
                 url: url,
                 type: 'post',
+                // _method: 'put',
+                // data: data,
                 data: new FormData($("#candidateForm")[0]),
                 processData: false,
                 contentType: false,
