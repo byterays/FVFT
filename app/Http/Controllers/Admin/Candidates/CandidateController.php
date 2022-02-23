@@ -7,14 +7,20 @@ use Illuminate\Http\Request;
 use DB;
 use App\Models\User;
 use App\Models\Employe;
+use App\Models\Training;
 use App\Traits\Admin\AdminMethods;
 
 class CandidateController extends Controller
 {
     use AdminMethods;
     public function __construct(){
-
-        $this->countries=DB::table('countries')->get();
+        $this->experiencelevels = \DB::table('experiencelevels')->get();
+        $this->educationlevels = \DB::table('educationlevels')->get();
+        $this->job_shifts = \DB::table('job_shifts')->get();
+        $this->job_categories = \DB::table('job_categories')->get();
+        $this->countries=\DB::table('countries')->get();
+        $this->trainings = Training::get();
+        $this->skills = \DB::table('skills')->get(); 
     }
     public function list(){
         return $this->view('admin.pages.candidates.list',[
@@ -25,6 +31,15 @@ class CandidateController extends Controller
         return $this->view('admin.pages.candidates.editadd',[
             'action'=>"New",
             'countries'=>$this->countries
+        ]);
+    }
+
+    public function create()
+    {
+        return $this->view('admin.pages.candidates.create',[
+            'action' => "New",
+            'countries' => $this->countries,
+            'educationLevels' => $this->educationlevels,
         ]);
     }
     public function edit($id){

@@ -52,11 +52,13 @@
     <link id="theme" rel="stylesheet" type="text/css" media="all"
         href="{{ asset('themes/fvft/') }}/assets/color-skins/color-skins/color10.css" />
     <!-- Data table css -->
-    <link href="{{ asset('themes/fvft/') }}/assets/plugins/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="{{ asset('themes/fvft/') }}/assets/plugins/datatable/dataTables.bootstrap4.min.css"
+        rel="stylesheet" />
     <link href="{{ asset('themes/fvft/') }}/assets/plugins/datatable/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="{{ asset('/') }}css/main.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('/') }}css/admin/style.css">
     <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/nepali.datepicker.min.css') }}">
     <style>
         .toast-top-container {
             position: absolute;
@@ -147,6 +149,7 @@
     <script src="{{ asset('themes/fvft/') }}/assets/js/admin-custom.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('js/toastr.min.js') }}"></script>
+    <script src="{{ asset('js/nepali.datepicker.min.js') }}"></script>
 
     <script>
         $.ajaxSetup({
@@ -169,6 +172,26 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        $(function() {
+            var mainInput = document.getElementsByClassName("nepaliDatePicker");
+            mainInput.nepaliDatePicker({
+                language: "english",
+                onChange: function() {
+                    let nepalidate = $(".nepaliDatePicker").val();
+                    let dateObj = NepaliFunctions.ParseDate(nepalidate);
+                    let engDate = NepaliFunctions.BS2AD(dateObj.parsedDate);
+                    let year = engDate.year;
+                    let month = NepaliFunctions.Get2DigitNo(engDate.month);
+                    let day = NepaliFunctions.Get2DigitNo(engDate.day);
+                    let engValue = year + '-' + month + '-' + day;
+                    $(".datetime").val(engValue);
+                },
+                ndpYear: true,
+                ndpMonth: true,
+                ndpYearCount: 200
+            });
+        });
     </script>
     <script>
         toastr.options = {

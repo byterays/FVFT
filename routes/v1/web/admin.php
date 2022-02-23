@@ -42,6 +42,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::prefix('candidates')->group(function () {
         Route::get('/', [CandidateController::class, 'list'])->name('admin.candidates.list');
         Route::get('new', [CandidateController::class, 'new'])->name('admin.candidates.new');
+        Route::get('create', [CandidateController::class, 'create'])->name('admin.candidates.create');
         Route::get('edit/{id}', [CandidateController::class, 'edit'])->name('admin.candidates.edit');
         Route::get('delete/{id}', [CandidateController::class, 'delete'])->name('admin.candidates.delete');
         Route::post('save', [CandidateController::class, 'save']);
@@ -101,4 +102,6 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
     Route::post('logout', [AuthController::class, 'logout']);
     // Ajax Requests
+
+    Route::get('store-district',[DashboardController::class, "storeDistrict"]);
 });
