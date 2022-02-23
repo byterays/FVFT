@@ -7,6 +7,7 @@ use App\Http\Requests\TrainingRequest;
 use App\Models\Training;
 use App\Traits\Admin\AdminMethods;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TrainingController extends Controller
 {
@@ -73,6 +74,24 @@ class TrainingController extends Controller
         }
         $status = $training->is_active;
         return response()->json(["msg"=>$msg, "status"=>$status]);
+    }
+
+
+    public function ajaxStoreTraining(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'title' => ['required', 'unique:trainings,title'],
+        ]);
+        if($validator->fails()){
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        if($validator->passes()){
+            $input = $request->except('_token');
+            $input['slug'] = createSlug($request->title);
+            $input['is_active'] = 1;
+            $training = Training::create($input);
+            return response()->json(['training_id' => $training->id, 'training_title' => $training->title]);
+        }
     }
 
 

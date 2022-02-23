@@ -191,6 +191,13 @@
                 ndpMonth: true,
                 ndpYearCount: 200
             });
+
+
+            $(".datetimepicker").datepicker({
+                format: 'yyyy-mm-dd',
+                todayHighlight: true,
+                autoclose: true,
+            });
         });
     </script>
     <script>

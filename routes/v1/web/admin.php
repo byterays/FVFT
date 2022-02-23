@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\Ajax\AddController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Jobs\AjaxJobController;
@@ -46,6 +47,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::get('edit/{id}', [CandidateController::class, 'edit'])->name('admin.candidates.edit');
         Route::get('delete/{id}', [CandidateController::class, 'delete'])->name('admin.candidates.delete');
         Route::post('save', [CandidateController::class, 'save']);
+        Route::post('store', [CandidateController::class, 'store'])->name('admin.canidates.store');
     });
     // Applicants Crude
     Route::prefix('applicants')->group(function () {
@@ -93,6 +95,10 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::match(['put', 'patch'], "update/{id}", [TrainingController::class, "update"])->name("update");
         Route::post('update-status', [TrainingController::class, "updateStatus"])->name("updateStatus");
         Route::delete('delete/{id}', [TrainingController::class, "delete"])->name("delete");
+        Route::post('ajax-store-training', [TrainingController::class, "ajaxStoreTraining"])->name("ajaxAddTraining");
+    });
+    Route::group(['prefix' => 'skill/', 'as' => 'admin.skill.'], function(){
+        Route::post('ajax-store-skill', [AddController::class, "ajaxStoreSKill"])->name("ajaxAddSkill");
     });
 
     Route::group(['prefix' => 'user/', 'as' => 'admin.user.'], function(){

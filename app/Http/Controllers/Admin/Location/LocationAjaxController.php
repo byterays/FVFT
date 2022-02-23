@@ -22,4 +22,11 @@ class LocationAjaxController extends Controller
         $cities->where('state_id',$request->state_id);
         return \Response::json($cities->get());
     }
+
+    public function districts(Request $request)
+    {
+        $districts = \DB::table('districts');
+        $districts->where('state_id', $request->state_id);
+        return \Response::json($districts->get());
+    }
 }
