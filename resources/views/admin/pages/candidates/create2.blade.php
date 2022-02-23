@@ -200,9 +200,10 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="height" placeholder="000">
+                                        <input type="text" class="form-control" name="height"
+                                        placeholder="000">
                                         <div class="input-group-append">
-                                            <button type="button" class="btn btn-primary">CM</button>
+                                            <button type="button" class="btn btn-primary">CM</button>                                         
                                         </div>
                                     </div>
                                     <div class="require text-danger height"></div>
@@ -216,9 +217,10 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="weight" placeholder="000">
+                                        <input type="text" class="form-control" name="weight"
+                                        placeholder="000">
                                         <div class="input-group-append">
-                                            <button type="button" class="btn btn-primary">KG</button>
+                                            <button type="button" class="btn btn-primary">KG</button>                                         
                                         </div>
                                     </div>
                                     <div class="require text-danger weight"></div>
@@ -287,7 +289,7 @@
             </div>
             <!-- end col -->
             <div class="col-xl-6">
-
+                
 
                 <div class="card m-b-20">
                     <div class="card-header">
@@ -479,7 +481,7 @@
                         </div>
                         <div class="form-group">
                             <div class="form-label">Language</div>
-                            {{-- @foreach ($statlanguage as $statlang)
+                            @foreach ($statlanguage as $statlang)
                                 <div class="row">
                                     <div class="col-md-4">
                                         <label for="" class="">{{ $statlang->lang }}</label>
@@ -501,40 +503,19 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach --}}
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <select name="language[]" class="form-control select2">
-                                        <option value="">Select Language</option>
-                                        @foreach ($languages as $language)
-                                            <option value="{{ $language->id }}">{{ $language->lang }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <select name="language_level[]" class="form-control select2">
-                                        <option value="">Select Level</option>
-                                        <option value="Very Good">Very Good</option>
-                                        <option value="Good">Good</option>
-                                        <option value="Fair">Fair</option>
-                                    </select>
-                                </div>
-                            </div>
+                            @endforeach
                             <div id="appendLanguageDiv">
 
                             </div>
-                            <div class="form-group mt-5">
-                                {{-- <div class="form-group"> --}}
-                                <span class="cur_sor" id="addLanguage">Add Language <i
-                                        class="fa fa-plus"></i></span>
-                                {{-- </div> --}}
-                                {{-- <select name="" class="form-control select2" id="languageSelect">
+                            <div class="d-inline-flex">
+                                <span>Add New Language</span>
+                                <select name="" class="form-control select2" id="languageSelect">
                                     <option value="">Select Language</option>
                                     @foreach ($languages as $language)
                                         <option value="{{ $language->id }}" data-id="{{ $language->id }}"
                                             data-name="{{ $language->lang }}">{{ $language->lang }}</option>
                                     @endforeach
-                                </select> --}}
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -846,33 +827,6 @@
                         </div>
                         </div>`;
             $("#appendLanguageDiv").append(html);
-            count++;
-        });
-
-
-        $("#addLanguage").on('click', () => {
-            let language_html = `<div class="row mt-5" id="languageRow_` + count + `">
-                                <div class="col-md-6">
-                                    <select name="language[]" class="form-control select2" id="lang_`+count+`">
-                                        <option value="">Select Language</option>
-                                        @foreach ($languages as $language)
-                                            <option value="{{ $language->id }}">{{ $language->lang }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-5">
-                                    <select name="language_level[]" class="form-control select2">
-                                        <option value="">Select Level</option>
-                                        <option value="Very Good">Very Good</option>
-                                        <option value="Good">Good</option>
-                                        <option value="Fair">Fair</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-1 mt-2">
-                            <span class="text-danger cur_sor" onclick="removeRow('languageRow_` + count + `')">X</span>
-                        </div>
-                            </div>`;
-            $("#appendLanguageDiv").append(language_html);
             count++;
         });
         // End Language Section

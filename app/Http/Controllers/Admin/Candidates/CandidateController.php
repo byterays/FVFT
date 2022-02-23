@@ -164,7 +164,7 @@ class CandidateController extends Controller
         if(!empty($request->language)){
             foreach($request->language as $key => $language){
                 $languageData[] = $language;
-                $languageData[] = $request->get('language_level_'.$language);
+                $languageData[] = $request->get('language_level')[$key];
             }
             $employe->languages = json_encode($languageData);
         }
@@ -193,7 +193,8 @@ class CandidateController extends Controller
         foreach($request->language as $key => $language){
             $fields['employ_id'] = $employ_id;
             $fields['language_id'] = $language;
-            $fields['language_level'] = $request->get('language_level_'.$language)[0];
+            $fields['language_level'] = $request->get('language_level')[$key];
+            // $fields['language_level'] = $request->get('language_level_'.$language)[0];
             DB::table('employes_languages')->insert($fields);
         }
         
