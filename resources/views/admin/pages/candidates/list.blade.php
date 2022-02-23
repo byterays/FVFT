@@ -81,8 +81,11 @@ if (session()->get('delete')) {
                                             <div data-toggle="tooltip" data-original-title="Edit"
                                                 style="display: inline-block;">
                                                 <a class="btn btn-success btn-sm text-white mb-1"
-                                                    href="/admin/candidates/edit/{{ $candidate->id }}"><i
+                                                    href="{{ route('admin.candidates.editCandidate', $candidate->id) }}"><i
                                                         class="fa fa-pencil"></i></a>
+                                                {{-- <a class="btn btn-success btn-sm text-white mb-1"
+                                                    href="/admin/candidates/edit/{{ $candidate->id }}"><i
+                                                        class="fa fa-pencil"></i></a> --}}
                                             </div>
                                             <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
                                                 data-original-title="Delete"

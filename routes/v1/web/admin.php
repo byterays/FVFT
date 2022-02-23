@@ -45,6 +45,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::get('new', [CandidateController::class, 'new'])->name('admin.candidates.new');
         Route::get('create', [CandidateController::class, 'create'])->name('admin.candidates.create');
         Route::get('edit/{id}', [CandidateController::class, 'edit'])->name('admin.candidates.edit');
+        Route::get('edit-candidate/{id}', [CandidateController::class, 'editCandidate'])->name('admin.candidates.editCandidate');
         Route::get('delete/{id}', [CandidateController::class, 'delete'])->name('admin.candidates.delete');
         Route::post('save', [CandidateController::class, 'save']);
         Route::post('store', [CandidateController::class, 'store'])->name('admin.canidates.store');

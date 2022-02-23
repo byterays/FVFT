@@ -87,7 +87,6 @@ const loadDistricts = async (state_id) => {
 
 
 const getDistricts = (state_id) => {
-    console.log(state_id);
     fetch(appurl + "ajax/districts", {
         method: "POST",
         headers: {

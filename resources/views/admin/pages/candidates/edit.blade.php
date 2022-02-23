@@ -40,8 +40,10 @@
                             <div class="col-xl-4">
                                 <div class="form-group profilePicture" id="profilePicture">
                                     <label for="">Profile Picture</label>
-                                    <input type="file" name="profile_picture" class="dropify"
-                                        data-allowed-file-extensions="png jpg jpeg" data-height="180">
+                                    <input type="file" name="profile_picture"
+                                        data-default-file="{{ $employ->avatar != null && file_exists($employ->avatar) ? env('APP_URL') . $employ->avatar : '' }}"
+                                        class="dropify" data-allowed-file-extensions="png jpg jpeg"
+                                        data-height="180">
                                     <div class="require text-danger profile_picture"></div>
                                 </div>
                             </div>
@@ -73,8 +75,8 @@
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" id="first_name" name="first_name"
-                                        placeholder="Enter First Name">
+                                    <input type="text" class="form-control" value="{{ $employ->first_name }}"
+                                        id="first_name" name="first_name" placeholder="Enter First Name">
                                     <div class="require text-danger first_name"></div>
                                 </div>
                             </div>
@@ -85,8 +87,8 @@
                                     <label for="" class="form-label">Middle Name</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" id="middle_name" name="middle_name"
-                                        placeholder="Enter Middle Name">
+                                    <input type="text" class="form-control" value="{{ $employ->middle_name }}"
+                                        id="middle_name" name="middle_name" placeholder="Enter Middle Name">
                                 </div>
                             </div>
                         </div>
@@ -97,8 +99,8 @@
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" id="last_name" name="last_name"
-                                        placeholder="Enter Last Name">
+                                    <input type="text" class="form-control" value="{{ $employ->last_name }}"
+                                        id="last_name" name="last_name" placeholder="Enter Last Name">
                                     <div class="require text-danger last_name"></div>
                                 </div>
                             </div>
@@ -112,9 +114,12 @@
                                 <div class="col-md-8">
                                     <select name="gender" class="form-control select2">
                                         <option value="">Select Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Other">Other</option>
+                                        <option value="Male" {{ $employ->gender == 'Male' ? 'selected' : '' }}>Male
+                                        </option>
+                                        <option value="Female" {{ $employ->gender == 'Female' ? 'selected' : '' }}>Female
+                                        </option>
+                                        <option value="Other" {{ $employ->gender == 'Other' ? 'selected' : '' }}>Other
+                                        </option>
                                     </select>
                                     <div class="require text-danger gender"></div>
                                 </div>
@@ -129,45 +134,21 @@
                                 <div class="col-md-8">
                                     <select name="marital_status" class="form-control select2">
                                         <option value="">Select Marital Status</option>
-                                        <option value="Unmarried">Unmarried</option>
-                                        <option value="Married">Married</option>
-                                        <option value="Divorced">Divorced</option>
-                                        <option value="Widow">Widow</option>
+                                        <option value="Unmarried"
+                                            {{ $employ->marital_status == 'Unmarried' ? 'selected' : '' }}>Unmarried
+                                        </option>
+                                        <option value="Married"
+                                            {{ $employ->marital_status == 'Married' ? 'selected' : '' }}>Married</option>
+                                        <option value="Divorced"
+                                            {{ $employ->marital_status == 'Divorced' ? 'selected' : '' }}>Divorced
+                                        </option>
+                                        <option value="Widow" {{ $employ->marital_status == 'Widow' ? 'selected' : '' }}>
+                                            Widow</option>
                                     </select>
                                     <div class="require text-danger marital_status"></div>
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="d-inline-flex">
-                            <div class="form-group">
-                                <div class="form-label">Gender&nbsp;<span class="req">*</span></div>
-                                <div class="custom-controls-stacked d-inline-flex">
-                                    <label class="custom-control custom-radio">
-                                        <input type="radio" class="custom-control-input" value="Male" name="gender">
-                                        <span class="custom-control-label">Male</span>
-                                    </label>
-                                    <label class="custom-control custom-radio ml-2">
-                                        <input type="radio" class="custom-control-input" value="Female" name="gender">
-                                        <span class="custom-control-label">Female</span>
-                                    </label>
-                                    <label class="custom-control custom-radio ml-2">
-                                        <input type="radio" class="custom-control-input" value="Other" name="gender">
-                                        <span class="custom-control-label">Other</span>
-                                    </label>
-                                </div>
-                                <div class="require text-danger gender"></div>
-                            </div>
-                            <div class="form-group col-md-9 ml-5">
-                                <div class="form-label">Marital Status&nbsp;<span class="req">*</span></div>
-                                <select name="marital_status" class="form-control select2">
-                                    <option value="Unmarried">Unmarried</option>
-                                    <option value="Married">Married</option>
-                                    <option value="Divorced">Divorced</option>
-                                    <option value="Widow">Widow</option>
-                                </select>
-                                <div class="require text-danger marital_status"></div>
-                            </div>
-                        </div> --}}
 
                         <div class="form-group">
                             <div class="row">
@@ -175,7 +156,8 @@
                                     <label for="" class="form-label">Date of Birth(Nepali B.S)</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control nepaliDatePicker" name="nepali_dob" readonly
+                                    <input type="text" class="form-control nepaliDatePicker"
+                                        value="{{ $employ->dob_in_bs }}" name="nepali_dob" readonly
                                         placeholder="Enter Birth Date" id="nepali-datepicker">
                                     <div class="require text-danger nepali_dob"></div>
                                 </div>
@@ -188,8 +170,8 @@
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control datetime" name="english_dob" readonly
-                                        placeholder="Enter Birth Date">
+                                    <input type="text" class="form-control datetime" value="{{ $employ->dob }}"
+                                        name="english_dob" readonly placeholder="Enter Birth Date">
                                     <div class="require text-danger english_dob"></div>
                                 </div>
                             </div>
@@ -201,7 +183,8 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="height" placeholder="000">
+                                        <input type="text" class="form-control" value="{{ $employ->height }}"
+                                            name="height" placeholder="000">
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-primary">CM</button>
                                         </div>
@@ -217,7 +200,8 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="weight" placeholder="000">
+                                        <input type="text" class="form-control" value="{{ $employ->weight }}"
+                                            name="weight" placeholder="000">
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-primary">KG</button>
                                         </div>
@@ -238,15 +222,16 @@
                         <div class="form-group">
                             <label for="">Mobile Number&nbsp;<span class="req">*</span></label>
                             <div class="d-inline-flex">
-                                <input type="text" name="mobile_number1" class="form-control"
-                                    placeholder="Enter Mobile Number 1">
-                                <input type="text" name="mobile_number2" class="form-control ml-3"
-                                    placeholder="Enter Mobile Number 2">
+                                <input type="text" name="mobile_number1" value="{{ $employ->mobile_phone }}"
+                                    class="form-control" placeholder="Enter Mobile Number 1">
+                                <input type="text" name="mobile_number2" value="{{ $employ->mobile_phone2 }}"
+                                    class="form-control ml-3" placeholder="Enter Mobile Number 2">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="" class="form-label">Email ID</label>
-                            <input type="email" class="form-control" name="email" placeholder="Enter Email ID">
+                            <input type="email" class="form-control" name="email" value="{{ $employ->user->email }}"
+                                placeholder="Enter Email ID">
                             <div class="require text-danger email"></div>
                         </div>
                         <div class="form-group">
@@ -254,32 +239,36 @@
                             <div class="row">
                                 <div class="col-6">
                                     <select name="state_id" class="form-control select2" id="states"
-                                        onchange="patchGetDistricts(this)">
+                                        onchange="patchGetDistricts(this)" value="{{ $employ->state_id }}">
                                         <option value="">Select State</option>
                                         @foreach ($states as $state)
-                                            <option value="{{ $state->id }}">{{ $state->name }}</option>
+                                            <option value="{{ $state->id }}"
+                                                {{ $state->id == $employ->state_id ? 'selected' : '' }}>
+                                                {{ $state->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-6">
-                                    <select name="district_id" class="form-control select2" id="districts">
-                                        <option value="">District</option>
+                                    <select name="district_id" class="form-control select2" id="districts"
+                                        value="{{ $employ->district_id }}">
+                                        <option value="">Select District</option>
                                     </select>
                                 </div>
                                 <div class="col-6 mt-3">
-                                    <input type="text" name="municipality" class="form-control"
-                                        placeholder="Municipality">
+                                    <input type="text" name="municipality" value="{{ $employ->municipality }}"
+                                        class="form-control" placeholder="Municipality">
                                 </div>
                                 <div class="col-6 mt-3">
-                                    <input type="text" name="ward" class="form-control" placeholder="Ward">
+                                    <input type="text" name="ward" class="form-control" value="{{ $employ->ward }}"
+                                        placeholder="Ward">
                                 </div>
                                 <div class="col-12 mt-3">
-                                    <input type="text" name="city_street" class="form-control"
-                                        placeholder="City/Street/Tole/Town/Village">
+                                    <input type="text" name="city_street" value="{{ $employ->city_street }}"
+                                        class="form-control" placeholder="City/Street/Tole/Town/Village">
                                 </div>
                                 <div class="col-12 mt-3">
-                                    <input type="text" name="address_line" class="form-control"
-                                        placeholder="Address Line">
+                                    <input type="text" name="address_line" value="{{ $employ->address_line }}"
+                                        class="form-control" placeholder="Address Line">
                                 </div>
                             </div>
                         </div>
@@ -298,12 +287,13 @@
                     <div class="card-body mb-0">
                         <div class="form-group">
                             <label for="" class="form-label">Passport Number</label>
-                            <input type="text" name="passport_number" class="form-control"
-                                placeholder="Enter Passport Number">
+                            <input type="text" name="passport_number" value="{{ $employ->passport_number }}"
+                                class="form-control" placeholder="Enter Passport Number">
                         </div>
                         <div class="form-group">
                             <label for="" class="form-label">Passport Expiry Date</label>
-                            <input type="text" name="passport_expiry_date" class="form-control datetimepicker"
+                            <input type="text" name="passport_expiry_date" value="{{ $employ->passport_expiry_date }}"
+                                class="form-control datetimepicker"
                                 placeholder="Enter Passport Expiry Date, eg:2020-01-02">
                         </div>
                     </div>
@@ -320,95 +310,104 @@
 
                             <div class="custom-controls-stacked d-inline-flex">
                                 <label class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" value="Yes" name="is_experience">
+                                    <input type="radio" class="custom-control-input" value="Yes" name="is_experience"
+                                        {{ $employ->is_experience == 1 ? 'checked' : '' }}>
                                     <span class="custom-control-label">Yes</span>
                                 </label>
                                 <label class="custom-control custom-radio ml-5">
-                                    <input type="radio" class="custom-control-input" value="No" name="is_experience">
+                                    <input type="radio" class="custom-control-input" value="No" name="is_experience"
+                                        {{ $employ->is_experience == 0 ? 'checked' : '' }}>
                                     <span class="custom-control-label">No</span>
                                 </label>
                             </div>
 
                         </div>
                         <div class="row d-none" id="experienceData">
-                            <div class="form-group">
-                                <div class="form-label">Experience 1</div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="">Country</label>
-                                            <select name="country_id[]" class="form-control select2" id="">
-                                                <option value="">Select Country</option>
-                                                @foreach ($countries as $country)
-                                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                                @endforeach
-                                            </select>
+                            @foreach (json_decode($employ->experiences, true) as $key => $employ_experience)
+                                <div class="form-group">
+                                    <div class="form-label">Experience</div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Country</label>
+                                                <select name="country_id[]" class="form-control select2" id="">
+                                                    <option value="">Select Country</option>
+                                                    @foreach ($countries as $country)
+                                                        <option value="{{ $country->id }}"
+                                                            {{ $country->id == $key ? 'selected' : '' }}>
+                                                            {{ $country->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="">Job Category</label>
-                                            <select name="job_category_id[]" class="form-control select2" id="">
-                                                <option value="">Select Job Category</option>
-                                                @foreach ($job_categories as $job_category)
-                                                    <option value="{{ $job_category->id }}">
-                                                        {{ $job_category->functional_area }}</option>
-                                                @endforeach
-                                            </select>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Job Category</label>
+                                                <select name="job_category_id[]" class="form-control select2" id="">
+                                                    <option value="">Select Job Category</option>
+                                                    @foreach ($job_categories as $job_category)
+                                                        <option value="{{ $job_category->id }}"
+                                                            {{ $job_category->id == $employ_experience['job_category_id'] ? 'selected' : '' }}>
+                                                            {{ $job_category->functional_area }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="">Job Title</label>
-                                            <select name="job_title[]" class="form-control select2" id="">
-                                                <option value="">Select Job Title</option>
-                                                @foreach ($jobs as $job)
-                                                    <option value="{{ $job->id }}">{{ $job->title }}</option>
-                                                @endforeach
-                                            </select>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Job Title</label>
+                                                <select name="job_title[]" class="form-control select2" id="">
+                                                    <option value="">Select Job Title</option>
+                                                    @foreach ($jobs as $job)
+                                                        <option value="{{ $job->id }}"
+                                                            {{ $job->id == $employ_experience['job_title_id'] ? 'selected' : '' }}>
+                                                            {{ $job->title }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="">Working Duration</label>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <select name="working_year[]" class="form-control select2" id="">
-                                                        <option value="">Year</option>
-                                                        <?php
-                                                        $dyear = old('year');
-                                                        $year = date('Y');
-                                                        $min = $year - 250;
-                                                        $max = $year;
-                                                        for ($i = $max; $i >= $min; $i--) {
-                                                            $selected = $dyear == $i ? 'selected' : '';
-                                                            echo "<option value='$i' $selected>$i</option>";
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <select name="working_month[]" class="form-control select2" id="">
-                                                        <option value="">Month</option>
-                                                        <?php
-                                                        $dmonth = old('month');
-                                                        ?>
-                                                        <?php for( $m = 1; $m <= 12; ++$m ) {
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Working Duration</label>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <select name="working_year[]" class="form-control select2" id="">
+                                                            <option value="">Year</option>
+                                                            <?php
+                                                            $dyear = $employ_experience['working_year'];
+                                                            $year = date('Y');
+                                                            $min = $year - 250;
+                                                            $max = $year;
+                                                            for ($i = $max; $i >= $min; $i--) {
+                                                                $selected = $dyear == $i ? 'selected' : '';
+                                                                echo "<option value='$i' $selected>$i</option>";
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <select name="working_month[]" class="form-control select2" id="">
+                                                            <option value="">Month</option>
+                                                            <?php
+                                                            $dmonth = $employ_experience['working_month'];
+                                                            ?>
+                                                            <?php for( $m = 1; $m <= 12; ++$m ) {
                                             $month_label = date('F', mktime(0, 0, 0, $m, 1));
                                             $selected_month = $dmonth == $month_label ? 'selected' : '';
                                             ?>
-                                                        <option value="<?php echo $month_label; ?>" <?php echo $selected_month; ?>>
-                                                            <?php echo $month_label; ?>
-                                                        </option>
-                                                        <?php } ?>
-                                                    </select>
+                                                            <option value="<?php echo $month_label; ?>" <?php echo $selected_month; ?>>
+                                                                <?php echo $month_label; ?>
+                                                            </option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
 
                             <div id="appendExperience">
 
@@ -433,12 +432,13 @@
                             <select name="education_level_id" class="form-control select2">
                                 <option value="">Select Level</option>
                                 @foreach ($educationLevels as $educationLevel)
-                                    <option value="{{ $educationLevel->id }}">{{ $educationLevel->title }}</option>
+                                    <option value="{{ $educationLevel->id }}"
+                                        {{ $educationLevel->id == $employ->education_level_id ? 'selected' : '' }}>
+                                        {{ $educationLevel->title }}</option>
                                 @endforeach
                             </select>
                             <div class="require text-danger education_level_id"></div>
                         </div>
-
                         <div class="form-group">
                             <label for="">Training</label>
                             <div class="row">
@@ -447,7 +447,9 @@
                                         id="training">
                                         <option value="">Select Training</option>
                                         @foreach ($trainings as $training)
-                                            <option value="{{ $training->id }}">{{ $training->title }}</option>
+                                            <option value="{{ $training->id }}"
+                                                {{ in_array($training->id, json_decode($employ->trainings)) ? 'selected' : '' }}>
+                                                {{ $training->title }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -467,7 +469,9 @@
                                     <select name="skill[]" class="form-control select2" multiple="multiple" id="skill">
                                         <option value="">Select Skill</option>
                                         @foreach ($skills as $skill)
-                                            <option value="{{ $skill->id }}">{{ $skill->title }}</option>
+                                            <option value="{{ $skill->id }}"
+                                                {{ in_array($skill->id, json_decode($employ->skills)) ? 'selected' : '' }}>
+                                                {{ $skill->title }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -476,51 +480,29 @@
                                         <span><i class="fa fa-plus"></i></span></span>
                                 </div>
                             </div>
-
                         </div>
                         <div class="form-group">
                             <div class="form-label">Language</div>
-                            {{-- @foreach ($statlanguage as $statlang)
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="" class="">{{ $statlang->lang }}</label>
-                                        <input type="hidden" name="language[]" class="form-control"
-                                            value="{{ $statlang->id }}">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="custom-controls-stacked d-inline-flex">
-                                            <label class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" value="Good"
-                                                    name="language_level_{{ $statlang->id }}[]">
-                                                <span class="custom-control-label">Good</span>
-                                            </label>
-                                            <label class="custom-control custom-radio ml-2">
-                                                <input type="radio" class="custom-control-input" value="Fair"
-                                                    name="language_level_{{ $statlang->id }}[]">
-                                                <span class="custom-control-label">Fair</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach --}}
-                            <div class="row">
+                            @foreach(json_decode($employ->languages, true) as $key => $employ_language)
+                            <div class="row {{ !$loop->first ? 'mt-2' : '' }}">
                                 <div class="col-md-6">
                                     <select name="language[]" class="form-control select2">
                                         <option value="">Select Language</option>
                                         @foreach ($languages as $language)
-                                            <option value="{{ $language->id }}">{{ $language->lang }}</option>
+                                            <option value="{{ $language->id }}" {{ $language->id == $key ? "selected" : "" }}>{{ $language->lang }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6">
                                     <select name="language_level[]" class="form-control select2">
                                         <option value="">Select Level</option>
-                                        <option value="Very Good">Very Good</option>
-                                        <option value="Good">Good</option>
-                                        <option value="Fair">Fair</option>
+                                        <option value="Very Good" {{ $employ_language == 'Very Good' ? 'selected' : '' }}>Very Good</option>
+                                        <option value="Good" {{ $employ_language == 'Good' ? 'selected' : '' }}>Good</option>
+                                        <option value="Fair" {{ $employ_language == 'Fair' ? 'selected' : '' }}>Fair</option>
                                     </select>
                                 </div>
                             </div>
+                            @endforeach
                             <div id="appendLanguageDiv">
 
                             </div>
@@ -558,12 +540,19 @@
     <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            // getDistricts($("#select-state").val());
+            getDistricts($("#states").val());
             $('.datetime').datepicker({
                 format: 'yyyy-mm-dd',
                 autoclose: true,
                 todayHighlight: true,
             });
+
+            var is_experience = $("input[name=is_experience]").val();
+            if (is_experience == "Yes") {
+                $("#experienceData").removeClass('d-none');
+            } else if (is_experience == "No") {
+                $("#experienceData").addClass('d-none');
+            }
 
             $("#fullPicture").on("change", function() {
                 if ($("#fullPicture")[0].files.length > 5) {
@@ -854,7 +843,7 @@
         $("#addLanguage").on('click', () => {
             let language_html = `<div class="row mt-5" id="languageRow_` + count + `">
                                 <div class="col-md-6">
-                                    <select name="language[]" class="form-control select2" id="lang_`+count+`">
+                                    <select name="language[]" class="form-control select2" id="lang_` + count + `">
                                         <option value="">Select Language</option>
                                         @foreach ($languages as $language)
                                             <option value="{{ $language->id }}">{{ $language->lang }}</option>
@@ -913,9 +902,9 @@
     </script>
     <script>
         const _token = $('meta[name="csrf-token"]')[0].content;
-        const state_id = {{ isset($candidate->state_id) ? $candidate->state_id : '3871' }};
-        const city_id = {{ isset($candidate->city_id) ? $candidate->city_id : 'null' }};
-        const district_id = {{ isset($candidate->district_id) ? $candidate->district_id : 'null' }};
+        const state_id = {{ isset($employ->state_id) ? $employ->state_id : '3871' }};
+        const city_id = {{ isset($employ->city_id) ? $employ->city_id : 'null' }};
+        const district_id = {{ isset($employ->district_id) ? $employ->district_id : 'null' }};
         const appurl = "{{ env('APP_URL') }}";
     </script>
 @endsection
