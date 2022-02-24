@@ -2,7 +2,18 @@
     <div class="col-md-12">
         <div class="card m-b-20">
             <div class="card-header">
+                @if(Request::is('candidate/profile'))
+                <div class="col-md-6">
+                    <h3>{{ strtoupper('Picture') }}</h3>
+                </div>
+                <div class="col-md-6">
+                    <a href="{{ $viewRoute }}" class="btn btn-success mr-auto">View Profile</a>
+                </div>
+                @else
                 <h3 class="card-title">{{ strtoupper('Picture') }}</h3>
+                @endif
+                
+
             </div>
             <div class="card-body">
                 <div class="row">

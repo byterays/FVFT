@@ -65,6 +65,7 @@ class CandidateController extends Controller
         $employ = Employe::where('id', $id)->with('user')->first();
         return $this->view('admin.pages.candidates.edit', [
             'action' => "Edit",
+            'viewRoute' => route('admin.candidates.show', $employ->id),
             'employ' => $employ,
             'countries' => $this->countries,
             'educationLevels' => $this->educationlevels,
@@ -84,6 +85,7 @@ class CandidateController extends Controller
         return $this->view('admin.pages.candidates.show', [
             'action' => "View",
             'employ' => $employ,
+            'editRoute' => route('admin.candidates.editCandidate', $employ->id),
         ]);
     }
 

@@ -73,6 +73,7 @@ class DashController extends Controller
             // 'job_categories' => $this->job_categories,
             'jobs' => $this->jobs,
             'employ_experiences' => DB::table('employes_experience')->where("employ_id", $employ->id)->get(),
+            'viewRoute' => route('candidate.profile.show', $employ->id),
         ]);
     }
     public function saveProfile(Request $request)
@@ -173,6 +174,17 @@ class DashController extends Controller
     private $destination = 'uploads/candidates/profiles/';
     private $fullPictureDestination = 'uploads/candidates/full_picture/';
     private $redirectTo = "candidate.profile";
+
+
+    public function show($id)
+    {
+        $employ = Employe::where('user_id',\Auth::user()->id)->first();
+        return $this->client_view('candidates.show', [
+            'action' => "View",
+            'employ' => $employ,
+            'editRoute' => route('candidate.profile'),
+        ]);
+    }
 
     public function update(Request $request, $id)
     {

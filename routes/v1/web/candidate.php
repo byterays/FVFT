@@ -10,6 +10,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashController::class, 'jobs'])->name('candidate.dashboard');
     Route::get('/jobs', [DashController::class, 'jobs'])->name('candidate.jobs');
     Route::get('/profile', [DashController::class, 'profile'])->name('candidate.profile');
+    Route::get('/show/{id}', [DashController::class, 'show'])->name('candidate.profile.show');
     Route::get('/safty-tips', [DashController::class, 'safty-tips'])->name('candidate.safty-tips');
     Route::get('settings', [DashController::class, 'settings'])->name('candidate.settings');
     Route::get('job-preferences', [DashController::class, 'job_preferences'])->name('candidate.job-preferences');
