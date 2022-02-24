@@ -297,14 +297,30 @@
                     </div>
                     <div class="card-body mb-0">
                         <div class="form-group">
-                            <label for="" class="form-label">Passport Number</label>
-                            <input type="text" name="passport_number" class="form-control"
-                                placeholder="Enter Passport Number">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="" class="form-label">Passport Number</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" name="passport_number" class="form-control"
+                                    placeholder="Enter Passport Number">
+                                </div>
+                            </div>
+                            
+                            
                         </div>
                         <div class="form-group">
-                            <label for="" class="form-label">Passport Expiry Date</label>
-                            <input type="text" name="passport_expiry_date" class="form-control datetimepicker"
-                                placeholder="Enter Passport Expiry Date, eg:2020-01-02">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="" class="form-label">Passport Expiry Date</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" name="passport_expiry_date" class="form-control datetimepicker"
+                                    placeholder="Enter Passport Expiry Date, eg:2020-01-02">
+                                </div>
+                            </div>
+                            
+                            
                         </div>
                     </div>
                 </div>
