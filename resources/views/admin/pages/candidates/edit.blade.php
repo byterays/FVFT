@@ -318,7 +318,6 @@
                     </div>
                     <div class="card-body">
                         <div class="card p-2" style="width: 15rem">
-
                             <div class="custom-controls-stacked d-inline-flex">
                                 <label class="custom-control custom-radio">
                                     <input type="radio" class="custom-control-input" value="Yes" name="is_experience"
@@ -334,6 +333,7 @@
 
                         </div>
                         <div class="row d-none" id="experienceData">
+                            @if(json_decode($employ->experiences, true) != null)
                             @foreach (json_decode($employ->experiences, true) as $key => $employ_experience)
                                 <div class="form-group">
                                     <div class="form-label">Experience</div>
@@ -419,6 +419,9 @@
                                     </div>
                                 </div>
                             @endforeach
+                            @else
+                            @include('admin.pages.candidates.partial.experience')
+                            @endif
 
                             <div id="appendExperience">
 
@@ -457,11 +460,15 @@
                                     <select name="training[]" class="form-control select2 training" multiple="multiple"
                                         id="training">
                                         <option value="">Select Training</option>
+                                        @if(json_decode($employ->trainings) != null)
                                         @foreach ($trainings as $training)
                                             <option value="{{ $training->id }}"
                                                 {{ in_array($training->id, json_decode($employ->trainings)) ? 'selected' : '' }}>
                                                 {{ $training->title }}</option>
                                         @endforeach
+                                        @else
+                                        @include('admin.pages.candidates.partial.training')
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="col-md-6">
@@ -479,11 +486,15 @@
                                 <div class="col-md-6">
                                     <select name="skill[]" class="form-control select2" multiple="multiple" id="skill">
                                         <option value="">Select Skill</option>
+                                        @if(json_decode($employ->skills) != null)
                                         @foreach ($skills as $skill)
                                             <option value="{{ $skill->id }}"
                                                 {{ in_array($skill->id, json_decode($employ->skills)) ? 'selected' : '' }}>
                                                 {{ $skill->title }}</option>
                                         @endforeach
+                                        @else
+                                        @include('admin.pages.candidates.partial.skill')
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="col-md-6">
@@ -494,6 +505,7 @@
                         </div>
                         <div class="form-group">
                             <div class="form-label">Language</div>
+                            @if(json_decode($employ->languages, true) != null)
                             @foreach (json_decode($employ->languages, true) as $key => $employ_language)
                                 <div class="row {{ !$loop->first ? 'mt-2' : '' }}">
                                     <div class="col-md-6">
@@ -522,6 +534,9 @@
                                     </div>
                                 </div>
                             @endforeach
+                            @else
+                            @include('admin.pages.candidates.partial.language')
+                            @endif
                             <div id="appendLanguageDiv">
 
                             </div>
@@ -567,9 +582,13 @@
             });
 
             var is_experience = $("input[name=is_experience]").val();
-            if (is_experience == "Yes") {
+            var isexp = "{{ $employ->is_experience }}";
+            console.log(isexp);
+            if (is_experience == "Yes" && isexp != '') {
                 $("#experienceData").removeClass('d-none');
             } else if (is_experience == "No") {
+                $("#experienceData").addClass('d-none');
+            } else if(isexp == ''){
                 $("#experienceData").addClass('d-none');
             }
 
