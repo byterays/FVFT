@@ -14,8 +14,6 @@
             max-width: 50% !important;
         }
 
-        
-
     </style>
     <div class="page-header">
         <h4 class="page-title">{{ $action }} Candidate</h4>
@@ -29,7 +27,8 @@
     <div class="alert alert-secondary d-none" role="alert"><button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">×</button><span id="db_error" class="db_error">Secondary alert—At vero eos et accusamus
             praesentium!</span></div>
-    <form action="{{ route('admin.candidates.update', $employ->id) }}" method="POST" enctype="multipart/form-data" id="candidateForm">
+    <form action="{{ route('admin.candidates.update', $employ->id) }}" method="POST" enctype="multipart/form-data"
+        id="candidateForm">
         @csrf
         @method('put')
         <div class="row">
@@ -289,21 +288,30 @@
                     </div>
                     <div class="card-body mb-0">
                         <div class="form-group">
-                            <label for="" class="form-label">Passport Number</label>
-                            <input type="text" name="passport_number" value="{{ $employ->passport_number }}"
-                                class="form-control" placeholder="Enter Passport Number">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="" class="form-label">Passport Number</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" name="passport_number" value="{{ $employ->passport_number }}"
+                                        class="form-control" placeholder="Enter Passport Number">
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="" class="form-label">Passport Expiry Date</label>
-                            <input type="text" name="passport_expiry_date" value="{{ $employ->passport_expiry_date }}"
-                                class="form-control datetimepicker"
-                                placeholder="Enter Passport Expiry Date, eg:2020-01-02">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="" class="form-label">Passport Expiry Date</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" name="passport_expiry_date"
+                                        value="{{ $employ->passport_expiry_date }}" class="form-control datetimepicker"
+                                        placeholder="Enter Passport Expiry Date, eg:2020-01-02">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
-
                 <div class="card m-b-20">
                     <div class="card-header">
                         <h3 class="card-title">{{ strtoupper('Experience') }}</h3>
@@ -486,25 +494,33 @@
                         </div>
                         <div class="form-group">
                             <div class="form-label">Language</div>
-                            @foreach(json_decode($employ->languages, true) as $key => $employ_language)
-                            <div class="row {{ !$loop->first ? 'mt-2' : '' }}">
-                                <div class="col-md-6">
-                                    <select name="language[]" class="form-control select2">
-                                        <option value="">Select Language</option>
-                                        @foreach ($languages as $language)
-                                            <option value="{{ $language->id }}" {{ $language->id == $employ_language['language_id'] ? "selected" : "" }}>{{ $language->lang }}</option>
-                                        @endforeach
-                                    </select>
+                            @foreach (json_decode($employ->languages, true) as $key => $employ_language)
+                                <div class="row {{ !$loop->first ? 'mt-2' : '' }}">
+                                    <div class="col-md-6">
+                                        <select name="language[]" class="form-control select2">
+                                            <option value="">Select Language</option>
+                                            @foreach ($languages as $language)
+                                                <option value="{{ $language->id }}"
+                                                    {{ $language->id == $employ_language['language_id'] ? 'selected' : '' }}>
+                                                    {{ $language->lang }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select name="language_level[]" class="form-control select2">
+                                            <option value="">Select Level</option>
+                                            <option value="Very Good"
+                                                {{ $employ_language['language_level'] == 'Very Good' ? 'selected' : '' }}>
+                                                Very Good</option>
+                                            <option value="Good"
+                                                {{ $employ_language['language_level'] == 'Good' ? 'selected' : '' }}>Good
+                                            </option>
+                                            <option value="Fair"
+                                                {{ $employ_language['language_level'] == 'Fair' ? 'selected' : '' }}>Fair
+                                            </option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <select name="language_level[]" class="form-control select2">
-                                        <option value="">Select Level</option>
-                                        <option value="Very Good" {{ $employ_language['language_level'] == 'Very Good' ? 'selected' : '' }}>Very Good</option>
-                                        <option value="Good" {{ $employ_language['language_level'] == 'Good' ? 'selected' : '' }}>Good</option>
-                                        <option value="Fair" {{ $employ_language['language_level'] == 'Fair' ? 'selected' : '' }}>Fair</option>
-                                    </select>
-                                </div>
-                            </div>
                             @endforeach
                             <div id="appendLanguageDiv">
 
