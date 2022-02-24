@@ -18,4 +18,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile', [DashController::class, 'saveProfile'])->name('candidate.save-profile');
     Route::post('/job-preferences', [DashController::class, 'saveJobPreferences'])->name('candidate.save-job-preferences');
     Route::post('/settings', [DashController::class, 'saveSettings'])->name('candidate.save-settings');
+
+    Route::put('/update-profile/{id}', [DashController::class, 'update'])->name('candidate.updateProfile');
 });

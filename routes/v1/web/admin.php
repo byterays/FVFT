@@ -98,11 +98,11 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::match(['put', 'patch'], "update/{id}", [TrainingController::class, "update"])->name("update");
         Route::post('update-status', [TrainingController::class, "updateStatus"])->name("updateStatus");
         Route::delete('delete/{id}', [TrainingController::class, "delete"])->name("delete");
-        Route::post('ajax-store-training', [TrainingController::class, "ajaxStoreTraining"])->name("ajaxAddTraining");
+        // Route::post('ajax-store-training', [TrainingController::class, "ajaxStoreTraining"])->name("ajaxAddTraining");
     });
-    Route::group(['prefix' => 'skill/', 'as' => 'admin.skill.'], function(){
-        Route::post('ajax-store-skill', [AddController::class, "ajaxStoreSKill"])->name("ajaxAddSkill");
-    });
+    // Route::group(['prefix' => 'skill/', 'as' => 'admin.skill.'], function(){
+    //     Route::post('ajax-store-skill', [AddController::class, "ajaxStoreSKill"])->name("ajaxAddSkill");
+    // });
 
     Route::group(['prefix' => 'user/', 'as' => 'admin.user.'], function(){
         Route::get('profile', [AdminController::class, "profile"])->name("profile");

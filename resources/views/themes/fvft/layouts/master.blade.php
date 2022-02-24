@@ -47,6 +47,7 @@
 		<!-- COLOR-SKINS -->
 		<link id="theme" rel="stylesheet" type="text/css" media="all" href="{{asset('themes/fvft/')}}/assets/color-skins/color-skins/color10.css" />
 		<link id="theme" rel="stylesheet" type="text/css" media="all" href="{{asset('themes/fvft/')}}/assets/css/main.css" />
+		<link rel="stylesheet" href="{{ asset('themes/fvft/assets/css/jquery-ui.css') }}">
 
 
 		@yield('style')
@@ -115,6 +116,7 @@
 
 		<!-- Custom Js-->
 		<script src="{{asset('themes/fvft/')}}/assets/js/custom.js"></script>
+		<script src="{{ asset('themes/fvft/assets/js/jquery-ui.js') }}"></script>
 		@yield('script')
 	</body>
 </html>
