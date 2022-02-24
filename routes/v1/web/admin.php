@@ -48,8 +48,9 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::get('edit-candidate/{id}', [CandidateController::class, 'editCandidate'])->name('admin.candidates.editCandidate');
         Route::get('delete/{id}', [CandidateController::class, 'delete'])->name('admin.candidates.delete');
         Route::post('save', [CandidateController::class, 'save']);
-        Route::post('store', [CandidateController::class, 'store'])->name('admin.canidates.store');
-        Route::put('update-candidate/{id}', [CandidateController::class, 'update'])->name('admin.canidates.update');
+        Route::post('store', [CandidateController::class, 'store'])->name('admin.candidates.store');
+        Route::put('update-candidate/{id}', [CandidateController::class, 'update'])->name('admin.candidates.update');
+        Route::get("candidate-details/{id}", [CandidateController::class, "show"])->name("admin.candidates.show");
     });
     // Applicants Crude
     Route::prefix('applicants')->group(function () {

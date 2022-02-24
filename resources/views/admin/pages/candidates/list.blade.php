@@ -75,7 +75,7 @@ if (session()->get('delete')) {
                                             <div data-toggle="tooltip" data-original-title="View"
                                                 style="display: inline-block;">
                                                 <a class="btn btn-primary btn-sm text-white mb-1"
-                                                    href="/candidate/{{ $candidate->id }}"><i
+                                                    href="{{ route('admin.candidates.show', $candidate->id) }}"><i
                                                         class="fa fa-eye"></i></a>
                                             </div>
                                             <div data-toggle="tooltip" data-original-title="Edit"

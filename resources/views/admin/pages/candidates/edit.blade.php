@@ -27,7 +27,7 @@
     <div class="alert alert-secondary d-none" role="alert"><button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">×</button><span id="db_error" class="db_error">Secondary alert—At vero eos et accusamus
             praesentium!</span></div>
-    <form action="{{ route('admin.canidates.update', $employ->id) }}" method="POST" enctype="multipart/form-data" id="candidateForm">
+    <form action="{{ route('admin.candidates.update', $employ->id) }}" method="POST" enctype="multipart/form-data" id="candidateForm">
         @csrf
         @method('put')
         <div class="row">

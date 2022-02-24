@@ -27,7 +27,7 @@
     <div class="alert alert-secondary d-none" role="alert"><button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">×</button><span id="db_error" class="db_error">Secondary alert—At vero eos et accusamus
             praesentium!</span></div>
-    <form action="{{ route('admin.canidates.store') }}" method="POST" enctype="multipart/form-data" id="candidateForm">
+    <form action="{{ route('admin.candidates.store') }}" method="POST" enctype="multipart/form-data" id="candidateForm">
         @csrf
         <div class="row">
             <div class="col-md-12">

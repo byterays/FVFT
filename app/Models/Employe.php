@@ -37,8 +37,17 @@ class Employe extends Model
     // protected $hidden = [
     // ];
 
+    protected $appends = [
+        'full_name'
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\Models\User', 'user_id', 'id');
+    }
+
+    public function getFullNameAttribute(){
+        $middle_name = $this->middle_name != null ? $this->middle_name : '';
+        return $this->first_name . ' '. $middle_name . ' '. $this->last_name;
     }
 }

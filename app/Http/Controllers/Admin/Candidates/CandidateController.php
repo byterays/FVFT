@@ -29,12 +29,14 @@ class CandidateController extends Controller
         $this->languages = \DB::table('languages')->get();
         $this->jobs = \DB::table('jobs')->get();
     }
-    function list() {
+    public function list() {
+        
         return $this->view('admin.pages.candidates.list', [
+            // 'candidates' => DB::table('employes')->paginate(10)
             'candidates' => Employe::paginate(10),
         ]);
     }
-    function new () {
+    public function new () {
         return $this->view('admin.pages.candidates.editadd', [
             'action' => "New",
             'countries' => $this->countries,
@@ -73,6 +75,15 @@ class CandidateController extends Controller
             'job_categories' => $this->job_categories,
             'jobs' => $this->jobs,
             'employ_experiences' => DB::table('employes_experience')->where("employ_id", $employ->id)->get(),
+        ]);
+    }
+
+    public function show($id)
+    {
+        $employ = Employe::where('id', $id)->with('user')->first();
+        return $this->view('admin.pages.candidates.show', [
+            'action' => "View",
+            'employ' => $employ,
         ]);
     }
 
@@ -174,6 +185,8 @@ class CandidateController extends Controller
             }
         }
     }
+
+    
 
     private function __updateEmployee($employe_id, $user_id, $request)
     {
@@ -459,6 +472,7 @@ class CandidateController extends Controller
             'countries' => $this->countries,
         ]);
     }
+
     public function save(Request $request)
     {
         // dd($request);
