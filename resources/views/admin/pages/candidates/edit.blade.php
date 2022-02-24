@@ -20,7 +20,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Modules</a></li>
             <li class="breadcrumb-item" aria-current="page"><a href="/admin/candidates/">Candidate</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Add</li>
+            <li class="breadcrumb-item active" aria-current="page">Edit</li>
         </ol>
     </div>
 

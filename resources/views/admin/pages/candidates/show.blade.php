@@ -34,7 +34,7 @@
         <h4 class="page-title">Profile:&nbsp;{{ $employ->full_name }}</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
-                <a href="" class=""><i class="fa fa-pencil"></i>&nbsp;Edit Profile</a>
+                <a href="{{ route('admin.candidates.editCandidate', $employ->id) }}" class=""><i class="fa fa-pencil"></i>&nbsp;Edit Profile</a>
             </li>
         </ol>
     </div>
