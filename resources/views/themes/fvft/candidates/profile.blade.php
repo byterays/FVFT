@@ -2,7 +2,9 @@
 @section('style')
     <!-- file Uploads -->
     <link href="/themes/fvft/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/datepicker.min.css') }}">
 @endsection
+
 @section('content')
     <style>
         .form-control {
