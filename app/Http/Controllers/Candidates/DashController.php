@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Candidates;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Traits\Site\ThemeMethods;
 use App\Traits\Site\CandidateMethods;
 use DB;
 use App\Models\Employe;
 use App\Models\EmployJobPreference;
+use App\Models\Job;
+use App\Models\JobApplication;
 use App\Models\Training;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
@@ -186,6 +189,25 @@ class DashController extends Controller
         ]);
     }
 
+    public function company_lists()
+    {
+        $employ = Employe::where('user_id',\Auth::user()->id)->first();
+        $job_id = $employ->job_applications()->pluck('job_id');
+        $companies_id = Job::whereIn('id', $job_id)->pluck('company_id')->toArray();
+        $unique_company_id = array_unique($companies_id);
+        // $companies = Company::whereIn('id', $unique_company_id)->get();
+        return $this->client_view('candidates.company_list', [
+            'companies' => Company::whereIn('id', $unique_company_id)->paginate(12),
+        ]);
+    }
+
+    public function view_company_detail($id)
+    {
+        return $this->client_view('candidates.company_detail',[
+            'company' => Company::where('id', $id)->with(['company_contact_person'])->first(),
+        ]);
+    }
+
     public function update(Request $request, $id)
     {
         $employe = Employe::where('id', $id)->first();
@@ -315,7 +337,7 @@ class DashController extends Controller
         
     }
 
-    public function __updateExperience($employ_id, $request)
+    private function __updateExperience($employ_id, $request)
     {
         DB::table('employes_experience')->where('employ_id', $employ_id)->delete();
        

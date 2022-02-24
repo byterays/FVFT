@@ -21,4 +21,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/settings', [DashController::class, 'saveSettings'])->name('candidate.save-settings');
 
     Route::put('/update-profile/{id}', [DashController::class, 'update'])->name('candidate.updateProfile');
+
+    Route::group(['prefix' => 'company/', 'as' => 'candidate.'], function(){
+        Route::get('lists', [DashController::class, 'company_lists'])->name('company_lists');
+    });
 });
