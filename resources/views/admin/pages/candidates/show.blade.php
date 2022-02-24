@@ -132,7 +132,7 @@
                                     </div>
                                 </div>
                             @endif
-                            @if (count(json_decode($employ->languages, true)) > 0)
+                            @if (json_decode($employ->languages, true) != null)
                                 <div class="language_div mt-5">
                                     <h4>{{ strtoupper('Language') }}</h4>
                                     <div class="mt-3 language_detail">
@@ -168,7 +168,7 @@
         </div>
 
 
-        @if (count(json_decode($employ->full_picture, true)) > 0)
+        @if (json_decode($employ->full_picture, true) != null)
             <div class="col-xl-6">
                 <div class="card m-b-20">
                     <div class="card-body">
