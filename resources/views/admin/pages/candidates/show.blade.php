@@ -28,13 +28,19 @@
             line-height: 0.9
         }
 
+        .tempcolor {
+            color: #1650e2;
+            font-weight: bold;
+        }
+
     </style>
     {{-- {{ dd($employ->first_name) }} --}}
     <div class="page-header">
-        <h4 class="page-title">Profile:&nbsp;{{ $employ->full_name }}</h4>
+        <h4 class="page-title tempcolor">Profile:&nbsp;{{ $employ->full_name }}</h4>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">
-                <a href="{{ route('admin.candidates.editCandidate', $employ->id) }}" class=""><i class="fa fa-pencil"></i>&nbsp;Edit Profile</a>
+            <li class="breadcrumb-item tempcolor active" aria-current="page">
+                <a href="{{ route('admin.candidates.editCandidate', $employ->id) }}" class=""><i
+                        class="fa fa-pencil"></i>&nbsp;Edit Profile</a>
             </li>
         </ol>
     </div>
@@ -47,7 +53,7 @@
                         <div class="col-md-8">
                             <div class="personal_information_div">
                                 <h4>{{ strtoupper('Personal Information') }}</h4>
-                                <div class="mt-3 personal_information">
+                                <div class="mt-5 personal_information">
                                     <p>Name: <span>{{ $employ->full_name }}</span></p>
                                     <p>Gender: <span>{{ $employ->gender }}</span></p>
                                     <p>Marital Status: <span>{{ $employ->marital_status }}</span></p>
@@ -58,7 +64,7 @@
                             </div>
                             <div class="passport_detail_div mt-5">
                                 <h4>{{ strtoupper('Passport Details') }}</h4>
-                                <div class="mt-3 passport_detail">
+                                <div class="mt-5 passport_detail">
                                     <p>Passport Number: <span>{{ $employ->passport_number }}</span></p>
                                     <p>Passport Expiry Date:
                                         <span>{{ date('Y F d', strtotime($employ->passport_expiry_date)) }}</span>
@@ -68,27 +74,29 @@
                             @if (json_decode($employ->experiences, true) != null)
                                 <div class="experience_div mt-5">
                                     <h4>{{ strtoupper('Experience') }}</h4>
-                                    @foreach (json_decode($employ->experiences, true) as $employ_experience)
-                                        <?php
-                                        $job_title = DB::table('jobs')
-                                            ->where('id', $employ_experience['job_title_id'])
-                                            ->first()->title;
-                                        $job_category = DB::table('job_categories')
-                                            ->where('id', $employ_experience['job_category_id'])
-                                            ->first()->functional_area;
-                                        $country_name = DB::table('countries')
-                                            ->where('id', $employ_experience['country_id'])
-                                            ->first()->name;
-                                        ?>
-                                        <div class="mt-3 experience_detail">
+
+                                    <div class="mt-5 experience_detail">
+                                        @foreach (json_decode($employ->experiences, true) as $employ_experience)
+                                            <?php
+                                            $job_title = DB::table('jobs')
+                                                ->where('id', $employ_experience['job_title_id'])
+                                                ->first()->title;
+                                            $job_category = DB::table('job_categories')
+                                                ->where('id', $employ_experience['job_category_id'])
+                                                ->first()->functional_area;
+                                            $country_name = DB::table('countries')
+                                                ->where('id', $employ_experience['country_id'])
+                                                ->first()->name;
+                                            ?>
                                             <p>{{ $loop->iteration }}.&nbsp;<span>{{ $job_title }},
                                                     {{ $employ_experience['working_year'] }}
                                                     {{ $employ_experience['working_year'] > 1 ? 'Years' : 'Year' }}
                                                     {{ $employ_experience['working_month'] }}
                                                     {{ $employ_experience['working_month'] > 1 ? 'Months' : 'Month' }},
                                                     {{ $job_category }}, {{ $country_name }}</span></p>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    </div>
+
                                 </div>
                             @endif
 
@@ -105,34 +113,35 @@
                                 <div class="training_div mt-5">
                                     <h4>{{ strtoupper('Training') }}</h4>
                                     <div class="mt-3 training_detail">
-                                        @foreach(json_decode($employ->trainings) as $etraining)
-                                        <p>{{ $loop->iteration }}.&nbsp;<span>{{ App\Models\Training::where('id', $etraining)->first()->title }}</span></p>
+                                        @foreach (json_decode($employ->trainings) as $etraining)
+                                            <p>{{ $loop->iteration }}.&nbsp;<span>{{ App\Models\Training::where('id', $etraining)->first()->title }}</span>
+                                            </p>
                                         @endforeach
-                                        
+
                                     </div>
                                 </div>
                             @endif
                             @if (json_decode($employ->skills) != null)
-                            <div class="skill_div mt-5">
-                                <h4>{{ strtoupper('Skills') }}</h4>
-                                <div class="mt-3 skill_detail">
-                                    @foreach(json_decode($employ->skills) as $eskill)
-                                    <p>{{ $loop->iteration }}.&nbsp;<span>{{ DB::table('skills')->where('id', $eskill)->first()->title }}</span></p>
-                                    @endforeach
+                                <div class="skill_div mt-5">
+                                    <h4>{{ strtoupper('Skills') }}</h4>
+                                    <div class="mt-3 skill_detail">
+                                        @foreach (json_decode($employ->skills) as $eskill)
+                                            <p>{{ $loop->iteration }}.&nbsp;<span>{{ DB::table('skills')->where('id', $eskill)->first()->title }}</span>
+                                            </p>
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
                             @endif
-                            @if(count(json_decode($employ->languages, true)) > 0)
-                            
-                            <div class="language_div mt-5">
-                                <h4>{{ strtoupper('Language') }}</h4>
-                                <div class="mt-3 language_detail">
-                                    @foreach(json_decode($employ->languages, true) as $elanguage)
-                                    <p>{{ $loop->iteration }}.&nbsp;{{ DB::table('languages')->where('id', $elanguage['language_id'])->first()->lang }}:&nbsp;<span>{{ $elanguage['language_level'] }}</span></p>
-                                    @endforeach
+                            @if (count(json_decode($employ->languages, true)) > 0)
+                                <div class="language_div mt-5">
+                                    <h4>{{ strtoupper('Language') }}</h4>
+                                    <div class="mt-3 language_detail">
+                                        @foreach (json_decode($employ->languages, true) as $elanguage)
+                                            <p>{{ $loop->iteration }}.&nbsp;{{ DB::table('languages')->where('id', $elanguage['language_id'])->first()->lang }}:&nbsp;<span>{{ $elanguage['language_level'] }}</span>
+                                            </p>
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
-                           
                             @endif
                             {{-- <div class="preferred_job_div mt-5">
                                 <h4>{{ strtoupper('Preferred Jobs') }}</h4>
@@ -146,11 +155,10 @@
                         </div>
                         <div class="col-md-4">
                             <div class="image">
-                                @php 
-                                $avatar = $employ->avatar != null ? $employ->avatar : 'uploads/default.jpg'
+                                @php
+                                    $avatar = $employ->avatar != null ? $employ->avatar : 'uploads/default.jpg';
                                 @endphp
-                                <img src="{{ asset($avatar) }}"
-                                    style="object-fit: cover" alt="">
+                                <img src="{{ asset($avatar) }}" style="object-fit: cover" alt="">
                             </div>
                         </div>
                     </div>
@@ -159,25 +167,24 @@
             </div>
         </div>
 
-        
-        @if(count(json_decode($employ->full_picture, true)) > 0)
-        <div class="col-xl-6">
-            <div class="card m-b-20">
-                <div class="card-body">
-                    <div class="row">
-                        @foreach(json_decode($employ->full_picture, true) as $efullpicture)
-                        <div class="col-md-6 mt-5">
-                            <div class="image">
-                                <img src="{{ asset($efullpicture) }}"
-                                    style="object-fit: cover" alt="">
-                            </div>
+
+        @if (count(json_decode($employ->full_picture, true)) > 0)
+            <div class="col-xl-6">
+                <div class="card m-b-20">
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach (json_decode($employ->full_picture, true) as $efullpicture)
+                                <div class="col-md-6 mt-5">
+                                    <div class="image">
+                                        <img src="{{ asset($efullpicture) }}" style="object-fit: cover" alt="">
+                                    </div>
+                                </div>
+                            @endforeach
+
                         </div>
-                        @endforeach
-                        
                     </div>
                 </div>
             </div>
-        </div>
         @endif
     </div>
 @endsection

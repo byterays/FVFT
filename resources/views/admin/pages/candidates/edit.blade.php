@@ -14,6 +14,8 @@
             max-width: 50% !important;
         }
 
+        
+
     </style>
     <div class="page-header">
         <h4 class="page-title">{{ $action }} Candidate</h4>
