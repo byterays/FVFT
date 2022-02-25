@@ -4,16 +4,15 @@ namespace App\Http\Controllers\Candidates;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
-use Illuminate\Http\Request;
-use App\Traits\Site\ThemeMethods;
-use App\Traits\Site\CandidateMethods;
-use DB;
 use App\Models\Employe;
 use App\Models\EmployJobPreference;
-use App\Models\Job;
-use App\Models\JobApplication;
 use App\Models\Training;
 use App\Models\User;
+use App\Traits\Site\CandidateMethods;
+use App\Traits\Site\ThemeMethods;
+use DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class DashController extends Controller
@@ -50,7 +49,7 @@ class DashController extends Controller
             'all_jobs' => $all_jobs,
             'rejected_jobs' => $rejected_jobs,
             'pending_jobs' => $pending_jobs,
-            'accepted_jobs' => $accepted_jobs
+            'accepted_jobs' => $accepted_jobs,
         ];
         if (auth()->check()) {
             $employ = Employe::where('user_id', auth()->user()->id)->first();
@@ -62,7 +61,7 @@ class DashController extends Controller
     {
         $educationlevels = DB::table('educationlevels')->get();
         $experiencelevels = DB::table('experiencelevels')->get();
-        $employ = Employe::where('user_id',\Auth::user()->id)->first();
+        $employ = Employe::where('user_id', \Auth::user()->id)->first();
         return $this->client_view('candidates.profile', [
             'employ' => $employ,
             'educationlevels' => $educationlevels,
@@ -110,7 +109,7 @@ class DashController extends Controller
             'educationlevels' => $educationlevels,
             'experiencelevels' => $experiencelevels,
             'job_categories' => $job_categories,
-            'employ_job_preference' => $employ_job_preference
+            'employ_job_preference' => $employ_job_preference,
         ]);
     }
     public function saveJobPreferences(Request $request)
@@ -156,7 +155,7 @@ class DashController extends Controller
             if (!$is_exist) {
                 \DB::table("job_applications")->insert([
                     "job_id" => $id,
-                    "employ_id" => $employ->id
+                    "employ_id" => $employ->id,
                 ]);
             }
         }
@@ -172,24 +171,20 @@ class DashController extends Controller
         }
     }
 
-
     public function saveJob($id)
     {
-        if(authIsCandidate()){
-            
-        }   
+        if (authIsCandidate()) {
+
+        }
     }
-
-
 
     private $destination = 'uploads/candidates/profiles/';
     private $fullPictureDestination = 'uploads/candidates/full_picture/';
     private $redirectTo = "candidate.profile";
 
-
     public function show($id)
     {
-        $employ = Employe::where('user_id',\Auth::user()->id)->first();
+        $employ = Employe::where('user_id', \Auth::user()->id)->first();
         return $this->client_view('candidates.show', [
             'action' => "View",
             'employ' => $employ,
@@ -199,7 +194,7 @@ class DashController extends Controller
 
     public function company_lists()
     {
-        $employ = Employe::where('user_id',\Auth::user()->id)->first();
+        $employ = Employe::where('user_id', \Auth::user()->id)->first();
         // $job_id = $employ->job_applications()->pluck('job_id');
         // $companies_id = Job::whereIn('id', $job_id)->pluck('company_id')->toArray();
         $unique_company_id = getApplicantCompanyList($employ);
@@ -211,7 +206,7 @@ class DashController extends Controller
 
     public function view_company_detail($id)
     {
-        return $this->client_view('candidates.company_detail',[
+        return $this->client_view('candidates.company_detail', [
             'company' => Company::where('id', $id)->with(['company_contact_person'])->first(),
         ]);
     }
@@ -255,8 +250,6 @@ class DashController extends Controller
             }
         }
     }
-
-    
 
     private function __updateEmployee($employe_id, $user_id, $request)
     {
@@ -342,13 +335,13 @@ class DashController extends Controller
         $this->__updateExperience($employe->id, $request);
         $this->__updateEmployeSkill($employe->id, $request);
         $this->__updateEmployeLanguage($employe->id, $request);
-        
+
     }
 
     private function __updateExperience($employ_id, $request)
     {
         DB::table('employes_experience')->where('employ_id', $employ_id)->delete();
-       
+
         $fields = [];
         if ($request->is_experience != null) {
             foreach ($request->country_id as $key => $country) {
@@ -364,8 +357,8 @@ class DashController extends Controller
         }
     }
 
-
-    private function __updateEmployeSkill($employ_id, $request){
+    private function __updateEmployeSkill($employ_id, $request)
+    {
         DB::table('employes_skills')->where('employ_id', $employ_id)->delete();
         $fields = [];
         foreach ($request->skill as $key => $skill) {
@@ -374,7 +367,6 @@ class DashController extends Controller
             \DB::table('employes_skills')->insert($fields);
         }
     }
-
 
     private function __updateEmployeLanguage($employ_id, $request)
     {

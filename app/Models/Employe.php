@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Employe extends Model
 {
     use HasFactory;
-    protected $table ="employes";
+    protected $table = "employes";
 
     protected $fillable = [
         'first_name',
@@ -32,13 +32,13 @@ class Employe extends Model
         'user_id',
         'created_at',
         'updated_at',
-        'avatar'
+        'avatar',
     ];
     // protected $hidden = [
     // ];
 
     protected $appends = [
-        'full_name'
+        'full_name',
     ];
 
     public function user()
@@ -46,10 +46,15 @@ class Employe extends Model
         return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
-    public function getFullNameAttribute(){
+    public function getFullNameAttribute()
+    {
         $middle_name = $this->middle_name != null ? $this->middle_name : '';
-        return $this->first_name . ' '. $middle_name . ' '. $this->last_name;
+        return $this->first_name . ' ' . $middle_name . ' ' . $this->last_name;
     }
 
-    git 
+    public function job_applications()
+    {
+        return $this->hasMany('App\Models\JobApplication', 'employ_id', 'id');
+    }
+
 }
