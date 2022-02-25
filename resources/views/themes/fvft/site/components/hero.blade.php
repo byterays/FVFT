@@ -12,7 +12,7 @@
                         <div class="search-background bg-transparent">
                             <div class="form row no-gutters ">
                                 <div class="form-group  col-xl-4 col-lg-3 col-md-12 mb-0 bg-white ">
-                                    <input type="text" class="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Search Jobs" name="search">
+                                    <input type="text" class="form-control input-lg br-tr-md-0 br-br-md-0" id="jobSearch" placeholder="Search Jobs" name="search">
                                 </div>
                                 <div class="form-group  col-xl-3 col-lg-3 col-md-12 mb-0 bg-white">
                                     {{-- <input type="text" class="form-control input-lg br-md-0" id="text5" placeholder="Select Location"> --}}

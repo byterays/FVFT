@@ -33,6 +33,7 @@ class HomeController extends Controller
 
     public function getJobsByTitle(Request $request)
     {
-        // $jobs = Job::where(($request->product_id);
+        $jobs = Job::where('title', 'LIKE', '%'.$request->job_title.'%')->get();
+        return $jobs;
     }
 }

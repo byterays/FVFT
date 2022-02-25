@@ -173,6 +173,76 @@
                 autoclose: true,
             });
         });
+
+
+
+        // Smart Search start
+        $("#jobSearch").autocomplete({
+            source: function(data, cb) {
+                $.ajax({
+                    url: "{{ route('getJobsByTitle') }}",
+                    type: 'POST',
+                    data: {
+                        'job_title': data.term
+                    },
+                    dataType: 'json',
+                    autoFocus: true,
+                    showHintOnFocus: true,
+                    autoSelect: true,
+                    selectInitial: true,
+
+                    success: function(res) {
+                        if (res.length) {
+                            var datas = $.map(res, function(value) {
+                                return {
+                                    label: value.title,
+                                    id: value.id,
+                                    job_title: value.title,
+                                }
+                            });
+                        }
+                        cb(datas);
+                    },
+                    error: function(){
+
+                    },
+                });
+            },
+            search: function(e, ui){
+                console.log('searching');
+            },
+            response: function(e, el){
+                if(el.content == undefined){
+
+                } else if(el.content.length == 1){
+                    // $(this).data('ui-autocomplete')._trigger('select', 'autocompleteselect', el);
+                    // $(this).autocomplete("close");
+                }
+                console.log('hiding');
+            }, 
+            open: function(){
+
+            },
+            select: function(e, ui){
+                e.preventDefault();
+                if(typeof ui.content != 'undefined'){
+                    if(isNaN(ui.content[0].id)){
+                        return;
+                    } 
+                    var jobtitle = ui.content[0].job_title;
+                    var job_id = ui.content[0].id;
+                } else {
+                    var jobtitle = ui.item.job_title;
+                    var job_id = ui.item.id;
+                }
+                $("#jobSearch").val(jobtitle);
+            }
+        });
+
+        $("#jobSearch").bind('paste', (e) => {
+            $("#jobSearch").autocomplete('search');
+        });
+        // End Smart Search
     </script>
     @yield('script')
 </body>

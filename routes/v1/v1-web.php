@@ -30,6 +30,8 @@ Route::get('news/', [NewsController::class, 'index']);
 Route::get('news/{slug}', [NewsController::class, 'getNews']);
 Route::get('page/{slug}', [PageController::class, 'index']);
 
+Route::post('get-job-by-title', [HomeController::class, 'getJobsByTitle'])->name('getJobsByTitle');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/apply-job/{id}', [DashController::class, 'applyjob']);
