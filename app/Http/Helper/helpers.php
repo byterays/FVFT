@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Job;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 if(!function_exists('createSlug')){
@@ -26,5 +27,14 @@ if(!function_exists('getApplicantCompanyList')){
         $companies_id = Job::whereIn('id', $job_id)->pluck('company_id')->toArray();
         $unique_company_id = array_unique($companies_id);
         return $unique_company_id;
+    }
+}
+
+if(!function_exists('authIsCandidate')){
+    function authIsCandidate(){
+        if(Auth::check() && Auth::user()->user_type == 'candidate'){
+            return true;
+        }
+        return false;
     }
 }

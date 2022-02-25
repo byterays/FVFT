@@ -173,6 +173,14 @@ class DashController extends Controller
     }
 
 
+    public function saveJob($id)
+    {
+        if(authIsCandidate()){
+            
+        }   
+    }
+
+
 
     private $destination = 'uploads/candidates/profiles/';
     private $fullPictureDestination = 'uploads/candidates/full_picture/';
