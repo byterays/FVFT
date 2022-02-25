@@ -51,8 +51,5 @@ class Employe extends Model
         return $this->first_name . ' '. $middle_name . ' '. $this->last_name;
     }
 
-    public function job_applications()
-    {
-        return $this->hasMany('App\Models\JobApplication', 'employ_id', 'id');
-    }
+    git 
 }

@@ -57,7 +57,7 @@ session()->forget('delete');
                             {{-- @dd($company->industry_id)                                 --}}
                             <tr>
                                 {{-- <td>{{$company->id}}</td> --}}
-                                <td><img src="/{{$company->company_logo}}" alt="" srcset="" width="50px"></td>
+                                <td><img src="{{asset($company->company_logo)}}" alt="" srcset="" width="50px"></td>
                                 <td>{{$company->company_name}}</td>
                                 <td>{{ $company->industry_id ? $company->industry->title : '' }}</td>
                                 <td>{{$company->company_email}}</td>

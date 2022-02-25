@@ -13,4 +13,9 @@ class JobApplication extends Model
     protected $fillable = [
         'id', 'employ_id', 'job_id', 'status', 'created_at', 'updated_at'
     ];
+
+    public function job()
+    {
+        return $this->belongsTo('App\Models\Job', 'job_id', 'id');
+    }
 }

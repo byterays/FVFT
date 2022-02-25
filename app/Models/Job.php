@@ -13,4 +13,9 @@ class Job extends Model
     {
     return $this->belongsTo("App\Models\Company", "company_id", "id");
     }
+
+    public function job_applications()
+    {
+        return $this->hasMany('App\Models\JobApplication', 'job_id', 'id');
+    }
 }
