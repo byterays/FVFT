@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Company;
 use App\Models\CompanyContactPerson;
 use App\Models\Industry;
+use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
 {
@@ -46,6 +47,42 @@ class CompanyController extends Controller
             'industries' => $this->industries,
         ]);
     }
+
+    public function editCompany($id)
+    {
+        $company = Company::where('id', $id)->with(['company_contact_person'])->firstOrFail();
+        return $this->view('admin.pages.companies.editCompany',[
+            'company' => $company,
+            'action' => 'Edit',
+            'countries' => $this->countries,
+            'industries' => $this->industries,
+        ]);
+    }
+
+
+    public function updateCompany(Request $request, $id)
+    {
+        dd($request->all());
+        $validator = Validator::make($request->all(),[
+            'company_name' => ['required'],
+            'industry_id' => ['required'],
+            'ownership' => ['required'],
+            'no_of_employee' => ['required'],
+            'operating_since' => ['required'],
+            'person_designation' => ['required'],
+            'full_name' => ['required'],
+            'contact_person_designation' => ['required'],
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['errors' => $validator->errors()]);
+        }
+
+        if($validator->passes()){
+            
+        }
+    }
+
     public function save(Request $request)
     {
         // if($request->company_user_id !== null){

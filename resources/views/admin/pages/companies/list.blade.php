@@ -73,7 +73,8 @@ session()->forget('delete');
                                         <a class="btn btn-primary btn-sm text-white mb-1"  href="{{ route('admin.companies.show', $company->id) }}" ><i class="fa fa-eye"></i></a>
                                     </div>
                                     <div data-toggle="tooltip" data-original-title="Edit" style="display: inline-block;">
-                                        <a class="btn btn-success btn-sm text-white mb-1" href="/admin/companies/edit/{{$company->id}}"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-success btn-sm text-white mb-1" href="{{route('admin.companies.editCompany',$company->id)}}"><i class="fa fa-pencil"></i></a>
+                                        {{-- <a class="btn btn-success btn-sm text-white mb-1" href="/admin/companies/edit/{{$company->id}}"><i class="fa fa-pencil"></i></a> --}}
                                     </div>
                                     <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip" data-original-title="Delete" href="/admin/companies/delete/{{$company->id}}"><i class="fa fa-trash-o"></i></a><br>
                                 </td>

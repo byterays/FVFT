@@ -37,6 +37,8 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::get('delete/{id}', [CompanyController::class, 'delete'])->name('admin.companies.delete');
         Route::post('save', [CompanyController::class, 'save']);
         Route::get('show/{id}', [CompanyController::class, 'show'])->name('admin.companies.show');
+        Route::get('edit-company/{id}', [CompanyController::class, 'editCompany'])->name('admin.companies.editCompany');
+        Route::put('update-company/{id}', [CompanyController::class, 'updateCompany'])->name('admin.companies.udpateCompany');
     });
 
     // Candidate Crude
