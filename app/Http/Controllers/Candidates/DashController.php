@@ -192,9 +192,9 @@ class DashController extends Controller
     public function company_lists()
     {
         $employ = Employe::where('user_id',\Auth::user()->id)->first();
-        $job_id = $employ->job_applications()->pluck('job_id');
-        $companies_id = Job::whereIn('id', $job_id)->pluck('company_id')->toArray();
-        $unique_company_id = array_unique($companies_id);
+        // $job_id = $employ->job_applications()->pluck('job_id');
+        // $companies_id = Job::whereIn('id', $job_id)->pluck('company_id')->toArray();
+        $unique_company_id = getApplicantCompanyList($employ);
         // $companies = Company::whereIn('id', $unique_company_id)->get();
         return $this->client_view('candidates.company_list', [
             'companies' => Company::whereIn('id', $unique_company_id)->paginate(12),
