@@ -72,22 +72,32 @@
                                 <div class="mt-5 experience_detail">
                                     @foreach (json_decode($employ->experiences, true) as $employ_experience)
                                         <?php
-                                        $job_title = DB::table('jobs')
-                                            ->where('id', $employ_experience['job_title_id'])
-                                            ->first()->title;
+                                        $job = DB::table('jobs')->where('id', $employ_experience['job_title_id']);
                                         $job_category = DB::table('job_categories')
-                                            ->where('id', $employ_experience['job_category_id'])
-                                            ->first()->functional_area;
+                                            ->where('id', $employ_experience['job_category_id']);
                                         $country_name = DB::table('countries')
-                                            ->where('id', $employ_experience['country_id'])
-                                            ->first()->name;
+                                            ->where('id', $employ_experience['country_id']);
+                                        
+                                        $job_title = $job->exists() ? $job->first()->title : '';
+                                        $country_title = $country_name->exists() ? $country_name->first()->name : '';
+                                        $job_category_title = $job_category->exists() ? $job_category->first()->functional_area : '';
+                                        
+                                        // $job_title = DB::table('jobs')
+                                        //     ->where('id', $employ_experience['job_title_id'])
+                                        //     ->first()->title;
+                                        // $job_category = DB::table('job_categories')
+                                        //     ->where('id', $employ_experience['job_category_id'])
+                                        //     ->first()->functional_area;
+                                        // $country_name = DB::table('countries')
+                                        //     ->where('id', $employ_experience['country_id'])
+                                        //     ->first()->name;
                                         ?>
                                         <p>{{ $loop->iteration }}.&nbsp;<span>{{ $job_title }},
                                                 {{ $employ_experience['working_year'] }}
                                                 {{ $employ_experience['working_year'] > 1 ? 'Years' : 'Year' }}
                                                 {{ $employ_experience['working_month'] }}
                                                 {{ $employ_experience['working_month'] > 1 ? 'Months' : 'Month' }},
-                                                {{ $job_category }}, {{ $country_name }}</span></p>
+                                                {{ $job_category_title }}, {{ $country_title }}</span></p>
                                     @endforeach
                                 </div>
 
