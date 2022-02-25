@@ -16,7 +16,7 @@
     .skill_detail p,
     .preferred_job_detail p,
     .language_detail p {
-        line-height: 0.5
+        line-height: 0.9
     }
 
     ..experience_detail p {

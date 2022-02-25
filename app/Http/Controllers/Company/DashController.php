@@ -36,6 +36,7 @@ class DashController extends Controller
             'contact_person' => $contact_person,
             'industries' => $this->industries,
             'countries' => $this->countries,
+            'viewRoute' => route('company.view_profile')
         ]);
     }
     public function saveProfile(Request $request)
@@ -103,6 +104,12 @@ class DashController extends Controller
             $fields['company'] = $company;
         }
         return $this->company_view('company.jobs', $fields);
+    }
+
+    public function show()
+    {
+        $company = Company::where('user_id', \Auth::user()->id)->with(['industry', 'company_contact_person', 'user'])->firstOrFail();
+        return $this->company_view('company.showProfile', ['company' => $company, 'editRoute' => route('company.edit_profile')]);
     }
 
     private $Destination = 'uploads/company/';

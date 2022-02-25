@@ -12,6 +12,7 @@ Route::middleware(['auth', 'is_company'])->group(function () {
     Route::get('/profile', [DashController::class, 'profile'])->name('company.edit_profile');
     Route::post('/profile', [DashController::class, 'saveProfile'])->name('company.save_profile');
     Route::put('/update/{id}', [DashController::class, 'updateProfile'])->name('company.update_profile');
+    Route::get('/view-my-profile', [DashController::class, 'show'])->name('company.view_profile');
 
     Route::get('/jobs', [DashController::class, 'jobs'])->name('company.jobs');
     Route::get('/edit/job/{id}', [DashController::class, 'edit'])->name('company.editjob');
