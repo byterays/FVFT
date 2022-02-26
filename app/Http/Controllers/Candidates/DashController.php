@@ -204,7 +204,7 @@ class DashController extends Controller
                 $query2->whereHas('employe', function ($query3) {
                     return $query3->where('user_id', Auth::user()->id);
                 });
-            });
+            }); 
         })->paginate(12);
         return $this->client_view('candidates.company_list', [
             'companies' => $companies,
