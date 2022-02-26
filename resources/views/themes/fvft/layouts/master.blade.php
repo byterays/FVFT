@@ -245,6 +245,7 @@
         // End Smart Search
     </script>
     @yield('script')
+    @yield('scripts')
 </body>
 
 </html>

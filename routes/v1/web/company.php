@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Company\AuthController;
 use App\Http\Controllers\Company\DashController;
+use App\Http\Controllers\Company\JobController;
 
 Route::get('/login', [AuthController::class, 'login'])->name('company.login');
 Route::post('/register', [AuthController::class, 'register'])->name('company.register');
@@ -18,4 +19,7 @@ Route::middleware(['auth', 'is_company'])->group(function () {
     Route::get('/edit/job/{id}', [DashController::class, 'edit'])->name('company.editjob');
     Route::get('/applicants', [DashController::class, 'applicants'])->name('company.applicants');
     Route::get('/settings', [DashController::class, 'profile'])->name('company.settings');
+
+
+    Route::get('add-new-job', [JobController::class, "addNewJob"])->name("company.addNewJob");
 });

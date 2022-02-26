@@ -14,7 +14,8 @@
                     <div class="form-group">
                         <label class="form-label">Company</label>
                         <div class="form-group">
-                            <input type="text" name="company_name" value="{{ $company->company_name }}">
+                            <input type="text" name="company_name" class="form-control"
+                                value="{{ $company->company_name }}" readonly>
                         </div>
                     </div>
 
@@ -91,6 +92,7 @@
                         <div class="form-group">
                             <select class="form-control select2-flag-search" name="category"
                                 data-placeholder="Select Category">
+                                <option value="">Select Job Category</option>
                                 @foreach ($job_categories as $category)
                                     <option value="{{ $category->id }}">
                                         {{ $category->functional_area }}
@@ -103,7 +105,7 @@
                         <label class="form-label">Job Sift</label>
                         <div class="form-group">
                             <select class="form-control select2-flag-search" name="job_shift"
-                                data-placeholder="Select Contry">
+                                data-placeholder="Select Job Shift">
                                 @foreach ($job_shifts as $shift)
                                     <option value="{{ $shift->id }}">{{ $shift->job_shift }}
                                     </option>
@@ -116,8 +118,8 @@
                         <label class="form-label">Education Level</label>
                         <div class="form-group">
                             <select class="form-control select2-flag-search" name="educationlevel"
-                                data-placeholder="Select Contry">
-                                @foreach ($educationlevels as $educationlevel)
+                                data-placeholder="Select Education Level">
+                                @foreach ($education_levels as $educationlevel)
                                     <option value="{{ $educationlevel->id }}">
                                         {{ $educationlevel->title }}
                                     </option>
@@ -130,7 +132,7 @@
                         <div class="form-group">
                             <select class="form-control select2-flag-search" name="experiencelevel"
                                 data-placeholder="Select Contry">
-                                @foreach ($experiencelevels as $experience)
+                                @foreach ($experience_levels as $experience)
                                     <option value="{{ $experience->id }}">{{ $experience->title }}
                                     </option>
                                 @endforeach
@@ -147,4 +149,15 @@
             </div>
         </div>
     </form>
+@endsection
+@section('script')
+    <script>
+        const _token = $('meta[name="csrf-token"]')[0].content;
+        const state_id = {{ isset($job->state_id) ? $job->state_id : 'null' }};
+        const city_id = {{ isset($job->city_id) ? $job->city_id : 'null' }};
+        const appurl = "{{ env('APP_URL') }}";
+
+
+        
+    </script>
 @endsection

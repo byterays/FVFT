@@ -6,7 +6,7 @@
             <h3 class="">My Jobs</h3>
         </div>
         <div class="col-md-6 mr-auto">
-            <a href="" class="btn btn-success">Add New Job</a>
+            <a href="{{ route('company.addNewJob') }}" class="btn btn-success">Add New Job</a>
         </div>
     </div>
     <div class="card-body">
