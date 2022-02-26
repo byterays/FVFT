@@ -9,6 +9,21 @@
         }
 
     </style>
+    <style>
+        .ql-editor {
+            height: 100%;
+        }
+
+        .req {
+            color: red;
+        }
+
+        .tempcolor {
+            color: #1650e2;
+            font-weight: bold;
+        }
+
+    </style>
 @endsection
 @section('content')
     <div class="row">

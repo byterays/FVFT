@@ -304,23 +304,27 @@
                         <div class="col-md-4">
                             <label for="">Full Name&nbsp;<span class="req">*</span></label>
                         </div>
+                        @php
+                            $hasContactPerson = !empty($company->company_contact_person);
+                            
+                        @endphp
                         <div class="col-md-2">
                             <select name="person_designation" class="form-control select2">
                                 <option value="Mr"
-                                    {{ $company->company_contact_person->person_designation == 'Mr' ? 'selected' : '' }}>
+                                    {{ $hasContactPerson && $company->company_contact_person->person_designation == 'Mr' ? 'selected' : '' }}>
                                     Mr.</option>
                                 <option value="Miss"
-                                    {{ $company->company_contact_person->person_designation == 'Miss' ? 'selected' : '' }}>
+                                    {{ $hasContactPerson && $company->company_contact_person->person_designation == 'Miss' ? 'selected' : '' }}>
                                     Miss.</option>
                                 <option value="Mrs"
-                                    {{ $company->company_contact_person->person_designation == 'Mrs' ? 'selected' : '' }}>
+                                    {{ $hasContactPerson && $company->company_contact_person->person_designation == 'Mrs' ? 'selected' : '' }}>
                                     Mrs.</option>
                             </select>
                             <div class="require text-danger person_designation"></div>
                         </div>
                         <div class="col-md-6">
                             <input type="text" class="form-control"
-                                value="{{ $company->company_contact_person->name }}" name="full_name"
+                                value="{{ $hasContactPerson ? $company->company_contact_person->name : '' }}" name="full_name"
                                 placeholder="Enter Full Name">
                         </div>
                     </div>
@@ -332,7 +336,7 @@
                         </div>
                         <div class="col-md-8">
                             <input type="text" name="contact_person_designation"
-                                value="{{ $company->company_contact_person->position }}" class="form-control"
+                                value="{{ $hasContactPerson ? $company->company_contact_person->position : '' }}" class="form-control"
                                 placeholder="Enter Designation, eg, HR, Manager">
                         </div>
                     </div>
@@ -345,8 +349,11 @@
                         <div class="col-md-2">
                             <select name="dialcode" class="form-control select2">
                                 @foreach ($countries as $country)
+                                @php
+                                $dialcode = $hasContactPerson ? $company->company_contact_person->dialcode : ''
+                                @endphp
                                     <option value="{{ $country->phonecode }}"
-                                        {{ $country->phonecode == $company->company_contact_person->dialcode ? 'selected' : '' }}>
+                                        {{ $country->phonecode == $dialcode ? 'selected' : '' }}>
                                         {{ $country->phonecode }}</option>
                                 @endforeach
                             </select>
@@ -354,7 +361,7 @@
                         <div class="col-md-6">
                             <input type="text" class="form-control" name="contact_person_mobile"
                                 placeholder="Enter Mobile Number"
-                                value="{{ $company->company_contact_person->phone }}">
+                                value="{{ $hasContactPerson ? $company->company_contact_person->phone : '' }}">
                         </div>
                     </div>
                 </div>
@@ -365,7 +372,7 @@
                         </div>
                         <div class="col-md-8">
                             <input type="email" class="form-control"
-                                value="{{ $company->company_contact_person->email }}" name="contact_person_email"
+                                value="{{ $hasContactPerson ? $company->company_contact_person->email : '' }}" name="contact_person_email"
                                 placeholder="Enter Email">
                         </div>
                     </div>
