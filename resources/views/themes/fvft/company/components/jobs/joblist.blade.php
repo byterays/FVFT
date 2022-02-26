@@ -4,7 +4,7 @@
             <th></th>
             <th class="w-100">{{$action}}</th>
             <th>Location</th>
-            <th>Date</th>
+            <th>Created At</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
@@ -35,6 +35,7 @@
             
             <td>
                 {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}
+                {{-- {{ date('Y-m-d', strtotime($item->created_at)) }} --}}
             </td>
             <td>{{ $item->status }}</td>
             <td>

@@ -22,4 +22,5 @@ Route::middleware(['auth', 'is_company'])->group(function () {
 
 
     Route::get('add-new-job', [JobController::class, "addNewJob"])->name("company.addNewJob");
+    Route::post('save-new-job', [JobController::class, "saveNewJob"])->name("company.saveNewJob");
 });
