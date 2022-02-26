@@ -54,8 +54,17 @@
         href="{{ asset('themes/fvft/') }}/assets/css/main.css" />
     <link rel="stylesheet" href="{{ asset('themes/fvft/assets/css/jquery-ui.css') }}">
     <link rel="stylesheet" href="{{ asset('css/nepali.datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
+    <style>
+        .toast-top-container {
+            position: absolute;
+            top: 65px;
+            width: 280px;
+            right: 40px;
+            height: auto;
+        }
 
-
+    </style>
     @yield('style')
 </head>
 
@@ -125,6 +134,7 @@
     <script src="{{ asset('themes/fvft/') }}/assets/js/custom.js"></script>
     <script src="{{ asset('themes/fvft/assets/js/jquery-ui.js') }}"></script>
     <script src="{{ asset('js/nepali.datepicker.min.js') }}"></script>
+    <script src="{{ asset('js/toastr.min.js') }}"></script>
     <script>
         $.ajaxSetup({
             headers: {
@@ -203,32 +213,32 @@
                         }
                         cb(datas);
                     },
-                    error: function(){
+                    error: function() {
 
                     },
                 });
             },
-            search: function(e, ui){
+            search: function(e, ui) {
                 console.log('searching');
             },
-            response: function(e, el){
-                if(el.content == undefined){
+            response: function(e, el) {
+                if (el.content == undefined) {
 
-                } else if(el.content.length == 1){
+                } else if (el.content.length == 1) {
                     // $(this).data('ui-autocomplete')._trigger('select', 'autocompleteselect', el);
                     // $(this).autocomplete("close");
                 }
                 console.log('hiding');
-            }, 
-            open: function(){
+            },
+            open: function() {
 
             },
-            select: function(e, ui){
+            select: function(e, ui) {
                 e.preventDefault();
-                if(typeof ui.content != 'undefined'){
-                    if(isNaN(ui.content[0].id)){
+                if (typeof ui.content != 'undefined') {
+                    if (isNaN(ui.content[0].id)) {
                         return;
-                    } 
+                    }
                     var jobtitle = ui.content[0].job_title;
                     var job_id = ui.content[0].id;
                 } else {
@@ -243,6 +253,46 @@
             $("#jobSearch").autocomplete('search');
         });
         // End Smart Search
+    </script>
+
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-container",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+        @if (Session::has('message'))
+            var type = "{{ Session::get('alert-type', 'info') }}";
+            switch (type) {
+            case 'info':
+            toastr.info("{{ Session::get('message') }}");
+            break;
+        
+            case 'warning':
+            toastr.warning("{{ Session::get('message') }}");
+            break;
+        
+            case 'success':
+            toastr.success("{{ Session::get('message') }}");
+            break;
+        
+            case 'error':
+            toastr.error("{{ Session::get('message') }}");
+            break;
+            }
+        @endif
     </script>
     @yield('script')
     @yield('scripts')
