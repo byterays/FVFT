@@ -7,6 +7,7 @@ use App\Models\Job;
 use App\Traits\Admin\AdminMethods;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class JobsController extends Controller
 {
@@ -110,6 +111,52 @@ class JobsController extends Controller
         return $request;
 
     }
+
+    private $redirectTo = 'admin.jobs-list';
+    private $destination = 'uploads/jobs/';
+
+    public function updateJob(Request $request, $id)
+    {
+        // dd($request->all());
+        $Validator = Validator::make($request->all(), [
+            'title' => ['required'],
+            'company_id' => ['required'],
+            'feature_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:4096'],
+            'country' => ['required'],
+            'state' => ['required'],
+            'category' => ['required'],
+            'educationlevel' => ['required'],
+            'experiencelevel' => ['required'],
+        ],[
+            'country.required' => 'Country is required',
+            'state.required' => 'State is required',
+            'category.required' => 'Job Category is required',
+            'educationlevel.required' => 'Education level is required',
+            'experiencelevel.required' => 'Experience Level is required',
+        ]);
+
+        if($Validator->fails()){
+            return response()->json(['errors' => $Validator->errors()]);
+        }
+
+        if($Validator->passes()){
+            try{
+                DB::beginTransaction();
+                $job = Job::find($id);
+                $oldImage = $job->feature_image_url;
+                $oldStatus = $job->status;
+                $this->__saveOrUpdateJob($job, $request, $oldImage);
+                $job->status = $request->job_status != null ? $request->job_status : $oldStatus;
+                $job->save();
+                DB::commit();
+                return response()->json(['msg' => 'Job updated', 'redirectRoute' => route($this->redirectTo)]);
+            } catch(\Exception $e){
+                DB::rollBack();
+                return response()->json(['db_error' => $e->getMessage()]);
+            }
+        }
+    }
+
     public function delete(Request $request)
     {
 
@@ -131,5 +178,37 @@ class JobsController extends Controller
     }
     function list() {
 
+    }
+
+    private function __saveOrUpdateJob($job, $request, $oldImage='')
+    {
+        $job->company_id = $request->company_id;
+        $job->title = $request->title;
+        $job->description = $request->description;
+        if($request->has('feature_image')){
+            $image = $request->file('feature_image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $job->feature_image_url = $this->destination . $imageName;
+            $image->move(public_path($this->destination, 'public'), $imageName);
+        } else {
+            $job->feature_image_url = $oldImage;
+        }
+        
+        $job->benefits = $request->benefits;
+        $job->salary_from = $request->salary_from;
+        $job->salary_to = $request->salary_to;
+        $job->hide_salary = $request->hide_salary != null ? 1 : 0;
+        $job->salary_currency = null;
+        $job->job_categories_id = $request->category;
+        $job->job_shift_id = $request->job_shift;
+        $job->num_of_positions = $request->number_of_position;
+        $job->expiry_date = $request->deadline;
+        $job->education_level_id = $request->educationlevel;
+        $job->job_experience_id = $request->experiencelevel;
+        $job->is_active = $request->is_active != null ? 1 : 0;
+        $job->is_featured = $request->is_featured != null ? 1 : 0;
+        $job->country_id = $request->country;
+        $job->state_id = $request->state;
+        $job->city_id = $request->city;
     }
 }

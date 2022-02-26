@@ -1,5 +1,6 @@
 @extends('admin.layouts.master')
 @section('main')
+    <link rel="stylesheet" href="{{ asset('css/datepicker.min.css') }}">
     @php
     $images = '[';
     $countriesDOM = '[';
@@ -32,32 +33,36 @@
                 <div class="card-header d-flex">
                     <h3 class="card-title" style="width: 100%;">Jobs List</h3>
                     <form action="{{ route('admin.jobs-list') }}" method="GET">
-                    <input type="text" name="title" value="{{ request('title') }}" class="form-control" placeholder="Search By Title">
-                    <select name="category_id" class="form-control">
-                        <option value="">Select Category</option>
-                        @foreach ($job_categories as $job_category)
-                            <option value="{{ $job_category->id }}"
-                                {{ request('category_id') == $job_category->id ? 'selected' : '' }}>
-                                {{ $job_category->functional_area }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <select name="employer_id" class="form-control">
-                        <option value="">Select Employer</option>
-                        @foreach ($companies as $company)
-                            <option value="{{ $company->id }}" {{ request('employer_id') == $company->id ? 'selected': '' }}>
-                                {{ $company->company_name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <select name="country_id" class="form-control">
-                        <option value="">Select Country</option>
-                        @foreach ($countries as $country)
-                            <option value="{{ $country->id }}" {{ request('country_id') == $country->id ? 'selected' : '' }}>{{ $country->name }}</option>
-                        @endforeach
-                    </select>
-                    <button type="submit" class="btn btn-primary">Search</button>  
-                </form>
+                        <input type="text" name="title" value="{{ request('title') }}" class="form-control"
+                            placeholder="Search By Title">
+                        <select name="category_id" class="form-control">
+                            <option value="">Select Category</option>
+                            @foreach ($job_categories as $job_category)
+                                <option value="{{ $job_category->id }}"
+                                    {{ request('category_id') == $job_category->id ? 'selected' : '' }}>
+                                    {{ $job_category->functional_area }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <select name="employer_id" class="form-control">
+                            <option value="">Select Employer</option>
+                            @foreach ($companies as $company)
+                                <option value="{{ $company->id }}"
+                                    {{ request('employer_id') == $company->id ? 'selected' : '' }}>
+                                    {{ $company->company_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <select name="country_id" class="form-control">
+                            <option value="">Select Country</option>
+                            @foreach ($countries as $country)
+                                <option value="{{ $country->id }}"
+                                    {{ request('country_id') == $country->id ? 'selected' : '' }}>{{ $country->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
                     <div class="d-flex flex-row-reverse mb-2">
                         <a href="/admin/jobs-new" class="btn btn-primary"><i class="fe fe-plus mr-2"></i>Add New</a>
                     </div>
@@ -73,6 +78,8 @@
                                     <th>Company</th>
                                     <th>Featured</th>
                                     <th>Status</th>
+                                    <th>Job Status</th>
+                                    {{-- <th>Approval Status</th> --}}
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -92,6 +99,16 @@
                                                 class="label label-{{ $job->is_active ? 'success' : 'warning' }}">{{ $job->is_active ? 'Active' : 'Inactive' }}</span>
                                         </td>
                                         <td>
+                                            @php
+                                                $job_status = $job->status == 'Published' || $job->status == 'Approved' ? 'success' : ($job->status == 'Expired' ? 'danger' : 'warning');
+                                            @endphp
+                                            <span class="label label-{{ $job_status }}">
+                                                {{ $job->status }}
+                                            </span>
+
+                                        </td>
+
+                                        <td>
 
                                             @include('admin.pages.jobs.components.edit_model',[
                                             "action"=>"Edit",
@@ -102,9 +119,10 @@
                                             "job_categories"=>$job_categories,
                                             "educationlevels"=>$educationlevels
                                             ])
+                                            {{-- onclick="patchOptions(countries,'#select-countries-{{ $job->id }}',{{ $job->country_id }});" --}}
                                             <div data-toggle="tooltip" data-original-title="Edit"
                                                 style="display: inline-block;"
-                                                onclick="patchOptions(countries,'#select-countries-{{ $job->id }}',{{ $job->country_id }});">
+                                                >
                                                 <a class="btn btn-success btn-sm text-white mb-1" data-toggle="modal"
                                                     data-target="#EditJob{{ $job->id }}"><i
                                                         class="fa fa-pencil"></i></a>
@@ -133,20 +151,60 @@
     </div>
 @endsection
 @section('script')
+    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
     <script>
-        const images = {
-            !!$images = $images.
-            "]"!!
-        };
-        const countriesDOM = {
-            !!$countriesDOM = $countriesDOM.
-            "]"!!
-        }
+        $(function() {
+               $('.datetime').datepicker({
+                   format: 'yyyy-mm-dd',
+                   autoclose: true,
+                   todayHighlight: true,
+               });
+           });
+   
+           function submitForm(e, JobId) {
+               e.preventDefault();
+               $('.require').css('display', 'none');
+               let url = $("#jobForm"+JobId).attr("action");
+               $.ajax({
+                   url: url,
+                   type: 'post',
+                   data: new FormData($("#jobForm"+JobId)[0]),
+                   processData: false,
+                   contentType: false,
+                   cache: false,
+                   success: function(data) {
+                    //    return true;
+                       if (data.db_error) {
+                           $(".alert-warning").css('display', 'block');
+                           $(".db_error").html(data.db_error);
+                       } else if (data.errors) {
+                           var error_html = "";
+                           $.each(data.errors, function(key, value) {
+                               error_html = '<div>' + value + '</div>';
+                               $('.' + key).css('display', 'block').html(error_html);
+                           });
+                       } else if (!data.errors && !data.db_error) {
+                           location.href = data.redirectRoute;
+                           toastr.success(data.msg);
+                       }
+                   }
+               });
+           }
+   </script>
+    <script>
+        // const images = {
+        //     !!$images = $images.
+        //     "]"!!
+        // };
+        // const countriesDOM = {
+        //     !!$countriesDOM = $countriesDOM.
+        //     "]"!!
+        // }
         $(document).ready(function() {
             loadCountries();
-            images.forEach(image => {
-                loadImage('feature_image' + image.id, image.url);
-            });
+            // images.forEach(image => {
+            //     loadImage('feature_image' + image.id, image.url);
+            // });
             // loadCountries((countries)=>{
             //     // console.log(countriesDOM);
             // });
