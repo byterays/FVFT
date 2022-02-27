@@ -5,9 +5,11 @@
         <div class="col-md-6">
             <h3 class="">My Jobs</h3>
         </div>
+        @if($company->is_active == 1)
         <div class="col-md-6 mr-auto">
             <a href="{{ route('company.addNewJob') }}" class="btn btn-success">Add New Job</a>
         </div>
+        @endif
     </div>
     <div class="card-body">
         <div class="ads-tabs">

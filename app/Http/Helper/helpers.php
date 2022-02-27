@@ -38,3 +38,12 @@ if(!function_exists('authIsCandidate')){
         return false;
     }
 }
+
+if(!function_exists('checkUserType')){
+    function checkUserType($type){
+        if(Auth::check() && Auth::user()->type == $type){
+            return true;
+        }
+        return false;
+    }
+}
