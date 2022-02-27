@@ -61,6 +61,15 @@
                                 </option>
                             @endforeach
                         </select>
+                        @php
+                            $statuses = ['Pending', 'Approved', 'Published', 'Expired'];
+                        @endphp
+                        <select name="job_status" class="form-control">
+                            <option value="">Select Status</option>
+                            @foreach($statuses as $value)
+                            <option value="{{ $value }}" {{ request('job_status') == $value ? 'selected': '' }}>{{ $value }}</option>
+                            @endforeach
+                        </select>
                         <button type="submit" class="btn btn-primary">Search</button>
                     </form>
                     <div class="d-flex flex-row-reverse mb-2">

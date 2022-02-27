@@ -39,6 +39,17 @@ class JobsController extends Controller
         if ($request->filled('title')) {
             $jobs = $jobs->where('title', 'like', '%' . $request->title . '%');
         }
+        if($request->filled('job_status')){
+            if($request->job_status == 'Pending'){
+                $jobs = $jobs->where('is_active', 0);
+            } else if($request->job_status == 'Approved'){
+                $jobs = $jobs->where('approval_status', 1);
+            } else if($request->job_status == 'Published'){
+                $jobs = $jobs->where('publish_status', 1);
+            } else if($request->job_status == 'Expired'){
+                $jobs = $jobs->where('is_expired', 1);
+            }
+        }
         $jobs = $jobs->paginate(10)->setPath('');
         return $this->view('admin.pages.jobs.jobs_list', [
             'jobs' => $jobs,

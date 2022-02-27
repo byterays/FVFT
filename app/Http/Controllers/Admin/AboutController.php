@@ -106,6 +106,17 @@ class AboutController extends Controller
         }
     }
 
+    public function delete($id)
+    {
+        $about = About::findOrFail($id);
+        $about->delete();
+        $lastAbout = About::latest();
+        if($lastAbout->exists()){
+            $lastAbout->first()->update(['status' => 1]);
+        }
+        return response()->json(['msg' => 'About deleted']);
+    }
+
     public function updateStatus(Request $request)
     {
         $about = About::where("id", $request->about_id)->first();

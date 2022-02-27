@@ -107,6 +107,7 @@
                     },
                     success: function(data){
                         el.closest('tr').remove();
+                        location.reload();
                     }
                 });
             }
