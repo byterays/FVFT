@@ -5,10 +5,10 @@
         <div class="col-md-6">
             <h3 class="">My Jobs</h3>
         </div>
-        @if($company->is_active == 1)
-        <div class="col-md-6 mr-auto">
-            <a href="{{ route('company.addNewJob') }}" class="btn btn-success">Add New Job</a>
-        </div>
+        @if ($company->is_active == 1)
+            <div class="col-md-6 mr-auto">
+                <a href="{{ route('company.addNewJob') }}" class="btn btn-success">Add New Job</a>
+            </div>
         @endif
     </div>
     <div class="card-body">
@@ -33,7 +33,8 @@
                     '])
                 </div>
                 <div class="tab-pane table-responsive border-top userprof-tab" id="tab3">
-                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$unapproved_jobs,'action'=>'Not Approved
+                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$unapproved_jobs,'action'=>'Not
+                    Approved
                     Jobs'])
                 </div>
                 <div class="tab-pane table-responsive border-top userprof-tab " id="tab4">
@@ -47,4 +48,26 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        function cloneJob(item_id) {
+            var url = "{{ route('company.cloneJob', ':id') }}",
+                url = url.replace(':id', item_id);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                success: function(response) {
+                    if (!response.exception) {
+                        toastr.success(response.msg);
+                        location.href = response.redirectRoute;
+                    } else if(response.exception) {
+                        toastr.warning(response.exception);
+                    }
+
+                }
+            });
+        }
+    </script>
 @endsection

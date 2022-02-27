@@ -10,7 +10,10 @@ class Job extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['is_expired'];
+    protected $fillable = ['company_id', 'title', 'description', 'feature_image_url', 'benefits', 'salary_from', 'salary_to',
+     'hide_salary', 'salary_currency', 'job_categories_id', 'job_shift_id', 'num_of_positions', 'expiry_date', 
+     'education_level_id', 'job_experience_id', 'is_active', 'is_featured', 'country_id', 'state_id', 'city_id',
+      'search', 'slug', 'status', 'publish_status', 'approval_status', 'is_expired'];
     
     public function company()
     {

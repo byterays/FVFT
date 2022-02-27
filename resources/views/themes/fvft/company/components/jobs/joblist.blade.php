@@ -45,6 +45,7 @@
             <td>
                 <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View" href="/job/{{ $item->id}}"><i class="fa fa-eye"></i></a>
                 <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View" href="{{ route('company.editjob', $item->id) }}"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="Clone Job" onclick="cloneJob({{ $item->id }})"><i class="fa fa-clone"></i></a>
                 {{-- <a class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i></a> --}}
                 {{-- <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-original-title="Delete" href="/remove-application/{{$item->id}}"><i class="fa fa-trash-o"></i></a> --}}
             </td>

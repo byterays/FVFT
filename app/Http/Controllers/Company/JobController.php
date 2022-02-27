@@ -99,6 +99,28 @@ class JobController extends Controller
         }
     }
 
+    public function cloneJob($id)
+    {
+        try{
+            $job = Job::findOrFail($id);
+            $cloneJob = $job->replicate();
+            $cloneJob->expiry_date = null;
+            $cloneJob->is_active = 0;
+            $cloneJob->is_featured = 0;
+            $cloneJob->created_at = date('Y-m-d H:i:s');
+            $cloneJob->updated_at = date('Y-m-d H:i:s');
+            $cloneJob->status = 'Not Approved';
+            $cloneJob->publish_status = 0;
+            $cloneJob->approval_status = 0;
+            $cloneJob->is_expired = 0;
+            $cloneJob->save();
+            return response()->json(['msg' => 'Job cloned successfully', 'redirectRoute' => route($this->redirectTo)]);
+        } catch(\Exception $e){
+            return response()->json(['exception' => $e->getMessage()]);
+        }
+        
+    }
+
 
     private function __validation(array $data)
     {

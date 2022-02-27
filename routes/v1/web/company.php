@@ -26,6 +26,7 @@ Route::middleware(['auth', 'is_company'])->group(function () {
     Route::post('save-new-job', [JobController::class, "saveNewJob"])->name("company.saveNewJob");
     Route::get('/edit/job/{id}', [JobController::class, 'edit'])->name('company.editjob');
     Route::put('/udpate/job/{id}', [JobController::class, 'updateJob'])->name('company.updateJob');
+    Route::post('clone-job/{id}', [JobController::class, 'cloneJob'])->name('company.cloneJob');
 
     Route::group(['prefix' => 'applicants/', 'as' => 'company.applicant.'], function(){
         Route::get('', [ApplicantController::class, 'applicants'])->name('index');

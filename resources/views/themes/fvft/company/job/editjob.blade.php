@@ -48,7 +48,7 @@
                     </div>
                     <div class="form-group">
                         <label for="deadline">Deadline</label>
-                        <input type="text" name="deadline" value="{{ date('Y-m-d', strtotime($job->expiry_date)) }}"
+                        <input type="text" name="deadline" value="{{ $job->expiry_date == null ? '' : date('Y-m-d', strtotime($job->expiry_date)) }}"
                             class="form-control datetime" readonly>
                     </div>
                     <div class="form-group">

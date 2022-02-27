@@ -41,7 +41,7 @@ class ExpireJob extends Command
         $jobs = Job::where('is_active', 1)->get();
         foreach($jobs as $job){
             $deadline = $job->expiry_date;
-            $current_date_time = date('Y-m-d h:i:s');
+            $current_date_time = date('Y-m-d H:i:s');
 
             if(strtotime($current_date_time) >= strtotime($deadline)){
                 $job->update([
