@@ -2,11 +2,17 @@
 
 namespace App\Console;
 
+// use App\Console\Commands\ExpireJob;
+// use Illuminate\Console\Command;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+
+    protected $commands = [
+        Commands\ExpireJob::class,
+    ];
     /**
      * Define the application's command schedule.
      *
@@ -16,6 +22,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command("expire:job")->everyMinute();
     }
 
     /**

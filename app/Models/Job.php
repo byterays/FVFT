@@ -10,6 +10,8 @@ class Job extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['is_expired'];
+    
     public function company()
     {
     return $this->belongsTo("App\Models\Company", "company_id", "id");
