@@ -20,6 +20,7 @@
                     <li><a href="#tab2" data-toggle="tab" class="">Approved</a></li>
                     <li><a href="#tab3" data-toggle="tab" class="">Not Approved</a></li>
                     <li><a href="#tab4" data-toggle="tab" class="">Published</a></li>
+                    <li><a href="#tab5" data-toggle="tab" class="">Expired</a></li>
                 </ul>
             </div>
             <div class="tab-content">
@@ -37,6 +38,10 @@
                 </div>
                 <div class="tab-pane table-responsive border-top userprof-tab " id="tab4">
                     @include('themes.fvft.company.components.jobs.joblist',['items'=>$published_jobs,'action'=>'Published
+                    Jobs'])
+                </div>
+                <div class="tab-pane table-responsive border-top userprof-tab " id="tab5">
+                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$expired_jobs,'action'=>'Expired
                     Jobs'])
                 </div>
             </div>
