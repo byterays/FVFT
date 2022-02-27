@@ -20,6 +20,11 @@ class Job extends Model
         return $this->hasMany('App\Models\JobApplication', 'job_id', 'id');
     }
 
+    public function countApplicant()
+    {
+        return $this->job_applications->count();
+    }
+
 
     protected static function boot()
     {

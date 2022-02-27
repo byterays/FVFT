@@ -23,7 +23,7 @@
                 <div class="media mt-0 mb-0">
                     <div class="media-body">
                         <div class="card-item-desc p-0">
-                            <a href="#" class="text-dark"><h4 class="font-weight-semibold">{{ $item->title }}</h4></a>
+                            <a href="#" class="text-dark"><h4 class="font-weight-semibold">{{ $item->title }} <span class="badge badge-success">{{ $item->countApplicant() }}</span></h4></a>
                             <a href="#"><i class="fa fa-tag w-4"></i> {{  \DB::table('job_categories')->where('id',$item->job_categories_id)->first()->functional_area}}</a>
                         </div>
                     </div>
