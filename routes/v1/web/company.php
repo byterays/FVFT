@@ -29,5 +29,6 @@ Route::middleware(['auth', 'is_company'])->group(function () {
 
     Route::group(['prefix' => 'applicants/', 'as' => 'company.applicant.'], function(){
         Route::get('', [ApplicantController::class, 'applicants'])->name('index');
+        Route::get('applicant-detail/{id}', [ApplicantController::class, 'applicant_detail'])->name('detail');
     });
 });

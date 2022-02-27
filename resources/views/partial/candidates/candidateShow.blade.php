@@ -29,16 +29,6 @@
     }
 
 </style>
-<div class="page-header">
-    <h4 class="page-title tempcolor">Profile:&nbsp;{{ $employ->full_name }}</h4>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item tempcolor active" aria-current="page">
-            <a href="{{ $editRoute }}" class=""><i
-                    class="fa fa-pencil"></i>&nbsp;Edit Profile</a>
-        </li>
-    </ol>
-</div>
-
 <div class="row">
     <div class="col-xl-6">
         <div class="card m-b-20">

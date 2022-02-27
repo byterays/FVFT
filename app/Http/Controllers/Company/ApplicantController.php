@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Company;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employe;
 use App\Models\JobApplication;
 use App\Traits\Site\CompanyMethods;
 use Illuminate\Http\Request;
@@ -16,10 +17,16 @@ class ApplicantController extends Controller
     {
         $applicants = JobApplication::whereHas('job', function ($query) {
             return $query->whereHas('company', function ($query2) {
-                    return $query2->where('user_id', Auth::user()->id);
+                    return $query2->where('user_id', Auth::user()->id)->with(['employe', 'job']);
             }); 
-        })->get();
-        dd($applicants);
+        })->paginate(10);
         return $this->company_view('company.applicant.index', ['applicants' => $applicants]);
+    }
+
+
+    public function applicant_detail($id)
+    {
+        $employ = Employe::where('id', $id)->with(['user'])->firstOrFail();
+        return $this->company_view('company.applicant.detail', ['employ' => $employ]);
     }
 }
