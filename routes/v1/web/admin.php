@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Ajax\AddController;
 use Illuminate\Support\Facades\Route;
@@ -92,6 +93,17 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::match(['put', 'patch'], 'update/{id}', [IndustryController::class, "update"])->name("update");
         Route::delete('delete/{id}', [IndustryController::class, "delete"])->name("delete");
         Route::post('update-status', [IndustryController::class, "updateStatus"])->name("updateStatus");
+    });
+
+
+    Route::group(['prefix' => 'about/', 'as' => 'admin.about.'], function(){
+        Route::get('', [AboutController::class, "index"])->name("index");
+        Route::get('create', [AboutController::class, "create"])->name("create");
+        Route::post('store', [AboutController::class, "store"])->name("store");
+        Route::get("edit/{id}", [AboutController::class, "edit"])->name("edit");
+        Route::match(['put', 'patch'], 'update/{id}', [AboutController::class, "update"])->name("update");
+        Route::delete('delete/{id}', [AboutController::class, "delete"])->name("delete");
+        Route::post('update-status', [AboutController::class, "updateStatus"])->name("updateStatus");
     });
 
     Route::group(['prefix' => 'training/', 'as' => 'admin.training.'], function(){
