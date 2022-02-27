@@ -79,7 +79,7 @@
                                     <th>Featured</th>
                                     <th>Status</th>
                                     <th>Job Status</th>
-                                    {{-- <th>Approval Status</th> --}}
+                                    <th>Publish Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -100,12 +100,23 @@
                                         </td>
                                         <td>
                                             @php
-                                                $job_status = $job->status == 'Published' || $job->status == 'Approved' ? 'success' : ($job->status == 'Expired' ? 'danger' : 'warning');
+                                                // $job_status = $job->status == 'Published' || $job->status == 'Approved' ? 'success' : ($job->status == 'Expired' ? 'danger' : 'warning');
+                                                $job_status = $job->status == 'Approved' ? 'success' : 'warning';
                                             @endphp
                                             <span class="label label-{{ $job_status }}">
                                                 {{ $job->status }}
                                             </span>
 
+                                        </td>
+                                        <td>
+                                            @php
+                                                
+                                                $job_status_color = $job->publish_status == 1 ? 'success' : 'warning';
+                                                $published_status = $job->publish_status == 1 ? 'Published' : 'Not Published';
+                                            @endphp
+                                            <span class="label label-{{ $job_status_color }}">
+                                                {{ $published_status }}
+                                            </span>
                                         </td>
 
                                         <td>
@@ -121,8 +132,7 @@
                                             ])
                                             {{-- onclick="patchOptions(countries,'#select-countries-{{ $job->id }}',{{ $job->country_id }});" --}}
                                             <div data-toggle="tooltip" data-original-title="Edit"
-                                                style="display: inline-block;"
-                                                >
+                                                style="display: inline-block;">
                                                 <a class="btn btn-success btn-sm text-white mb-1" data-toggle="modal"
                                                     data-target="#EditJob{{ $job->id }}"><i
                                                         class="fa fa-pencil"></i></a>
@@ -154,43 +164,49 @@
     <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
     <script>
         $(function() {
-               $('.datetime').datepicker({
-                   format: 'yyyy-mm-dd',
-                   autoclose: true,
-                   todayHighlight: true,
-               });
-           });
-   
-           function submitForm(e, JobId) {
-               e.preventDefault();
-               $('.require').css('display', 'none');
-               let url = $("#jobForm"+JobId).attr("action");
-               $.ajax({
-                   url: url,
-                   type: 'post',
-                   data: new FormData($("#jobForm"+JobId)[0]),
-                   processData: false,
-                   contentType: false,
-                   cache: false,
-                   success: function(data) {
+            $('.datetime').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true,
+            });
+
+
+        });
+
+        $(".JobModal").on('hide.bs.modal', function(e) {
+            $(".require").css('display', 'none');
+        });
+
+        function submitForm(e, JobId) {
+            e.preventDefault();
+            $('.require').css('display', 'none');
+            let url = $("#jobForm" + JobId).attr("action");
+            $.ajax({
+                url: url,
+                type: 'post',
+                data: new FormData($("#jobForm" + JobId)[0]),
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data) {
                     //    return true;
-                       if (data.db_error) {
-                           $(".alert-warning").css('display', 'block');
-                           $(".db_error").html(data.db_error);
-                       } else if (data.errors) {
-                           var error_html = "";
-                           $.each(data.errors, function(key, value) {
-                               error_html = '<div>' + value + '</div>';
-                               $('.' + key).css('display', 'block').html(error_html);
-                           });
-                       } else if (!data.errors && !data.db_error) {
-                           location.href = data.redirectRoute;
-                           toastr.success(data.msg);
-                       }
-                   }
-               });
-           }
-   </script>
+                    if (data.db_error) {
+                        $(".alert-warning").css('display', 'block');
+                        $(".db_error").html(data.db_error);
+                    } else if (data.errors) {
+                        var error_html = "";
+                        $.each(data.errors, function(key, value) {
+                            error_html = '<div>' + value + '</div>';
+                            $('.' + key).css('display', 'block').html(error_html);
+                        });
+                    } else if (!data.errors && !data.db_error) {
+                        location.href = data.redirectRoute;
+                        toastr.success(data.msg);
+                    }
+                }
+            });
+        }
+    </script>
     <script>
         // const images = {
         //     !!$images = $images.

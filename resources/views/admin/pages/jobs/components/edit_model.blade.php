@@ -17,6 +17,8 @@ $cities = \DB::table('cities')
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
+            <div class="alert alert-secondary d-none" role="alert"><button type="button" class="close" data-dismiss="alert"
+                aria-hidden="true">×</button><span id="db_error" class="db_error"></span></div>
             <form action="{{ route('admin.job.update', $job->id) }}" method="post" enctype="multipart/form-data"
                 id="jobForm{{ $job->id }}">
                 @csrf
@@ -67,7 +69,7 @@ $cities = \DB::table('cities')
                             <div class="form-group">
                                 <label class="form-label">Deadline</label>
                                 <input type="text" class="form-control datetime" name="deadline"
-                                    placeholder="Number of Positions"
+                                    placeholder="Deadline"
                                     value="{{ date('Y-m-d', strtotime($job->expiry_date)) }}" readonly>
                             </div>
                             <div class="form-group">
@@ -129,7 +131,7 @@ $cities = \DB::table('cities')
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Cities</label>
-                                <select name="city" id="select-cities-{{ $job->id }}"
+                                <select name="city_id" id="select-cities-{{ $job->id }}"
                                     class="form-control select2 ">
                                     @foreach ($cities as $item)
                                         <option value="{{ $item->id }}"
@@ -140,21 +142,29 @@ $cities = \DB::table('cities')
                             <div class="form-group">
                                 <label class="custom-switch-checkbox">
                                     <input type="checkbox" name="is_active" class="custom-switch-input"
-                                        @if (isset($job->is_active)) checked="" @endif>
+                                        @if (isset($job->is_active) && $job->is_active == 1) checked="" @endif>
                                     <span class="custom-switch-indicator"></span>
                                     <span class="custom-switch-description">Active</span>
                                 </label>
                                 <label class="custom-switch-checkbox">
                                     <input type="checkbox" name="is_featured" class="custom-switch-input"
-                                        @if (isset($job->is_featured)) checked="" @endif>
+                                        @if (isset($job->is_featured) && $job->is_featured == 1) checked="" @endif>
                                     <span class="custom-switch-indicator"></span>
                                     <span class="custom-switch-description">Featured</span>
                                 </label>
+                                @if(isset($job->approval_status) && $job->approval_status == 1)
+                                <label class="custom-switch-checkbox">
+                                    <input type="checkbox" name="publish_status" class="custom-switch-input"
+                                        @if (isset($job->publish_status) && $job->publish_status == 1) checked="" @endif>
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="custom-switch-description">Published</span>
+                                </label>
+                                @endif
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="status">Status</label>
                                 @php
-                                    $statuses = ['Approved' => 'Approved', 'Not Approved' => 'Not Approved', 'Published' => 'Published', 'Unpublished' => 'Unpublished', 'Expired' => 'Expired'];
+                                    $statuses = ['Approved' => 'Approved', 'Not Approved' => 'Not Approved'];
                                 @endphp
                                 <select name="job_status" class="form-control select2-flag-search">
                                     <option value="">Select Status</option>

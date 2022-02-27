@@ -21,8 +21,8 @@ class DashController extends Controller
         $this->educationlevels = \DB::table('educationlevels')->get();
         $this->job_shifts = \DB::table('job_shifts')->get();
         $this->job_categories = \DB::table('job_categories')->get();
-        $this->countries = \DB::table('countries')->get();  
-        $this->industries = Industry::get(); 
+        $this->countries = \DB::table('countries')->get();
+        $this->industries = Industry::get();
     }
     public function dashboard()
     {
@@ -36,7 +36,7 @@ class DashController extends Controller
             'contact_person' => $contact_person,
             'industries' => $this->industries,
             'countries' => $this->countries,
-            'viewRoute' => route('company.view_profile')
+            'viewRoute' => route('company.view_profile'),
         ]);
     }
     public function saveProfile(Request $request)
@@ -85,19 +85,17 @@ class DashController extends Controller
         return $this->profile();
     }
 
-
-
     public function jobs()
     {
         $all_jobs = $this->jobsquery('all', false);
-        // $rejected_jobs = $this->jobsquery('rejected');
-        // $pending_jobs = $this->jobsquery('pending');
-        // $accepted_jobs = $this->jobsquery('accepted');
+        $approved_jobs = $this->jobsquery('Approved');
+        $unapproved_jobs = $this->jobsquery('Not Approved');
+        $published_jobs = Job::where('publish_status', 1)->paginate(10);
         $fields = [
-            'all_jobs' => $all_jobs
-            // 'rejected_jobs' => $rejected_jobs,
-            // 'pending_jobs' => $pending_jobs,
-            // 'accepted_jobs' => $accepted_jobs
+            'all_jobs' => $all_jobs,
+            'approved_jobs' => $approved_jobs,
+            'unapproved_jobs' => $unapproved_jobs,
+            'published_jobs' => $published_jobs,
         ];
         if (auth()->check()) {
             $company = Company::where('user_id', auth()->user()->id)->first();
@@ -117,7 +115,7 @@ class DashController extends Controller
 
     public function updateProfile(Request $request, $id)
     {
-        
+
         $validator = Validator::make($request->all(), [
             'company_name' => ['required'],
             'industry_id' => ['required'],
@@ -173,7 +171,7 @@ class DashController extends Controller
                 $company->city_id = $request->city_id;
                 $company->company_address = $request->company_address;
                 $company->is_active = $request->is_active != null ? 1 : 0;
-                $company->is_featured = $request->is_featured != null ? 1: 0;
+                $company->is_featured = $request->is_featured != null ? 1 : 0;
                 $company->company_website = $request->company_website;
                 $company->company_fb_page = $request->company_fb_page;
                 $company->ownership = $request->ownership;
@@ -198,7 +196,6 @@ class DashController extends Controller
         }
     }
 
-
     private function __updateContactPerson($company_id, $request)
     {
         $contact_person = CompanyContactPerson::where('company_id', $company_id)->first();
@@ -213,7 +210,6 @@ class DashController extends Controller
         $contact_person->dialcode = $request->dialcode;
         $contact_person->save();
     }
-
 
     public function edit($id)
     {
@@ -231,10 +227,12 @@ class DashController extends Controller
 
     private function jobsquery($status, $filter = true)
     {
+
         $company = Company::where('user_id', auth()->user()->id)->first();
         $jobs = Job::where('company_id', $company->id);
-        if($filter){
+        if ($filter) {
             $jobs->where('status', $status);
+
         }
         return $jobs->paginate(10);
     }

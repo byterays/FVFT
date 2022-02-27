@@ -21,7 +21,7 @@
         <a href="/company/jobs" class=" d-flex border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> My Jobs
         </a>
-        <a href="/company/applicants" class="d-flex border-bottom">
+        <a href="{{ route('company.applicant.index') }}" class="d-flex border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-heart-outline fs-20"></i></span> Applicants
         </a>
 

@@ -115,6 +115,53 @@ class JobsController extends Controller
     private $redirectTo = 'admin.jobs-list';
     private $destination = 'uploads/jobs/';
 
+    public function saveNewJob(Request $request)
+    {
+        // dd($request->all());
+        $Validator = Validator::make($request->all(), [
+            'title' => ['required'],
+            'company_id' => ['required'],
+            'feature_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:4096'],
+            'country' => ['required'],
+            'state' => ['required'],
+            'category' => ['required'],
+            'educationlevel' => ['required'],
+            'experiencelevel' => ['required'],
+        ],[
+            'company_id.required' => 'Company is required',
+            'country.required' => 'Country is required',
+            'state.required' => 'State is required',
+            'category.required' => 'Job Category is required',
+            'educationlevel.required' => 'Education level is required',
+            'experiencelevel.required' => 'Experience Level is required',
+        ]);
+
+        if($Validator->fails()){
+            return response()->json(['errors' => $Validator->errors()]);
+        }
+
+        if($Validator->passes()){
+            try{
+                DB::beginTransaction();
+                $job = new Job();
+                $this->__saveOrUpdateJob($job, $request, '');
+                $job->status = $request->job_status != null ? 1 : 0;
+                if($request->job_status == 'Approved'){
+                    $job->approval_status = 1;
+                } else {
+                    $job->approval_status = 0;
+                }
+                $job->save();
+                DB::commit();
+                return response()->json(['msg' => 'Job created successfully', 'redirectRoute' => route($this->redirectTo)]);
+            } catch(\Exception $e){
+                DB::rollBack();
+                return response()->json(['db_error' => $e->getMessage()]);
+            }
+        }
+
+    }
+
     public function updateJob(Request $request, $id)
     {
         // dd($request->all());
@@ -147,6 +194,12 @@ class JobsController extends Controller
                 $oldStatus = $job->status;
                 $this->__saveOrUpdateJob($job, $request, $oldImage);
                 $job->status = $request->job_status != null ? $request->job_status : $oldStatus;
+                if($request->job_status == 'Approved'){
+                    $job->approval_status = 1;
+                } else {
+                    $job->approval_status = 0;
+                }
+                $job->publish_status = $request->publish_status != null ? 1 : 0;
                 $job->save();
                 DB::commit();
                 return response()->json(['msg' => 'Job updated', 'redirectRoute' => route($this->redirectTo)]);
@@ -209,6 +262,6 @@ class JobsController extends Controller
         $job->is_featured = $request->is_featured != null ? 1 : 0;
         $job->country_id = $request->country;
         $job->state_id = $request->state;
-        $job->city_id = $request->city;
+        $job->city_id = $request->city_id;
     }
 }

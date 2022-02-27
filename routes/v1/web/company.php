@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Company\ApplicantController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Company\AuthController;
@@ -25,4 +26,8 @@ Route::middleware(['auth', 'is_company'])->group(function () {
     Route::post('save-new-job', [JobController::class, "saveNewJob"])->name("company.saveNewJob");
     Route::get('/edit/job/{id}', [JobController::class, 'edit'])->name('company.editjob');
     Route::put('/udpate/job/{id}', [JobController::class, 'updateJob'])->name('company.updateJob');
+
+    Route::group(['prefix' => 'applicants/', 'as' => 'company.applicant.'], function(){
+        Route::get('', [ApplicantController::class, 'applicants'])->name('index');
+    });
 });

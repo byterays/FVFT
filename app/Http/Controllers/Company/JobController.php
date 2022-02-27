@@ -88,6 +88,7 @@ class JobController extends Controller
                 $oldStatus = $job->status;
                 $this->__saveOrUpdateJob($job, $request, $oldImage);
                 $job->status = $request->status != null ? $request->status : $oldStatus;
+                $job->publish_status = $request->publish_status != null ? 1 : 0;
                 $job->save();
                 DB::commit();
                 return response()->json(['msg' => 'Job updated successfully', 'redirectRoute' =>route($this->redirectTo)]);

@@ -114,6 +114,14 @@
                             <span class="custom-switch-indicator"></span>
                             <span class="custom-switch-description">Featured</span>
                         </label>
+                        @if($job->approval_status == 1)
+                        <label class="custom-switch-checkbox">
+                            <input type="checkbox" name="publish_status" class="custom-switch-input"
+                                {{ $job->publish_status ? 'checked' : '' }}>
+                            <span class="custom-switch-indicator"></span>
+                            <span class="custom-switch-description">Published</span>
+                        </label>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label class="form-label">Job Category</label>
@@ -181,7 +189,7 @@
         </div>
         <div class="card-footer text-right">
             <div class="d-flex">
-                <a href="javascript:void(0)" class="btn btn-link">Cancel</a>
+                <a href="{{ route('company.jobs') }}" class="btn btn-link">Cancel</a>
                 <button type="button" onclick="submitForm(event);" class="btn btn-success ml-auto">Save </button>
             </div>
         </div>

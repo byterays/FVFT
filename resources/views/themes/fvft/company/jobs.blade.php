@@ -14,10 +14,10 @@
             <div class="tabs-menus">
                 <!-- Tabs -->
                 <ul class="nav panel-tabs">
-                    <li class=""><a href="#tab1" class="" data-toggle="tab">All Jobs</a></li>
-                    {{-- <li><a href="#tab2" data-toggle="tab" class="active">Pending</a></li>
-                                    <li><a href="#tab3" data-toggle="tab" class="">Accepted</a></li>
-                                    <li><a href="#tab4" data-toggle="tab" class="">Rejected</a></li> --}}
+                    <li class=""><a href="#tab1" class="active" data-toggle="tab">All Jobs</a></li>
+                    <li><a href="#tab2" data-toggle="tab" class="">Approved</a></li>
+                    <li><a href="#tab3" data-toggle="tab" class="">Not Approved</a></li>
+                    <li><a href="#tab4" data-toggle="tab" class="">Published</a></li>
                 </ul>
             </div>
             <div class="tab-content">
@@ -25,15 +25,18 @@
                     @include('themes.fvft.company.components.jobs.joblist',['items'=>$all_jobs,'action'=>'All
                     Jobs'])
                 </div>
-                {{-- <div class="tab-pane table-responsive border-top userprof-tab" id="tab2">
-                                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$pending_jobs,'action'=>'Pending Jobs '])
-                                </div>
-                                <div class="tab-pane table-responsive border-top userprof-tab" id="tab3">
-                                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$accepted_jobs,'action'=>'Accepted Jobs'])
-                                </div>
-                                <div class="tab-pane table-responsive border-top userprof-tab " id="tab4">
-                                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$rejected_jobs,'action'=>'Rejected Jobs'])
-                                </div> --}}
+                <div class="tab-pane table-responsive border-top userprof-tab" id="tab2">
+                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$approved_jobs,'action'=>'Approved
+                    '])
+                </div>
+                <div class="tab-pane table-responsive border-top userprof-tab" id="tab3">
+                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$unapproved_jobs,'action'=>'Not Approved
+                    Jobs'])
+                </div>
+                <div class="tab-pane table-responsive border-top userprof-tab " id="tab4">
+                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$published_jobs,'action'=>'Published
+                    Jobs'])
+                </div>
             </div>
         </div>
     </div>

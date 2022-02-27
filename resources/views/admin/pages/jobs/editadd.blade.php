@@ -1,5 +1,6 @@
 @extends('admin.layouts.master')
 @section('main')
+    <link rel="stylesheet" href="{{ asset('css/datepicker.min.css') }}">
     <div class="page-header">
         <h4 class="page-title">Add Job</h4>
         <ol class="breadcrumb">
@@ -11,7 +12,9 @@
 
     <div class="row">
         <div class="col-12">
-            <form action="/admin/jobs-save" method="post">
+            <div class="alert alert-secondary d-none" role="alert"><button type="button" class="close" data-dismiss="alert"
+                aria-hidden="true">×</button><span id="db_error" class="db_error"></span></div>
+            <form action="{{ route('admin.saveNewJob') }}" method="post" enctype="multipart/form-data" id="jobForm">
                 @csrf
                 <div class="card">
                     <div class="card-header">
@@ -24,16 +27,18 @@
                                 <div class="form-group">
                                     <label class="form-label">Title</label>
                                     <input type="text" class="form-control" name="title" placeholder="Job Title">
+                                    <div class="require text-danger title"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Company</label>
                                     <div class="form-group">
                                         <select class="form-control select2-flag-search" data-placeholder="Select Company"
-                                            name="company">
+                                            name="company_id">
                                             @foreach ($companies as $company)
                                                 <option value="{{ $company->id }}">{{ $company->company_name }}</option>
                                             @endforeach
                                         </select>
+                                        <div class="require text-danger company_id"></div>
                                     </div>
                                 </div>
 
@@ -46,26 +51,32 @@
                                 <div class="form-group">
                                     <label class="form-label">Benefits <span
                                             class="form-label-small">56/100</span></label>
-                                    <textarea class="form-control" name="Bbenefits" rows="5"
+                                    <textarea class="form-control" name="benefits" rows="5"
                                         placeholder="Benefits."></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Number of Positions</label>
-                                    <input type="number" class="form-control" name="number-of-position"
+                                    <input type="number" class="form-control" name="number_of_position"
                                         placeholder="Number of Positions">
                                 </div>
                                 <div class="form-group">
+                                    <label class="form-label">Deadline</label>
+                                    <input type="text" class="form-control datetime" name="deadline"
+                                        placeholder="Deadline"
+                                        value="" readonly>
+                                </div>
+                                <div class="form-group">
                                     <label class="form-label">Salary From</label>
-                                    <input type="number" class="form-control" name="salary-from"
+                                    <input type="number" class="form-control" name="salary_from"
                                         placeholder="Salary From">
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Salary To</label>
-                                    <input type="number" class="form-control" name="salary-to" placeholder="Salary To">
+                                    <input type="number" class="form-control" name="salary_to" placeholder="Salary To">
                                 </div>
                                 <div class="form-group">
                                     <label class="custom-switch-checkbox">
-                                        <input type="checkbox" name="is_featured" class="custom-switch-input">
+                                        <input type="checkbox" name="hide_salary" class="custom-switch-input">
                                         <span class="custom-switch-indicator"></span>
                                         <span class="custom-switch-description">Hide Salary</span>
                                     </label>
@@ -74,18 +85,13 @@
                             <div class="col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label class="form-label">Featured Image</label>
-                                    <input type="file" class="dropify" name="feature_image" data-height="180">
+                                    <input type="file" class="dropify" name="feature_image" data-height="180" data-allowed-file-extensions="jpg png jpeg" data-max-file-size="4M">
 
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Country</label>
-                                    {{-- <select name="country" id="select-countries" class="form-control select2 ">
-                                        <option value="br">Brazil</option>
-                                        <option value="cz">Czech Republic</option>
-                                        <option value="de">Germany</option>
-                                        <option value="pl" selected>Poland</option>
-                                    </select> --}}
-                                    <select name="country_id" id="select-country" class="form-control select2"
+                                   
+                                    <select name="country" id="select-country" class="form-control select2-flag-search"
                                         value="{{ isset($job->country_id) ? $job->country_id : '' }}"
                                         onchange="patchStates(this)">
                                         @foreach ($countries as $item)
@@ -95,35 +101,28 @@
                                         @endforeach
 
                                     </select>
+                                    <div class="require text-danger country"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">States</label>
-                                    {{-- <select name="state" id="select-countries" class="form-control select2 ">
-                                        <option value="br">Brazil</option>
-                                        <option value="cz">Czech Republic</option>
-                                        <option value="de">Germany</option>
-                                        <option value="pl" selected>Poland</option>
-                                    </select> --}}
-                                    <select name="state_id" id="select-state" class="form-control select2"
+                                    
+                                    <select name="state" id="select-state" class="form-control select2-flag-search"
                                         value="{{ isset($job->state_id) ? $job->state_id : '' }}"
                                         onchange="patchCities(this)">
                                     </select>
+                                    <div class="require text-danger state"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Cities</label>
-                                    {{-- <select name="city" id="select-countries" class="form-control select2 ">
-                                        <option value="br">Brazil</option>
-                                        <option value="cz">Czech Republic</option>
-                                        <option value="de">Germany</option>
-                                        <option value="pl" selected>Poland</option>
-                                    </select> --}}
-                                    <select name="city_id" id="select-city" class="form-control select2"
+                                   
+                                    <select name="city_id" id="select-city" class="form-control select2-flag-search"
                                         value="{{ isset($job->city_id) ? $job->city_id : '' }}">
                                     </select>
+                                    <div class="require text-danger city_id"></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="custom-switch-checkbox">
-                                        <input type="checkbox" name="is_active" class="custom-switch-input" checked="">
+                                        <input type="checkbox" name="is_active" class="custom-switch-input">
                                         <span class="custom-switch-indicator"></span>
                                         <span class="custom-switch-description">Active</span>
                                     </label>
@@ -132,6 +131,19 @@
                                         <span class="custom-switch-indicator"></span>
                                         <span class="custom-switch-description">Featured</span>
                                     </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="status">Status</label>
+                                    @php
+                                        $statuses = ['Approved' => 'Approved', 'Not Approved' => 'Not Approved'];
+                                    @endphp
+                                    <select name="job_status" class="form-control select2-flag-search">
+                                        <option value="">Select Status</option>
+                                        @foreach ($statuses as $key => $value)
+                                            <option value="{{ $key }}">{{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Job Category</label>
@@ -143,6 +155,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                        <div class="require text-danger category"></div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -154,6 +167,7 @@
                                                 <option value="{{ $shift->id }}">{{ $shift->job_shift }}</option>
                                             @endforeach
                                         </select>
+                                        <div class="require text-danger job_shift"></div>
                                     </div>
                                 </div>
 
@@ -167,6 +181,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                        <div class="require text-danger educationlevel"></div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -175,9 +190,11 @@
                                         <select class="form-control select2-flag-search" name="experiencelevel"
                                             data-placeholder="Select Contry">
                                             @foreach ($experiencelevels as $experience)
-                                                <option value="{{ $experience->id }}">{{ $experience->title }}</option>
+                                                <option value="{{ $experience->id }}">{{ $experience->title }}
+                                                </option>
                                             @endforeach
                                         </select>
+                                        <div class="require text-danger experiencelevel"></div>
                                     </div>
                                 </div>
                             </div>
@@ -185,8 +202,9 @@
                     </div>
                     <div class="card-footer text-right">
                         <div class="d-flex">
-                            <a href="javascript:void(0)" class="btn btn-link">Cancel</a>
-                            <button type="submit" class="btn btn-success ml-auto">Save </button>
+                            <a href="{{ route('admin.jobs-list') }}" class="btn btn-link">Cancel</a>
+                            <button type="button" onclick="submitForm(event);" class="btn btn-success ml-auto">Save
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -196,11 +214,53 @@
 @endsection
 
 @section('script')
+    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('js/location.js') }}"></script>
     <script>
         const _token = $('meta[name="csrf-token"]')[0].content;
         const state_id = {{ isset($job->state_id) ? $job->state_id : 'null' }};
         const city_id = {{ isset($job->city_id) ? $job->city_id : 'null' }};
         const appurl = "{{ env('APP_URL') }}";
+
+
+        $(function() {
+            $('.datetime').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true,
+            });
+
+
+        });
+
+        function submitForm(e) {
+            e.preventDefault();
+            $('.require').css('display', 'none');
+            let url = $("#jobForm").attr("action");
+            $.ajax({
+                url: url,
+                type: 'post',
+                data: new FormData($("#jobForm")[0]),
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data) {
+                    // return true;
+                    if (data.db_error) {
+                        $(".alert-warning").css('display', 'block');
+                        $(".db_error").html(data.db_error);
+                    } else if (data.errors) {
+                        var error_html = "";
+                        $.each(data.errors, function(key, value) {
+                            error_html = '<div>' + value + '</div>';
+                            $('.' + key).css('display', 'block').html(error_html);
+                        });
+                    } else if (!data.errors && !data.db_error) {
+                        location.href = data.redirectRoute;
+                        toastr.success(data.msg);
+                    }
+                }
+            });
+        }
     </script>
 @endsection

@@ -29,7 +29,7 @@
                                 <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Jobs</span><i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
 								<li><a class="slide-item" href="/admin/jobs-list">List Jobs</a></li>
-								<li><a class="slide-item" href="/admin/jobs-new">Add Job</a></li>
+								<li><a class="slide-item" href="{{ route('admin.addNewJob') }}">Add Job</a></li>
 							</ul>
 						</li>
                         <li class="slide">
