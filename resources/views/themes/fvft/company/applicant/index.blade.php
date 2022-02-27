@@ -24,6 +24,7 @@
                     <td>{{ $applicant->status }}</td>
                     <td>{{ $applicant->interview_status }}</td>
                     <td>
+                        <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="Edit" href="{{ route('company.applicant.editApplication', $applicant->id) }}"><i class="fa fa-edit"></i></a>
                         <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View" href="{{ route('company.applicant.detail', $applicant->employ_id) }}"><i class="fa fa-eye"></i></a>
                     </td>
                 </tr>
