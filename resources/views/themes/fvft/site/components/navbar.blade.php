@@ -1,6 +1,6 @@
 <nav class="horizontalMenu clearfix d-md-flex">
     <ul class="horizontalMenu-list">
-        @foreach ($primary_menu as $item)      
+        @foreach ($primary_menu as $item)
         <li><a href="{{$item->link}}">{{$item->title}}</a></li>
         @endforeach
         @auth
@@ -32,7 +32,7 @@
                 <li>
                     <a href="/company/applicants">Applicants</a>
                 </li>
-                
+
                 <li>
                     <a href="/company/settings">Settings</a>
                 </li>
@@ -44,7 +44,7 @@
                 <li>
                     <form action="/logout" method="post">
                       @csrf
-                      <button type="submit" class="btn btn-danger btn-sm text-white">
+                      <button type="submit" class="btn btn-danger btn-sm text-white btn-block">
                         <span class="icon1 " style="background: #ffffff00;color: #f3f6ff;"><i class="typcn typcn-power-outline fs-20"></i></span> Logout
                     </button>
                     </form>

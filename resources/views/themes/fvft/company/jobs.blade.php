@@ -1,5 +1,6 @@
 @extends('themes.fvft.company.layouts.dashmaster')
 @section('jobs') active @endsection
+@section('title') Jobs @endsection
 @section('content')
 <section>
     <div class="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg" style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
@@ -7,8 +8,7 @@
             <div class="text-center text-white">
                 <h1 class="">My Jobs</h1>
                 <ol class="breadcrumb text-center">
-                    <li class="breadcrumb-item"><a href="#">Company</a></li>
-                    <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('company.dash') }}">Company</a></li>
                     <li class="breadcrumb-item active text-white" aria-current="page">My Jobs</li>
                 </ol>
             </div>

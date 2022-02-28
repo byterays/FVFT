@@ -2,6 +2,7 @@
 @section('css')
     <link href="{{asset("/")}}themes/fvft/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css">
 @endsection
+@section('title') Profile @endsection
 @section('edit_profile') active @endsection
 @section('content')
     <section>
@@ -10,8 +11,7 @@
                 <div class="text-center text-white">
                     <h1 class="">Profile</h1>
                     <ol class="breadcrumb text-center">
-                        <li class="breadcrumb-item"><a href="#">Company</a></li>
-                        <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('company.dash') }}">Company</a></li>
                         <li class="breadcrumb-item active text-white" aria-current="page">Profile</li>
                     </ol>
                 </div>

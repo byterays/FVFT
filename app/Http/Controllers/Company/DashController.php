@@ -71,4 +71,9 @@ class DashController extends Controller
 
         return redirect()->route('company.edit_profile');
     }
+
+    public function applicants()
+    {
+        return $this->company_view('company.applicants');
+    }
 }
