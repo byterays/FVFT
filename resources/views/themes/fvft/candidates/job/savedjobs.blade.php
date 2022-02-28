@@ -53,15 +53,15 @@
                                     @foreach ($saved_jobs as $item)
                                         <tr>
                                             <td>
-                                                {{ $item->job->exists() ? $item->job->title : '' }}
+                                                {{ !empty($item->job) ? $item->job->title : '' }}
                                             </td>
                                             <td>
-                                                {{ $item->job->exists() && $item->job->company->exists() ? $item->job->company->company_name : '' }}
+                                                {{ !empty($item->job) && !empty($item->job->company) ? $item->job->company->company_name : '' }}
                                             </td>
 
                                             <td>
                                                 @php
-                                                    $deadline = $item->job->exists() ? $item->job->expiry_date : '';
+                                                    $deadline = !empty($item->job) ? $item->job->expiry_date : '';
 
                                                 @endphp
                                                 {{ $deadline != '' ? date('Y-m-d', strtotime($deadline)) : '----' }}
