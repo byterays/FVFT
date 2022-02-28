@@ -6,6 +6,14 @@
 @section('main')
     @include('themes.fvft.site.components.header')
 
+    @php
+        if(checkUserType('candidate')){
+            $employ_id = App\Models\Employe::where('user_id', \Auth::user()->id)->first()->id;
+            // dd($employ_id);
+        } else {
+            $employ_id = '';
+        }
+    @endphp
     <!--Breadcrumb-->
     <div class="bg-white border-bottom">
         <div class="container">
@@ -145,8 +153,8 @@
                                                                                     <a href="/apply-job/{{ $item->id }}"
                                                                                         class="btn btn-block btn-primary"> Apply
                                                                                         Now</a>
-                                                                                    <a href="/apply-job/{{ $item->id }}"
-                                                                                        class="btn btn-block btn-primary ml-2">
+                                                                                    <a href="javascript:void(0);" onclick="savejob({{ $item->id }})"
+                                                                                        class="btn btn-block btn-primary ml-2 saveJobButton">
                                                                                         Save Job</a>
                                                                                 </div>
                                                                             @endif
@@ -158,8 +166,8 @@
                                                                         <div class="d-inline-flex">
                                                                             <a href="/apply-job/{{ $item->id }}"
                                                                                 class="btn btn-block btn-primary"> Apply Now</a>
-                                                                            <a href="/apply-job/{{ $item->id }}"
-                                                                                class="btn btn-block btn-primary ml-2"> Save
+                                                                            <a href="javascript:void(0);" onclick="savejob({{ $item->id }})"
+                                                                                class="btn btn-block btn-primary ml-2 saveJobButton"> Save
                                                                                 Job</a>
                                                                         </div>
                                                                     @endauth
@@ -281,5 +289,34 @@
         const state_id = {{ isset($candidate->state_id) ? $candidate->state_id : '3871' }};
         const city_id = {{ isset($candidate->city_id) ? $candidate->city_id : 'null' }};
         const appurl = "{{ env('APP_URL') }}";
+    </script>
+
+    <script>
+        function savejob(job_id){
+            var url = "{{ route('candidate.savedjob.saveJob') }}";
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    'job_id': job_id,
+                    'employ_id': '{{ $employ_id }}',
+                },
+                beforeSend: function(){
+                    $(".saveJobButton").attr('disabled', true);
+                },
+                success: function(response){
+                    if(response.db_error){
+                        toastr.warning(response.db_error);
+                    } else if(response.error){
+                        toastr.warning(response.error);
+                    } else {
+                        toastr.success(response.msg);
+                    }
+                },
+                complete: function(){
+                    $(".saveJobButton").attr('disabled', false);
+                },
+            });
+        }
     </script>
 @endsection

@@ -41,7 +41,7 @@ if(!function_exists('authIsCandidate')){
 
 if(!function_exists('checkUserType')){
     function checkUserType($type){
-        if(Auth::check() && Auth::user()->type == $type){
+        if(Auth::check() && Auth::user()->user_type == $type){
             return true;
         }
         return false;
