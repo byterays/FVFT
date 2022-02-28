@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Candidates\AuthController;
 use App\Http\Controllers\Candidates\DashController;
+use App\Http\Controllers\Candidates\JobController;
 
 Route::get('/login', [AuthController::class, 'login'])->name('candidate.login');
 Route::post('/register', [AuthController::class, 'register'])->name('candidate.register');
@@ -24,5 +25,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['prefix' => 'company/', 'as' => 'candidate.'], function(){
         Route::get('lists', [DashController::class, 'company_lists'])->name('company_lists');
+    });
+
+    Route::group(['prefix' => 'saved-jobs/', 'as' => 'candidate.savedjob.'], function(){
+        Route::get('lists/{id}', [JobController::class, 'saveJobLists'])->name('saveJobLists');
+        Route::post('store', [JobController::class, 'saveJob'])->name('saveJob');
     });
 });
