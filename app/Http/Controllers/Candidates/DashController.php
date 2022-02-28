@@ -163,11 +163,11 @@ class DashController extends Controller
                     return redirect()->route('candidate.dashboard')->with(notifyMsg('warning', 'You have already applied for this job'));
                 }
             } else {
-                return redirect()->route('candidate.profile')->with(notifyMsg('warning', 'You are not eligible to apply for job. Please Complete your profile first.'));
+                return redirect()->route('candidate.profile')->with(notifyMsg('warning', 'You are not eligible to apply for job. Please Complete your profile first.x'));
             }
 
         }
-        return redirect()->route('candidate.dashboard');
+        return redirect()->route('candidate.dashboard')->with(notifyMsg('success', 'Successfully applied for job'));
     }
     public function removeApplication($id)
     {
