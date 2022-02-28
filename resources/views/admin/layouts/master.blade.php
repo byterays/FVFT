@@ -46,15 +46,15 @@
 		<!-- Color-Skins -->
 		<link id="theme" rel="stylesheet" type="text/css" media="all" href="{{asset('themes/fvft/')}}/assets/color-skins/color-skins/color10.css" />
 		<link href="{{asset('/')}}css/main.css" rel="stylesheet"/>
-		
+
 		@yield('style')
 	</head>
 	<body class="app sidebar-mini">
 
 		<!--Loader-->
-		<div id="global-loader">
-			<img src="{{asset('themes/fvft/')}}/assets/images/loader.svg" class="loader-img" alt="">
-		</div>
+		{{--<div id="global-loader">--}}
+			{{--<img src="{{asset('themes/fvft/')}}/assets/images/loader.svg" class="loader-img" alt="">--}}
+		{{--</div>--}}
 		<div class="page">
 			<div class="page-main">
 				@include('admin.components.header')
@@ -68,7 +68,7 @@
 					</div>
 				</div>
 			</div>
-		
+
 			<!--footer-->
 			@include('admin.components.footer')
 			<!-- End Footer-->
