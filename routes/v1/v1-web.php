@@ -23,12 +23,14 @@ Auth::routes();
 // Site Routes
 Route::get('/', [HomeController::class, 'home']);
 Route::get('/companies', [HomeController::class, 'companies']);
-Route::get('/company-view/{id}', [HomeController::class, 'company']);
-Route::get('jobs/', [JobsController::class, 'index']);
+Route::get('/company-view/{id}', [HomeController::class, 'company'])->middleware('viewCompanyDetail');
+Route::get('jobs/', [JobsController::class, 'index'])->name('site.jobs');
 Route::get('job/{id}', [JobsController::class, 'jobindex']);
 Route::get('news/', [NewsController::class, 'index']);
 Route::get('news/{slug}', [NewsController::class, 'getNews']);
 Route::get('page/{slug}', [PageController::class, 'index']);
+
+Route::post('get-job-by-title', [HomeController::class, 'getJobsByTitle'])->name('getJobsByTitle');
 
 
 Route::middleware(['auth'])->group(function () {
@@ -40,4 +42,5 @@ Route::prefix('ajax')->group(function () {
     Route::post('/countries', [LocationAjaxController::class, 'countries']);
     Route::post('/states', [LocationAjaxController::class, 'states']);
     Route::post('/cities', [LocationAjaxController::class, 'cities']);
+    Route::post('/districts', [LocationAjaxController::class, 'districts']);
 });

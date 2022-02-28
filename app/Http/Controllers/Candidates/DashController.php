@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Candidates;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Traits\Site\ThemeMethods;
-use App\Traits\Site\CandidateMethods;
-use DB;
+use App\Models\Company;
 use App\Models\Employe;
 use App\Models\EmployJobPreference;
+use App\Models\Training;
 use App\Models\User;
+use App\Traits\Site\CandidateMethods;
+use App\Traits\Site\ThemeMethods;
+use DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class DashController extends Controller
 {
@@ -18,6 +22,16 @@ class DashController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->experiencelevels = \DB::table('experiencelevels')->get();
+        $this->educationlevels = \DB::table('educationlevels')->get();
+        $this->job_shifts = \DB::table('job_shifts')->get();
+        // $this->job_categories = \DB::table('job_categories')->get();
+        // $this->countries = \DB::table('countries')->get();
+        $this->trainings = Training::get();
+        $this->skills = \DB::table('skills')->get();
+        $this->states = \DB::table('states')->get();
+        $this->languages = \DB::table('languages')->get();
+        $this->jobs = \DB::table('jobs')->get();
     }
 
     public function dashboard()
@@ -35,7 +49,7 @@ class DashController extends Controller
             'all_jobs' => $all_jobs,
             'rejected_jobs' => $rejected_jobs,
             'pending_jobs' => $pending_jobs,
-            'accepted_jobs' => $accepted_jobs
+            'accepted_jobs' => $accepted_jobs,
         ];
         if (auth()->check()) {
             $employ = Employe::where('user_id', auth()->user()->id)->first();
@@ -47,9 +61,21 @@ class DashController extends Controller
     {
         $educationlevels = DB::table('educationlevels')->get();
         $experiencelevels = DB::table('experiencelevels')->get();
+        $employ = Employe::where('user_id', \Auth::user()->id)->first();
         return $this->client_view('candidates.profile', [
+            'employ' => $employ,
             'educationlevels' => $educationlevels,
-            'experiencelevels' => $experiencelevels
+            'experiencelevels' => $experiencelevels,
+            // 'countries' => $this->countries,
+            'educationLevels' => $this->educationlevels,
+            'states' => $this->states,
+            'skills' => $this->skills,
+            'trainings' => $this->trainings,
+            'languages' => $this->languages,
+            // 'job_categories' => $this->job_categories,
+            'jobs' => $this->jobs,
+            'employ_experiences' => DB::table('employes_experience')->where("employ_id", $employ->id)->get(),
+            'viewRoute' => route('candidate.profile.show', $employ->id),
         ]);
     }
     public function saveProfile(Request $request)
@@ -83,7 +109,7 @@ class DashController extends Controller
             'educationlevels' => $educationlevels,
             'experiencelevels' => $experiencelevels,
             'job_categories' => $job_categories,
-            'employ_job_preference' => $employ_job_preference
+            'employ_job_preference' => $employ_job_preference,
         ]);
     }
     public function saveJobPreferences(Request $request)
@@ -124,16 +150,24 @@ class DashController extends Controller
     public function applyjob($id)
     {
         if (auth()->check() && auth()->user()->user_type == "candidate") {
-            $employ = \DB::table('employes')->where('user_id', auth()->user()->id)->first();
+            $employ = Employe::where('user_id', auth()->user()->id)->first();
+            // $employ = \DB::table('employes')->where('user_id', auth()->user()->id)->first();
             $is_exist = \DB::table("job_applications")->where('job_id', $id)->where('employ_id', $employ->id)->first();
-            if (!$is_exist) {
-                \DB::table("job_applications")->insert([
-                    "job_id" => $id,
-                    "employ_id" => $employ->id
-                ]);
+            if ($employ->calculateProfileCompletion() > 80) {
+                if (!$is_exist) {
+                    \DB::table("job_applications")->insert([
+                        "job_id" => $id,
+                        "employ_id" => $employ->id,
+                    ]);
+                } else {
+                    return redirect()->route('candidate.dashboard')->with(notifyMsg('warning', 'You have already applied for this job'));
+                }
+            } else {
+                return redirect()->route('candidate.profile')->with(notifyMsg('warning', 'You are not eligible to apply for job. Please Complete your profile first.x'));
             }
+
         }
-        return redirect()->route('candidate.dashboard');
+        return redirect()->route('candidate.dashboard')->with(notifyMsg('success', 'Successfully applied for job'));
     }
     public function removeApplication($id)
     {
@@ -143,5 +177,223 @@ class DashController extends Controller
             $job_application->delete();
             return redirect()->back();
         }
+    }
+
+    public function saveJob($id)
+    {
+        if (authIsCandidate()) {
+
+        }
+    }
+
+    private $destination = 'uploads/candidates/profiles/';
+    private $fullPictureDestination = 'uploads/candidates/full_picture/';
+    private $redirectTo = "candidate.profile";
+
+    public function show($id)
+    {
+        $employ = Employe::where('user_id', \Auth::user()->id)->first();
+        return $this->client_view('candidates.show', [
+            'action' => "View",
+            'employ' => $employ,
+            'editRoute' => route('candidate.profile'),
+        ]);
+    }
+
+    public function company_lists()
+    {
+        // $employ = Employe::where('user_id', \Auth::user()->id)->first();
+        // $job_id = $employ->job_applications()->pluck('job_id');
+        // $companies_id = Job::whereIn('id', $job_id)->pluck('company_id')->toArray();
+        // $unique_company_id = getApplicantCompanyList($employ);
+        // $companies = Company::whereIn('id', $unique_company_id)->get();
+        $companies = Company::whereHas('jobs', function ($query) {
+            return $query->whereHas('job_applications', function ($query2) {
+                $query2->whereHas('employe', function ($query3) {
+                    return $query3->where('user_id', Auth::user()->id);
+                });
+            });
+        })->paginate(12);
+        return $this->client_view('candidates.company_list', [
+            'companies' => $companies,
+            // 'companies' => Company::whereIn('id', $unique_company_id)->paginate(12),
+        ]);
+    }
+
+    public function view_company_detail($id)
+    {
+        return $this->client_view('candidates.company_detail', [
+            'company' => Company::where('id', $id)->with(['company_contact_person'])->first(),
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $employe = Employe::where('id', $id)->first();
+        $validator = Validator::make($request->all(), [
+            'first_name' => ['required'],
+            'last_name' => ['required'],
+            'english_dob' => ['required'],
+            'gender' => ['required'],
+            'marital_status' => ['required'],
+            'education_level_id' => ['required'],
+            'mobile_number1' => ['required'],
+            'email' => ['required', 'unique:users,email,' . $employe->user_id],
+            'profile_picture' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:12096'],
+            'full_picture' => ['nullable'],
+            'full_picture.*' => ['image', 'mimes:jpeg,png,jpg', 'max:12096'],
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()]);
+        }
+
+        if ($validator->passes()) {
+            try {
+                \DB::beginTransaction();
+                $user = User::find($employe->user_id);
+                $user->email = $request->email;
+                $user->update([
+                    'email' => $request->email,
+                    'user_type' => 'candidate',
+                ]);
+                $this->__updateEmployee($id, $user->id, $request);
+                \DB::commit();
+                return response()->json(['msg' => 'Candidate updated successfully', 'redirectRoute' => route($this->redirectTo)]);
+            } catch (\Exception$e) {
+                \DB::rollBack();
+                return response()->json(['db_error' => $e->getMessage()]);
+                // return redirect()->back();
+            }
+        }
+    }
+
+    private function __updateEmployee($employe_id, $user_id, $request)
+    {
+        $employe = Employe::find($employe_id);
+        $employe->first_name = $request->first_name;
+        $employe->middle_name = $request->middle_name;
+        $employe->last_name = $request->last_name;
+        $employe->dob = $request->english_dob;
+        $employe->gender = $request->gender;
+        $employe->marital_status = $request->marital_status;
+        $employe->state_id = $request->state_id;
+        $employe->mobile_phone = $request->mobile_number1;
+        $employe->user_id = $user_id;
+        $employe->address = $request->address_line;
+        $employe->city_street = $request->city_street;
+        $employe->height = $request->height;
+        $employe->weight = $request->weight;
+        $employe->is_active = '1';
+        $employe->is_verified = '1';
+        if ($request->hasFile('profile_picture')) {
+            $prf = $request->file('profile_picture');
+            $prfName = time() . '_' . $prf->getClientOriginalName();
+            $employe->avatar = $this->destination . $prfName;
+            $prf->move(public_path($this->destination, 'public'), $prfName);
+        }
+
+        if ($request->hasFile('full_picture')) {
+            foreach ($request->file('full_picture') as $file) {
+                $photoName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path($this->fullPictureDestination, 'public'), $photoName);
+                $photoData[] = $this->fullPictureDestination . $photoName;
+            }
+            $employe->full_picture = json_encode($photoData);
+        }
+
+        $employe->education_level_id = $request->education_level_id;
+        $employe->dob_in_bs = $request->nepali_dob;
+        $employe->mobile_phone2 = $request->mobile_number2;
+        $employe->district_id = $request->district_id;
+        $employe->municipality = $request->municipality;
+        $employe->ward = $request->ward;
+        $employe->passport_number = $request->passport_number;
+        $employe->passport_expiry_date = $request->passport_expiry_date;
+        $employe->is_experience = $request->is_experience !== null ? 1 : 0;
+        if (!empty($request->training)) {
+            foreach ($request->training as $key => $training) {
+                $trainingData[] = $training;
+            }
+            $employe->trainings = json_encode($trainingData);
+        }
+        if (!empty($request->skill)) {
+            foreach ($request->skill as $key => $skill) {
+                $skillData[] = $skill;
+            }
+            $employe->skills = json_encode($skillData);
+        }
+
+        if (!empty($request->language)) {
+            foreach ($request->language as $key => $language) {
+                $languageData[] = [
+                    'language_id' => $language,
+                    'language_level' => $request->get('language_level')[$key],
+                ];
+            }
+            $employe->languages = json_encode($languageData);
+        }
+
+        if ($request->is_experience != null && !empty($request->country_id)) {
+            foreach ($request->country_id as $key => $country) {
+                $experienceData[] =
+                    [
+                    'country_id' => $country,
+                    'job_category_id' => $request->get('job_category_id')[$key],
+                    'job_title_id' => $request->get('job_title')[$key],
+                    'working_year' => $request->get('working_year')[$key],
+                    'working_month' => $request->get('working_month')[$key],
+                ];
+            }
+            $employe->experiences = json_encode($experienceData);
+        }
+        $employe->save();
+
+        $this->__updateExperience($employe->id, $request);
+        $this->__updateEmployeSkill($employe->id, $request);
+        $this->__updateEmployeLanguage($employe->id, $request);
+
+    }
+
+    private function __updateExperience($employ_id, $request)
+    {
+        DB::table('employes_experience')->where('employ_id', $employ_id)->delete();
+
+        $fields = [];
+        if ($request->is_experience != null) {
+            foreach ($request->country_id as $key => $country) {
+                $fields['employ_id'] = $employ_id;
+                $fields['country_id'] = $country;
+                $fields['job_category_id'] = $request->get('job_category_id')[$key];
+                $fields['job_title_id'] = $request->get('job_title')[$key];
+                $fields['working_year'] = $request->get('working_year')[$key];
+                $fields['working_month'] = $request->geT('working_month')[$key];
+                DB::table('employes_experience')->insert($fields);
+            }
+
+        }
+    }
+
+    private function __updateEmployeSkill($employ_id, $request)
+    {
+        DB::table('employes_skills')->where('employ_id', $employ_id)->delete();
+        $fields = [];
+        foreach ($request->skill as $key => $skill) {
+            $fields['employ_id'] = $employ_id;
+            $fields['skills_id'] = $skill;
+            \DB::table('employes_skills')->insert($fields);
+        }
+    }
+
+    private function __updateEmployeLanguage($employ_id, $request)
+    {
+        DB::table('employes_languages')->where('employ_id', $employ_id)->delete();
+        $fields = [];
+        foreach ($request->language as $key => $language) {
+            $fields['employ_id'] = $employ_id;
+            $fields['language_id'] = $language;
+            $fields['language_level'] = $request->get('language_level')[$key];
+            DB::table('employes_languages')->insert($fields);
+        }
+
     }
 }

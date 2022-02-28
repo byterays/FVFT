@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\Ajax\AddController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,5 +16,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::group(['prefix' => 'skill/', 'as' => 'admin.skill.'], function(){
+    Route::post('ajax-store-skill', [AddController::class, "ajaxStoreSKill"])->name("ajaxAddSkill");
+});
+Route::group(['prefix' => 'training/', 'as' => 'admin.training.'], function(){
+    Route::post('ajax-store-training', [AddController::class, "ajaxStoreTraining"])->name("ajaxAddTraining");
 });
 require_once 'v1/v1-web.php';

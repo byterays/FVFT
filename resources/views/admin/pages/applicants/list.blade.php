@@ -59,7 +59,7 @@ session()->forget('delete');
                                 <td>{{ $job->title }}</td>
                                 <td>
                                     <?php
-                                    $status_indicator_items = array("pending" => "warning", "accepted" => "success", "rejected" => "danger");
+                                    $status_indicator_items = array("pending" => "warning", "accepted" => "success", "rejected" => "danger", "shortlisted" => "success", "selectedForInterview" => "success", "interviewed" => "success", "redlisted" => "danger");
                                     $status_indicator = $status_indicator_items[$item->status];
                                     ?>
                                     <span class="label label-{{$status_indicator}}">{{ $item->status }}</span>

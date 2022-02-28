@@ -4,13 +4,15 @@
             <th></th>
             <th class="w-100">{{$action}}</th>
             <th>Location</th>
-            <th>Date</th>
+            <th>Applied At</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($items as $item)                                            
+        
+        @foreach ($items as $item) 
+                                                   
         <tr>
             <td>
                 <label class="custom-control custom-checkbox">
@@ -22,16 +24,17 @@
                 <div class="media mt-0 mb-0">
                     <div class="media-body">
                         <div class="card-item-desc p-0">
-                            <a href="#" class="text-dark"><h4 class="font-weight-semibold">{{ $item->title }}</h4></a>
-                            <a href="#"><i class="fa fa-tag w-4"></i> {{  \DB::table('job_categories')->where('id',$item->job_categories_id)->first()->functional_area}}</a>
+                            <a href="/job/{{ $item->job_id}}" class="text-dark"><h4 class="font-weight-semibold">{{ $item->title }}</h4></a>
+                            <a href="/job/{{ $item->job_id}}"><i class="fa fa-tag w-4"></i> {{  \DB::table('job_categories')->where('id',$item->job_categories_id)->first()->functional_area}}</a>
                         </div>
                     </div>
                 </div>
             </td>
-            <td><i class="fa fa-map-marker mr-1 text-muted"></i>Ambrosia</td>
+            <td><i class="fa fa-map-marker mr-1 text-muted"></i>{{ DB::table('companies')->where('id', $item->company_id)->first()->company_address }}</td>
             
             <td>
-                {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}
+                {{ date('Y-m-d', strtotime($item->created_at)) }}
+                {{-- {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }} --}}
             </td>
             <td>{{ $item->status }}</td>
             <td>

@@ -44,6 +44,7 @@ session()->forget('delete');
                                 {{-- <th>#id</th> --}}
                                 <th>Logo</th>
                                 <th>Name</th>
+                                <th>Industry</th>
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Featured</th>
@@ -53,11 +54,12 @@ session()->forget('delete');
                         </thead>
                         <tbody>
                             @foreach ($companies as $company)
-                            {{-- @dd($company)                                 --}}
+                            {{-- @dd($company->industry_id)                                 --}}
                             <tr>
                                 {{-- <td>{{$company->id}}</td> --}}
-                                <td><img src="/{{$company->company_logo}}" alt="" srcset="" width="50px"></td>
+                                <td><img src="{{asset($company->company_logo)}}" alt="" srcset="" width="50px"></td>
                                 <td>{{$company->company_name}}</td>
+                                <td>{{ $company->industry_id ? $company->industry->title : '' }}</td>
                                 <td>{{$company->company_email}}</td>
                                 <td>{{$company->company_phone}}</td>
                                 <td>
@@ -67,9 +69,12 @@ session()->forget('delete');
                                     <span class="label label-{{$company->is_active?'success':'warning'}}">{{$company->is_active?"Active":"Inactive"}}</span>
                                 </td>
                                 <td>
-
+                                    <div data-toggle="tooltip" data-original-title="View" style="display: inline-block;">
+                                        <a class="btn btn-primary btn-sm text-white mb-1"  href="{{ route('admin.companies.show', $company->id) }}" ><i class="fa fa-eye"></i></a>
+                                    </div>
                                     <div data-toggle="tooltip" data-original-title="Edit" style="display: inline-block;">
-                                        <a class="btn btn-success btn-sm text-white mb-1" href="/admin/companies/edit/{{$company->id}}"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-success btn-sm text-white mb-1" href="{{route('admin.companies.editCompany',$company->id)}}"><i class="fa fa-pencil"></i></a>
+                                        {{-- <a class="btn btn-success btn-sm text-white mb-1" href="/admin/companies/edit/{{$company->id}}"><i class="fa fa-pencil"></i></a> --}}
                                     </div>
                                     <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip" data-original-title="Delete" href="/admin/companies/delete/{{$company->id}}"><i class="fa fa-trash-o"></i></a><br>
                                 </td>

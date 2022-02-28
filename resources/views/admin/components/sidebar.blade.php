@@ -5,7 +5,7 @@
 						<div class="dropdown user-pro-body">
 							<div>
 								<img src="{{asset('/')}}{{ $user["profile"] }}" alt="user-img" class="avatar avatar-lg brround">
-								<a href="editprofile.html" class="profile-img">
+								<a href="{{ route('admin.user.profile') }}" class="profile-img">
 									<span class="fa fa-pencil" aria-hidden="true"></span>
 								</a>
 							</div>
@@ -29,7 +29,7 @@
                                 <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Jobs</span><i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
 								<li><a class="slide-item" href="/admin/jobs-list">List Jobs</a></li>
-								<li><a class="slide-item" href="/admin/jobs-new">Add Job</a></li>
+								<li><a class="slide-item" href="{{ route('admin.addNewJob') }}">Add Job</a></li>
 							</ul>
 						</li>
                         <li class="slide">
@@ -45,7 +45,7 @@
                                 <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Candidates</span><i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
 								<li><a class="slide-item" href="/admin/candidates/">List Candidates</a></li>
-								<li><a class="slide-item" href="/admin/candidates/new">Add Candidate</a></li>
+								<li><a class="slide-item" href="{{ route('admin.candidates.create') }}">Add Candidate</a></li>
 							</ul>
 						</li>
 						<li class="slide">
@@ -72,6 +72,30 @@
 								<li><a class="slide-item" href="/admin/news/new">Add New</a></li>
 							</ul>
 						</li>  
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="#">
+                                <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Industry</span><i class="angle fa fa-angle-right"></i></a>
+							<ul class="slide-menu">
+								<li><a class="slide-item" href="{{ route('admin.industry.index') }}">List Industries</a></li>
+								<li><a class="slide-item" href="{{ route('admin.industry.create') }}">Add New</a></li>
+							</ul>
+						</li> 
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="#">
+                                <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Training</span><i class="angle fa fa-angle-right"></i></a>
+							<ul class="slide-menu">
+								<li><a class="slide-item" href="{{ route('admin.training.index') }}">List Trainings</a></li>
+								<li><a class="slide-item" href="{{ route('admin.training.create') }}">Add New</a></li>
+							</ul>
+						</li> 
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="#">
+                                <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">About</span><i class="angle fa fa-angle-right"></i></a>
+							<ul class="slide-menu">
+								<li><a class="slide-item" href="{{ route('admin.about.index') }}">List Abouts</a></li>
+								
+							</ul>
+						</li> 
 						<li class="slide">
 							<span class="side-menu__item">
                                 <span class="side-menu__label">MANAGE</span>

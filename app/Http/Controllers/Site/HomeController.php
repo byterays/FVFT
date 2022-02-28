@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
+use App\Models\Job;
 use Illuminate\Http\Request;
 use App\Traits\Site\ThemeMethods;
 
@@ -26,5 +27,13 @@ class HomeController extends Controller
         $company = \DB::table('companies')->find($id);
         $company_jobs = \DB::table('jobs')->where("company_id", $id)->paginate(10);
         return $this->site_view('site.company-view', ['company' => $company, "company_jobs" => $company_jobs]);
+    }
+
+
+
+    public function getJobsByTitle(Request $request)
+    {
+        $jobs = Job::where('title', 'LIKE', '%'.$request->job_title.'%')->get();
+        return $jobs;
     }
 }

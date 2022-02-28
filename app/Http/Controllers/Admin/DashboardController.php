@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\District;
 use Illuminate\Http\Request;
 use App\Traits\Admin\AdminMethods;
 
@@ -46,5 +47,21 @@ class DashboardController extends Controller
             ],
             "latest_jobs"=>$jobs->limit(2)->orderBy('id')->get()
         ]);
+    }
+
+    public function storeDistrict()
+    {
+        $date = date('Y-m-d h:i:s');
+        $files = file_get_contents(public_path('files/districts.txt'));
+        $districts = json_decode($files);
+        foreach ($districts as $district) {
+            $data = District::create([
+                'state_id' => $district->state_id,
+                'name' => $district->name,
+                'created_at' => $date,
+                'updated_at' => $date,
+            ]);
+        }
+        echo 'success';
     }
 }

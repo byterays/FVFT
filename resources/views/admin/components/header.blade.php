@@ -176,11 +176,11 @@
                     </div>
                 </div> --}}
                 <div class="dropdown ">
-                    <a href="/admin/profile" class="nav-link pr-0 leading-none user-img" data-toggle="dropdown">
+                    <a href="{{ route('admin.user.profile') }}" class="nav-link pr-0 leading-none user-img" data-toggle="dropdown">
                         <img src="{{asset('/')}}{{ $user["profile"] }}" alt="profile-img" class="avatar avatar-md brround">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow ">
-                        <a class="dropdown-item" href="/admin/profile">
+                        <a class="dropdown-item" href="{{ route('admin.user.profile') }}">
                             <i class="dropdown-icon icon icon-user"></i> My Profile
                         </a>
                         {{-- <a class="dropdown-item" href="emailservices.html">

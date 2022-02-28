@@ -30,10 +30,10 @@
                             <div class="tabs-menus">
                                 <!-- Tabs -->
                                 <ul class="nav panel-tabs">
-                                    <li class=""><a href="#tab1" class="" data-toggle="tab">All Jobs</a></li>
-                                    <li><a href="#tab2" data-toggle="tab" class="active">Pending</a></li>
+                                    <li class=""><a href="#tab1" class="active" data-toggle="tab">All Jobs</a></li>
+                                    <li><a href="#tab2" data-toggle="tab" class="">Pending</a></li>
                                     <li><a href="#tab3" data-toggle="tab" class="">Accepted</a></li>
-                                    <li><a href="#tab4" data-toggle="tab" class="">Pending</a></li>
+                                    <li><a href="#tab4" data-toggle="tab" class="">Rejected</a></li>
                                 </ul>
                             </div>
                             <div class="tab-content">

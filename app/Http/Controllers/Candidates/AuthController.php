@@ -21,10 +21,11 @@ class AuthController extends Controller
     }
     protected function register(Request $request)
     {
+        
         $data = $request->validate([
             'first_name' => 'required|string|max:50',
-            'middle_name' => 'string|max:20',
-            'last_name' => 'string|max:50',
+            'middle_name' => 'nullable|string|max:20',
+            'last_name' => 'required|string|max:50',
             'email' => 'required:|unique:users|max:50',
             'password' => 'required|confirmed|min:8',
         ]);
