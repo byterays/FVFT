@@ -25,32 +25,40 @@ class DashController extends Controller
     public function saveProfile(Request $request)
     {
         $request->validate([
-            'company_logo' => 'required|image|mimes:jpg,png,jpeg,|max:99999|dimensions:min_width=100,min_height=100',
-            'company_cover' => 'required|image|mimes:jpg,png,jpeg|max:99999|dimensions:min_width=100,min_height=100',
+            'company_name' => 'required|max:255',
+            'company_logo' => 'nullable|image|mimes:jpg,png,jpeg,|max:99999|dimensions:min_width=100,min_height=100',
+            'company_cover' => 'nullable|image|mimes:jpg,png,jpeg|max:99999|dimensions:min_width=100,min_height=100',
         ]);
-        $userfield = [];
-        $request->company_password ? $userfield['password'] = bcrypt($request->company_password) : null;
-        $userfield['email'] = $request->company_email;
-        $user = auth()->user();
-        // dd($user);
-        $request->company_logo ? $logofile = time() . '_' . $request->company_logo->getClientOriginalName() : null;
-        $request->company_cover ? $coverfile = time() . '_' . $request->company_cover->getClientOriginalName() : null;
 
-        $request->company_logo ? $request->company_logo->move(public_path('uploads/company', 'public'), $logofile) : null;
-        $request->company_cover ? $request->company_cover->move(public_path('uploads/company', 'public'), $coverfile) : null;
-        $fields = [];
-        $request->company_name ? $fields['company_name'] = $request->company_name : null;
-        $request->company_logo ? $fields['company_logo'] = 'uploads/company/' . $logofile : null;
-        $request->company_cover ? $fields['company_cover'] = 'uploads/company/' . $coverfile : null;
-        $request->company_phone ? $fields['company_phone'] = $request->company_phone : null;
-        $request->company_email ? $fields['company_email'] = $request->company_email : null;
-        $request->industry_id ? $fields['industry_id'] = $request->industry_id : null;
-        $request->company_details ? $fields['company_details'] = $request->company_details : null;
-        $request->company_address ? $fields['company_address'] = $request->company_address : null;
-        $request->country_id ? $fields['country_id'] = $request->country_id : null;
-        $request->city_id ? $fields['city_id'] = $request->city_id : null;
-        $request->is_active ? $fields['is_active'] = $request->is_active == "on" ? true : false : null;
-        $company = Company::updateOrCreate(['user_id' => $user->id], $fields);
+        $company = Company::where('id', $request->company_id)->where('user_id', auth()->user()->id)->firstOrFail();
+        $company->company_name = $request->company_name;
+        $company->company_phone = $request->company_phone;
+        $company->company_email = $request->company_email;
+        $company->industry_id = $request->industry_id;
+        $company->company_details = $request->company_details;
+        $company->company_address = $request->company_address;
+        $company->country_id = $request->country_id;
+        $company->city_id = $request->city_id;
+        $company->is_active = $request->is_active == "on" ? true : false;
+        $company->company_details = $request->company_details;
+
+        $upload_path = 'uploads/company/';
+
+        // Remove old file if exist
+        // ....
+
+        if ($request->hasFile('company_logo')){
+            $logofile = time() . '_' . $request->company_logo->getClientOriginalName();
+            $request->company_logo->move(public_path($upload_path, 'public'), $logofile);
+            $company->company_logo = $upload_path.$logofile;
+        }
+        if ($request->hasFile('company_cover')) {
+            $coverfile = time() . '_' . $request->company_cover->getClientOriginalName();
+            $request->company_cover->move(public_path($upload_path, 'public'), $coverfile);
+            $company->company_cover = $upload_path.$coverfile;
+        }
+        $company->save();
+
         CompanyContactPerson::updateOrCreate(
             ['company_id' => $company->id],
             [
@@ -61,6 +69,11 @@ class DashController extends Controller
             ]
         );
 
-        return $this->profile();
+        return redirect()->route('company.edit_profile');
+    }
+
+    public function applicants()
+    {
+        return $this->company_view('company.applicants');
     }
 }
