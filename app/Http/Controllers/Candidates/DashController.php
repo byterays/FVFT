@@ -150,14 +150,22 @@ class DashController extends Controller
     public function applyjob($id)
     {
         if (auth()->check() && auth()->user()->user_type == "candidate") {
-            $employ = \DB::table('employes')->where('user_id', auth()->user()->id)->first();
+            $employ = Employe::where('user_id', auth()->user()->id)->first();
+            // $employ = \DB::table('employes')->where('user_id', auth()->user()->id)->first();
             $is_exist = \DB::table("job_applications")->where('job_id', $id)->where('employ_id', $employ->id)->first();
-            if (!$is_exist) {
-                \DB::table("job_applications")->insert([
-                    "job_id" => $id,
-                    "employ_id" => $employ->id,
-                ]);
+            if ($employ->calculateProfileCompletion() > 80) {
+                if (!$is_exist) {
+                    \DB::table("job_applications")->insert([
+                        "job_id" => $id,
+                        "employ_id" => $employ->id,
+                    ]);
+                } else {
+                    return redirect()->route('candidate.dashboard')->with(notifyMsg('warning', 'You have already applied for this job'));
+                }
+            } else {
+                return redirect()->route('candidate.profile')->with(notifyMsg('warning', 'You are not eligible to apply for job. Please Complete your profile first.'));
             }
+
         }
         return redirect()->route('candidate.dashboard');
     }
@@ -204,7 +212,7 @@ class DashController extends Controller
                 $query2->whereHas('employe', function ($query3) {
                     return $query3->where('user_id', Auth::user()->id);
                 });
-            }); 
+            });
         })->paginate(12);
         return $this->client_view('candidates.company_list', [
             'companies' => $companies,
@@ -251,7 +259,7 @@ class DashController extends Controller
                 $this->__updateEmployee($id, $user->id, $request);
                 \DB::commit();
                 return response()->json(['msg' => 'Candidate updated successfully', 'redirectRoute' => route($this->redirectTo)]);
-            } catch (\Exception $e) {
+            } catch (\Exception$e) {
                 \DB::rollBack();
                 return response()->json(['db_error' => $e->getMessage()]);
                 // return redirect()->back();
