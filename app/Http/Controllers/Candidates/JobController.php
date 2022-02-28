@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Candidates;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employe;
 use App\Models\SavedJob;
 use App\Traits\Site\CandidateMethods;
 use App\Traits\Site\ThemeMethods;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JobController extends Controller
 {
@@ -15,10 +17,12 @@ class JobController extends Controller
 
     private $page = 'candidates.job.';
 
-    public function saveJobLists($id)
+    public function saveJobLists()
     {
-        $saved_jobs = SavedJob::where('employ_id', $id)->latest()->get();
-        return $this->site_view($this->page.'savedjobs',['saved_jobs' => $saved_jobs]);
+        $employ=@Employe::where('user_id',Auth::user()->id)->first();
+        $employe=@Employe::where('user_id',Auth::user()->id)->first();
+        $saved_jobs = SavedJob::where('employ_id', $employ->id)->latest()->paginate(10);
+        return $this->site_view($this->page.'savedjobs',['saved_jobs' => $saved_jobs, 'employe' => $employe]);
     }
 
     public function saveJob(Request $request)
@@ -42,5 +46,11 @@ class JobController extends Controller
             return response()->json(['db_error' => $e->getMessage()]);
         }
 
+    }
+
+    public function delete($id)
+    {
+        SavedJob::destroy($id);
+        return redirect()->back()->with(notifyMsg('warning', 'Saved Job deleted'));
     }
 }

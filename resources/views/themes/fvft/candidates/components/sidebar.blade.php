@@ -18,6 +18,9 @@
             <a href="/candidate/jobs" class="@if(Route::currentRouteName()=="candidate.jobs") active @endif   d-flex  border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> My Jobs
             </a>
+            <a href="{{ route('candidate.savedjob.saveJobLists') }}" class="@if(Route::currentRouteName()=="candidate.savedjob.saveJobLists") active @endif   d-flex  border-bottom">
+                <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Saved Jobs
+            </a>
             <a href="{{ route('candidate.company_lists') }}" class="@if(Route::currentRouteName()=="candidate.company_lists") active @endif   d-flex  border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Company Lists
             </a>

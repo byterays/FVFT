@@ -28,7 +28,8 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['prefix' => 'saved-jobs/', 'as' => 'candidate.savedjob.'], function(){
-        Route::get('lists/{id}', [JobController::class, 'saveJobLists'])->name('saveJobLists');
+        Route::get('lists', [JobController::class, 'saveJobLists'])->name('saveJobLists');
         Route::post('store', [JobController::class, 'saveJob'])->name('saveJob');
+        Route::get('delete/{id}', [JobController::class, 'delete'])->name('delete');
     });
 });
