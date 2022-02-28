@@ -15,7 +15,7 @@ trait CompanyMethods
         return @Company::where('user_id', \Auth::user()->id)->first();
     }
 
-    public function compeny_view($path, $obj = [])
+    public function company_view($path, $obj = [])
     {
         $company = $this->company();
         return $this->site_view($path, array_merge($obj, ["company" => $company]));

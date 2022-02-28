@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Compeny;
+namespace App\Http\Controllers\company;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -30,8 +30,8 @@ class AuthController extends Controller
 
         $user = User::create($fields);
         $employe = Company::create([
-            'compeny_name' => $data['name'],
-            'compeny_email' => $data['email'],
+            'company_name' => $data['name'],
+            'company_email' => $data['email'],
             'user_id' => $user->id,
         ]);
         return $this->loginAttempt([

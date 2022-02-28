@@ -121,11 +121,11 @@ class JobsListController extends Controller
             "id"=> (int)$job->id,
             "company"=>($company?[
                 "id"=>(int)$company->id,
-                "name"=>$company->compeny_name,
+                "name"=>$company->company_name,
                 "logo_url"=>env("APP_URL").$company->company_logo,
                 "cover_image_url"=>env("APP_URL").$company->company_cover,
-                "phone"=>$company->compeny_phone,
-                "email"=>$company->compeny_email
+                "phone"=>$company->company_phone,
+                "email"=>$company->company_email
             ]:null),
             "title"=> $job->title,
             "description"=> $job->description,

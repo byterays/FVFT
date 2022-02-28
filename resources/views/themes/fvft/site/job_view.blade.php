@@ -22,7 +22,7 @@
 													<a href="/job/{{$job->id}}" class="text-dark"><h4 class="mt-3 mb-1 fs-20 font-weight-bold">{{ $job->title }}</h4></a>
 													<div class="">
 														<ul class="mb-0 d-flex">
-															<li class="mr-3"><a href="#" class="icons"><i class="si si-briefcase text-muted mr-1"></i>  {{ $company->compeny_name}}</a></li>
+															<li class="mr-3"><a href="#" class="icons"><i class="si si-briefcase text-muted mr-1"></i>  {{ $company->company_name}}</a></li>
 															<li class="mr-3"><a href="#" class="icons"><i class="si si-location-pin text-muted mr-1"></i> {{@DB::table('countries')->find($job->country_id)->name}} </a></li>
 															<li class="mr-3"><a href="#" class="icons"><i class="si si-calendar text-muted mr-1"></i>{{ \Carbon\Carbon::parse($job->created_at)->diffForHumans() }}</a></li>
 															{{-- <li class="mr-3"><a href="#" class="icons"><i class="si si-eye text-muted mr-1"></i> 765</a></li> --}}
@@ -120,7 +120,7 @@
 														<td class="w-150 px-0"><span class="font-weight-semibold">Eligibility</span></td> <td><span>:</span></td> <td><span> {{ @DB::table('educationlevels')->find($job->education_level_id)->title}}</span></td>
 													</tr>
 													<tr>
-														<td class="w-150 px-0"><span class="font-weight-semibold">Company</span></td> <td><span>:</span></td> <td><span> {{ $company->compeny_name}}</span></td>
+														<td class="w-150 px-0"><span class="font-weight-semibold">Company</span></td> <td><span>:</span></td> <td><span> {{ $company->company_name}}</span></td>
 													</tr>
 												</tbody>
 											</table>
@@ -135,7 +135,7 @@
 											<a class="mb-0">Job ID : #{{$job->id}}</a>
 										</div>
 										<div class="col col-auto">
-											Posted By <a class="mb-0 font-weight-bold">{{ $company->compeny_name}}</a> /  {{ \Carbon\Carbon::parse($job->created_at)->diffForHumans() }}
+											Posted By <a class="mb-0 font-weight-bold">{{ $company->company_name}}</a> /  {{ \Carbon\Carbon::parse($job->created_at)->diffForHumans() }}
 										</div>
 									</div>
 								</div>
@@ -180,7 +180,7 @@
 									<img src="{{asset("/")}}{{$company_contact_persons->avatar}}" class="brround avatar-xxl" alt="user">
 									<div class="">
 										<a href="userprofile.html" class="text-dark"><h4 class="mt-3 mb-1 font-weight-semibold">{{ $company_contact_persons->name}}</h4></a>
-										<span class="text-gray">{{ $company_contact_persons->position}} of {{$company->compeny_name}}</span>
+										<span class="text-gray">{{ $company_contact_persons->position}} of {{$company->company_name}}</span>
 										<span class="text-muted">Member Since  {{ \Carbon\Carbon::parse($job->created_at)->diffForHumans() }}</span>
 										<h6 class="mt-2 mb-0"><a href="#" class="btn btn-primary btn-sm">See All Ads</a></h6>
 									</div>

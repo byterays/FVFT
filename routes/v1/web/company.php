@@ -1,10 +1,9 @@
 <?php
 
+use App\Http\Controllers\company\AuthController;
+use App\Http\Controllers\company\DashController;
+use App\Http\Controllers\Company\JobsController;
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\Compeny\AuthController;
-use App\Http\Controllers\Compeny\DashController;
-use App\Http\Controllers\Compeny\JobsController;
 
 
 Route::get('/login', [AuthController::class, 'login'])->name('company.login');

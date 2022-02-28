@@ -1,18 +1,21 @@
 <?php
- 
+
 namespace App\Traits\API;
+
 use Illuminate\Http\Response;
-trait ApiMethods{
-    function sendResponse($result, $message=null,$pagination=null)
+
+trait ApiMethods
+{
+    function sendResponse($result, $message = null, $pagination = null)
     {
         // dd($pagination?$pagination:"not found");
-        $response =[
+        $response = [
             'success' => true
         ];
-        $pagination?$response= array_merge($response,[
-            "meta"=>$pagination
-        ]):null;
-        $response=array_merge($response,[
+        $pagination ? $response = array_merge($response, [
+            "meta" => $pagination
+        ]) : null;
+        $response = array_merge($response, [
             'data' => $result,
             'message' => $message,
             'code' => Response::HTTP_OK
@@ -24,7 +27,7 @@ trait ApiMethods{
     {
         $response = [
             'success' => false,
-            'message' => ['error' => [$error]],
+            'message' => $error,
             'code' => $code
         ];
         if (!empty($errorMessages)) {

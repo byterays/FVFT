@@ -21,23 +21,23 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-6 col-lg-6">
-                                            <input type="text" name="compeny_id" style="display:none;" value="{{isset($company->id)?$company->id:''}}">
-                                            <input type="text" name="compeny_user_id" style="display:none;" value="{{isset($company->user_id)?$company->user_id:''}}">
+                                            <input type="text" name="company_id" style="display:none;" value="{{isset($company->id)?$company->id:''}}">
+                                            <input type="text" name="company_user_id" style="display:none;" value="{{isset($company->user_id)?$company->user_id:''}}">
                                             <div class="form-group">
                                                 <label class="form-label">Company Name</label>
-                                                <input type="text" class="form-control" name="compeny_name" placeholder="Company Name" value="{{isset($company->compeny_name)?$company->compeny_name:''}}" required>
+                                                <input type="text" class="form-control" name="company_name" placeholder="Company Name" value="{{isset($company->company_name)?$company->company_name:''}}" required>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label">Company Phone</label>
-                                                <input type="text" class="form-control" name="compeny_phone" placeholder="Company Phone" value="{{isset($company->compeny_phone)?$company->compeny_phone:''}}" required>
+                                                <input type="text" class="form-control" name="company_phone" placeholder="Company Phone" value="{{isset($company->company_phone)?$company->company_phone:''}}" required>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label">Company Email</label>
-                                                <input type="text" class="form-control" name="compeny_email" placeholder="Company Email" value="{{isset($company->compeny_email)?$company->compeny_email:''}}" required>
+                                                <input type="text" class="form-control" name="company_email" placeholder="Company Email" value="{{isset($company->company_email)?$company->company_email:''}}" required>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label">Password</label>
-                                                <input type="password" class="form-control" name="compeny_password" placeholder="Password" value="" required>
+                                                <input type="password" class="form-control" name="company_password" placeholder="Password" value="" required>
                                             </div>
                                             
                                             <div class="form-group">
@@ -45,7 +45,7 @@
                                                 <div class="form-group">
                                                     <select class="form-control select2-flag-search" data-placeholder="Select Company" name="industry_id" value="{{isset($company->industry_id)?$company->industry_id:''}}">
                                                         {{-- @foreach ($industries as $industry)
-                                                            <option value="{{$industry->id}}">{{$industry->compeny_name}}</option>
+                                                            <option value="{{$industry->id}}">{{$industry->company_name}}</option>
                                                         @endforeach --}}
                                                     </select>
                                                 </div>
@@ -54,7 +54,7 @@
                 
                                             <div class="form-group">
                                                 <label class="form-label">Company Ditails <span class="form-label-small">56/100</span></label>
-                                                <textarea class="form-control" name="compeny_details" rows="7" placeholder="Company Ditails" required>{{isset($company->compeny_details)?$company->compeny_details:''}}</textarea>
+                                                <textarea class="form-control" name="company_details" rows="7" placeholder="Company Ditails" required>{{isset($company->company_details)?$company->company_details:''}}</textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label">Country</label>
@@ -121,7 +121,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label">Street Address</label>
-                                                <input type="text" class="form-control" name="compeny_address" placeholder="Street Address" value="{{isset($company->compeny_address)?$company->compeny_address:''}}">
+                                                <input type="text" class="form-control" name="company_address" placeholder="Street Address" value="{{isset($company->company_address)?$company->company_address:''}}">
                                             </div>
                     
                                         </div>

@@ -71,7 +71,7 @@ class RegisterController extends Controller
         $fields['email']=$data['email'];
         $fields['password']=Hash::make($data['password']);
         
-        if($data['user_type']=="compeny" || $data['user_type']=="candidate"){
+        if($data['user_type']=="company" || $data['user_type']=="candidate"){
             if ($data['user_type']=="candidate") {
                 $employe=Employe::create([
                     'first_name'=>$data['first_name'],

@@ -49,7 +49,7 @@
                                                     <label class="form-label">Password</label>
                                                     <input type="password" class="form-control text-dark" name="compeny_password" placeholder="Password" value="" required>
                                                 </div>
-                                                
+
                                                 <div class="form-group">
                                                     <label class="form-label">Company Ditails <span class="form-label-small">56/100</span></label>
                                                     <textarea class="form-control text-dark" name="compeny_details" rows="7" placeholder="Company Ditails" required>{{isset($company->compeny_details)?$company->compeny_details:''}}</textarea>
@@ -60,7 +60,7 @@
                                                         @foreach ($countries as $item)
                                                             <option value="{{$item->id}}" {{isset($company->country_id)?$item->id==$company->country_id?"selected":"":null}}>{{$item->name}}</option>
                                                         @endforeach
-                                                
+
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -79,9 +79,9 @@
                                                         <span class="custom-switch-indicator"></span>
                                                         <span class="custom-switch-description">Active</span>
                                                     </label>
-                                                   
+
                                                 </div>
-                                
+
                                             </div>
                                             <div class="col-md-6 col-lg-6">
                                                 <label class="form-label">Contact Person</label>
@@ -104,7 +104,7 @@
                                                         <input type="text" class="form-control text-dark" name="contact_person_position" placeholder="Position" value="{{isset($contact_person->position)?$contact_person->position:''}}">
                                                     </div>
                                                 </div>
-        
+
                                                 <div class="form-group">
                                                     <label class="form-label">Company Logo</label>
                                                     <input type="file" class="dropify" name="company_logo" data-height="180" data-default-file="{{isset($company->company_logo)?env('APP_URL').$company->company_logo:''}}">
@@ -117,7 +117,7 @@
                                                     <label class="form-label">Street Address</label>
                                                     <input type="text" class="form-control text-dark" name="compeny_address" placeholder="Street Address" value="{{isset($company->compeny_address)?$company->compeny_address:''}}">
                                                 </div>
-                        
+
                                             </div>
                                         </div>
                                     </div>

@@ -46,7 +46,7 @@
 																</div>
 															</div>
 															<div class="item-card9 mt-3 mt-md-5">
-																<a href="/company-view/{{$item->id}}" class="text-dark"><h4 class="font-weight-semibold mt-1">{{$item->compeny_name}}</h4></a>
+																<a href="/company-view/{{$item->id}}" class="text-dark"><h4 class="font-weight-semibold mt-1">{{$item->company_name}}</h4></a>
 																<div class="rating-stars d-inline-flex">
 																	<input type="number" readonly="readonly" class="rating-value star" name="rating-stars-value" value="4">
 																	 {{-- (245 Reviews) --}}

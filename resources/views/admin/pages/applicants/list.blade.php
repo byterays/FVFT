@@ -1,20 +1,22 @@
 @php
-    $delete=[];
-    if(session()->get('delete')){
-        $delete=session()->get('delete');
-        session()->forget('delete');
-    }
+$delete=[];
+if(session()->get('delete')){
+$delete=session()->get('delete');
+session()->forget('delete');
+}
 @endphp
 @extends('admin.layouts.master')
 @section('main')
 @if($delete)
-    @if($delete["status"]=="success")
-        <div id="statusmsg" class="alert alert-success fade show flash" role="alert" style="position: fixed;z-index: 11;top: 60px !important;right:20px;"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <i class="fa fa-check-circle-o mr-2" aria-hidden="true"></i> Applicants Deleted.</div>
-    @else
-        <div id="statusmsg" class="alert alert-danger fade show flash" role="alert" style="position: fixed;z-index: 11;top: 60px !important;right:20px;">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="fa fa-frown-o mr-2" aria-hidden="true"></i>Failed ! To Delete.</div>
-    @endif
+@if($delete["status"]=="success")
+<div id="statusmsg" class="alert alert-success fade show flash" role="alert" style="position: fixed;z-index: 11;top: 60px !important;right:20px;"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <i class="fa fa-check-circle-o mr-2" aria-hidden="true"></i> Applicants Deleted.
+</div>
+@else
+<div id="statusmsg" class="alert alert-danger fade show flash" role="alert" style="position: fixed;z-index: 11;top: 60px !important;right:20px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="fa fa-frown-o mr-2" aria-hidden="true"></i>Failed ! To Delete.
+</div>
+@endif
 @endif
 <div class="page-header">
     <h4 class="page-title">Candidates</h4>
@@ -25,11 +27,11 @@
 </div>
 <div class="row">
     <div class="col-lg-12">
-        
+
         <div class="card">
             <div class="card-header d-flex">
                 <h3 class="card-title" style="width: 100%;">Applicants List</h3>
-                <div class="d-flex flex-row-reverse mb-2" >
+                <div class="d-flex flex-row-reverse mb-2">
 
                     {{-- <a type="button" class="btn btn-primary" href="/admin/applicants/new"><i class="fe fe-plus mr-2"></i>Add New</a> --}}
                 </div>
@@ -48,22 +50,28 @@
                         </thead>
                         <tbody>
                             @foreach ($applicants as $item)
-                            @php 
-                                $candidate = DB::table('employes')->where('id',$item->employ_id)->first();
-                                $job = DB::table('jobs')->where('id',$item->job_id)->first();
+                            @php
+                            $candidate = DB::table('employes')->where('id',$item->employ_id)->first();
+                            $job = DB::table('jobs')->where('id',$item->job_id)->first();
                             @endphp
                             <tr>
                                 <td>{{ $candidate->first_name." ".$candidate->middle_name." ".$candidate->last_name }}</td>
                                 <td>{{ $job->title }}</td>
-                                <td>{{ $item->status }}</td>
                                 <td>
-                                     <div data-toggle="tooltip" data-original-title="Edit" style="display: inline-block;">
-                                        <a class="btn btn-success btn-sm text-white mb-1"  href="/admin/applicants/edit/{{$item->id}}"><i class="fa fa-pencil"></i></a>
+                                    <?php
+                                    $status_indicator_items = array("pending" => "warning", "accepted" => "success", "rejected" => "danger");
+                                    $status_indicator = $status_indicator_items[$item->status];
+                                    ?>
+                                    <span class="label label-{{$status_indicator}}">{{ $item->status }}</span>
+                                </td>
+                                <td>
+                                    <div data-toggle="tooltip" data-original-title="Edit" style="display: inline-block;">
+                                        <a class="btn btn-success btn-sm text-white mb-1" href="/admin/applicants/edit/{{$item->id}}"><i class="fa fa-pencil"></i></a>
                                     </div>
                                     <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip" data-original-title="Delete" href="/admin/candidates/delete/{{$item->id}}"><i class="fa fa-trash-o"></i></a><br>
                                 </td>
                             </tr>
-                                
+
                             @endforeach
                         </tbody>
                     </table>
@@ -79,9 +87,9 @@
 @section('script')
 <script>
     window.setTimeout(function() {
-        $(".flash").fadeTo(500, 0).slideUp(500, function(){
+        $(".flash").fadeTo(500, 0).slideUp(500, function() {
             $(this).remove();
         });
-        }, 5000);
+    }, 5000);
 </script>
 @endsection
