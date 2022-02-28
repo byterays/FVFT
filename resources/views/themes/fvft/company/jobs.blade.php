@@ -1,4 +1,5 @@
 @extends('themes.fvft.company.layouts.dashmaster')
+@section('jobs') active @endsection
 @section('content')
 <section>
     <div class="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg" style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
@@ -37,14 +38,14 @@
                             </div>
                             <div class="tab-content">
                                 <div class="tab-pane table-responsive border-top userprof-tab active" id="tab1">
-                                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$all_jobs,'action'=>'All Jobs'])  
-                                </div> 
+                                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$all_jobs,'action'=>'All Jobs'])
+                                </div>
                                 <div class="tab-pane table-responsive border-top userprof-tab " id="tab2">
-                                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$active_jobs,'action'=>'Active Jobs'])  
-                                </div> 
+                                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$active_jobs,'action'=>'Active Jobs'])
+                                </div>
                                 <div class="tab-pane table-responsive border-top userprof-tab" id="tab3">
-                                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$inactive_jobs,'action'=>'InActive Jobs'])  
-                                </div> 
+                                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$inactive_jobs,'action'=>'InActive Jobs'])
+                                </div>
                             </div>
                         </div>
                     </div>
