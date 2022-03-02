@@ -28,9 +28,8 @@
                             <li class="select-country">
                                 <select class="form-control select2-flag-search" data-placeholder="Select Country">
                                     @foreach($countries as $index => $country)
-                                       <option value="{{$country->iso2}}">{{$country->emoji}} {{$country->name}}</option>
+                                        <option value="{{$country->iso2}}">{{$country->name}}</option>
                                     @endforeach
-
                                 </select>
                             </li>
                             <li class="dropdown d-none d-xl-inline-block">
@@ -68,42 +67,39 @@
             <div class="col-xl-5 col-lg-5 col-sm-8 col-5">
                 <div class="top-bar-right">
                     <ul class="custom">
-                        @guest                            
-                        <li>
-                            <a href="/register" class=""><i class="fa fa-user mr-1"></i> <span>Register</span></a>
-                        </li>
-                        <li>
-                            <a href="/login" class=""><i class="fa fa-sign-in mr-1"></i> <span>Login</span></a>
-                        </li>
+                        @guest
+                            <li>
+                                <a href="{{ route('candidate.login') }}" class=""><i class="fa fa-user mr-1"></i> <span>Register</span></a>
+                            </li>
+                            <li>
+                                <a href="{{ route('candidate.login') }}" class=""><i class="fa fa-sign-in mr-1"></i> <span>Login</span></a>
+                            </li>
+                            <li>
+                                <a href="{{ route('company.login') }}" class=""><i class="fa fa-black-tie mr-1"></i> <span>For Employer</span></a>
+                            </li>
+                            <li>
+                                <a href="{{ route('candidate.login') }}" class=""><i class="fa fa-users mr-1"></i> <span>For Employee</span></a>
+                            </li>
                         @endguest
-                        @auth                            
-                        <li class="dropdown">
-                            <a href="#" class="" data-toggle="dropdown"><i class="fa fa-home mr-1"></i><span> My Dashboard</span></a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                <a href="mydash.html" class="dropdown-item" >
-                                    <i class="dropdown-icon icon icon-user"></i> My Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="dropdown-icon icon icon-speech"></i> Inbox
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="dropdown-icon icon icon-bell"></i> Notifications
-                                </a>
-                                <a href="mydash.html" class="dropdown-item" >
-                                    <i class="dropdown-icon  icon icon-settings"></i> Account Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="dropdown-icon icon icon-power"></i> Log out
-                                </a>
-                            </div>
-                        </li>
+                        @auth
+                            {{--<li class="dropdown">--}}
+                            {{--<a href="#" class="" data-toggle="dropdown"><i class="fa fa-home mr-1"></i><span> My Dashboard</span></a>--}}
+                            {{--<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">--}}
+                            {{--<a href="{{ route('company.dash') }}" class="dropdown-item" >--}}
+                            {{--<i class="dropdown-icon icon icon-user"></i> My Profile--}}
+                            {{--</a>--}}
+                            {{--<a class="dropdown-item" href="{{ route('company.dash') }}">--}}
+                            {{--<i class="dropdown-icon icon icon-speech"></i> Inbox--}}
+                            {{--</a>--}}
+                            {{--<a class="dropdown-item" href="{{ route('company.dash') }}">--}}
+                            {{--<i class="dropdown-icon icon icon-bell"></i> Notifications--}}
+                            {{--</a>--}}
+                            {{--<a href="{{ route('company.dash') }}" class="dropdown-item" >--}}
+                            {{--<i class="dropdown-icon  icon icon-settings"></i> Account Settings--}}
+                            {{--</a>--}}
+                            {{--</div>--}}
+                            {{--</li>--}}
                         @endauth
-                        <li>
-                            <a href="/company/" class=""><i class="fa fa-black-tie mr-1"></i> <span>For Employer</span></a>
-                        </li>
-                        <li>
-                            <a href="/candidate/" class=""><i class="fa fa-users mr-1"></i> <span>For Employee</span></a>
-                        </li>
                     </ul>
                 </div>
             </div>
