@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Candidates;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employe;
+use App\Models\EmployJobPreference;
+use App\Models\Job;
 use App\Models\SavedJob;
 use App\Traits\Site\CandidateMethods;
 use App\Traits\Site\ThemeMethods;
@@ -52,5 +54,18 @@ class JobController extends Controller
     {
         SavedJob::destroy($id);
         return redirect()->back()->with(notifyMsg('warning', 'Saved Job deleted'));
+    }
+
+
+    public function recommended_job()
+    {
+        $employe=@Employe::where('user_id',Auth::user()->id)->first();
+        if(!empty($employe->job_preference)){
+            $job_preference = EmployJobPreference::where('employ_id', $employe->id)->first();
+            $recommended_jobs = Job::where('job_categories_id', $job_preference->job_category_id)->where('country_id', $job_preference->country_id)->paginate(10);
+        } else {
+            $recommended_jobs = null;
+        }
+        return $this->site_view($this->page.'recommended_job', ['recommended_jobs' => $recommended_jobs, 'employe' => $employe]);
     }
 }

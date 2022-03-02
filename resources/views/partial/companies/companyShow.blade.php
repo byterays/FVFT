@@ -43,11 +43,11 @@ $flag = $country->exists() ? $country->first()->emojiU : DB::table('countries')-
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-6">
-                        <img src="{{ asset($company->company_logo) }}" class="img-fluid" alt="">
+                        <img src="{{ asset($company->company_logo != null ? $company->company_logo : 'uploads/defaultimage.jpg' ) }}" class="img-fluid" alt="">
                     </div>
                     <div class="col-md-6 justify-content-between">
                         {{-- <img src="{{ asset('https://ipdata.co/flags/np.png') }}" class="img-fluid" alt=""> --}}
-                        <img src="{{ 'https://ipdata.co/flags/'.strtolower($country->first()->iso2).'.png' }}" style="height: 100%; width: 100%;" class="img-fluid" alt="">
+                        <img src="{{ $country->exists() ? 'https://ipdata.co/flags/'.strtolower($country->first()->iso2).'.png' : asset('uploads/defaultimage.jpg') }}" style="height: 100%; width: 100%;" class="img-fluid" alt="">
                     </div>
                 </div>
             </div>
@@ -91,7 +91,7 @@ $flag = $country->exists() ? $country->first()->emojiU : DB::table('countries')-
                             <h4 class="tempcolor">{{ strtoupper('Company Basic Information') }}</h4>
                             <div class="mt-5 company_basic_information">
                                 <p>Company Name: <span>{{ $company->company_name }}</span></p>
-                                <p>Industry Category: <span>{{ $company->industry->title }}</span></p>
+                                <p>Industry Category: <span>{{ !empty($company->industry) ? $company->industry->title : '' }}</span></p>
                                 <p>Ownership: <span>{{ $company->ownership }}</span></p>
                                 <p>Operating Since:
                                     <span>{{ date('Y', strtotime($company->operating_since)) }}</span></p>
@@ -128,7 +128,7 @@ $flag = $country->exists() ? $country->first()->emojiU : DB::table('countries')-
 
                         @if (!empty($company->company_contact_person))
                             <div class="company_contact_person_div mt-5">
-                                <h4 class="tempcolor">{{ strtoupper('Company Contact Information') }}</h4>
+                                <h4 class="tempcolor">{{ strtoupper('Contact Person Information') }}</h4>
                                 <div class="mt-5 company_contact_person_information">
                                     <p>Name: <span>{{ $company->company_contact_person->name }}</span></p>
                                     <p>Designation:

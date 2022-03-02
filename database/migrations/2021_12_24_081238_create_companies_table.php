@@ -15,17 +15,17 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->bigIncrements('id')->unique('id');
-            $table->string('compeny_name', 50);
+            $table->string('company_name', 50);
             $table->text('company_logo');
-            $table->text('compeny_banner');
+            $table->text('company_banner');
             $table->unsignedBigInteger('user_id')->index('const_user_company');
-            $table->string('compeny_phone', 15);
-            $table->string('compeny_email', 50);
+            $table->string('company_phone', 15);
+            $table->string('company_email', 50);
             $table->unsignedBigInteger('industry_id');
-            $table->text('compeny_details');
+            $table->text('company_details');
             $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('city_id');
-            $table->string('compeny_address', 50);
+            $table->string('company_address', 50);
             $table->boolean('is_active');
             $table->double('is_featured');
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();

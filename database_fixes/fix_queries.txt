@@ -1,13 +1,13 @@
 ALTER TABLE `freevisa_freeticket`.`companies`
-  CHANGE `compeny_name` `company_name` VARCHAR (50) CHARSET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  CHANGE `compeny_banner` `company_banner` TEXT CHARSET utf8mb4 COLLATE utf8mb4_general_ci NULL,
-  CHANGE `compeny_details` `company_details` TEXT CHARSET utf8mb4 COLLATE utf8mb4_general_ci NULL,
-  CHANGE `compeny_address` `company_address` VARCHAR (50) CHARSET utf8mb4 COLLATE utf8mb4_general_ci NULL;
+  CHANGE `company_name` `company_name` VARCHAR (50) CHARSET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  CHANGE `company_banner` `company_banner` TEXT CHARSET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  CHANGE `company_details` `company_details` TEXT CHARSET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  CHANGE `company_address` `company_address` VARCHAR (50) CHARSET utf8mb4 COLLATE utf8mb4_general_ci NULL;
 
 ALTER TABLE `freevisa_freeticket`.`companies`
-  CHANGE `compeny_phone` `company_phone` VARCHAR (15) CHARSET utf8mb4 COLLATE utf8mb4_general_ci NULL,
-  CHANGE `compeny_email` `company_email` VARCHAR (50) CHARSET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+  CHANGE `company_phone` `company_phone` VARCHAR (15) CHARSET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  CHANGE `company_email` `company_email` VARCHAR (50) CHARSET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
 
 ALTER TABLE `freevisa_freeticket`.`company_social_medias`
-  CHANGE `compeny_id` `company_id` BIGINT (20) UNSIGNED NOT NULL,
+  CHANGE `company_id` `company_id` BIGINT (20) UNSIGNED NOT NULL,
   CHANGE `updated_at` `updated_at` TIMESTAMP NULL;
