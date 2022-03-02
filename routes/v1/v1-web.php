@@ -23,7 +23,8 @@ Auth::routes();
 // Site Routes
 Route::get('/', [HomeController::class, 'home']);
 Route::get('/companies', [HomeController::class, 'companies']);
-Route::get('/company-view/{id}', [HomeController::class, 'company'])->middleware('viewCompanyDetail');
+// Route::get('/company-view/{id}', [HomeController::class, 'company'])->middleware('viewCompanyDetail');
+Route::get('/company-view/{id}', [HomeController::class, 'company']);
 Route::get('jobs/', [JobsController::class, 'index'])->name('site.jobs');
 Route::get('job/{id}', [JobsController::class, 'jobindex']);
 Route::get('news/', [NewsController::class, 'index']);
