@@ -14,7 +14,7 @@ class AddForeignKeysToCompanySocialMediasTable extends Migration
     public function up()
     {
         Schema::table('company_social_medias', function (Blueprint $table) {
-            $table->foreign(['compeny_id'], 'const_company_social_medias')->references(['id'])->on('companies')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign(['company_id'], 'const_company_social_medias')->references(['id'])->on('companies')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
 

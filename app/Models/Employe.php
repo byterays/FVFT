@@ -81,6 +81,12 @@ class Employe extends Model
     }
 
 
+    public function job_preference()
+    {
+        return $this->hasOne('App\Models\EmployJobPreference', 'employ_id', 'id');
+    }
+
+
     public function calculateProfileCompletion()
     {
         $completed = 0;

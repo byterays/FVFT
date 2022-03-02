@@ -32,4 +32,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('store', [JobController::class, 'saveJob'])->name('saveJob');
         Route::get('delete/{id}', [JobController::class, 'delete'])->name('delete');
     });
+
+    Route::group(['prefix' => 'recommended-job/', 'as' => 'candidate.'], function(){
+        Route::get('', [JobController::class, 'recommended_job'])->name('recommended_job');
+    });
 });

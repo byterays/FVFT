@@ -7,12 +7,12 @@
     @include('themes.fvft.site.components.header')
 
     @php
-        if(checkUserType('candidate')){
-            $employ_id = App\Models\Employe::where('user_id', \Auth::user()->id)->first()->id;
-            // dd($employ_id);
-        } else {
-            $employ_id = '';
-        }
+    if (checkUserType('candidate')) {
+        $employ_id = App\Models\Employe::where('user_id', \Auth::user()->id)->first()->id;
+        // dd($employ_id);
+    } else {
+        $employ_id = '';
+    }
     @endphp
     <!--Breadcrumb-->
     <div class="bg-white border-bottom">
@@ -78,7 +78,7 @@
                                                 <div class="d-md-flex">
                                                     <div class="p-0 m-0 item-card9-img">
                                                         <div class="item-card9-imgs">
-                                                            <a href="job/{{ $item->slug }}"></a>
+                                                            <a href="job/{{ $item->id }}"></a>
                                                             <img src="{{ asset('/') }}{{ $item->feature_image_url }}"
                                                                 alt="img" class="h-100">
                                                         </div>
@@ -149,25 +149,27 @@
                                                                                     class="btn btn-danger icons mt-1 mb-1">
                                                                                     Remove Application</a>
                                                                             @else
-                                                                                <div class="d-inline-flex">
+                                                                                <div class="ml-auto">
                                                                                     <a href="/apply-job/{{ $item->id }}"
-                                                                                        class="btn btn-block btn-primary"> Apply
+                                                                                        class="btn btn-primary mr-3"> Apply
                                                                                         Now</a>
-                                                                                    <a href="javascript:void(0);" onclick="savejob({{ $item->id }})"
-                                                                                        class="btn btn-block btn-primary ml-2 saveJobButton">
+                                                                                    <a href="javascript:void(0);"
+                                                                                        onclick="savejob({{ $item->id }})"
+                                                                                        class="btn btn-primary saveJobButton">
                                                                                         Save Job</a>
                                                                                 </div>
                                                                             @endif
                                                                         @else
                                                                             <a href="/job/{{ $item->id }}"
-                                                                                class="btn btn-block btn-primary">View</a>
+                                                                                class="btn btn-primary">View</a>
                                                                         @endif
                                                                     @else
-                                                                        <div class="d-inline-flex">
+                                                                        <div class="ml-auto">
                                                                             <a href="/apply-job/{{ $item->id }}"
-                                                                                class="btn btn-block btn-primary"> Apply Now</a>
-                                                                            <a href="javascript:void(0);" onclick="savejob({{ $item->id }})"
-                                                                                class="btn btn-block btn-primary ml-2 saveJobButton"> Save
+                                                                                class="btn btn-primary mr-3"> Apply Now</a>
+                                                                            <a href="javascript:void(0);"
+                                                                                onclick="savejob({{ $item->id }})"
+                                                                                class="btn btn-primary saveJobButton"> Save
                                                                                 Job</a>
                                                                         </div>
                                                                     @endauth
@@ -247,17 +249,30 @@
                                                                                     class="btn btn-danger icons mt-1 mb-1">
                                                                                     Remove Application</a>
                                                                             @else
-                                                                                <a href="/apply-job/{{ $item->id }}"
-                                                                                    class="btn btn-block btn-primary"> Apply
-                                                                                    Now</a>
+                                                                                <div class="ml-auto">
+                                                                                    <a href="/apply-job/{{ $item->id }}"
+                                                                                        class="btn btn-primary mr-3"> Apply
+                                                                                        Now</a>
+                                                                                    <a href="javascript:void(0);"
+                                                                                        onclick="savejob({{ $item->id }})"
+                                                                                        class="btn btn-primary saveJobButton">
+                                                                                        Save
+                                                                                        Job</a>
+                                                                                </div>
                                                                             @endif
                                                                         @else
                                                                             <a href="/job/{{ $item->id }}"
                                                                                 class="btn btn-block btn-primary">View</a>
                                                                         @endif
                                                                     @else
-                                                                        <a href="/apply-job/{{ $item->id }}"
-                                                                            class="btn btn-block btn-primary"> Apply Now</a>
+                                                                        <div class="ml-auto">
+                                                                            <a href="/apply-job/{{ $item->id }}"
+                                                                                class="btn btn-primary mr-3"> Apply Now</a>
+                                                                            <a href="javascript:void(0);"
+                                                                                onclick="savejob({{ $item->id }})"
+                                                                                class="btn btn-primary saveJobButton"> Save
+                                                                                Job</a>
+                                                                        </div>
                                                                     @endauth
                                                                 </div>
                                                             </div>
@@ -292,7 +307,7 @@
     </script>
 
     <script>
-        function savejob(job_id){
+        function savejob(job_id) {
             var url = "{{ route('candidate.savedjob.saveJob') }}";
             $.ajax({
                 url: url,
@@ -301,19 +316,19 @@
                     'job_id': job_id,
                     'employ_id': '{{ $employ_id }}',
                 },
-                beforeSend: function(){
+                beforeSend: function() {
                     $(".saveJobButton").attr('disabled', true);
                 },
-                success: function(response){
-                    if(response.db_error){
+                success: function(response) {
+                    if (response.db_error) {
                         toastr.warning(response.db_error);
-                    } else if(response.error){
+                    } else if (response.error) {
                         toastr.warning(response.error);
                     } else {
                         toastr.success(response.msg);
                     }
                 },
-                complete: function(){
+                complete: function() {
                     $(".saveJobButton").attr('disabled', false);
                 },
             });

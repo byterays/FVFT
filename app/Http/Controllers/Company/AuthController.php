@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Traits\Site\ThemeMethods;
 use App\Models\Company;
 use App\Models\User;
+use App\Notifications\NewEmployer;
 
 class AuthController extends Controller
 {
@@ -34,6 +35,13 @@ class AuthController extends Controller
             'company_email' => $data['email'],
             'user_id' => $user->id,
         ]);
+        $notification['msg'] = "New Employer Registered";
+        $notification['link'] = route('admin.companies.show', $employe->id);
+        $notification['detail']  = '';
+        $delay = now()->addSeconds(5);
+        foreach(User::where('user_type', 'admin')->get() as $admin){
+            $admin->notify((new NewEmployer($notification))->delay($delay));
+        }
         return $this->loginAttempt([
             "email" => $data['email'],
             "password" => $data['password']

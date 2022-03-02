@@ -82,8 +82,8 @@ CREATE TABLE `companies` (
   `company_cover` text DEFAULT NULL,
   `company_banner` text DEFAULT NULL,
   `user_id` bigint(20) unsigned NOT NULL,
-  `compeny_phone` varchar(15) DEFAULT NULL,
-  `compeny_email` varchar(50) NOT NULL,
+  `company_phone` varchar(15) DEFAULT NULL,
+  `company_email` varchar(50) NOT NULL,
   `industry_id` bigint(20) unsigned DEFAULT NULL,
   `company_details` text DEFAULT NULL,
   `country_id` bigint(20) unsigned DEFAULT NULL,
@@ -129,13 +129,13 @@ CREATE TABLE `company_social_medias` (
   `title` varchar(225) NOT NULL,
   `icon` varchar(50) NOT NULL,
   `url` text NOT NULL,
-  `compeny_id` bigint(20) unsigned NOT NULL,
+  `company_id` bigint(20) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
-  KEY `const_company_social_medias` (`compeny_id`),
-  CONSTRAINT `const_company_social_medias` FOREIGN KEY (`compeny_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `const_company_social_medias` (`company_id`),
+  CONSTRAINT `const_company_social_medias` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `countries` */
