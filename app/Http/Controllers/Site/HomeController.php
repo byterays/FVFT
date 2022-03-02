@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Models\Job;
+use DB;
 use Illuminate\Http\Request;
 use App\Traits\Site\ThemeMethods;
+use Illuminate\Notifications\DatabaseNotification as Notification;
 
 class HomeController extends Controller
 {
@@ -35,5 +37,15 @@ class HomeController extends Controller
     {
         $jobs = Job::where('title', 'LIKE', '%'.$request->job_title.'%')->get();
         return $jobs;
+    }
+
+
+    public function markRead(Request $request)
+    {
+        $notification = Notification::find($request->id);
+        $notification->markAsRead();
+        if($notification->data['link'] != ''){
+            return redirect($notification->data['link']);
+        }
     }
 }

@@ -22,6 +22,7 @@ Route::prefix('company')->group(function () {
 Auth::routes();
 // Site Routes
 Route::get('/', [HomeController::class, 'home']);
+Route::get('/mark-as-read/{id}', [HomeController::class, 'markRead'])->name('markread');
 Route::get('/companies', [HomeController::class, 'companies']);
 // Route::get('/company-view/{id}', [HomeController::class, 'company'])->middleware('viewCompanyDetail');
 Route::get('/company-view/{id}', [HomeController::class, 'company']);

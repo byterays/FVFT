@@ -88,46 +88,32 @@
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item text-center">See all Notification</a>
                     </div>
-                </div>
+                </div> --}}
                 <div class="dropdown d-none d-md-flex">
                     <a class="nav-link icon" data-toggle="dropdown">
-                        <i class="fa fa-envelope-o"></i>
-                        <span class=" nav-unread badge badge-warning  badge-pill">3</span>
+                        <i class="fa fa-bell-o"></i>
+                        <span class=" nav-unread badge badge-warning  badge-pill">{{ Auth::user()->unReadNotifications->count() }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                        <a href="#" class="dropdown-item d-flex pb-3">
+                        @if(Auth::user()->unReadNotifications->count() > 0)
+                        @foreach(Auth::user()->unReadNotifications()->get() as $ntitem)
+                        <a href="{{ route('markread', $ntitem->id) }}" class="dropdown-item d-flex pb-3">
+                        {{-- <a href="{!! $ntitem->data['link'] != null ? $ntitem->data['link'] : '#' !!}" class="dropdown-item d-flex pb-3"> --}}
                             <img src="{{asset('themes/fvft/')}}/assets/images/users/male/41.jpg" alt="avatar-img" class="avatar brround mr-3 align-self-center">
                             <div>
-                                <strong>Blake</strong> I've finished it! See you so.......
-                                <div class="small text-muted">30 mins ago</div>
+                                <span>{!! $ntitem->data['msg'] !!}</span>
+                                <div class="small text-muted"></div>
                             </div>
                         </a>
-                        <a href="#" class="dropdown-item d-flex pb-3">
-                            <img src="{{asset('themes/fvft/')}}/assets/images/users/female/1.jpg" alt="avatar-img" class="avatar brround mr-3 align-self-center">
-                            <div>
-                                <strong>Caroline</strong> Just see the my Admin....
-                                <div class="small text-muted">12 mins ago</div>
-                            </div>
-                        </a>
-                        <a href="#" class="dropdown-item d-flex pb-3">
-                            <img src="{{asset('themes/fvft/')}}/assets/images/users/male/18.jpg" alt="avatar-img" class="avatar brround mr-3 align-self-center">
-                            <div>
-                                <strong>Jonathan</strong> Hi! I'am singer......
-                                <div class="small text-muted">1 hour ago</div>
-                            </div>
-                        </a>
-                        <a href="#" class="dropdown-item d-flex pb-3">
-                            <img src="{{asset('themes/fvft/')}}/assets/images/users/female/18.jpg" alt="avatar-img" class="avatar brround mr-3 align-self-center">
-                            <div>
-                                <strong>Emily</strong> Just a reminder that you have.....
-                                <div class="small text-muted">45 mins ago</div>
-                            </div>
-                        </a>
+                        @endforeach
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item text-center">View all Messages</a>
+                        <a href="#" class="dropdown-item text-center">View all Notification</a>
+                        @else
+                        <span class="dropdown-item text-center">No Notification</span>
+                        @endif
                     </div>
                 </div>
-                <div class="dropdown d-none d-md-flex">
+                {{-- <div class="dropdown d-none d-md-flex">
                     <a class="nav-link icon" data-toggle="dropdown">
                         <i class="fe fe-grid"></i>
                     </a>
