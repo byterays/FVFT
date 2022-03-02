@@ -26,7 +26,7 @@ Route::get('/companies', [HomeController::class, 'companies']);
 // Route::get('/company-view/{id}', [HomeController::class, 'company'])->middleware('viewCompanyDetail');
 Route::get('/company-view/{id}', [HomeController::class, 'company']);
 Route::get('jobs/', [JobsController::class, 'index'])->name('site.jobs');
-Route::get('job/{id}', [JobsController::class, 'jobindex']);
+Route::get('job/{id}', [JobsController::class, 'jobindex'])->name('viewJob');
 Route::get('news/', [NewsController::class, 'index']);
 Route::get('news/{slug}', [NewsController::class, 'getNews']);
 Route::get('page/{slug}', [PageController::class, 'index']);
