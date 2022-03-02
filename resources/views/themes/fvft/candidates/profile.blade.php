@@ -35,7 +35,7 @@
                 <div class="col-xl-3 col-lg-12 col-md-12">
                     @include('themes.fvft.candidates.components.sidebar')
                 </div>
-                <div class="col-lg-8 col-md-12 col-md-12">
+                <div class="col-lg-9 col-md-12 col-md-12">
                     <div class="alert alert-secondary d-none" role="alert"><button type="button" class="close"
                             data-dismiss="alert" aria-hidden="true">×</button><span id="db_error"
                             class="db_error"></span></div>

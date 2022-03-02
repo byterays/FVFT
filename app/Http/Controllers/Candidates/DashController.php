@@ -293,12 +293,17 @@ class DashController extends Controller
         }
 
         if ($request->hasFile('full_picture')) {
+            $photoData = [];
             foreach ($request->file('full_picture') as $file) {
                 $photoName = time() . '_' . $file->getClientOriginalName();
                 $file->move(public_path($this->fullPictureDestination, 'public'), $photoName);
                 $photoData[] = $this->fullPictureDestination . $photoName;
             }
-            $employe->full_picture = json_encode($photoData);
+//            $employe->full_picture = json_encode($photoData);
+            $employe->full_picture = json_encode( array_merge(
+                $photoData,
+                json_decode($employe->full_picture, true)
+            ));
         }
 
         $employe->education_level_id = $request->education_level_id;
