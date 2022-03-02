@@ -28,7 +28,8 @@ class AdminController extends Controller
         // dd($request->all());
         $validator = Validator::make($request->all(),[
             'avatar' => ['nullable', 'mimes:jpeg,jpg,png', 'max:2048'],
-            'email' => ['required','email']
+            'email' => ['required','email'],
+            'name' => ['required'],
         ]);
         $user = Auth::user();
         // dd($user);
