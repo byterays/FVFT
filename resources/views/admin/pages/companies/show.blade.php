@@ -38,8 +38,8 @@
 
                         </div>
                     </div> --}}
-                    {{-- {"id":1,"company_name":"Compeny
-                    1","company_logo":"uploads\/company\/1643951932_D91a-06.png","company_cover":"uploads\/company\/1643951932_D91a-06.png","company_banner":"","user_id":11,"company_phone":"6557545635","company_email":"compeny1@gmail.com","industry_id":1,"company_details":"jhvhgasdhcva,jsd\r\njhvhgasdhcva,jsd\r\njhvhgasdhcva,jsd\r\njhvhgasdhcva,jsd\r\njhvhgasdhcva,jsd\r\njhvhgasdhcva,jsd\r\njhvhgasdhcva,jsd\r\njhvhgasdhcva,jsd\r\njhvhgasdhcva,jsd","country_id":132,"state_id":1939,"city":"76467","company_address":"","is_active":1,"is_featured":0,"created_at":"2021-12-31T09:16:32.000000Z","updated_at":"2022-02-04T05:18:52.000000Z","industry":{"id":1,"title":"Software
+                    {{-- {"id":1,"company_name":"company
+                    1","company_logo":"uploads\/company\/1643951932_D91a-06.png","company_cover":"uploads\/company\/1643951932_D91a-06.png","company_banner":"","user_id":11,"company_phone":"6557545635","company_email":"company1@gmail.com","industry_id":1,"company_details":"jhvhgasdhcva,jsd\r\njhvhgasdhcva,jsd\r\njhvhgasdhcva,jsd\r\njhvhgasdhcva,jsd\r\njhvhgasdhcva,jsd\r\njhvhgasdhcva,jsd\r\njhvhgasdhcva,jsd\r\njhvhgasdhcva,jsd\r\njhvhgasdhcva,jsd","country_id":132,"state_id":1939,"city":"76467","company_address":"","is_active":1,"is_featured":0,"created_at":"2021-12-31T09:16:32.000000Z","updated_at":"2022-02-04T05:18:52.000000Z","industry":{"id":1,"title":"Software
                     Development","slug":"software-development","is_active":1,"created_at":"2022-02-21T07:20:25.000000Z","updated_at":"2022-02-21T07:38:57.000000Z"}} --}}
                     <div class="card-body">
                         <h3><u>{{ strtoupper('Company Details') }}</u></h3>
