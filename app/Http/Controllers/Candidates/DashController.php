@@ -316,6 +316,7 @@ class DashController extends Controller
             }
             $employe->trainings = json_encode($trainingData);
         }
+
         if (!empty($request->skill)) {
             foreach ($request->skill as $key => $skill) {
                 $skillData[] = $skill;
@@ -377,10 +378,12 @@ class DashController extends Controller
     {
         DB::table('employes_skills')->where('employ_id', $employ_id)->delete();
         $fields = [];
-        foreach ($request->skill as $key => $skill) {
-            $fields['employ_id'] = $employ_id;
-            $fields['skills_id'] = $skill;
-            \DB::table('employes_skills')->insert($fields);
+        if (isset($request->skill) AND !blank($request->skill)){
+            foreach ($request->skill as $key => $skill) {
+                $fields['employ_id'] = $employ_id;
+                $fields['skills_id'] = $skill;
+                \DB::table('employes_skills')->insert($fields);
+            }
         }
     }
 
@@ -388,12 +391,15 @@ class DashController extends Controller
     {
         DB::table('employes_languages')->where('employ_id', $employ_id)->delete();
         $fields = [];
-        foreach ($request->language as $key => $language) {
-            $fields['employ_id'] = $employ_id;
-            $fields['language_id'] = $language;
-            $fields['language_level'] = $request->get('language_level')[$key];
-            DB::table('employes_languages')->insert($fields);
+        if (isset($request->language) AND !blank($request->language)) {
+            foreach ($request->language as $key => $language) {
+                if(!blank($language)){
+                    $fields['employ_id'] = $employ_id;
+                    $fields['language_id'] = $language;
+                    $fields['language_level'] = $request->get('language_level')[$key];
+                    DB::table('employes_languages')->insert($fields);
+                }
+            }
         }
-
     }
 }
