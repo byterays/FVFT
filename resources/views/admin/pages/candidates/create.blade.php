@@ -688,7 +688,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Country</label>
-                                            <select name="country_id[]" class="form-control select2-flag-search" id="">
+                                            <select name="country_id[]" class="form-control select2-flag-search">
                                                 <option value="">Select Country</option>
                                                 @foreach ($countries as $country)
                                                     <option value="{{ $country->id }}">{{ $country->name }}</option>
@@ -933,10 +933,10 @@
         }
     </script>
     <script>
-        const _token = $('meta[name="csrf-token"]')[0].content;
-        const state_id = {{ isset($candidate->state_id) ? $candidate->state_id : '3871' }};
-        const city_id = {{ isset($candidate->city_id) ? $candidate->city_id : 'null' }};
-        const district_id = {{ isset($candidate->district_id) ? $candidate->district_id : 'null' }};
-        const appurl = "{{ env('APP_URL') }}";
+        // const _token = $('meta[name="csrf-token"]')[0].content;
+        // const state_id = {{ isset($candidate->state_id) ? $candidate->state_id : '3871' }};
+        // const city_id = {{ isset($candidate->city_id) ? $candidate->city_id : 'null' }};
+        // const district_id = {{ isset($candidate->district_id) ? $candidate->district_id : 'null' }};
+        // const appurl = "{{ env('APP_URL') }}";
     </script>
 @endsection

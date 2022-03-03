@@ -29,14 +29,14 @@ class CandidateController extends Controller
         $this->languages = \DB::table('languages')->get();
         $this->jobs = \DB::table('jobs')->get();
     }
-    public function list() {
-        
+    function list() {
+
         return $this->view('admin.pages.candidates.list', [
             // 'candidates' => DB::table('employes')->paginate(10)
             'candidates' => Employe::paginate(10),
         ]);
     }
-    public function new () {
+    function new () {
         return $this->view('admin.pages.candidates.editadd', [
             'action' => "New",
             'countries' => $this->countries,
@@ -91,21 +91,8 @@ class CandidateController extends Controller
 
     public function store(Request $request)
     {
-        // if (!empty($request->language)) {
-        //     foreach ($request->language as $key => $language) {
-        //         $languageData[] = [
-        //             'language_id' => $language,
-        //             'language_level' => $request->get('language_level')[$key]
-        //         ];
-        //         // $languageData[$language] = $request->get('language_level')[$key];
-        //         // $languageData[] = $request->get('language_level')[$key];
-        //     }
-        //     $data = json_encode($languageData);
-        //     dd(json_decode($data, true));
-        //     dd($data);
-        // }
-        // dd($request->all());
 
+        // dd(!empty($request->skill));
         $validator = Validator::make($request->all(), [
             'first_name' => ['required'],
             'last_name' => ['required'],
@@ -140,7 +127,7 @@ class CandidateController extends Controller
             } catch (\Exception $e) {
                 \DB::rollBack();
                 return response()->json(['db_error' => $e->getMessage()]);
-                // return redirect()->back();
+                // return redirect()->back()->with(notifyMsg('warning', $e->getMessage()));
             }
         }
     }
@@ -188,8 +175,6 @@ class CandidateController extends Controller
         }
     }
 
-    
-
     private function __updateEmployee($employe_id, $user_id, $request)
     {
         $employe = Employe::find($employe_id);
@@ -232,7 +217,7 @@ class CandidateController extends Controller
         $employe->ward = $request->ward;
         $employe->passport_number = $request->passport_number;
         $employe->passport_expiry_date = $request->passport_expiry_date;
-        $employe->is_experience = $request->is_experience !== null ? 1 : 0;
+        $employe->is_experience = $request->is_experience !== null && $request->is_experience == 'Yes' ? 1 : 0;
         if (!empty($request->training)) {
             foreach ($request->training as $key => $training) {
                 $trainingData[] = $training;
@@ -247,82 +232,101 @@ class CandidateController extends Controller
         }
 
         if (!empty($request->language)) {
+            $languageData = [];
             foreach ($request->language as $key => $language) {
-                $languageData[] = [
-                    'language_id' => $language,
-                    'language_level' => $request->get('language_level')[$key],
-                ];
+                if ($language != null) {
+                    $languageData[] = [
+                        'language_id' => $language,
+                        'language_level' => $request->get('language_level')[$key],
+                    ];
+                }
+
             }
-            $employe->languages = json_encode($languageData);
+            if (!empty($languageData)) {
+                $employe->languages = json_encode($languageData);
+            }
+
         }
 
-        if ($request->is_experience != null && !empty($request->country_id)) {
+        if ($request->is_experience != null && $request->is_experience == 'Yes' && !empty($request->country_id)) {
+            $experienceData = [];
             foreach ($request->country_id as $key => $country) {
-                $experienceData[] =
-                    [
-                    'country_id' => $country,
-                    'job_category_id' => $request->get('job_category_id')[$key],
-                    'job_title_id' => $request->get('job_title')[$key],
-                    'working_year' => $request->get('working_year')[$key],
-                    'working_month' => $request->get('working_month')[$key],
-                ];
+                if ($country != null) {
+                    $experienceData[] =
+                        [
+                        'country_id' => $country,
+                        'job_category_id' => $request->get('job_category_id')[$key],
+                        'job_title_id' => $request->get('job_title')[$key],
+                        'working_year' => $request->get('working_year')[$key],
+                        'working_month' => $request->get('working_month')[$key],
+                    ];
+                }
+
             }
-            $employe->experiences = json_encode($experienceData);
+            if (!empty($experienceData)) {
+                $employe->experiences = json_encode($experienceData);
+            }
+
         }
         $employe->save();
 
         $this->__updateExperience($employe->id, $request);
         $this->__updateEmployeSkill($employe->id, $request);
         $this->__updateEmployeLanguage($employe->id, $request);
-        
+
     }
 
     public function __updateExperience($employ_id, $request)
     {
         DB::table('employes_experience')->where('employ_id', $employ_id)->delete();
-       
+
         $fields = [];
-        if ($request->is_experience != null) {
+        if ($request->is_experience != null && $request->is_experience == 'Yes' && !empty($request->country_id)) {
             foreach ($request->country_id as $key => $country) {
-                $fields['employ_id'] = $employ_id;
-                $fields['country_id'] = $country;
-                $fields['job_category_id'] = $request->get('job_category_id')[$key];
-                $fields['job_title_id'] = $request->get('job_title')[$key];
-                $fields['working_year'] = $request->get('working_year')[$key];
-                $fields['working_month'] = $request->geT('working_month')[$key];
-                DB::table('employes_experience')->insert($fields);
+                if ($country != null) {
+                    $fields['employ_id'] = $employ_id;
+                    $fields['country_id'] = $country;
+                    $fields['job_category_id'] = isset($request->get('job_category_id')[$key]) ? $request->get('job_category_id')[$key] : '';
+                    $fields['job_title_id'] = isset($request->get('job_title')[$key]) ? $request->get('job_title')[$key] : '';
+                    $fields['working_year'] = isset($request->get('working_year')[$key]) ? $request->get('working_year')[$key] : '';
+                    $fields['working_month'] = isset($request->get('working_month')[$key]) ? $request->get('working_month')[$key] : '';
+                    DB::table('employes_experience')->insert($fields);
+                }
+
             }
 
         }
     }
 
-
-    private function __updateEmployeSkill($employ_id, $request){
-        DB::table('employes_skills')->where('employ_id', $employ_id)->delete();
-        $fields = [];
-        foreach ($request->skill as $key => $skill) {
-            $fields['employ_id'] = $employ_id;
-            $fields['skills_id'] = $skill;
-            \DB::table('employes_skills')->insert($fields);
+    private function __updateEmployeSkill($employ_id, $request)
+    {
+        if (!empty($request->skill || $request->skill != null)) {
+            DB::table('employes_skills')->where('employ_id', $employ_id)->delete();
+            $fields = [];
+            foreach ($request->skill as $key => $skill) {
+                $fields['employ_id'] = $employ_id;
+                $fields['skills_id'] = $skill;
+                \DB::table('employes_skills')->insert($fields);
+            }
         }
     }
-
 
     private function __updateEmployeLanguage($employ_id, $request)
     {
         DB::table('employes_languages')->where('employ_id', $employ_id)->delete();
         $fields = [];
         foreach ($request->language as $key => $language) {
-            $fields['employ_id'] = $employ_id;
-            $fields['language_id'] = $language;
-            $fields['language_level'] = $request->get('language_level')[$key];
-            // $fields['language_level'] = $request->get('language_level_'.$language)[0];
-            DB::table('employes_languages')->insert($fields);
+            if ($language != null) {
+                $fields['employ_id'] = $employ_id;
+                $fields['language_id'] = $language;
+                $fields['language_level'] = isset($request->get('language_level')[$key]) ? $request->get('language_level')[$key] : '';
+                // $fields['language_level'] = $request->get('language_level_'.$language)[0];
+                DB::table('employes_languages')->insert($fields);
+            }
+
         }
 
     }
-
-    
 
     private function __saveEmployee($user_id, $request)
     {
@@ -367,7 +371,7 @@ class CandidateController extends Controller
         $employe->ward = $request->ward;
         $employe->passport_number = $request->passport_number;
         $employe->passport_expiry_date = $request->passport_expiry_date;
-        $employe->is_experience = $request->is_experience !== null ? 1 : 0;
+        $employe->is_experience = $request->is_experience !== null && $request->is_experience == 'Yes' ? 1 : 0;
         if (!empty($request->training)) {
             foreach ($request->training as $key => $training) {
                 $trainingData[] = $training;
@@ -382,28 +386,39 @@ class CandidateController extends Controller
         }
 
         if (!empty($request->language)) {
+            $languageData = [];
             foreach ($request->language as $key => $language) {
                 // $languageData[] = $language;
                 // $languageData[] = $request->get('language_level')[$key];
                 // $languageData[$language] = $request->get('language_level')[$key];
-                $languageData[] = [
-                    'language_id' => $language,
-                    'language_level' => $request->get('language_level')[$key],
-                ];
+                if ($language != null) {
+                    $languageData[] = [
+                        'language_id' => $language,
+                        'language_level' => isset($request->get('language_level')[$key]) ? $request->get('language_level')[$key] : '',
+                    ];
+                }
+
             }
-            $employe->languages = json_encode($languageData);
+            if (!empty($languageData)) {
+                $employe->languages = json_encode($languageData);
+            }
+
         }
 
-        if ($request->is_experience != null && !empty($request->country_id)) {
+        if ($request->is_experience != null && $request->is_experience && !empty($request->country_id)) {
+            $experienceData = [];
             foreach ($request->country_id as $key => $country) {
-                $experienceData[] =
-                    [
-                    'country_id' => $country,
-                    'job_category_id' => $request->get('job_category_id')[$key],
-                    'job_title_id' => $request->get('job_title')[$key],
-                    'working_year' => $request->get('working_year')[$key],
-                    'working_month' => $request->get('working_month')[$key],
-                ];
+                if ($country != null) {
+                    $experienceData[] =
+                        [
+                        'country_id' => $country,
+                        'job_category_id' => isset($request->get('job_category_id')[$key]) ? $request->get('job_category_id')[$key] : '',
+                        'job_title_id' => isset($request->get('job_title')[$key]) ? $request->get('job_title')[$key] : '',
+                        'working_year' => isset($request->get('working_year')[$key]) ? $request->get('working_year')[$key] : '',
+                        'working_month' => isset($request->get('working_month')[$key]) ? $request->get('working_month')[$key] : '',
+                    ];
+                }
+
                 // $experienceData[$country] =
                 //     [
                 //         'job_category_id' => $request->get('job_category_id')[$key],
@@ -413,7 +428,10 @@ class CandidateController extends Controller
                 //     ];
 
             }
-            $employe->experiences = json_encode($experienceData);
+            if (!empty($experienceData)) {
+                $employe->experiences = json_encode($experienceData);
+            }
+
         }
         $employe->save();
 
@@ -425,10 +443,12 @@ class CandidateController extends Controller
     private function __saveEmployeSkill($employ_id, $request)
     {
         $fields = [];
-        foreach ($request->skill as $key => $skill) {
-            $fields['employ_id'] = $employ_id;
-            $fields['skills_id'] = $skill;
-            \DB::table('employes_skills')->insert($fields);
+        if (!empty($request->skill || $request->skill != null)) {
+            foreach ($request->skill as $key => $skill) {
+                $fields['employ_id'] = $employ_id;
+                $fields['skills_id'] = $skill;
+                \DB::table('employes_skills')->insert($fields);
+            }
         }
 
     }
@@ -437,11 +457,13 @@ class CandidateController extends Controller
     {
         $fields = [];
         foreach ($request->language as $key => $language) {
-            $fields['employ_id'] = $employ_id;
-            $fields['language_id'] = $language;
-            $fields['language_level'] = $request->get('language_level')[$key];
-            // $fields['language_level'] = $request->get('language_level_'.$language)[0];
-            DB::table('employes_languages')->insert($fields);
+            if ($language != null) {
+                $fields['employ_id'] = $employ_id;
+                $fields['language_id'] = $language;
+                $fields['language_level'] = isset($request->get('language_level')[$key]) ? $request->get('language_level')[$key] : '';
+                DB::table('employes_languages')->insert($fields);
+            }
+
         }
 
     }
@@ -449,15 +471,17 @@ class CandidateController extends Controller
     private function __saveExperience($employe_id, $request)
     {
         $fields = [];
-        if ($request->is_experience != null) {
+        if ($request->is_experience != null && $request->is_experience == 'Yes' && !empty($request->country_id)) {
             foreach ($request->country_id as $key => $country) {
-                $fields['employ_id'] = $employe_id;
-                $fields['country_id'] = $country;
-                $fields['job_category_id'] = $request->get('job_category_id')[$key];
-                $fields['job_title_id'] = $request->get('job_title')[$key];
-                $fields['working_year'] = $request->get('working_year')[$key];
-                $fields['working_month'] = $request->geT('working_month')[$key];
-                DB::table('employes_experience')->insert($fields);
+                if ($country != null) {
+                    $fields['employ_id'] = $employe_id;
+                    $fields['country_id'] = $country;
+                    $fields['job_category_id'] = isset($request->get('job_category_id')[$key]) ? $request->get('job_category_id')[$key] : '';
+                    $fields['job_title_id'] = isset($request->get('job_title')[$key]) ? $request->get('job_title')[$key] : '';
+                    $fields['working_year'] = isset($request->get('working_year')[$key]) ? $request->get('working_year')[$key] : '';
+                    $fields['working_month'] = isset($request->get('working_month')[$key]) ? $request->get('working_month')[$key] : '';
+                    DB::table('employes_experience')->insert($fields);
+                }
             }
 
         }
