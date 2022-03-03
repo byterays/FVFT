@@ -36,6 +36,8 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::prefix('companies')->group(function () {
         Route::get('/', [CompanyController::class, 'list'])->name('admin.companies.list');
         Route::get('new', [CompanyController::class, 'new'])->name('admin.companies.new');
+        Route::get('/create', [CompanyController::class, 'create'])->name('admin.companies.create');
+        Route::post('/store', [CompanyController::class, 'saveCompany'])->name('admin.companies.saveCompany');
         Route::get('edit/{id}', [CompanyController::class, 'edit'])->name('admin.companies.edit');
         Route::get('delete/{id}', [CompanyController::class, 'delete'])->name('admin.companies.delete');
         Route::post('save', [CompanyController::class, 'save']);

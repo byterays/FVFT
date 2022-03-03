@@ -31,7 +31,7 @@
                             <label for="">Cover Picture</label>
                             <input type="file" name="company_cover" data-default-file="{{ env('APP_URL').$company->company_cover }}"
                                 class="dropify" data-height="180" data-allowed-file-extensions="png jpg jpeg">
-                            <div class="require text-danger full_picture"></div>
+                            <div class="require text-danger company_cover"></div>
                         </div>
                     </div>
                 </div>
@@ -240,6 +240,7 @@
                         </div>
                         <div class="col-md-2">
                             <select name="dial_code" class="form-control select2">
+                                <option value="">ISO</option>
                                 @foreach ($countries as $country)
                                     <option value="{{ $country->phonecode }}"
                                         {{ $company->dialcode1 == $country->phonecode ? 'selected' : '' }}>
@@ -348,6 +349,7 @@
                         </div>
                         <div class="col-md-2">
                             <select name="dialcode" class="form-control select2">
+                                <option value="">ISO</option>
                                 @foreach ($countries as $country)
                                 @php
                                 $dialcode = $hasContactPerson ? $company->company_contact_person->dialcode : ''

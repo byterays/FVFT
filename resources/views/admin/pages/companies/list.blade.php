@@ -33,7 +33,7 @@ session()->forget('delete');
                 <h3 class="card-title" style="width: 100%;">Companies List</h3>
                 <div class="d-flex flex-row-reverse mb-2">
 
-                    {{-- <a type="button" class="btn btn-primary" href="/admin/companies/new"><i class="fe fe-plus mr-2"></i>Add New</a> --}}
+                    <a type="button" class="btn btn-primary" href="{{ route('admin.companies.create') }}"><i class="fe fe-plus mr-2"></i>Add New</a>
                 </div>
             </div>
             <div class="card-body">
