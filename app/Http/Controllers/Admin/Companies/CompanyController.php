@@ -152,7 +152,7 @@ class CompanyController extends Controller
         $contact_person->position = $request->contact_person_designation;
         $contact_person->company_id = $company_id;
         $contact_person->avatar = '';
-        $contact_person->person_designation = $request->contact_person_designation;
+        $contact_person->person_designation = $request->person_designation;
         $contact_person->isocode = '';
         $contact_person->dialcode = $request->dialcode;
         $contact_person->save();

@@ -10,7 +10,7 @@ session()->forget('delete');
 @if($delete)
 @if($delete["status"]=="success")
 <div id="statusmsg" class="alert alert-success fade show flash" role="alert" style="display:fixed;position: absolute;z-index: 11;top: 60px !important;right:20px;"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    <i class="fa fa-check-circle-o mr-2" aria-hidden="true"></i> Job Deleted.
+    <i class="fa fa-check-circle-o mr-2" aria-hidden="true"></i> Company Deleted.
 </div>
 @else
 <div id="statusmsg" class="alert alert-danger fade show flash" role="alert" style="display:fixed;position: absolute;z-index: 11;top: 60px !important;right:20px;">
@@ -19,7 +19,7 @@ session()->forget('delete');
 @endif
 @endif
 <div class="page-header">
-    <h4 class="page-title">Jobs</h4>
+    <h4 class="page-title">Companies</h4>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Modules</a></li>
         <li class="breadcrumb-item" aria-current="page"><a href="/admin/companies/">Company</a></li>
@@ -30,10 +30,10 @@ session()->forget('delete');
 
         <div class="card">
             <div class="card-header d-flex">
-                <h3 class="card-title" style="width: 100%;">Jobs List</h3>
+                <h3 class="card-title" style="width: 100%;">Companies List</h3>
                 <div class="d-flex flex-row-reverse mb-2">
 
-                    <a type="button" class="btn btn-primary" href="/admin/companies/new"><i class="fe fe-plus mr-2"></i>Add New</a>
+                    {{-- <a type="button" class="btn btn-primary" href="/admin/companies/new"><i class="fe fe-plus mr-2"></i>Add New</a> --}}
                 </div>
             </div>
             <div class="card-body">
