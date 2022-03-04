@@ -185,6 +185,15 @@
         });
 
 
+        function preventNegativeNo(this_value){
+            if(!!$(this_value).val() && Math.abs($(this_value).val()) >= 1){
+                $(this_value).val(Math.abs($(this_value).val()));
+            } else {
+                $(this_value).val(null);
+            }
+        }
+
+
 
         // Smart Search start
         $("#jobSearch").autocomplete({
