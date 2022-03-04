@@ -50,6 +50,22 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
+                                    <label for="company" class="form-label">Company Name&nbsp;<span
+                                            class="req">*</span></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select name="company_id" class="form-control select2">
+                                        <option value="">Select Company</option>
+                                        @foreach($companies as $company)
+                                        <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
                                     <label for="no_of_employee" class="form-label">No of Employee&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
@@ -99,7 +115,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="number" class="form-control" name="working_hour" placeholder="eg, 8">
+                                        <input type="number" class="form-control" name="working_hours" placeholder="eg, 8">
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-primary">In Hour(/hr)</button>
                                         </div>
@@ -111,7 +127,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="working_days" class="form-label">Working Hours Per Day&nbsp;<span
+                                    <label for="working_days" class="form-label">Working Days Per Week&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
@@ -152,7 +168,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <select name="contract_year" class="form-control select2">
+                                            <select name="contract_month" class="form-control select2">
                                                 <option value="">Select Month</option>
                                                 @for ($i = 1; $i <= 12; $i++)
                                                     <option value="{{ $i }}">{{ $i }}</option>
@@ -200,7 +216,7 @@
                                 <div class="col-md-8">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <select name="min_year_experience" class="form-control select2">
+                                            <select name="min_experience" class="form-control select2">
                                                 <option value="">Min</option>
                                                 @for ($i = 0; $i <= 10; $i++)
                                                     <option value="{{ $i }}">{{ $i }}</option>
@@ -208,7 +224,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <select name="max_year_experience" class="form-control select2">
+                                            <select name="max_experience" class="form-control select2">
                                                 <option value="">Max</option>
                                                 @for ($i = 1; $i <= 15; $i++)
                                                     <option value="{{ $i }}">{{ $i }}</option>
@@ -281,7 +297,143 @@
         </div>
         <div class="row">
             <div class="col-xl-6">
-
+                <div class="card m-b-20">
+                    <div class="card-header">
+                        <h3 class="card-title tempcolor">{{ strtoupper('Salary Facility') }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="salary" class="form-label">Salary&nbsp;<span class="req">*</span></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                           <div class="row">
+                                               <div class="col-md-8">
+                                                   <input type="text" name="country_salary" class="form-control">
+                                               </div>
+                                               <div class="col-md-4">
+                                                   <label for="" class="form-label">USD</label>
+                                               </div>
+                                           </div>
+                                           <div class="row mt-3">
+                                            <div class="col-md-8">
+                                                <input type="text" name="nepali_salary" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="" class="form-label">NPR</label>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="accomodation" class="form-label">Accomodation&nbsp;<span class="req">*</span></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select name="accomodation" class="form-control select2">
+                                        <option value="">Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="food" class="form-label">Food&nbsp;<span class="req">*</span></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select name="food" class="form-control select2">
+                                        <option value="">Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="annual_vacation" class="form-label">Annual Vacation&nbsp;<span class="req">*</span></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select name="annual_vacation" class="form-control select2">
+                                        <option value="">Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="over_time" class="form-label">Over Time&nbsp;<span class="req">*</span></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select name="over_time" class="form-control select2">
+                                        <option value="">Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="requirements" class="form-label">Other Benefits</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="hidden" class="form-control" name="other_benefits"
+                                        id="benefitID">
+                                    <input type="hidden" class="form-control" name="benefit_intro"
+                                        id="benefit_intro">
+                                    <div id="benefitEditor" style="min-height: 15rem;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card m-b-20">
+                    <div class="card-header">
+                        <h3 class="card-title tempcolor">{{ strtoupper('Profile Picture') }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="" class="form-label">Upload Picture(Max Number is 5)</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="file" class="form-control dropify" name="picture[]" data-allowed-file-extensions="png jpg jpeg">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="" class="form-label">Upload Featured Image</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="file" class="form-control dropify" name="feature_image" data-allowed-file-extensions="png jpg jpeg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
@@ -385,12 +537,12 @@
         // for benefits
         ben_quill.on('text-change', function() {
             benefits = JSON.stringify(ben_quill.getContents());
-            $("#company_service_id")[0].value = benefits;
-            $("#html_content_service")[0].value = escapeHtml($('.ql-editor').html());
+            $("#benefitID")[0].value = benefits;
+            $("#benefit_intro")[0].value = escapeHtml($('.ql-editor').html());
         });
-        console.log($("#company_service_id")[0].value)
-        if ($("#company_service_id")[0].value != '') {
-            ben_quill.setContents(JSON.parse($("#company_service_id")[0].value))
+        console.log($("#benefitID")[0].value)
+        if ($("#benefitID")[0].value != '') {
+            ben_quill.setContents(JSON.parse($("#benefitID")[0].value))
         }
 
 
