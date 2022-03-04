@@ -81,13 +81,15 @@ class JobsController extends Controller
         ]);
     }
     function new () {
-        return $this->view('admin.pages.jobs.editadd', [
+        // return $this->view('admin.pages.jobs.editadd', [
+        return $this->view('admin.pages.jobs.create', [
             "companies" => $this->companies,
             "experiencelevels" => $this->experiencelevels,
             "job_shifts" => $this->job_shifts,
             "job_categories" => $this->job_categories,
             "educationlevels" => $this->educationlevels,
             "countries" => $this->countries,
+            'skills' => DB::table('skills')->get(),
         ]);
     }
     public function save(Request $request)
