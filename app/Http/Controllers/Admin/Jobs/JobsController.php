@@ -127,24 +127,32 @@ class JobsController extends Controller
 
     private $redirectTo = 'admin.jobs-list';
     private $destination = 'uploads/jobs/';
+    private $picturedestination = 'uploads/jobs/pictures/';
 
     public function saveNewJob(Request $request)
     {
-        // dd($request->all());
         $Validator = Validator::make($request->all(), [
             'title' => ['required'],
             'company_id' => ['required'],
+            'male_employee' => ['required'],
+            'female_employee' => ['required'],
+            'any_employee' => ['nullable'],
             'feature_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:4096'],
             'picture.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg'],
             'category_id' => ['required'],
             'education_level' => ['required'],
-            'experiencelevel' => ['required'],
+            'working_hours' => ['required'],
+            'working_days' => ['required'],
             'contract_year' => ['required'],
             'contract_month' => ['required'],
             'accomodation' => ['required'],
             'food' => ['required'],
             'annual_vacation' => ['required'],
             'over_time' => ['required'],
+            'country_salary' => ['required'],
+            'nepali_salary' => ['required'],
+            'country' => ['required'],
+            'state' => ['required'],
         ],[
             'company_id.required' => 'Company is required',
             'category_id.required' => 'Category is required',
@@ -162,11 +170,13 @@ class JobsController extends Controller
                 DB::beginTransaction();
                 $job = new Job();
                 $this->__saveOrUpdateJob($job, $request, '');
-                $job->status = $request->job_status != null ? 1 : 0;
+                // $job->status = $request->job_status != null ? 1 : 0;
                 if($request->job_status == 'Approved'){
                     $job->approval_status = 1;
+                    $job->status = "Approved";
                 } else {
                     $job->approval_status = 0;
+                    $job->status = "Not Approved";
                 }
                 $job->save();
                 DB::commit();
@@ -264,21 +274,60 @@ class JobsController extends Controller
             $job->feature_image_url = $oldImage;
         }
         
-        $job->benefits = $request->benefits;
+        $job->benefits = $request->other_benefits;
         $job->salary_from = $request->salary_from;
         $job->salary_to = $request->salary_to;
         $job->hide_salary = $request->hide_salary != null ? 1 : 0;
         $job->salary_currency = null;
-        $job->job_categories_id = $request->category;
+        $job->job_categories_id = $request->category_id;
         $job->job_shift_id = $request->job_shift;
-        $job->num_of_positions = $request->number_of_position;
+        $job->num_of_positions = $request->male_employee + $request->female_employee + $request->any_employee;
         $job->expiry_date = $request->deadline;
-        $job->education_level_id = $request->educationlevel;
+        $job->education_level_id = $request->education_level;
         $job->job_experience_id = $request->experiencelevel;
         $job->is_active = $request->is_active != null ? 1 : 0;
         $job->is_featured = $request->is_featured != null ? 1 : 0;
         $job->country_id = $request->country;
         $job->state_id = $request->state;
         $job->city_id = $request->city_id;
+        $job->country_salary = $request->country_salary;
+        $job->nepali_salary = $request->nepali_salary;
+        $job->no_of_male = $request->male_employee;
+        $job->no_of_female = $request->female_employee;
+        $job->any_gender = $request->any_employee;
+        $job->working_hours = $request->working_hours;
+        $job->working_days = $request->working_days;
+        $job->contract_year = $request->contract_year;
+        $job->contract_month = $request->contract_month;
+        $job->contract_description = $request->contract_description;
+        $job->min_experience = $request->min_experience;
+        $job->max_experience = $request->max_experience;
+        $job->min_age = $request->min_age;
+        $job->max_age = $request->max_age;
+        if (!empty($request->skills)) {
+            foreach ($request->skills as $key => $skill) {
+                $skillData[] = $skill;
+            }
+            $job->skills = json_encode($skillData);
+        }
+        $job->requirement_intro = $request->requirement_intro;
+        $job->requirements = $request->other_requirements;
+        $job->benefit_intro = $request->benefit_intro;
+        $job->accomodation = $request->accomodation;
+        $job->food = $request->food;
+        $job->annual_vacation = $request->annual_vacation;
+        $job->over_time = $request->over_time;
+        $job->pictures = '';
+        if ($request->hasFile('picture')) {
+            if(!file_exists($this->picturedestination)){
+                mkdir($this->picturedestination, 077, true);
+            }
+            foreach ($request->file('picture') as $file) {
+                $photoName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path($this->picturedestination, 'public'), $photoName);
+                $photoData[] = $this->picturedestination . $photoName;
+            }
+            $job->pictures = json_encode($photoData);
+        }
     }
 }

@@ -56,8 +56,8 @@
                                 <div class="col-md-8">
                                     <select name="company_id" class="form-control select2">
                                         <option value="">Select Company</option>
-                                        @foreach($companies as $company)
-                                        <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                                        @foreach ($companies as $company)
+                                            <option value="{{ $company->id }}">{{ $company->company_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -115,7 +115,8 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="number" class="form-control" name="working_hours" placeholder="eg, 8">
+                                        <input type="number" class="form-control" name="working_hours"
+                                            placeholder="eg, 8">
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-primary">In Hour(/hr)</button>
                                         </div>
@@ -141,7 +142,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
@@ -151,6 +152,75 @@
                                     <input type="text" name="deadline" class="form-control datetime" readonly>
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="form-label" for="status">Status</label>
+                                </div>
+                                <div class="col-md-8">
+                                    @php
+                                        $statuses = ['Approved' => 'Approved', 'Not Approved' => 'Not Approved'];
+                                    @endphp
+                                    <select name="job_status" class="form-control select2">
+                                        <option value="">Select Status</option>
+                                        @foreach ($statuses as $key => $value)
+                                            <option value="{{ $key }}">{{ $value }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="form-label">Country&nbsp;<span class="req">*</span></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select name="country" id="select-country" class="form-control select2-flag-search"
+                                        value="{{ isset($job->country_id) ? $job->country_id : '' }}"
+                                        onchange="patchStates(this)">
+                                        @foreach ($countries as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ isset($job->country_id) ? ($item->id == $job->country_id ? 'selected' : '') : null }}>
+                                                {{ $item->name }}</option>
+                                        @endforeach
+
+                                    </select>
+                                    <div class="require text-danger country"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="form-label">States&nbsp;<span class="req">*</span></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select name="state" id="select-state" class="form-control select2-flag-search"
+                                        value="{{ isset($job->state_id) ? $job->state_id : '' }}"
+                                        onchange="patchCities(this)">
+                                    </select>
+                                    <div class="require text-danger state"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="form-label">Cities&nbsp;<span
+                                            class="req">*</span></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select name="city_id" id="select-city" class="form-control select2-flag-search"
+                                        value="{{ isset($job->city_id) ? $job->city_id : '' }}">
+                                    </select>
+                                    <div class="require text-danger city_id"></div>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="form-group">
                             <div class="row">
@@ -318,29 +388,30 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="salary" class="form-label">Salary&nbsp;<span class="req">*</span></label>
+                                    <label for="salary" class="form-label">Salary&nbsp;<span
+                                            class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="row">
                                         <div class="col-md-12">
-                                           <div class="row">
-                                               <div class="col-md-8">
-                                                   <input type="text" name="country_salary" class="form-control">
-                                               </div>
-                                               <div class="col-md-4">
-                                                   <label for="" class="form-label">USD</label>
-                                               </div>
-                                           </div>
-                                           <div class="row mt-3">
-                                            <div class="col-md-8">
-                                                <input type="text" name="nepali_salary" class="form-control">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <input type="text" name="country_salary" class="form-control">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="" class="form-label">USD</label>
+                                                </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <label for="" class="form-label">NPR</label>
+                                            <div class="row mt-3">
+                                                <div class="col-md-8">
+                                                    <input type="text" name="nepali_salary" class="form-control">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="" class="form-label">NPR</label>
+                                                </div>
                                             </div>
                                         </div>
-                                        </div>
-                                        
+
                                     </div>
                                     <div class="form-group mt-2">
                                         <label class="custom-switch-checkbox">
@@ -355,7 +426,8 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="accomodation" class="form-label">Accomodation&nbsp;<span class="req">*</span></label>
+                                    <label for="accomodation" class="form-label">Accomodation&nbsp;<span
+                                            class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <select name="accomodation" class="form-control select2">
@@ -369,7 +441,8 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="food" class="form-label">Food&nbsp;<span class="req">*</span></label>
+                                    <label for="food" class="form-label">Food&nbsp;<span
+                                            class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <select name="food" class="form-control select2">
@@ -383,7 +456,8 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="annual_vacation" class="form-label">Annual Vacation&nbsp;<span class="req">*</span></label>
+                                    <label for="annual_vacation" class="form-label">Annual Vacation&nbsp;<span
+                                            class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <select name="annual_vacation" class="form-control select2">
@@ -397,7 +471,8 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="over_time" class="form-label">Over Time&nbsp;<span class="req">*</span></label>
+                                    <label for="over_time" class="form-label">Over Time&nbsp;<span
+                                            class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <select name="over_time" class="form-control select2">
@@ -414,10 +489,8 @@
                                     <label for="requirements" class="form-label">Other Benefits</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="hidden" class="form-control" name="other_benefits"
-                                        id="benefitID">
-                                    <input type="hidden" class="form-control" name="benefit_intro"
-                                        id="benefit_intro">
+                                    <input type="hidden" class="form-control" name="other_benefits" id="benefitID">
+                                    <input type="hidden" class="form-control" name="benefit_intro" id="benefit_intro">
                                     <div id="benefitEditor" style="min-height: 15rem;">
                                     </div>
                                 </div>
@@ -438,7 +511,8 @@
                                     <label for="" class="form-label">Upload Picture(Max Number is 5)</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="file" class="form-control dropify" name="picture[]" data-allowed-file-extensions="png jpg jpeg">
+                                    <input type="file" class="form-control dropify" name="picture[]"
+                                        data-allowed-file-extensions="png jpg jpeg">
                                 </div>
                             </div>
                         </div>
@@ -448,8 +522,14 @@
                                     <label for="" class="form-label">Upload Featured Image</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="file" class="form-control dropify" name="feature_image" data-allowed-file-extensions="png jpg jpeg">
+                                    <input type="file" class="form-control dropify" name="feature_image"
+                                        data-allowed-file-extensions="png jpg jpeg">
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="text-center">
+                                <button type="button" onclick="submitForm(event);" class="btn btn-success">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -494,8 +574,9 @@
                 success: function(data) {
                     // return true;
                     if (data.db_error) {
-                        $(".alert-warning").css('display', 'block');
+                        $(".alert-secondary").css('display', 'block');
                         $(".db_error").html(data.db_error);
+                        toastr.warning(data.db_error);
                     } else if (data.errors) {
                         var error_html = "";
                         $.each(data.errors, function(key, value) {
