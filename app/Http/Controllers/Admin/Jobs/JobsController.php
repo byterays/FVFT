@@ -70,14 +70,18 @@ class JobsController extends Controller
             "countries" => $this->countries,
         ]);
     }
-    public function edit()
+    public function edit($id)
     {
-        return $this->view('admin.pages.jobs.editadd', [
+        // return $this->view('admin.pages.jobs.editadd', [
+        return $this->view('admin.pages.jobs.edit', [
+            'job' => Job::findOrFail($id),
             "companies" => $this->companies,
             "experiencelevels" => $this->experiencelevels,
             "job_shifts" => $this->job_shifts,
             "job_categories" => $this->job_categories,
             "educationlevels" => $this->educationlevels,
+            "countries" => $this->countries,
+            'skills' => DB::table('skills')->get(),
         ]);
     }
     function new () {
@@ -159,6 +163,8 @@ class JobsController extends Controller
             'category.required' => 'Job Category is required',
             'education_level.required' => 'Education level is required',
             'experiencelevel.required' => 'Experience Level is required',
+            'country_salary.required' => 'The Salary field is required',
+            'nepali_salary.required' => 'The Nepali Salary field is required',
         ]);
 
         if($Validator->fails()){
@@ -169,7 +175,7 @@ class JobsController extends Controller
             try{
                 DB::beginTransaction();
                 $job = new Job();
-                $this->__saveOrUpdateJob($job, $request, '');
+                $this->__saveOrUpdateJob($job, $request, '', '');
                 // $job->status = $request->job_status != null ? 1 : 0;
                 if($request->job_status == 'Approved'){
                     $job->approval_status = 1;
@@ -195,18 +201,33 @@ class JobsController extends Controller
         $Validator = Validator::make($request->all(), [
             'title' => ['required'],
             'company_id' => ['required'],
+            'male_employee' => ['required'],
+            'female_employee' => ['required'],
+            'any_employee' => ['nullable'],
             'feature_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:4096'],
+            'picture.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg'],
+            'category_id' => ['required'],
+            'education_level' => ['required'],
+            'working_hours' => ['required'],
+            'working_days' => ['required'],
+            'contract_year' => ['required'],
+            'contract_month' => ['required'],
+            'accomodation' => ['required'],
+            'food' => ['required'],
+            'annual_vacation' => ['required'],
+            'over_time' => ['required'],
+            'country_salary' => ['required'],
+            'nepali_salary' => ['required'],
             'country' => ['required'],
             'state' => ['required'],
-            'category' => ['required'],
-            'educationlevel' => ['required'],
-            'experiencelevel' => ['required'],
         ],[
-            'country.required' => 'Country is required',
-            'state.required' => 'State is required',
+            'company_id.required' => 'Company is required',
+            'category_id.required' => 'Category is required',
             'category.required' => 'Job Category is required',
-            'educationlevel.required' => 'Education level is required',
+            'education_level.required' => 'Education level is required',
             'experiencelevel.required' => 'Experience Level is required',
+            'country_salary.required' => 'The Salary field is required',
+            'nepali_salary.required' => 'The Nepali Salary field is required',
         ]);
 
         if($Validator->fails()){
@@ -218,8 +239,9 @@ class JobsController extends Controller
                 DB::beginTransaction();
                 $job = Job::find($id);
                 $oldImage = $job->feature_image_url;
+                $oldPicture = $job->pictures;
                 $oldStatus = $job->status;
-                $this->__saveOrUpdateJob($job, $request, $oldImage);
+                $this->__saveOrUpdateJob($job, $request, $oldImage, $oldPicture);
                 $job->status = $request->job_status != null ? $request->job_status : $oldStatus;
                 if($request->job_status == 'Approved'){
                     $job->approval_status = 1;
@@ -260,7 +282,7 @@ class JobsController extends Controller
 
     }
 
-    private function __saveOrUpdateJob($job, $request, $oldImage='')
+    private function __saveOrUpdateJob($job, $request, $oldImage='', $oldPicture='')
     {
         $job->company_id = $request->company_id;
         $job->title = $request->title;
@@ -328,6 +350,8 @@ class JobsController extends Controller
                 $photoData[] = $this->picturedestination . $photoName;
             }
             $job->pictures = json_encode($photoData);
+        } else {
+            $job->pictures = $oldPicture;
         }
     }
 }

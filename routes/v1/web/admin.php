@@ -30,6 +30,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::post('/jobs-save', [JobsController::class, 'save']);
     Route::get('/jobs-delete', [JobsController::class, 'delete']);
     Route::get('/jobs-new', [JobsController::class, 'new'])->name('admin.addNewJob');
+    Route::get('/jobs-edit/{id}', [JobsController::class, 'edit'])->name('admin.editJob');
     Route::post('/save-job', [JobsController::class, 'saveNewJob'])->name('admin.saveNewJob');
     Route::put('/jobs-update/{id}', [JobsController::class, 'updateJob'])->name('admin.job.update');
     // Companies Crude
