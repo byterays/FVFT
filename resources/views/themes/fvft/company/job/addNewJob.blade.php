@@ -167,7 +167,7 @@
                                         value="{{ isset($job->country_id) ? $job->country_id : '' }}"
                                         onchange="patchStates(this)">
                                         @foreach ($countries as $item)
-                                            <option value="{{ $item->id }}"
+                                            <option value="{{ $item->id }}" data-name="{{ $item->currency_name }}"
                                                 {{ isset($job->country_id) ? ($item->id == $job->country_id ? 'selected' : '') : null }}>
                                                 {{ $item->name }}</option>
                                         @endforeach
@@ -381,7 +381,7 @@
                                                     <input type="text" name="country_salary" class="form-control">
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">USD</label>
+                                                    <label for="" class="form-label countrylabel">USD</label>
                                                 </div>
                                             </div>
                                             <div class="row mt-3">
@@ -556,6 +556,15 @@
 
                     'imageFormat': 'The image format is not allowed (png, jpg, jpeg only).'
                 }
+            });
+
+            var currency_name = $("#select-country option:selected").data('name');
+            $(".countrylabel").html(currency_name);
+
+
+            $("#select-country").on('change', function(){
+                var currency_name = $(this).find('option:selected').data('name');
+                $(".countrylabel").html(currency_name);
             });
         });
 

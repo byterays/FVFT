@@ -68,6 +68,17 @@
             });
 
 
+
+            var currency_name = $("#select-country option:selected").data('name');
+            $(".countrylabel").html(currency_name);
+
+
+            $("#select-country").on('change', function(){
+                var currency_name = $(this).find('option:selected').data('name');
+                $(".countrylabel").html(currency_name);
+            });
+
+
         });
 
         function submitForm(e) {
