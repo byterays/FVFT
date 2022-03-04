@@ -141,6 +141,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
@@ -181,6 +182,18 @@
                                 </div>
 
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="custom-switch-checkbox">
+                                <input type="checkbox" name="is_active" class="custom-switch-input">
+                                <span class="custom-switch-indicator"></span>
+                                <span class="custom-switch-description">Active</span>
+                            </label>
+                            <label class="custom-switch-checkbox">
+                                <input type="checkbox" name="is_featured" class="custom-switch-input">
+                                <span class="custom-switch-indicator"></span>
+                                <span class="custom-switch-description">Featured</span>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -328,6 +341,13 @@
                                         </div>
                                         </div>
                                         
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <label class="custom-switch-checkbox">
+                                            <input type="checkbox" name="hide_salary" class="custom-switch-input">
+                                            <span class="custom-switch-indicator"></span>
+                                            <span class="custom-switch-description">Hide Salary</span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
