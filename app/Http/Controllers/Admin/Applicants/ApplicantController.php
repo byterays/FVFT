@@ -20,7 +20,7 @@ class ApplicantController extends Controller
     }
     public function list(){
         return $this->view('admin.pages.applicants.list',[
-            'applicants'=>JobApplication::paginate(10)
+            'applicants'=>JobApplication::with('company')->paginate(10)
         ]);
     }
     public function new(){

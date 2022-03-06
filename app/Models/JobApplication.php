@@ -23,4 +23,9 @@ class JobApplication extends Model
     {
         return $this->belongsTo('App\Models\Employe', 'employ_id', 'id');
     }
+
+    public function company()
+    {
+        // return $this->job->whereHas('job.company')->with(['job.company']);
+    }
 }

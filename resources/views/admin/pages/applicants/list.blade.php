@@ -40,6 +40,7 @@ if (session()->get('delete')) {
                         {{-- <a type="button" class="btn btn-primary" href="/admin/applicants/new"><i class="fe fe-plus mr-2"></i>Add New</a> --}}
                     </div>
                 </div>
+                {{-- {{ dd($applicants) }} --}}
                 <div class="card-body">
                     <div class="table-responsive border-top">
                         <table class="table table-bordered table-hover mb-0 text-nowrap">
@@ -63,7 +64,7 @@ if (session()->get('delete')) {
                                         $job = DB::table('jobs')
                                             ->where('id', $item->job_id)
                                             ->first();
-                                        $applied_company = ;
+                                        $applied_company = '';
                                     @endphp
                                     <tr>
                                         <td>{{ $candidate->first_name . ' ' . $candidate->middle_name . ' ' . $candidate->last_name }}
