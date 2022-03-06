@@ -19,8 +19,12 @@ class ApplicantController extends Controller
         $this->countries=DB::table('countries')->where('is_active',1)->get();
     }
     public function list(){
+        // $applicants = JobApplication::whereHas('job', function($q){
+        //     return $q->with('company');
+        // })->paginate(10);
         return $this->view('admin.pages.applicants.list',[
-            'applicants'=>JobApplication::with('company')->paginate(10)
+            // 'applicants'=>$applicants
+            'applicants'=>JobApplication::paginate(10)
         ]);
     }
     public function new(){
