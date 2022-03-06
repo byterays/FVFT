@@ -41,7 +41,6 @@ class JobController extends Controller
 
     public function saveNewJob(Request $request)
     {
-        // dd($request->all());
         $validator = $this->__validation($request->all());
 
         if ($validator->fails()) {
@@ -54,9 +53,11 @@ class JobController extends Controller
                 $job = new Job();
                 $this->__saveOrUpdateJob($job, $request, '', '');
                 $job->status = 'Not Approved';
+                $job->draft_status = $request->saveType == 'save_as_draft' ? 1 : 0;
                 $job->save();
                 DB::commit();
-                return response()->json(['msg' => 'New job added', 'redirectRoute' => route($this->redirectTo)]);
+                $msg = $request->saveType == 'save_as_draft' ? 'Your job added to draft' : 'New job added';
+                return response()->json(['msg' => $msg, 'redirectRoute' => route($this->redirectTo)]);
             } catch (\Exception $e) {
                 DB::rollBack();
                 return response()->json(['db_error' => $e->getMessage()]);
@@ -93,9 +94,11 @@ class JobController extends Controller
                 $oldImage = $job->feature_image_url;
                 $oldPicture = $job->pictures;
                 $oldStatus = $job->status;
-                $this->__saveOrUpdateJob($job, $request, $oldImage);
+                $oldDraftStatus = $job->draft_status;
+                $this->__saveOrUpdateJob($job, $request, $oldImage, $oldPicture);
                 $job->status = $request->status != null ? $request->status : $oldStatus;
                 $job->publish_status = $request->publish_status != null ? 1 : 0;
+                $job->draft_status = $request->saveType == 'save_draft_job' ? 0 : $oldDraftStatus;
                 $job->save();
                 DB::commit();
                 return response()->json(['msg' => 'Job updated successfully', 'redirectRoute' => route($this->redirectTo)]);
@@ -137,7 +140,7 @@ class JobController extends Controller
             'female_employee' => ['required'],
             'any_employee' => ['nullable'],
             'feature_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:4096'],
-            'picture.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg'],
+            // 'picture.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg'],
             'category_id' => ['required'],
             'education_level' => ['required'],
             'working_hours' => ['required'],
@@ -167,7 +170,8 @@ class JobController extends Controller
     {
         $job->company_id = $request->company_id;
         $job->title = $request->title;
-        $job->description = $request->description;
+        $job->description = $request->job_description;
+        $job->description_intro = $request->job_description_intro;
         if($request->has('feature_image')){
             $image = $request->file('feature_image');
             $imageName = time() . '_' . $image->getClientOriginalName();
