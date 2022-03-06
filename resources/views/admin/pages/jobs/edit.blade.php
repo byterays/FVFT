@@ -115,7 +115,8 @@
 
 
         let requirement = "";
-        let benefits = ""
+        let benefits = "";
+        let job_description = "";
         var toolbarOptions = [
             [{
                 'header': [1, 2, 3, 4, 5, 6, false]
@@ -147,6 +148,13 @@
             }
         });
 
+        var jd_quill = new Quill('#JobDescription', {
+            theme: 'snow',
+            modules: {
+                toolbar: toolbarOptions
+            }
+        });
+
         req_quill.on('text-change', function() {
             requirement = JSON.stringify(req_quill.getContents());
             $("#requirementID")[0].value = requirement;
@@ -162,9 +170,18 @@
             $("#benefitID")[0].value = benefits;
             $("#benefit_intro")[0].value = escapeHtml($('.ql-editor').html());
         });
-        console.log($("#benefitID")[0].value)
         if ($("#benefitID")[0].value != '') {
             ben_quill.setContents(JSON.parse($("#benefitID")[0].value))
+        }
+
+        // for job_description
+        jd_quill.on('text-change', function() {
+            job_description = JSON.stringify(jd_quill.getContents());
+            $("#jobdescriptionID")[0].value = job_description;
+            $("#job_description_intro")[0].value = escapeHtml($('.ql-editor').html());
+        });
+        if ($("#jobdescriptionID")[0].value != '') {
+            jd_quill.setContents(JSON.parse($("#jobdescriptionID")[0].value))
         }
 
 

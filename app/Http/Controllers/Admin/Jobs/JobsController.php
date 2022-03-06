@@ -142,7 +142,7 @@ class JobsController extends Controller
             'female_employee' => ['required'],
             'any_employee' => ['nullable'],
             'feature_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:4096'],
-            'picture.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg'],
+            // 'picture.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg'],
             'category_id' => ['required'],
             'education_level' => ['required'],
             'working_hours' => ['required'],
@@ -286,7 +286,8 @@ class JobsController extends Controller
     {
         $job->company_id = $request->company_id;
         $job->title = $request->title;
-        $job->description = $request->description;
+        $job->description = $request->job_description;
+        $job->description_intro = $request->job_description_intro;
         if($request->has('feature_image')){
             $image = $request->file('feature_image');
             $imageName = time() . '_' . $image->getClientOriginalName();
