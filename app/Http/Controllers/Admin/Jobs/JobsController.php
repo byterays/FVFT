@@ -96,6 +96,14 @@ class JobsController extends Controller
             'skills' => DB::table('skills')->get(),
         ]);
     }
+
+    public function viewJob($id)
+    {
+        return $this->view('admin.pages.jobs.viewjob',[
+            "job" => Job::where('id',$id)->with(['company'])->firstOrFail()
+        ]);
+    }
+
     public function save(Request $request)
     {
         $job = new Job();
