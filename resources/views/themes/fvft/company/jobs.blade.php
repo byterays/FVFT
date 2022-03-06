@@ -36,14 +36,13 @@
                     <a href="{{ route('company.addNewJob') }}" class="btn btn-success">Add New Job</a>
                 </div>
                 <div class="col-md-6">
-                    <form action="#" method="POST">
-                        @csrf
+                    <form action="{{ route('company.jobs') }}" method="GET">
                         <div class="input-group input-icons mb-3">
                             <i class="fa fa-search icon"></i>
-                            <input type="text" class="form-control" placeholder="Search Your Job"
+                            <input type="text"name="term" value="{{ request()->term }}" class="form-control" placeholder="Search Your Job"
                                 aria-label="Search your Job" aria-describedby="button-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-success" type="button">Search</button>
+                                <button class="btn btn-outline-success" type="submit">Search</button>
                             </div>
                         </div>
                     </form>

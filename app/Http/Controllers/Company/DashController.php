@@ -93,16 +93,22 @@ class DashController extends Controller
         return $this->company_view('company.applicants');
     }
 
-    public function jobs()
+    public function jobs(Request $request)
     {
-        $all_jobs = $this->jobsquery('all', false);
+        $company = Company::where('user_id', auth()->user()->id)->first();
+        if($request->filled('term')){
+            $all_jobs = Job::filterjob($request->term)->where('company_id', $company->id)->paginate(10);
+        } else {
+            $all_jobs = $this->jobsquery('all', false);
+        }
+        
         $approved_jobs = $this->jobsquery('Approved');
         $unapproved_jobs = $this->jobsquery('Not Approved');
-        $published_jobs = Job::where('publish_status', 1)->paginate(10);
-        $expired_jobs = Job::where('is_expired', 1)->paginate(10);
-        $draft_jobs = Job::where('draft_status', 1)->paginate(10);
-        $pending_jobs = Job::where('is_active', 0)->paginate(10);
-        $active_jobs = Job::where('is_active', 1)->paginate(10);
+        $published_jobs = Job::where('publish_status', 1)->where('company_id', $company->id)->paginate(10);
+        $expired_jobs = Job::where('is_expired', 1)->where('company_id', $company->id)->paginate(10);
+        $draft_jobs = Job::where('draft_status', 1)->where('company_id', $company->id)->paginate(10);
+        $pending_jobs = Job::where('is_active', 0)->where('company_id', $company->id)->paginate(10);
+        $active_jobs = Job::where('is_active', 1)->where('company_id', $company->id)->paginate(10);
         $fields = [
             'all_jobs' => $all_jobs,
             'approved_jobs' => $approved_jobs,

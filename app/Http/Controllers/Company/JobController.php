@@ -109,6 +109,8 @@ class JobController extends Controller
         }
     }
 
+    
+
     public function cloneJob($id)
     {
         try {
