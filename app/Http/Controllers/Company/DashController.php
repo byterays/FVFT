@@ -100,12 +100,18 @@ class DashController extends Controller
         $unapproved_jobs = $this->jobsquery('Not Approved');
         $published_jobs = Job::where('publish_status', 1)->paginate(10);
         $expired_jobs = Job::where('is_expired', 1)->paginate(10);
+        $draft_jobs = Job::where('draft_status', 1)->paginate(10);
+        $pending_jobs = Job::where('is_active', 0)->paginate(10);
+        $active_jobs = Job::where('is_active', 1)->paginate(10);
         $fields = [
             'all_jobs' => $all_jobs,
             'approved_jobs' => $approved_jobs,
             'unapproved_jobs' => $unapproved_jobs,
             'published_jobs' => $published_jobs,
             'expired_jobs' => $expired_jobs,
+            'draft_jobs' => $draft_jobs,
+            'pending_jobs' => $pending_jobs,
+            'active_jobs' => $active_jobs,
         ];
         if (auth()->check()) {
             $company = Company::where('user_id', auth()->user()->id)->first();

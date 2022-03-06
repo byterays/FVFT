@@ -1,51 +1,131 @@
 @extends('themes.fvft.company.layouts.dashmaster')
-@section('jobs') active @endsection
-@section('title') Jobs @endsection
+@section('jobs')
+    active
+@endsection
+@section('title')
+    Jobs
+@endsection
 @section('content')
+    <style>
+        .input-icons i {
+            position: absolute;
+        }
+
+        .input-icons input {
+            text-indent: 20px;
+        }
+
+        .icon {
+            padding: 10px;
+            min-width: 40px;
+            z-index: 99999
+        }
+
+    </style>
     <div class="card-header">
         {{-- <h3 class="card-title">My Jobs</h3> --}}
         <div class="col-md-6">
             <h3 class="">My Jobs</h3>
         </div>
-        @if ($company->is_active == 1)
-            <div class="col-md-6 mr-auto">
-                <a href="{{ route('company.addNewJob') }}" class="btn btn-success">Add New Job</a>
-            </div>
-        @endif
+
     </div>
     <div class="card-body">
+        @if ($company->is_active == 1)
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <a href="{{ route('company.addNewJob') }}" class="btn btn-success">Add New Job</a>
+                </div>
+                <div class="col-md-6">
+                    <form action="#" method="POST">
+                        @csrf
+                        <div class="input-group input-icons mb-3">
+                            <i class="fa fa-search icon"></i>
+                            <input type="text" class="form-control" placeholder="Search Your Job"
+                                aria-label="Search your Job" aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success" type="button">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        @endif
         <div class="ads-tabs">
             <div class="tabs-menus">
                 <!-- Tabs -->
                 <ul class="nav panel-tabs">
-                    <li class=""><a href="#tab1" class="active" data-toggle="tab">All Jobs</a></li>
-                    <li><a href="#tab2" data-toggle="tab" class="">Approved</a></li>
-                    <li><a href="#tab3" data-toggle="tab" class="">Not Approved</a></li>
-                    <li><a href="#tab4" data-toggle="tab" class="">Published</a></li>
-                    <li><a href="#tab5" data-toggle="tab" class="">Expired</a></li>
+                    <li class=""><a href="#allJob" class="active" data-toggle="tab">All Jobs</a></li>
+                    <li><a href="#draft" data-toggle="tab" class="">Draft</a></li>
+                    <li><a href="#pendingjobs" data-toggle="tab" class="">Pending Jobs</a></li>
+                    <li><a href="#approvedjobs" data-toggle="tab" class="">Approved</a></li>
+                    <li><a href="#notapproved" data-toggle="tab" class="">Not Approved</a></li>
+                    <li><a href="#published" data-toggle="tab" class="">Published</a></li>
+                    <li><a href="#expired" data-toggle="tab" class="">Expired</a></li>
                 </ul>
             </div>
             <div class="tab-content">
-                <div class="tab-pane table-responsive border-top userprof-tab active" id="tab1">
-                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$all_jobs,'action'=>'All
-                    Jobs'])
+                <div class="tab-pane table-responsive border-top userprof-tab active" id="allJob">
+                    @include(
+                        'themes.fvft.company.components.jobs.joblist',
+                        [
+                            'items' => $all_jobs,
+                            'action' => 'All Jobs',
+                        ]
+                    )
                 </div>
-                <div class="tab-pane table-responsive border-top userprof-tab" id="tab2">
-                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$approved_jobs,'action'=>'Approved
-                    '])
+                <div class="tab-pane table-responsive border-top userprof-tab" id="approvedjobs">
+                    @include(
+                        'themes.fvft.company.components.jobs.joblist',
+                        [
+                            'items' => $approved_jobs,
+                            'action' => 'Approved',
+                        ]
+                    )
                 </div>
-                <div class="tab-pane table-responsive border-top userprof-tab" id="tab3">
-                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$unapproved_jobs,'action'=>'Not
-                    Approved
-                    Jobs'])
+                <div class="tab-pane table-responsive border-top userprof-tab" id="notapproved">
+                    @include(
+                        'themes.fvft.company.components.jobs.joblist',
+                        [
+                            'items' => $unapproved_jobs,
+                            'action' => 'Not Approved Jobs',
+                        ]
+                    )
                 </div>
-                <div class="tab-pane table-responsive border-top userprof-tab " id="tab4">
-                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$published_jobs,'action'=>'Published
-                    Jobs'])
+                <div class="tab-pane table-responsive border-top userprof-tab " id="published">
+                    @include(
+                        'themes.fvft.company.components.jobs.joblist',
+                        [
+                            'items' => $published_jobs,
+                            'action' => 'Published Jobs',
+                        ]
+                    )
                 </div>
-                <div class="tab-pane table-responsive border-top userprof-tab " id="tab5">
-                    @include('themes.fvft.company.components.jobs.joblist',['items'=>$expired_jobs,'action'=>'Expired
-                    Jobs'])
+                <div class="tab-pane table-responsive border-top userprof-tab " id="expired">
+                    @include(
+                        'themes.fvft.company.components.jobs.joblist',
+                        [
+                            'items' => $expired_jobs,
+                            'action' => 'Expired Jobs',
+                        ]
+                    )
+                </div>
+                <div class="tab-pane table-responsive border-top userprof-tab " id="draft">
+                    @include(
+                        'themes.fvft.company.components.jobs.joblist',
+                        [
+                            'items' => $draft_jobs,
+                            'action' => 'Draft Jobs',
+                        ]
+                    )
+                </div>
+                <div class="tab-pane table-responsive border-top userprof-tab " id="pendingjobs">
+                    @include(
+                        'themes.fvft.company.components.jobs.joblist',
+                        [
+                            'items' => $pending_jobs,
+                            'action' => 'Pending Jobs',
+                        ]
+                    )
                 </div>
             </div>
         </div>
@@ -64,7 +144,7 @@
                     if (!response.exception) {
                         toastr.success(response.msg);
                         location.href = response.redirectRoute;
-                    } else if(response.exception) {
+                    } else if (response.exception) {
                         toastr.warning(response.exception);
                     }
 
