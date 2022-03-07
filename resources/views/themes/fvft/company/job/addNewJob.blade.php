@@ -543,7 +543,7 @@
                 </div>
                 <div class="mr-auto">
                     <button type="button" name="saveType" value="save_as_draft"
-                        onclick="submitForm(event, 'save_as_draft');" class="btn btn-success">Save as Draft</button>
+                        onclick="submitForm(event, 'save_as_draft');" class="btn btn-primary">Save as Draft</button>
                     <button type="button" name="saveType" value="proceed_to_approval"
                         onclick="submitForm(event, 'proceed_to_approval');" class="btn btn-success ml-3">Proceed To
                         Approval</button>
