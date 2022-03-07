@@ -22,7 +22,8 @@ class CreateCompanyContactPersonsTable extends Migration
             $table->unsignedBigInteger('company_id')->index('company_contact_persons');
             $table->text('avatar');
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();
-            $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
+            $table->timestamp('updated_at')->nullable();
+//            $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
         });
     }
 

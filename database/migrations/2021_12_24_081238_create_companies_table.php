@@ -29,7 +29,7 @@ class CreateCompaniesTable extends Migration
             $table->boolean('is_active');
             $table->double('is_featured');
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();
-            $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

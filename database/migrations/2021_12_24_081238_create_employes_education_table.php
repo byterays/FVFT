@@ -18,7 +18,7 @@ class CreateEmployesEducationTable extends Migration
             $table->unsignedBigInteger('employ_id')->index('consr_employes_relation');
             $table->unsignedBigInteger('educationlevels_id')->index('const_education_relation');
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();
-            $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

@@ -18,7 +18,7 @@ class CreateManageNewsCategoriesTable extends Migration
             $table->unsignedBigInteger('news_id')->index('const_news_relation');
             $table->unsignedBigInteger('category_id')->index('const_category_relation');
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();
-            $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
+            $table->timestamp('updated_at')->nullable();
         });
     }
 
