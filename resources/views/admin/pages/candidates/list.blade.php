@@ -51,8 +51,10 @@ if (session()->get('delete')) {
                                     <th>Full Name</th>
                                     <th>Email</th>
                                     <th>Phone</th>
+                                    <th>Gender</th>
                                     <th>Address</th>
                                     <th>Active</th>
+                                    <th>Registered At</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -64,11 +66,15 @@ if (session()->get('delete')) {
                                         </td>
                                         <td>{{ DB::table('users')->find($candidate->user_id)->email }}</td>
                                         <td>{{ $candidate->mobile_phone }}</td>
+                                        <td>{{ $candidate->gender }}</td>
                                         <td>{{ $candidate->address }}</td>
 
                                         <td>
                                             <span
                                                 class="label label-{{ $candidate->is_active ? 'success' : 'warning' }}">{{ $candidate->is_active ? 'Active' : 'Inactive' }}</span>
+                                        </td>
+                                        <td>
+                                            {{ date('Y-m-d', strtotime($candidate->created_at)) }}
                                         </td>
                                         <td>
                                             {{-- <button class="btn btn-danger" data-toggle="modal" data-target="#largeModal">View modal</button> --}}

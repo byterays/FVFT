@@ -30,12 +30,16 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::post('/jobs-save', [JobsController::class, 'save']);
     Route::get('/jobs-delete', [JobsController::class, 'delete']);
     Route::get('/jobs-new', [JobsController::class, 'new'])->name('admin.addNewJob');
+    Route::get('/jobs-edit/{id}', [JobsController::class, 'edit'])->name('admin.editJob');
     Route::post('/save-job', [JobsController::class, 'saveNewJob'])->name('admin.saveNewJob');
     Route::put('/jobs-update/{id}', [JobsController::class, 'updateJob'])->name('admin.job.update');
+    Route::get('/jobs-detail/{id}', [JobsController::class, 'viewJob'])->name('admin.job.view');
     // Companies Crude
     Route::prefix('companies')->group(function () {
         Route::get('/', [CompanyController::class, 'list'])->name('admin.companies.list');
         Route::get('new', [CompanyController::class, 'new'])->name('admin.companies.new');
+        Route::get('/create', [CompanyController::class, 'create'])->name('admin.companies.create');
+        Route::post('/store', [CompanyController::class, 'saveCompany'])->name('admin.companies.saveCompany');
         Route::get('edit/{id}', [CompanyController::class, 'edit'])->name('admin.companies.edit');
         Route::get('delete/{id}', [CompanyController::class, 'delete'])->name('admin.companies.delete');
         Route::post('save', [CompanyController::class, 'save']);

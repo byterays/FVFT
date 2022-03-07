@@ -197,6 +197,15 @@
                 autoclose: true,
             });
         });
+
+
+        function preventNegativeNo(this_value){
+            if(!!$(this_value).val() && Math.abs($(this_value).val()) >= 1){
+                $(this_value).val(Math.abs($(this_value).val()));
+            } else {
+                $(this_value).val(null);
+            }
+        }
     </script>
     <script>
         toastr.options = {
