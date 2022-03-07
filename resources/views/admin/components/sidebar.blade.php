@@ -37,7 +37,7 @@
                                 <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Companies</span><i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
 								<li><a class="slide-item" href="/admin/companies/">List Companies</a></li>
-								<li><a class="slide-item" href="/admin/companies/new">Add Company</a></li>
+								<li><a class="slide-item" href="{{ route('admin.companies.create') }}">Add Company</a></li>
 							</ul>
 						</li>
                         <li class="slide">

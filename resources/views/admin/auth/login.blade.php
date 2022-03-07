@@ -1,6 +1,11 @@
 @extends('admin.layouts.page_master')
 @section('main')
 <!--Page-->
+<style>
+    .invalid-feedback{
+        display: block !important;
+    }
+</style>
 <form action="/login" method="post">
     @csrf
 <div class="page custom-pages">
@@ -17,7 +22,7 @@
                                 <div class="form-group">
                                     <label class="form-label text-dark">Email address</label>
                                     <input type="email" name="email" class="form-control" placeholder="Enter email" required>
-                                    @error('password')
+                                    @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

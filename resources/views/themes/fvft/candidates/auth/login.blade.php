@@ -3,6 +3,11 @@
 {{-- @dd($countries) --}}
 @section('main')
     @include('themes.fvft.site.components.header')
+    <style>
+        .invalid-feedback{
+            display: block !important;
+        }
+    </style>
     <section>
         <div class="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg"
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
@@ -57,13 +62,14 @@
                                                 @csrf
                                                 <h3 class="pb-2">Login</h3>
                                                 <div class="mail">
+                                                    
+                                                    <input type="email" name="email">
+                                                    <label>Email</label>
                                                     @error('email')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
-                                                    <input type="email" name="email">
-                                                    <label>Email</label>
                                                 </div>
                                                 <div class="passwd">
                                                     <input type="password" name="password">

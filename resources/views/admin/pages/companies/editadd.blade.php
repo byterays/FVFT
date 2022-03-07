@@ -2,7 +2,7 @@
 @section('main')
     {{-- @dd($company?$company); --}}
     <div class="page-header">
-        <h4 class="page-title">{{ $action }} Job</h4>
+        <h4 class="page-title">{{ $action }} Company</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Modules</a></li>
             <li class="breadcrumb-item" aria-current="page"><a href="/admin/companies/">Company</a></li>
@@ -16,7 +16,7 @@
                 @csrf
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">New Job</h3>
+                        <h3 class="card-title">New Company</h3>
                     </div>
                     <div class="card-body">
                         <div class="row">

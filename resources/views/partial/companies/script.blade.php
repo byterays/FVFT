@@ -109,6 +109,7 @@
                 if (response.db_error) {
                     $(".alert-secondary").css('display', 'block');
                     $(".db_error").html(response.db_error);
+                    toastr.warning(response.db_error);
                 } else if (response.errors) {
                     var error_html = "";
                     $.each(response.errors, function(key, value) {

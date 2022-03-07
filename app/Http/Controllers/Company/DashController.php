@@ -93,19 +93,31 @@ class DashController extends Controller
         return $this->company_view('company.applicants');
     }
 
-    public function jobs()
+    public function jobs(Request $request)
     {
-        $all_jobs = $this->jobsquery('all', false);
+        $company = Company::where('user_id', auth()->user()->id)->first();
+        if($request->filled('term')){
+            $all_jobs = Job::filterjob($request->term)->where('company_id', $company->id)->paginate(10);
+        } else {
+            $all_jobs = $this->jobsquery('all', false);
+        }
+        
         $approved_jobs = $this->jobsquery('Approved');
         $unapproved_jobs = $this->jobsquery('Not Approved');
-        $published_jobs = Job::where('publish_status', 1)->paginate(10);
-        $expired_jobs = Job::where('is_expired', 1)->paginate(10);
+        $published_jobs = Job::where('publish_status', 1)->where('company_id', $company->id)->paginate(10);
+        $expired_jobs = Job::where('is_expired', 1)->where('company_id', $company->id)->paginate(10);
+        $draft_jobs = Job::where('draft_status', 1)->where('company_id', $company->id)->paginate(10);
+        $pending_jobs = Job::where('is_active', 0)->where('company_id', $company->id)->paginate(10);
+        $active_jobs = Job::where('is_active', 1)->where('company_id', $company->id)->paginate(10);
         $fields = [
             'all_jobs' => $all_jobs,
             'approved_jobs' => $approved_jobs,
             'unapproved_jobs' => $unapproved_jobs,
             'published_jobs' => $published_jobs,
             'expired_jobs' => $expired_jobs,
+            'draft_jobs' => $draft_jobs,
+            'pending_jobs' => $pending_jobs,
+            'active_jobs' => $active_jobs,
         ];
         if (auth()->check()) {
             $company = Company::where('user_id', auth()->user()->id)->first();
@@ -125,7 +137,7 @@ class DashController extends Controller
 
     public function updateProfile(Request $request, $id)
     {
-
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'company_name' => ['required'],
             'industry_id' => ['required'],
@@ -215,7 +227,7 @@ class DashController extends Controller
         $contact_person->position = $request->contact_person_designation;
         $contact_person->company_id = $company_id;
         $contact_person->avatar = '';
-        $contact_person->person_designation = $request->contact_person_designation;
+        $contact_person->person_designation = $request->person_designation;
         $contact_person->isocode = '';
         $contact_person->dialcode = $request->dialcode;
         $contact_person->save();

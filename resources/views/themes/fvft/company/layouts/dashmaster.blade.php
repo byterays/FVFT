@@ -33,6 +33,7 @@
                         @endif
                         @yield('content')
                     </div>
+                    @yield('data')
                 </div>
             </div>
         </div>

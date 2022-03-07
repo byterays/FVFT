@@ -259,7 +259,7 @@ class DashController extends Controller
                 $this->__updateEmployee($id, $user->id, $request);
                 \DB::commit();
                 return response()->json(['msg' => 'Candidate updated successfully', 'redirectRoute' => route($this->redirectTo)]);
-            } catch (\Exception$e) {
+            } catch (\Exception $e) {
                 \DB::rollBack();
                 return response()->json(['db_error' => $e->getMessage()]);
                 // return redirect()->back();
@@ -314,7 +314,7 @@ class DashController extends Controller
         $employe->ward = $request->ward;
         $employe->passport_number = $request->passport_number;
         $employe->passport_expiry_date = $request->passport_expiry_date;
-        $employe->is_experience = $request->is_experience !== null ? 1 : 0;
+        $employe->is_experience = $request->is_experience !== null && $request->is_experience == 'Yes' ? 1 : 0;
         if (!empty($request->training)) {
             foreach ($request->training as $key => $training) {
                 $trainingData[] = $training;
@@ -330,27 +330,41 @@ class DashController extends Controller
         }
 
         if (!empty($request->language)) {
+            $languageData = [];
             foreach ($request->language as $key => $language) {
-                $languageData[] = [
-                    'language_id' => $language,
-                    'language_level' => $request->get('language_level')[$key],
-                ];
+                if ($language != null) {
+                    $languageData[] = [
+                        'language_id' => $language,
+                        'language_level' => $request->get('language_level')[$key],
+                    ];
+                }
+
             }
-            $employe->languages = json_encode($languageData);
+            if (!empty($languageData)) {
+                $employe->languages = json_encode($languageData);
+            }
+
         }
 
-        if ($request->is_experience != null && !empty($request->country_id)) {
+        if ($request->is_experience != null && $request->is_experience == 'Yes' && !empty($request->country_id)) {
+            $experienceData = [];
             foreach ($request->country_id as $key => $country) {
-                $experienceData[] =
-                    [
-                    'country_id' => $country,
-                    'job_category_id' => $request->get('job_category_id')[$key],
-                    'job_title_id' => $request->get('job_title')[$key],
-                    'working_year' => $request->get('working_year')[$key],
-                    'working_month' => $request->get('working_month')[$key],
-                ];
+                if ($country != null) {
+                    $experienceData[] =
+                        [
+                        'country_id' => $country,
+                        'job_category_id' => $request->get('job_category_id')[$key],
+                        'job_title_id' => $request->get('job_title')[$key],
+                        'working_year' => $request->get('working_year')[$key],
+                        'working_month' => $request->get('working_month')[$key],
+                    ];
+                }
+
             }
-            $employe->experiences = json_encode($experienceData);
+            if (!empty($experienceData)) {
+                $employe->experiences = json_encode($experienceData);
+            }
+
         }
         $employe->save();
 
@@ -365,15 +379,18 @@ class DashController extends Controller
         DB::table('employes_experience')->where('employ_id', $employ_id)->delete();
 
         $fields = [];
-        if ($request->is_experience != null) {
+        if ($request->is_experience != null && $request->is_experience == 'Yes' && !empty($request->country_id)) {
             foreach ($request->country_id as $key => $country) {
-                $fields['employ_id'] = $employ_id;
-                $fields['country_id'] = $country;
-                $fields['job_category_id'] = $request->get('job_category_id')[$key];
-                $fields['job_title_id'] = $request->get('job_title')[$key];
-                $fields['working_year'] = $request->get('working_year')[$key];
-                $fields['working_month'] = $request->geT('working_month')[$key];
-                DB::table('employes_experience')->insert($fields);
+                if ($country != null) {
+                    $fields['employ_id'] = $employ_id;
+                    $fields['country_id'] = $country;
+                    $fields['job_category_id'] = $request->get('job_category_id')[$key];
+                    $fields['job_title_id'] = $request->get('job_title')[$key];
+                    $fields['working_year'] = $request->get('working_year')[$key];
+                    $fields['working_month'] = $request->geT('working_month')[$key];
+                    DB::table('employes_experience')->insert($fields);
+                }
+
             }
 
         }

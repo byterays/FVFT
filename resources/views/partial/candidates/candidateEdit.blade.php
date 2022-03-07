@@ -232,7 +232,7 @@
                     <label for="" class="form-label">Address</label>
                     <div class="row">
                         <div class="col-6">
-                            <select name="state_id" class="form-control select2" id="states"
+                            <select name="state_id" class="form-control select2-flag-search" id="states"
                                     onchange="patchGetDistricts(this)" value="{{ $employ->state_id }}">
                                 <option value="">Select State</option>
                                 @foreach ($states as $state)
@@ -243,8 +243,7 @@
                             </select>
                         </div>
                         <div class="col-6">
-                            <select name="district_id" class="form-control select2" id="districts"
-                                    value="{{ $employ->district_id }}">
+                            <select name="district_id" class="form-control select2-flag-search" id="districts" value="{{ $employ->district_id }}">
                                 <option value="">Select District</option>
                             </select>
                         </div>
@@ -330,7 +329,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Country</label>
-                                            <select name="country_id[]" class="form-control select2">
+                                            <select name="country_id[]" class="form-control select2-flag-search">
                                                 <option value="">Select Country</option>
                                                 @foreach ($countries as $country)
                                                     <option value="{{ $country->id }}"
@@ -338,6 +337,70 @@
                                                         {{ $country->name }}</option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Job Category</label>
+                                            <select name="job_category_id[]" class="form-control select2-flag-search" id="">
+                                                <option value="">Select Job Category</option>
+                                                @foreach ($job_categories as $job_category)
+                                                    <option value="{{ $job_category->id }}"
+                                                        {{ $job_category->id == $employ_experience['job_category_id'] ? 'selected' : '' }}>
+                                                        {{ $job_category->functional_area }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Job Title</label>
+                                            <select name="job_title[]" class="form-control select2-flag-search" id="">
+                                                <option value="">Select Job Title</option>
+                                                @foreach ($jobs as $job)
+                                                    <option value="{{ $job->id }}"
+                                                        {{ $job->id == $employ_experience['job_title_id'] ? 'selected' : '' }}>
+                                                        {{ $job->title }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Working Duration</label>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <select name="working_year[]" class="form-control select2" id="">
+                                                        <option value="">Year</option>
+                                                        <?php
+                                                        $dyear = $employ_experience['working_year'];
+                                                        $year = date('Y');
+                                                        $min = $year - 250;
+                                                        $max = $year;
+                                                        for ($i = $max; $i >= $min; $i--) {
+                                                            $selected = $dyear == $i ? 'selected' : '';
+                                                            echo "<option value='$i' $selected>$i</option>";
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <select name="working_month[]" class="form-control select2" id="">
+                                                        <option value="">Month</option>
+                                                        <?php
+                                                        $dmonth = $employ_experience['working_month'];
+                                                        ?>
+                                                        <?php for( $m = 1; $m <= 12; ++$m ) {
+                                                        $month_label = date('F', mktime(0, 0, 0, $m, 1));
+                                                        $selected_month = $dmonth == $month_label ? 'selected' : '';
+                                                        ?>
+                                                        <option value="<?php echo $month_label; ?>" <?php echo $selected_month; ?>>
+                                                            <?php echo $month_label; ?>
+                                                        </option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -432,7 +495,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="">Education Level&nbsp;<span class="req">*</span></label>
-                    <select name="education_level_id" class="form-control select2">
+                    <select name="education_level_id" class="form-control select2-flag-search">
                         <option value="">Select Level</option>
                         @foreach ($educationLevels as $educationLevel)
                             <option value="{{ $educationLevel->id }}"

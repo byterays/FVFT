@@ -31,6 +31,13 @@ class Job extends Model
     }
 
 
+    static function filterjob($value)
+    {
+        $jobs = self::where('title', 'LIKE', '%'.$value. '%');
+        return $jobs;
+    }
+
+
     protected static function boot()
     {
         parent::boot();
