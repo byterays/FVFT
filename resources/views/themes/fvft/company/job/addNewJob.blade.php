@@ -541,11 +541,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="mr-auto">
+                <div class="mr-auto ml-2">
                     <button type="button" name="saveType" value="save_as_draft"
-                        onclick="submitForm(event, 'save_as_draft');" class="btn btn-primary">Save as Draft</button>
+                        onclick="submitForm(event, 'save_as_draft');" class="btn btn-primary rounded-0">Save as Draft</button>
+                    <button type="button" name="saveType" value="save_and_preview"
+                        onclick="submitForm(event, 'save_and_preview');" class="btn btn-warning rounded-0 ml-2">Preview</button>
                     <button type="button" name="saveType" value="proceed_to_approval"
-                        onclick="submitForm(event, 'proceed_to_approval');" class="btn btn-success ml-3">Proceed To
+                        onclick="submitForm(event, 'proceed_to_approval');" class="btn btn-success rounded-0 ml-3">Proceed To
                         Approval</button>
                 </div>
             </div>

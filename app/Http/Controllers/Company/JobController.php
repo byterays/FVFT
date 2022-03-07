@@ -55,8 +55,14 @@ class JobController extends Controller
                 $job->status = 'Not Approved';
                 $job->draft_status = $request->saveType == 'save_as_draft' ? 1 : 0;
                 $job->save();
+                if($request->saveType == "save_and_preview"){
+                    $this->redirectTo = "company.viewjob,".$job->id;
+                }
                 DB::commit();
                 $msg = $request->saveType == 'save_as_draft' ? 'Your job added to draft' : 'New job added';
+                if($request->saveType == "save_and_preview"){
+                    return response()->json(['msg' => $msg, 'redirectRoute' => route('company.viewjob', $job->id)]);
+                }
                 return response()->json(['msg' => $msg, 'redirectRoute' => route($this->redirectTo)]);
             } catch (\Exception $e) {
                 DB::rollBack();
@@ -109,7 +115,11 @@ class JobController extends Controller
         }
     }
 
-    
+    public function viewjob($id)
+    {
+        $job = Job::findOrFail($id);
+        return $this->company_view('company.job.viewjob', ['job' => $job]);
+    }
 
     public function cloneJob($id)
     {
