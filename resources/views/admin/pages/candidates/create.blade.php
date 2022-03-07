@@ -306,8 +306,8 @@
                                     placeholder="Enter Passport Number">
                                 </div>
                             </div>
-                            
-                            
+
+
                         </div>
                         <div class="form-group">
                             <div class="row">
@@ -319,8 +319,8 @@
                                     placeholder="Enter Passport Expiry Date, eg:2020-01-02">
                                 </div>
                             </div>
-                            
-                            
+
+
                         </div>
                     </div>
                 </div>

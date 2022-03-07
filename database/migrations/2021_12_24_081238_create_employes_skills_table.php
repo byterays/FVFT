@@ -18,7 +18,7 @@ class CreateEmployesSkillsTable extends Migration
             $table->unsignedBigInteger('employ_id')->index('const_e_emp_id');
             $table->unsignedBigInteger('skills_id')->index('const_e_skills_relation');
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();
-            $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

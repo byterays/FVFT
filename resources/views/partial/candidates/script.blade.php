@@ -330,7 +330,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-1 mt-2">
-                            <span class="text-danger cur_sor" onclick="removeRow('languageRow_` + count + `')">X</span>
+                            <button class="text-danger btn btn-sm btn-default" onclick="removeRow('languageRow_` + count + `')"><i class="fa fa-minus"/></button>
                         </div>
                             </div>`;
         $("#appendLanguageDiv").append(language_html);

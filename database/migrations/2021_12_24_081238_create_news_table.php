@@ -24,7 +24,7 @@ class CreateNewsTable extends Migration
             $table->text('seo_keywords');
             $table->string('slug', 225);
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();
-            $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

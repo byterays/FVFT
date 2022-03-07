@@ -35,7 +35,7 @@ class CreateEmployesTable extends Migration
             $table->boolean('is_active');
             $table->boolean('is_verified');
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();
-            $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
+            $table->timestamp('updated_at')->nullable();
             $table->text('avatar');
         });
     }

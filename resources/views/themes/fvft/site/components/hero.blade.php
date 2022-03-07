@@ -65,8 +65,7 @@
                                         </div>
                                         <div class="cat-desc text-left">
                                             <h5 class="mb-3 mt-0">{{ $item->functional_area }}</h5>
-                                            <small
-                                                class="badge badge-pill badge-primary mr-2">{{ \DB::table('jobs')->where(['job_categories_id' => $item->id])->count() }}Jobs</small>
+                                            <small class="badge badge-pill badge-primary mr-2">{{ \DB::table('jobs')->where(['job_categories_id' => $item->id])->count() }}Jobs</small>
                                         </div>
                                     </div>
                                 </div>

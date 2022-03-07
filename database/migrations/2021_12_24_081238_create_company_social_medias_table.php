@@ -20,7 +20,7 @@ class CreateCompanySocialMediasTable extends Migration
             $table->text('url');
             $table->unsignedBigInteger('company_id')->index('const_company_social_medias');
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();
-            $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

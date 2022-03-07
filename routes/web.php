@@ -14,9 +14,6 @@ use App\Http\Controllers\Admin\Ajax\AddController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::group(['prefix' => 'skill/', 'as' => 'admin.skill.'], function(){
     Route::post('ajax-store-skill', [AddController::class, "ajaxStoreSKill"])->name("ajaxAddSkill");
 });

@@ -18,7 +18,7 @@ class CreateJobApplicationsTable extends Migration
             $table->unsignedBigInteger('employ_id')->index('const_ja_employ_relation');
             $table->unsignedBigInteger('job_id')->index('const_ja_job__relation');
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();
-            $table->timestamp('updated_at')->default('0000-00-00 00:00:00');
+            $table->timestamp('updated_at')->nullable();
         });
     }
 
