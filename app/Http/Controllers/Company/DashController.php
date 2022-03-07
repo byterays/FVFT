@@ -137,7 +137,7 @@ class DashController extends Controller
 
     public function updateProfile(Request $request, $id)
     {
-
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'company_name' => ['required'],
             'industry_id' => ['required'],

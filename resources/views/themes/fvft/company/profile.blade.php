@@ -32,7 +32,7 @@
     active
 @endsection
 @section('content')
-    <form action="{{ route('company.update_profile', $company->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('company.update_profile', $company->id) }}" method="post" enctype="multipart/form-data" id="companyForm">
         @csrf
         @method('put')
         @include('partial/companies/companyEdit')

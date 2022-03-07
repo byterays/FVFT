@@ -54,7 +54,7 @@
                         </div>
                         <div class="col-md-8">
                             <input type="text" class="form-control" value="{{ $company->company_name }}"
-                                id="company_name" name="company_name" placeholder="Enter Company Name">
+                                name="company_name" placeholder="Enter Company Name">
                             <div class="require text-danger company_name"></div>
                         </div>
                     </div>
