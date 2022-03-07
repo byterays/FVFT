@@ -26,7 +26,7 @@ class JobsController extends Controller
         // if($request->action=="delete"){
 
         // }
-        $jobs = DB::table('jobs');
+        $jobs = DB::table('jobs')->where('draft_status', 0);
         if ($request->filled('country_id')) {
             $jobs = $jobs->where('country_id', $request->country_id);
         }
