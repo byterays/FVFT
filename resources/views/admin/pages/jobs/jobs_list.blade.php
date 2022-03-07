@@ -150,6 +150,10 @@
                                                 data-original-title="Edit Job"
                                                 href="{{ route('admin.editJob', $job->id) }}"><i
                                                     class="fa fa-edit"></i></a>
+                                            <a class="btn btn-primary btn-sm text-white mb-1" data-toggle="tooltip"
+                                                data-original-title="View Job"
+                                                href="{{ route('admin.job.view', $job->id) }}"><i
+                                                    class="fa fa-eye"></i></a>
                                             <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
                                                 data-original-title="Delete"
                                                 href="http://127.0.0.1:8000/admin/jobs-delete?id={{ $job->id }}&from={{ $jobs->currentPage() }}"><i
