@@ -143,7 +143,7 @@
                             </div>
                         </div>
                     </div>
-                    @if ($job->draft_status == 1)
+                    @if ($job->draft_status == 0)
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
@@ -151,13 +151,13 @@
                                 </div>
                                 <div class="col-md-8">
                                     @php
-                                        $statuses = ['Approved' => 'Approved', 'Not Approved' => 'Not Approved'];
+                                        $statuses = ['Draft', 'Pending', 'Active', 'Approved', 'Not Approved', 'Published', 'Unpublished', 'Expired', 'Rejected'];
+                                        // $statuses = ['Approved' => 'Approved', 'Not Approved' => 'Not Approved'];
                                     @endphp
                                     <select name="job_status" class="form-control select2">
                                         <option value="">Select Status</option>
                                         @foreach ($statuses as $key => $value)
-                                            <option value="{{ $key }}"
-                                                {{ $key == $job->status ? 'selected' : '' }}>{{ $value }}
+                                            <option value="{{ $value }}" {{ $job->status == $value ? 'selected' : '' }}>{{ $value }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -268,7 +268,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label class="custom-switch-checkbox">
                             <input type="checkbox" name="is_active" class="custom-switch-input"
                                 {{ $job->is_active == 1 ? 'checked' : '' }}>
@@ -281,7 +281,7 @@
                             <span class="custom-switch-indicator"></span>
                             <span class="custom-switch-description">Featured</span>
                         </label>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
