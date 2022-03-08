@@ -87,8 +87,8 @@
                                     <th>Company</th>
                                     <th>Featured</th>
                                     <th>Status</th>
-                                    <th>Job Status</th>
-                                    <th>Publish Status</th>
+                                    {{-- <th>Job Status</th>
+                                    <th>Publish Status</th> --}}
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -103,11 +103,20 @@
                                             <i
                                                 class="fa fa-{{ $job->is_featured ? 'check-' : '' }}circle-o {{ $job->is_featured ? 'text-success' : 'text-warning' }}"></i>
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             <span
                                                 class="label label-{{ $job->is_active ? 'success' : 'warning' }}">{{ $job->is_active ? 'Active' : 'Inactive' }}</span>
-                                        </td>
+                                        </td> --}}
                                         <td>
+                                            @php
+                                            $job_status = ['Draft' => 'primary', 'Pending' => 'warning', 'Active' => 'success', 'Approved' => 'success', 
+                                            'Not Approved'=>'warning', 'Published'=>'success', 'Unpublished'=>'warning', 'Expired'=>'danger', 'Rejected'=>'danger'];
+                                            @endphp
+                                            <span class="label label-{{ $job_status[$job->status] }}">
+                                                {{ $job->status }}
+                                            </span>
+                                        </td>
+                                        {{-- <td>
                                             @php
                                                 // $job_status = $job->status == 'Published' || $job->status == 'Approved' ? 'success' : ($job->status == 'Expired' ? 'danger' : 'warning');
                                                 $job_status = $job->status == 'Approved' ? 'success' : 'warning';
@@ -116,8 +125,8 @@
                                                 {{ $job->status }}
                                             </span>
 
-                                        </td>
-                                        <td>
+                                        </td> --}}
+                                        {{-- <td>
                                             @php
                                                 
                                                 $job_status_color = $job->publish_status == 1 ? 'success' : 'warning';
@@ -126,7 +135,7 @@
                                             <span class="label label-{{ $job_status_color }}">
                                                 {{ $published_status }}
                                             </span>
-                                        </td>
+                                        </td> --}}
 
                                         <td>
 
