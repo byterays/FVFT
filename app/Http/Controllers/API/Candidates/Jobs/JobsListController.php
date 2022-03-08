@@ -11,7 +11,7 @@ use DB;
 class JobsListController extends Controller
 {
     use ApiMethods;
-    public function list(Request $request){
+    public function listing(Request $request){
         // dd($request);
         $limit= $request->has("limit")?$request->limit:10;
         $jobs =Job::query();
@@ -65,14 +65,14 @@ class JobsListController extends Controller
         }else{
             $jobs->limit($limit);
         }
-        
+
         $j=$jobs->get();
         // dd($j);
         $results = [];
         foreach($j as $index=>$job){
             $results[$index] = $this->process($job);
         }
-        
+
         // dd($total_records);
         $total_page_no=(int)($total_records/$limit);
         $page_no=$request->has("page_no")?$request->page_no:1;
