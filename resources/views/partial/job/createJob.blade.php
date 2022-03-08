@@ -250,18 +250,18 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="form-group">
-                        <label class="custom-switch-checkbox">
+                    <div class="form-group">
+                        {{-- <label class="custom-switch-checkbox">
                             <input type="checkbox" name="is_active" class="custom-switch-input">
                             <span class="custom-switch-indicator"></span>
                             <span class="custom-switch-description">Active</span>
-                        </label>
+                        </label> --}}
                         <label class="custom-switch-checkbox">
                             <input type="checkbox" name="is_featured" class="custom-switch-input">
                             <span class="custom-switch-indicator"></span>
                             <span class="custom-switch-description">Featured</span>
                         </label>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </div>
