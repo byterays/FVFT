@@ -11,6 +11,7 @@
 /public/uploads/site
 /public/uploads/admin
 /public/uploads/cv
+/public/uploads/candidates/full_picture/*.*
 /storage/*.key
 /vendor
 .env
