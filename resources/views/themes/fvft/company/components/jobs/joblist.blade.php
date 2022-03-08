@@ -6,9 +6,9 @@
             <th>Location</th>
             <th>Created At</th>
             <th>Status</th>
-            <th>Publish Status</th>
+            {{-- <th>Publish Status</th>
             <th>Active Status</th>
-            <th>Expiration</th>
+            <th>Expiration</th> --}}
             <th>Action</th>
         </tr>
     </thead>
@@ -41,9 +41,9 @@
                 {{-- {{ date('Y-m-d', strtotime($item->created_at)) }} --}}
             </td>
             <td>{{ $item->status }}</td>
-            <td>{{ $item->publish_status == 1 ? 'Published' : 'Not Published' }}</td>
+            {{-- <td>{{ $item->publish_status == 1 ? 'Published' : 'Not Published' }}</td>
             <td>{{ $item->is_active == 1 ? 'Active' : 'Pending' }}</td>
-            <td>{{ $item->is_active == 1 ? 'Expired' : 'Available' }}</td>
+            <td>{{ $item->is_active == 1 ? 'Expired' : 'Available' }}</td> --}}
             <td>
                 <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View" href="/job/{{ $item->id}}"><i class="fa fa-eye"></i></a>
                 <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View" href="{{ route('company.editjob', $item->id) }}"><i class="fa fa-edit"></i></a>

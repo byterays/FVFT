@@ -14,7 +14,7 @@ class AddStatusToJobsTable extends Migration
     public function up()
     {
         Schema::table('jobs', function (Blueprint $table) {
-            $table->enum('status', ['Approved', 'Not Approved', 'Published', 'Unpublished', 'Expired'])->after('slug')->nullable();
+            $table->enum('status', ['Draft', 'Pending', 'Active', 'Approved', 'Not Approved', 'Published', 'Unpublished', 'Expired', 'Rejected'])->after('slug')->nullable();
         });
     }
 

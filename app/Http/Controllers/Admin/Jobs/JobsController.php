@@ -179,19 +179,23 @@ class JobsController extends Controller
             return response()->json(['errors' => $Validator->errors()]);
         }
 
+        // ['Draft', 'Pending', 'Active', 'Approved', 'Not Approved', 'Published', 'Unpublished', 'Expired', 'Rejected']
+
+        
         if($Validator->passes()){
             try{
                 DB::beginTransaction();
                 $job = new Job();
                 $this->__saveOrUpdateJob($job, $request, '', '');
                 // $job->status = $request->job_status != null ? 1 : 0;
-                if($request->job_status == 'Approved'){
-                    $job->approval_status = 1;
-                    $job->status = "Approved";
-                } else {
-                    $job->approval_status = 0;
-                    $job->status = "Not Approved";
-                }
+                $job->status = $request->job_status;
+                // if($request->job_status == 'Approved'){
+                //     $job->approval_status = 1;
+                //     $job->status = "Approved";
+                // } else if($request->job_status == 'Not Approved') {
+                //     $job->approval_status = 0;
+                //     $job->status = "Not Approved";
+                // } 
                 $job->save();
                 DB::commit();
                 return response()->json(['msg' => 'Job created successfully', 'redirectRoute' => route($this->redirectTo)]);
@@ -251,12 +255,12 @@ class JobsController extends Controller
                 $oldStatus = $job->status;
                 $this->__saveOrUpdateJob($job, $request, $oldImage, $oldPicture);
                 $job->status = $request->job_status != null ? $request->job_status : $oldStatus;
-                if($request->job_status == 'Approved'){
-                    $job->approval_status = 1;
-                } else {
-                    $job->approval_status = 0;
-                }
-                $job->publish_status = $request->publish_status != null ? 1 : 0;
+                // if($request->job_status == 'Approved'){
+                //     $job->approval_status = 1;
+                // } else {
+                //     $job->approval_status = 0;
+                // }
+                // $job->publish_status = $request->publish_status != null ? 1 : 0;
                 $job->save();
                 DB::commit();
                 return response()->json(['msg' => 'Job updated', 'redirectRoute' => route($this->redirectTo)]);

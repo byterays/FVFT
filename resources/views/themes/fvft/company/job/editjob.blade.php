@@ -278,16 +278,34 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                @if ($job->approval_status == 1)
+                            @if ($job->status == 'Active')
+                                <div class="form-group">
+                                    {{-- @if ($job->approval_status == 1)
                                     <label class="custom-switch-checkbox">
                                         <input type="checkbox" name="publish_status" class="custom-switch-input"
                                             {{ $job->publish_status ? 'checked' : '' }}>
                                         <span class="custom-switch-indicator"></span>
                                         <span class="custom-switch-description">Published</span>
                                     </label>
-                                @endif
-                            </div>
+                                @endif --}}
+                                    <div class="col-md-4">
+                                        <label for="" class="form-label">Status</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @php
+                                            $statuses = ['Published' => 'Published', 'Unpublished' => 'Unpublished'];
+                                        @endphp
+                                        <select name="status" class="form-control select2">
+                                            <option value="">Select Status</option>
+                                            @foreach ($statuses as $key => $value)
+                                                <option value="{{ $key }}">{{ $value }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="require text-danger status"></div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -591,10 +609,12 @@
                 </div>
                 <div class="mr-auto">
                     @if ($job->draft_status == 1)
-                        <button type="button" onclick="submitForm(event, 'save_draft_job');" class="btn btn-success ml-2">Save Job</button>
+                        <button type="button" onclick="submitForm(event, 'save_draft_job');"
+                            class="btn btn-success ml-2">Save Job</button>
                     @endif
-                    @if($job->draft_status == 0)
-                    <button type="button" onclick="submitForm(event, 'update');" class="btn btn-success ml-3">Update</button>
+                    @if ($job->draft_status == 0)
+                        <button type="button" onclick="submitForm(event, 'update');"
+                            class="btn btn-success ml-3">Update</button>
                     @endif
                 </div>
             </div>

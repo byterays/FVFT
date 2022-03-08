@@ -52,7 +52,12 @@ class JobController extends Controller
                 DB::beginTransaction();
                 $job = new Job();
                 $this->__saveOrUpdateJob($job, $request, '', '');
-                $job->status = 'Not Approved';
+                if($request->saveType == 'save_as_draft'){
+                    $job->status = 'Draft';
+                } else {
+                    $job->status = 'Pending';
+                }
+                // $job->status = 'Not Approved';
                 $job->draft_status = $request->saveType == 'save_as_draft' ? 1 : 0;
                 $job->save();
                 if($request->saveType == "save_and_preview"){
