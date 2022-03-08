@@ -189,6 +189,11 @@ class JobsController extends Controller
                 $this->__saveOrUpdateJob($job, $request, '', '');
                 // $job->status = $request->job_status != null ? 1 : 0;
                 $job->status = $request->job_status;
+                if($request->job_status == 'Draft'){
+                    $job->draft_date = date('Y-m-d H:i:s');
+                } else if($request->job_status == 'Published'){
+                    $job->publish_date = date('Y-m-d H:i:s');
+                }
                 // if($request->job_status == 'Approved'){
                 //     $job->approval_status = 1;
                 //     $job->status = "Approved";
@@ -255,6 +260,11 @@ class JobsController extends Controller
                 $oldStatus = $job->status;
                 $this->__saveOrUpdateJob($job, $request, $oldImage, $oldPicture);
                 $job->status = $request->job_status != null ? $request->job_status : $oldStatus;
+                if($request->job_status == 'Draft'){
+                    $job->draft_date = date('Y-m-d H:i:s');
+                } else if($request->job_status == 'Published'){
+                    $job->publish_date = date('Y-m-d H:i:s');
+                }
                 // if($request->job_status == 'Approved'){
                 //     $job->approval_status = 1;
                 // } else {

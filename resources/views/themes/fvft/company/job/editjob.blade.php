@@ -608,14 +608,17 @@
                     </div>
                 </div>
                 <div class="mr-auto">
-                    @if ($job->draft_status == 1)
+                    @if ($job->status == 'Draft')
                         <button type="button" onclick="submitForm(event, 'save_draft_job');"
-                            class="btn btn-success ml-2">Save Job</button>
-                    @endif
-                    @if ($job->draft_status == 0)
+                            class="btn btn-success ml-2">Proceed to Approval</button>
+                    @else
                         <button type="button" onclick="submitForm(event, 'update');"
                             class="btn btn-success ml-3">Update</button>
                     @endif
+                    {{-- @if ($job->draft_status == 0)
+                        <button type="button" onclick="submitForm(event, 'update');"
+                            class="btn btn-success ml-3">Update</button>
+                    @endif --}}
                 </div>
             </div>
         </div>
