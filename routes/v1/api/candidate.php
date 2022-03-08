@@ -49,7 +49,6 @@ Route::middleware('auth:api')->group(function () {
 Route::get('job-list', [JobsListController::class, 'list']);
 Route::get('job-categories', [JobCategoryController::class, 'list']);
 
-
 Route::get('news-categories', [NewsCategoryController::class, 'list']);
 Route::get('news', [NewsController::class, 'list']);
 Route::get('news/{id}', [NewsController::class, 'index']);

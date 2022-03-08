@@ -14,11 +14,33 @@ class ProfileController extends Controller
 {
     use ApiMethods;
 
-    public function get_profile($message= "User Profile."){
-        return $this->sendResponse(
-            $this->process(Auth::user()),
-            $message
-        );
+    public function get_profile()
+    {
+        $user  = Auth::user();
+        $employee = Employe::with([
+            'country',
+            'state',
+            'district',
+            'city',
+            'experience',
+            'experience.country',
+            'experience.job_category',
+            'experience.job',
+            'education',
+            'education.educationLevel',
+            'employeeSkills',
+            'employeeSkills.skill',
+            'employeeLanguage',
+            'employeeLanguage.language',
+            'preferredCountry',
+            'preferredCountry.country',
+            'cv',
+            'job_applications',
+            'job_preference'])
+            ->where('user_id', $user->id)->first();
+//        dd($employee);
+        $responseData = $this->sendResponse(compact('employee', 'user'), 'success', '');
+        return $responseData;
     }
     public function save_profile(Request $request)
     {
