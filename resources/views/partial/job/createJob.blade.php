@@ -137,12 +137,13 @@
                             </div>
                             <div class="col-md-8">
                                 @php
-                                    $statuses = ['Approved' => 'Approved', 'Not Approved' => 'Not Approved'];
+                                $statuses = ['Draft', 'Pending', 'Active', 'Approved', 'Not Approved', 'Published', 'Unpublished', 'Expired', 'Rejected'];
+                                    // $statuses = ['Approved' => 'Approved', 'Not Approved' => 'Not Approved'];
                                 @endphp
                                 <select name="job_status" class="form-control select2">
                                     <option value="">Select Status</option>
                                     @foreach ($statuses as $key => $value)
-                                        <option value="{{ $key }}">{{ $value }}
+                                        <option value="{{ $value }}">{{ $value }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -250,11 +251,11 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="custom-switch-checkbox">
+                        {{-- <label class="custom-switch-checkbox">
                             <input type="checkbox" name="is_active" class="custom-switch-input">
                             <span class="custom-switch-indicator"></span>
                             <span class="custom-switch-description">Active</span>
-                        </label>
+                        </label> --}}
                         <label class="custom-switch-checkbox">
                             <input type="checkbox" name="is_featured" class="custom-switch-input">
                             <span class="custom-switch-indicator"></span>

@@ -45,7 +45,8 @@ class ExpireJob extends Command
 
             if(strtotime($current_date_time) >= strtotime($deadline)){
                 $job->update([
-                    'is_expired' => 1
+                    'is_expired' => 1,
+                    'status' => 'Expired',
                 ]);
             }
         }

@@ -56,10 +56,11 @@
                     <li class=""><a href="#allJob" class="active" data-toggle="tab">All Jobs</a></li>
                     <li><a href="#draft" data-toggle="tab" class="">Draft</a></li>
                     <li><a href="#pendingjobs" data-toggle="tab" class="">Pending Jobs</a></li>
-                    <li><a href="#approvedjobs" data-toggle="tab" class="">Approved</a></li>
-                    <li><a href="#notapproved" data-toggle="tab" class="">Not Approved</a></li>
-                    <li><a href="#published" data-toggle="tab" class="">Published</a></li>
-                    <li><a href="#expired" data-toggle="tab" class="">Expired</a></li>
+                    {{-- <li><a href="#approvedjobs" data-toggle="tab" class="">Approved</a></li>
+                    <li><a href="#notapproved" data-toggle="tab" class="">Not Approved</a></li> --}}
+                    <li><a href="#published" data-toggle="tab" class="">Published Jobs</a></li>
+                    <li><a href="#expired" data-toggle="tab" class="">Expired Jobs</a></li>
+                    <li><a href="#rejected" data-toggle="tab" class="">Rejected Jobs</a></li>
                 </ul>
             </div>
             <div class="tab-content">
@@ -72,7 +73,7 @@
                         ]
                     )
                 </div>
-                <div class="tab-pane table-responsive border-top userprof-tab" id="approvedjobs">
+                {{-- <div class="tab-pane table-responsive border-top userprof-tab" id="approvedjobs">
                     @include(
                         'themes.fvft.company.components.jobs.joblist',
                         [
@@ -80,8 +81,8 @@
                             'action' => 'Approved',
                         ]
                     )
-                </div>
-                <div class="tab-pane table-responsive border-top userprof-tab" id="notapproved">
+                </div> --}}
+                {{-- <div class="tab-pane table-responsive border-top userprof-tab" id="notapproved">
                     @include(
                         'themes.fvft.company.components.jobs.joblist',
                         [
@@ -89,7 +90,7 @@
                             'action' => 'Not Approved Jobs',
                         ]
                     )
-                </div>
+                </div> --}}
                 <div class="tab-pane table-responsive border-top userprof-tab " id="published">
                     @include(
                         'themes.fvft.company.components.jobs.joblist',
@@ -123,6 +124,15 @@
                         [
                             'items' => $pending_jobs,
                             'action' => 'Pending Jobs',
+                        ]
+                    )
+                </div>
+                <div class="tab-pane table-responsive border-top userprof-tab " id="rejected">
+                    @include(
+                        'themes.fvft.company.components.jobs.joblist',
+                        [
+                            'items' => $rejected_jobs,
+                            'action' => 'Rejected Jobs',
                         ]
                     )
                 </div>

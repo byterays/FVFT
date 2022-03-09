@@ -52,11 +52,23 @@ class JobController extends Controller
                 DB::beginTransaction();
                 $job = new Job();
                 $this->__saveOrUpdateJob($job, $request, '', '');
-                $job->status = 'Not Approved';
+                if($request->saveType == 'save_as_draft'){
+                    $job->status = 'Draft';
+                    $job->draft_date = date('Y-m-d H:i:s');
+                } else {
+                    $job->status = 'Pending';
+                }
+                // $job->status = 'Not Approved';
                 $job->draft_status = $request->saveType == 'save_as_draft' ? 1 : 0;
                 $job->save();
+                if($request->saveType == "save_and_preview"){
+                    $this->redirectTo = "company.viewjob,".$job->id;
+                }
                 DB::commit();
                 $msg = $request->saveType == 'save_as_draft' ? 'Your job added to draft' : 'New job added';
+                if($request->saveType == "save_and_preview"){
+                    return response()->json(['msg' => $msg, 'redirectRoute' => route('company.viewjob', $job->id)]);
+                }
                 return response()->json(['msg' => $msg, 'redirectRoute' => route($this->redirectTo)]);
             } catch (\Exception $e) {
                 DB::rollBack();
@@ -97,8 +109,14 @@ class JobController extends Controller
                 $oldDraftStatus = $job->draft_status;
                 $this->__saveOrUpdateJob($job, $request, $oldImage, $oldPicture);
                 $job->status = $request->status != null ? $request->status : $oldStatus;
+                if($request->status == 'Published'){
+                    $job->publish_status = date('Y-m-d H:i:s');
+                }
                 $job->publish_status = $request->publish_status != null ? 1 : 0;
                 $job->draft_status = $request->saveType == 'save_draft_job' ? 0 : $oldDraftStatus;
+                if($request->saveType == 'save_draft_job'){
+                    $job->status = 'Pending';
+                }
                 $job->save();
                 DB::commit();
                 return response()->json(['msg' => 'Job updated successfully', 'redirectRoute' => route($this->redirectTo)]);
@@ -109,7 +127,11 @@ class JobController extends Controller
         }
     }
 
-    
+    public function viewjob($id)
+    {
+        $job = Job::findOrFail($id);
+        return $this->company_view('company.job.viewjob', ['job' => $job]);
+    }
 
     public function cloneJob($id)
     {
@@ -121,7 +143,7 @@ class JobController extends Controller
             $cloneJob->is_featured = 0;
             $cloneJob->created_at = date('Y-m-d H:i:s');
             $cloneJob->updated_at = date('Y-m-d H:i:s');
-            $cloneJob->status = 'Not Approved';
+            $cloneJob->status = 'Pending';
             $cloneJob->publish_status = 0;
             $cloneJob->approval_status = 0;
             $cloneJob->is_expired = 0;
