@@ -1,4 +1,5 @@
 @extends('themes.fvft.candidates.layouts.dashmaster')
+@section('title') My Jobs @stop
 @section('content')
 <section>
     <div class="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg" style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
@@ -38,7 +39,7 @@
                             </div>
                             <div class="tab-content">
                                 <div class="tab-pane table-responsive border-top userprof-tab active" id="tab1">
-                                    @include('themes.fvft.candidates.components.jobs.joblist',['items'=>$all_jobs,'action'=>'All Jobs'])  
+                                    @include('themes.fvft.candidates.components.jobs.joblist',['items'=>$all_jobs,'action'=>'All Jobs'])
                                 </div>
                                 <div class="tab-pane table-responsive border-top userprof-tab" id="tab2">
                                     @include('themes.fvft.candidates.components.jobs.joblist',['items'=>$pending_jobs,'action'=>'Pending Jobs '])
