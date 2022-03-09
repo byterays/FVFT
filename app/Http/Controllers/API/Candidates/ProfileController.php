@@ -14,27 +14,55 @@ class ProfileController extends Controller
 {
     use ApiMethods;
 
-    public function get_profile($message= "User Profile."){
-        return $this->sendResponse(
-            $this->process(Auth::user()),
-            $message
-        );
+    public function get_profile()
+    {
+        $user  = Auth::user();
+        $employee = Employe::with([
+            'country',
+            'state',
+            'district',
+            'city',
+            'experience',
+            'experience.country',
+            'experience.job_category',
+            'experience.job',
+            'education',
+            'education.educationLevel',
+            'employeeSkills',
+            'employeeSkills.skill',
+            'employeeLanguage',
+            'employeeLanguage.language',
+            'preferredCountry',
+            'preferredCountry.country',
+            'cv',
+            'job_applications',
+            'job_preference'])
+            ->where('user_id', $user->id)->first();
+//        dd($employee);
+        $responseData = $this->sendResponse(compact('employee', 'user'), 'success', '');
+        return $responseData;
     }
-    public function save_profile(Request $request){        
-        $employe= Employe::where('user_id',Auth::user()->id)->first();
-        $user=User::find(Auth::user()->id);
+    public function save_profile(Request $request)
+    {
+        $user = User::find(Auth::user()->id);
+        $employe = Employe::where('user_id', $user->id)->first();
+
         if($request->has('phone')){
             $employe->update(["mobile_phone"=>$request->phone]);
         }
+
         if($request->has('first_name')){
             $employe->update(["first_name"=>$request->first_name]);
         }
+
         if($request->has('middle_name')){
             $employe->update(["middle_name"=>$request->middle_name]);
         }
+
         if($request->has('last_name')){
             $employe->update([ "last_name"=>$request->last_name]);
         }
+
         if($request->has('profile_img')){
             $base64 =  $request->profile_img["base64"];
             $image_info = getimagesize($base64);
@@ -45,6 +73,7 @@ class ProfileController extends Controller
                 $employe->update(["avatar"=>$upload]);
             }
         }
+
         return $this->get_profile("Profile Update Succesful !");
 
     }
@@ -69,7 +98,7 @@ class ProfileController extends Controller
             'old_password' => 'required',
             'new_password' => 'required'
         ]);
-        
+
         if(\Hash::check($request->old_password, auth()->user()->password)){
             $authuser=Auth::user();
             $user=User::find($authuser->id);

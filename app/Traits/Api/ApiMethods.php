@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\API;
+namespace App\Traits\Api;
 
 use Illuminate\Http\Response;
 

@@ -6,7 +6,7 @@
         <div class="profile-pic">
             <div class="profile-pic-img">
                 <span class="bg-success dots" data-toggle="tooltip" data-placement="top" title="" data-original-title="online"></span>
-                <img src="{{ asset($employe->avatar ?? 'uploads/default.jpg') }}" class="brround" alt="user">
+                <img src="{{ asset($employe->avatar ?? 'uploads/default.jpg') }}" class="brround" alt="user" style="width: 100%;height: 100%;">
             </div>
             <a href="userprofile.html" class="text-dark"><h4 class="mt-3 mb-0 font-weight-semibold">{{$employe->first_name}} {{$employe->middle_name}} {{$employe->last_name}}</h4></a>
         </div>

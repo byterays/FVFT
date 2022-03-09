@@ -55,9 +55,9 @@ class Employe extends Model
     ];
 
 
-    
-    
-    
+
+
+
     // protected $hidden = [];
 
     protected $appends = [
@@ -75,22 +75,71 @@ class Employe extends Model
         return $this->first_name . ' ' . $middle_name . ' ' . $this->last_name;
     }
 
-    public function job_applications()
+    public function country()
     {
-        return $this->hasMany('App\Models\JobApplication', 'employ_id', 'id');
+        return $this->belongsTo(Country::class, 'country_id');
     }
 
+    public function state()
+    {
+        return $this->belongsTo(State::class, 'state_id');
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'district_id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
+
+    public function job_applications()
+    {
+        return $this->hasMany(JobApplication::class, 'employ_id');
+    }
+
+    public function experience()
+    {
+        return $this->hasMany(EmployeeExperience::class, 'employ_id');
+    }
 
     public function job_preference()
     {
-        return $this->hasOne('App\Models\EmployJobPreference', 'employ_id', 'id');
+        return $this->hasOne(EmployJobPreference::class, 'employ_id');
+    }
+
+    public function employeeSkills()
+    {
+        return $this->hasMany(EmployeeSkill::class, 'employ_id');
+    }
+
+    public function education()
+    {
+        return $this->hasMany(EmployeeEducation::class, 'employ_id');
+    }
+
+    public function employeeLanguage()
+    {
+        return $this->hasMany(EmployeeLanguage::class, 'employ_id');
+    }
+
+    public function preferredCountry()
+    {
+        return $this->hasMany(EmployesCountry::class, 'employ_id');
+    }
+
+    public function cv()
+    {
+        return $this->hasMany(EmployeeCv::class, 'employ_id');
     }
 
 
     public function calculateProfileCompletion()
     {
         $completed = 0;
-        $profileElements = ['first_name', 'last_name', 'dob', 'gender', 'marital_status', 
+        $profileElements = ['first_name', 'last_name', 'dob', 'gender', 'marital_status',
          'state_id', 'district_id', 'mobile_phone', 'address', 'education_level_id', 'avatar', 'height', 'weight'];
         $total = count($profileElements);
 
@@ -117,6 +166,6 @@ class Employe extends Model
     }
 
 
-    
+
 
 }
