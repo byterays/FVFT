@@ -14,7 +14,7 @@ class AddFullPictureEducationLevelsMobilePhone2DistrictIdMunicipalityWardPasspor
     public function up()
     {
         Schema::table('employes', function (Blueprint $table) {
-            $table->string("full_picture")->nullable();
+            $table->longText("full_picture")->nullable();
             $table->bigInteger('education_level_id')->nullable();
             $table->string('dob_in_bs')->nullable();
             $table->string('mobile_phone2')->nullable();
@@ -24,7 +24,7 @@ class AddFullPictureEducationLevelsMobilePhone2DistrictIdMunicipalityWardPasspor
             $table->string('passport_number')->nullable();
             $table->string('passport_expiry_date')->nullable();
             $table->tinyInteger('is_experience')->nullable();
-            $table->string('trainings')->nullable();
+            $table->longText('trainings')->nullable();
         });
     }
 
