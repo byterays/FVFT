@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Employe;
 use App\Models\EmployJobPreference;
+use App\Models\JobApplication;
+use App\Models\SavedJob;
 use App\Models\Training;
 use App\Models\User;
 use App\Traits\Site\CandidateMethods;
@@ -36,8 +38,27 @@ class DashController extends Controller
 
     public function dashboard()
     {
-        return $this->site_view('candidates.dash');
+        $employe = Employe::where('user_id', auth()->user()->id)->first();
+        return $this->client_view('candidates.dash',[
+            "totals" => [
+                [
+                    'title' => 'Applied Jobs',
+                    'links' => route('candidate.jobs'),
+                    'total' => $this->applications(new JobApplication())->where('employ_id', $employe->id)->count()
+                ],
+                [
+                    'title' => 'Saved Jobs',
+                    'links' => route('candidate.savedjob.saveJobLists'),
+                    'total' => $this->applications(new SavedJob())->where('employ_id', $employe->id)->count(),
+                ]
+            ]
+        ]);
     }
+
+    private function applications($model){
+        return get_class($model)::query();
+    }
+
     public function jobs()
     {
 
