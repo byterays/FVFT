@@ -18,11 +18,13 @@ class CreateNewsTable extends Migration
             $table->string('title', 225);
             $table->text('short_description');
             $table->text('body');
+            $table->text('html_content')->nullable();
             $table->text('feature_img');
             $table->string('seo_title', 225);
             $table->text('seo_description');
             $table->text('seo_keywords');
             $table->string('slug', 225);
+            $table->tinyInteger('is_active')->default(1)->nullable();
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();
             $table->timestamp('updated_at')->nullable();
         });
