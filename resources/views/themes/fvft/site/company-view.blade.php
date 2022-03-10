@@ -58,7 +58,7 @@
 													<div class="media-heading">
 														<h3 class="card-title mb-3 mt-5 font-weight-bold">Company Info</h3>
 													</div>
-													<p>{{ $company->company_details}}</p>
+													<p>{!! html_entity_decode($company->html_content_intro) !!}</p>
 												
 												</div>
 											</div>
