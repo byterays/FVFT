@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\Applicants\ApplicantController;
 use App\Http\Controllers\Admin\News\NewsController;
 use App\Http\Controllers\Admin\Industry\IndustryController;
 use App\Http\Controllers\Admin\Training\TrainingController;
+use App\Http\Controllers\Admin\SantiController;
 
 Route::get('login', function () {
     return view('admin.auth.login');
@@ -100,7 +101,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     });
 
 
-    Route::group(['prefix' => 'about/', 'as' => 'admin.about.'], function(){
+    Route::group(['prefix' => 'about-fvft/', 'as' => 'admin.about.'], function(){
         Route::get('', [AboutController::class, "index"])->name("index");
         Route::get('create', [AboutController::class, "create"])->name("create");
         Route::post('store', [AboutController::class, "store"])->name("store");
@@ -108,6 +109,16 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::match(['put', 'patch'], 'update/{id}', [AboutController::class, "update"])->name("update");
         Route::delete('delete/{id}', [AboutController::class, "delete"])->name("delete");
         Route::post('update-status', [AboutController::class, "updateStatus"])->name("updateStatus");
+    });
+
+    Route::group(['prefix' => 'about-santi/', 'as' => 'admin.santi.'], function(){
+        Route::get('', [SantiController::class, "index"])->name("index");
+        Route::get('create', [SantiController::class, "create"])->name("create");
+        Route::post('store', [SantiController::class, "store"])->name("store");
+        Route::get("edit/{id}", [SantiController::class, "edit"])->name("edit");
+        Route::match(['put', 'patch'], 'update/{id}', [SantiController::class, "update"])->name("update");
+        Route::delete('delete/{id}', [SantiController::class, "delete"])->name("delete");
+        Route::post('update-status', [SantiController::class, "updateStatus"])->name("updateStatus");
     });
 
     Route::group(['prefix' => 'training/', 'as' => 'admin.training.'], function(){

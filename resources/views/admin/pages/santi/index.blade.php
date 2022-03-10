@@ -1,10 +1,10 @@
 @extends('admin.layouts.master')
 @section('main')
     <div class="page-header">
-        <h4 class="page-title">FVFT</h4>
+        <h4 class="page-title">About Santi Overseas</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Modules</a></li>
-            <li class="breadcrumb-item" aria-current="page"><a href="{{ route('admin.about.index') }}">FVFT</a>
+            <li class="breadcrumb-item" aria-current="page"><a href="{{ route('admin.santi.index') }}">Go Back</a>
             </li>
         </ol>
     </div>
@@ -13,10 +13,10 @@
 
             <div class="card">
                 <div class="card-header d-flex">
-                    <h3 class="card-title" style="width: 100%;">About FVFT</h3>
+                    <h3 class="card-title" style="width: 100%;">Santi Overseas</h3>
                     <div class="d-flex flex-row-reverse mb-2">
 
-                        <a type="button" class="btn btn-primary" href="{{ route('admin.about.create') }}"><i
+                        <a type="button" class="btn btn-primary" href="{{ route('admin.santi.create') }}"><i
                                 class="fe fe-plus mr-2"></i>Add New</a>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                             el.text('Active');
                             el.removeClass('label-warning').addClass('label-success');
                         }
-                        // toastr.success(data.msg);
+                        toastr.success(data.msg);
                     }
                 });
             }
@@ -97,7 +97,7 @@
 
         function deleteData(id, el){
             if(id){
-                var url = "{{ route('admin.about.delete', ':id') }}",
+                var url = "{{ route('admin.santi.delete', ':id') }}",
                 url = url.replace(":id", id);
                 $.ajax({
                     url: url,
@@ -107,6 +107,7 @@
                     },
                     success: function(data){
                         el.closest('tr').remove();
+                        toastr.success(data.msg);
                         location.reload();
                     }
                 });

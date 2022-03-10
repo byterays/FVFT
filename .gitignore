@@ -12,6 +12,8 @@
 /public/uploads/admin
 /public/uploads/cv
 /public/uploads/candidates/full_picture/*.*
+/public/uploads/santi
+/public/uploads/about
 /storage/*.key
 /vendor
 .env
