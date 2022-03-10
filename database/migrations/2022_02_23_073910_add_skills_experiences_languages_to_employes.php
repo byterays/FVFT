@@ -15,8 +15,8 @@ class AddSkillsExperiencesLanguagesToEmployes extends Migration
     {
         Schema::table('employes', function (Blueprint $table) {
             $table->string('skills')->nullable();
-            $table->string('experiences')->nullable();
-            $table->string('languages')->nullable();
+            $table->longText('experiences')->nullable();
+            $table->longText('languages')->nullable();
         });
     }
 
