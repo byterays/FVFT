@@ -54,7 +54,7 @@ $user=Auth::user();
                 </div>
             </div>
                 <div class="float-right mb-4 mb-lg-0">
-                    <button class="btn btn-success w-150" type="submit">Save</button>
+                    <button class="btn btn-primary w-150" type="submit">Save</button>
                 </div>
             </div>
            
