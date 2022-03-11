@@ -16,27 +16,27 @@ class CreateEmployesTable extends Migration
         Schema::create('employes', function (Blueprint $table) {
             $table->bigIncrements('id')->unique('id');
             $table->string('first_name', 50);
-            $table->string('middle_name', 50);
+            $table->string('middle_name', 50)->nullable();
             $table->string('last_name', 50);
-            $table->date('dob');
-            $table->string('gender', 50);
-            $table->string('marital_status', 50);
-            $table->string('nationality', 50);
-            $table->unsignedBigInteger('country_id');
-            $table->unsignedBigInteger('city_id');
-            $table->string('tel_phone', 20);
-            $table->string('mobile_phone', 20);
-            $table->unsignedBigInteger('exprience_id');
+            $table->date('dob')->nullable();
+            $table->string('gender', 50)->nullable();
+            $table->string('marital_status', 50)->nullable();
+            $table->string('nationality', 50)->nullable();
+            $table->unsignedBigInteger('country_id')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
+            $table->string('tel_phone', 20)->nullable();
+            $table->string('mobile_phone', 20)->nullable();
+            $table->unsignedBigInteger('exprience_id')->nullable();
             $table->unsignedBigInteger('user_id')->index('const_user_employ');
-            $table->unsignedBigInteger('functional_area_id');
-            $table->integer('expected_salary');
-            $table->integer('salary_currency');
-            $table->string('address', 50);
-            $table->boolean('is_active');
-            $table->boolean('is_verified');
+            $table->unsignedBigInteger('functional_area_id')->nullable();
+            $table->integer('expected_salary')->nullable();
+            $table->integer('salary_currency')->nullable();
+            $table->string('address', 50)->nullable();
+            $table->boolean('is_active')->default(1);
+            $table->boolean('is_verified')->default(0);
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();
             $table->timestamp('updated_at')->nullable();
-            $table->text('avatar');
+            $table->text('avatar')->nullable();
         });
     }
 

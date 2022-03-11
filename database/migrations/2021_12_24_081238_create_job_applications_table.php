@@ -17,6 +17,10 @@ class CreateJobApplicationsTable extends Migration
             $table->bigIncrements('id')->unique('id');
             $table->unsignedBigInteger('employ_id')->index('const_ja_employ_relation');
             $table->unsignedBigInteger('job_id')->index('const_ja_job__relation');
+            $table->string('status', 50)->default('pending');
+            $table->string('interview_status', 50)->default('notstarted');
+            $table->date('interview_date')->nullable();
+            $table->time('interview_time')->nullable();
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();
             $table->timestamp('updated_at')->nullable();
         });
