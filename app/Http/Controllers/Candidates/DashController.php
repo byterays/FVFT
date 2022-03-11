@@ -255,6 +255,7 @@ class DashController extends Controller
             'first_name' => ['required'],
             'last_name' => ['required'],
             'english_dob' => ['required'],
+            'nepali_dob' => ['required'],
             'gender' => ['required'],
             'marital_status' => ['required'],
             'education_level_id' => ['required'],
@@ -263,6 +264,13 @@ class DashController extends Controller
             'profile_picture' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:12096'],
             'full_picture' => ['nullable'],
             'full_picture.*' => ['image', 'mimes:jpeg,png,jpg', 'max:12096'],
+        ],[
+            'first_name.required' => 'The first name field is required',
+            'last_name.required' => 'The last name field is required',
+            'english_dob.required' => 'Date of birth field is required',
+            'nepali_dob.required' => 'Date of birth field is required',
+            'education_level_id.required' => 'The education level field is required',
+            'mobile_number1.required' => 'The mobile number field is required',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()]);
