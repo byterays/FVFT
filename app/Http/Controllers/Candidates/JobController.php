@@ -65,6 +65,13 @@ class JobController extends Controller
     public function recommended_job()
     {
         $employe=@Employe::where('user_id',Auth::user()->id)->first();
+        // dd($employe);
+        // $recommended_jobs = Job::whereHas("job_applications.employe", function($query) use($employe){
+        //     return $query->whereHas('job_preference', function($q2) use($employe) {
+        //         return $q2->where('job_categories_id', $employe->job_preference->job_category_id)
+        //         ->where('country_id', $employe->job_preference->country_id);
+        //     });
+        // })->paginate(10); //Todo Check Query
         if(!empty($employe->job_preference)){
             $job_preference = EmployJobPreference::where('employ_id', $employe->id)->first();
             $recommended_jobs = Job::where('job_categories_id', $job_preference->job_category_id)->where('country_id', $job_preference->country_id)->paginate(10);

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\JobCategory;
+use App\Models\Country;
 
 class EmployJobPreference extends Model
 {
@@ -15,5 +17,12 @@ class EmployJobPreference extends Model
     public function employ()
     {
         return $this->belongsTo('App\Models\Employee', 'employ_id', 'id');
+    }
+
+    public function category(){
+        return $this->belongsTo(JobCategory::class, 'job_category_id');
+    }
+    public function country(){
+        return $this->belongsTo(Country::class, 'country_id');
     }
 }

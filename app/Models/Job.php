@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use App\Models\JobCategory;
 
 class Job extends Model
 {
@@ -23,6 +24,11 @@ class Job extends Model
     public function job_applications()
     {
         return $this->hasMany('App\Models\JobApplication', 'job_id', 'id');
+    }
+
+    public function job_category()
+    {
+        return $this->belongsTo(JobCategory::class, "job_categories_id");
     }
 
     public function countApplicant()
