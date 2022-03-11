@@ -17,11 +17,11 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">Profile</h1>
+                    <h1 class="">Saved Jobs</h1>
                     <ol class="breadcrumb text-center">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">Profile</li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Saved Jobs</li>
                     </ol>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                                                 
                                             </td>
                                             <td>
-                                                <a href="" class="">View Details</a>
+                                                <a href="{{ route('viewJob', $item->id) }}" class="">View Details</a>
                                             </td>
                                             <td>
             

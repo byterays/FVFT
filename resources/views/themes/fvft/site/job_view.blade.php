@@ -62,7 +62,8 @@
 																	$application = \DB::table('job_applications')->where('job_id',$job->id)->where('employ_id', $employ->id)->first();
 																@endphp
 																@if($application)
-																	<a href="/remove-application/{{$job->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
+																	<a href="javascript:void(0);" class="btn btn-danger icons mt-1 mb-1" >Applied</a>
+																	{{-- <a href="/remove-application/{{$job->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a> --}}
 																@else
 																	<a href="/apply-job/{{$job->id}}" class="btn btn-info icons"> Apply Now</a>
 																@endif
@@ -81,7 +82,7 @@
 							<div class="card-body border-top">
 								<h4 class="mb-4 card-title">Job Description</h4>
 								<div class="mb-4">
-									<p>{{ $job->description }}</p>
+									<p>{!! html_entity_decode($job->description_intro) !!}</p>
 					
 								</div>
 								<h4 class="mb-4 card-title">Job Details</h4>
@@ -148,7 +149,8 @@
 												$application = \DB::table('job_applications')->where('job_id',$job->id)->where('employ_id', $employ->id)->first();
 												@endphp
 												@if($application)
-													<a href="/remove-application/{{$job->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
+													<a href="javascript:void(0);" class="btn btn-danger icons mt-1 mb-1" >Applied</a>
+													{{-- <a href="/remove-application/{{$job->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a> --}}
 												@else
 													<a href="/apply-job/{{$job->id}}" class="btn btn-info icons"> Apply Now</a>
 												@endif

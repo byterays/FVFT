@@ -115,7 +115,9 @@
                                                                             Exp</span></a>
                                                                 </div>
                                                                 <p class="mb-0 leading-tight">
-                                                                    {{ Str::limit($item->description, 50) }} </p>
+                                                                    {!! Str::limit(html_entity_decode($item->description_intro), 50) !!}
+                                                                    {{-- {{ Str::limit($item->description, 50) }} --}}
+                                                                </p>
                                                             </div>
                                                         </div>
                                                         <div class="card-footer pt-3 pb-3">
@@ -143,20 +145,32 @@
                                                                                     ->where('job_id', $item->id)
                                                                                     ->where('employ_id', $employ->id)
                                                                                     ->first();
+                                                                                $savedJob = App\Models\SavedJob::where('employ_id', $employ->id)->where('job_id', $item->id);
                                                                             @endphp
                                                                             @if ($application)
-                                                                                <a href="/remove-application/{{ $item->id }}"
-                                                                                    class="btn btn-danger icons mt-1 mb-1">
-                                                                                    Remove Application</a>
+                                                                                <div class="ml-auto">
+                                                                                    {{-- <a href="/remove-application/{{ $item->id }}"
+                                                                                        class="btn btn-danger icons mt-1 mb-1 mr-3">
+                                                                                        Remove Application</a> --}}
+                                                                                    <a href="javascript:void(0);"
+                                                                                        class="btn btn-primary mr-3">
+                                                                                        Applied</a>
+                                                                                </div>
                                                                             @else
                                                                                 <div class="ml-auto">
                                                                                     <a href="/apply-job/{{ $item->id }}"
                                                                                         class="btn btn-primary mr-3"> Apply
                                                                                         Now</a>
-                                                                                    <a href="javascript:void(0);"
-                                                                                        onclick="savejob({{ $item->id }})"
-                                                                                        class="btn btn-primary saveJobButton">
-                                                                                        Save Job</a>
+                                                                                    @if ($savedJob->exists())
+                                                                                        <a href="javascript:void(0);"
+                                                                                            class="btn btn-primary saveJobButton">
+                                                                                            Saved</a>
+                                                                                    @else
+                                                                                        <a href="javascript:void(0);"
+                                                                                            onclick="savejob({{ $item->id }})"
+                                                                                            class="btn btn-primary saveJobButton">
+                                                                                            Save Job</a>
+                                                                                    @endif
                                                                                 </div>
                                                                             @endif
                                                                         @else
@@ -167,10 +181,6 @@
                                                                         <div class="ml-auto">
                                                                             <a href="/apply-job/{{ $item->id }}"
                                                                                 class="btn btn-primary mr-3"> Apply Now</a>
-                                                                            <a href="javascript:void(0);"
-                                                                                onclick="savejob({{ $item->id }})"
-                                                                                class="btn btn-primary saveJobButton"> Save
-                                                                                Job</a>
                                                                         </div>
                                                                     @endauth
 
@@ -193,19 +203,21 @@
                                                     <div class="card overflow-hidden">
                                                         <div class="item-card9-img border-bottom">
                                                             <div class="item-card9-imgs">
-                                                                <a href="jobs.html"></a>
+                                                                <a href="{{ route('viewJob', $item->id) }}"></a>
                                                                 <img src="{{ asset('/') }}{{ $item->feature_image_url }}"
                                                                     alt="img" class="h-100">
                                                             </div>
                                                         </div>
                                                         <div class="card-body">
                                                             <div class="item-card9">
-                                                                <a href="jobs.html" class="text-dark mt-2">
+                                                                <a href="{{ route('viewJob', $item->id) }}"
+                                                                    class="text-dark mt-2">
                                                                     <h4 class="font-weight-semibold mt-1 mb-2">
                                                                         {{ $item->title }}</h4>
                                                                 </a>
                                                                 <ul class="icon-card mb-0 mt-1">
-                                                                    <li class=""><a href="#"
+                                                                    <li class=""><a
+                                                                            href="{{ route('site.companydetail', $company->id) }}"
                                                                             class="icons"><i
                                                                                 class="fa fa-building-o text-muted mr-1"></i>
                                                                             {{ $company->company_name }}</a></li>
@@ -226,7 +238,9 @@
                                                                     </li>
                                                                 </ul>
                                                                 <p class="mb-0 mt-2">
-                                                                    {{ Str::limit($item->description, 50) }} </p>
+                                                                    {!! Str::limit(html_entity_decode($item->description_intro), 50) !!}
+                                                                    {{-- {{ Str::limit($item->description, 50) }}  --}}
+                                                                </p>
                                                             </div>
                                                         </div>
                                                         <div class="card-body p-3 pl-5 pr-5">
@@ -243,21 +257,32 @@
                                                                                     ->where('job_id', $item->id)
                                                                                     ->where('employ_id', $employ->id)
                                                                                     ->first();
+                                                                                $savedJob = App\Models\SavedJob::where('employ_id', $employ->id)->where('job_id', $item->id);
                                                                             @endphp
                                                                             @if ($application)
-                                                                                <a href="/remove-application/{{ $item->id }}"
-                                                                                    class="btn btn-danger icons mt-1 mb-1">
-                                                                                    Remove Application</a>
+                                                                                <div class="ml-auto">
+                                                                                    {{-- <a href="/remove-application/{{ $item->id }}"
+                                                                                        class="btn btn-danger icons mt-1 mb-1 mr-3">
+                                                                                        Remove Application</a> --}}
+                                                                                    <a href="javascript:void(0);"
+                                                                                        class="btn btn-primary mr-3">
+                                                                                        Applied</a>
+                                                                                </div>
                                                                             @else
                                                                                 <div class="ml-auto">
                                                                                     <a href="/apply-job/{{ $item->id }}"
                                                                                         class="btn btn-primary mr-3"> Apply
                                                                                         Now</a>
-                                                                                    <a href="javascript:void(0);"
-                                                                                        onclick="savejob({{ $item->id }})"
-                                                                                        class="btn btn-primary saveJobButton">
-                                                                                        Save
-                                                                                        Job</a>
+                                                                                    @if ($savedJob->exists())
+                                                                                        <a href="javascript:void(0);"
+                                                                                            class="btn btn-primary saveJobButton">
+                                                                                            Saved</a>
+                                                                                    @else
+                                                                                        <a href="javascript:void(0);"
+                                                                                            onclick="savejob({{ $item->id }})"
+                                                                                            class="btn btn-primary saveJobButton">
+                                                                                            Save Job</a>
+                                                                                    @endif
                                                                                 </div>
                                                                             @endif
                                                                         @else
@@ -268,10 +293,6 @@
                                                                         <div class="ml-auto">
                                                                             <a href="/apply-job/{{ $item->id }}"
                                                                                 class="btn btn-primary mr-3"> Apply Now</a>
-                                                                            <a href="javascript:void(0);"
-                                                                                onclick="savejob({{ $item->id }})"
-                                                                                class="btn btn-primary saveJobButton"> Save
-                                                                                Job</a>
                                                                         </div>
                                                                     @endauth
                                                                 </div>
@@ -324,6 +345,8 @@
                         toastr.warning(response.db_error);
                     } else if (response.error) {
                         toastr.warning(response.error);
+                    } else if (response.redirectRoute) {
+                        location.href = response.redirectRoute
                     } else {
                         toastr.success(response.msg);
                     }

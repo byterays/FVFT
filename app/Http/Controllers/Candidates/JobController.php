@@ -30,18 +30,23 @@ class JobController extends Controller
     public function saveJob(Request $request)
     {
         try {
-            if($request->job_id != null && $request->employ_id != null){
-                if(SavedJob::where('employ_id', $request->employ_id)->where('job_id', $request->job_id)->exists()){
-                    return response()->json(['error' => 'This job is already saved on your profile']);
+            if(auth()->check() && auth()->user()->user_type == 'candidate'){
+                if($request->job_id != null && $request->employ_id != null){
+                    if(SavedJob::where('employ_id', $request->employ_id)->where('job_id', $request->job_id)->exists()){
+                        return response()->json(['error' => 'This job is already saved on your profile']);
+                    }
+                    $saveJob = SavedJob::create([
+                        'employ_id' => $request->employ_id,
+                        'job_id' => $request->job_id,
+                    ]);
+                    return response()->json(['msg' => 'Job saved to your profile successfully.']);
+                } else {
+                    return response()->json(['error' => 'Something went wrong']);
                 }
-                $saveJob = SavedJob::create([
-                    'employ_id' => $request->employ_id,
-                    'job_id' => $request->job_id,
-                ]);
-                return response()->json(['msg' => 'Job saved to your profile successfully.']);
             } else {
-                return response()->json(['error' => 'Something went wrong']);
+                return response()->json(['redirectRoute' => route('candidate.login')]);
             }
+            
             
             
         } catch (\Exception$e) {
