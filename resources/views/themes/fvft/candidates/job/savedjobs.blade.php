@@ -62,20 +62,24 @@
                                             <td>
                                                 @php
                                                     $deadline = !empty($item->job) ? $item->job->expiry_date : '';
-
+                                                    
                                                 @endphp
                                                 {{ $deadline != '' ? date('Y-m-d', strtotime($deadline)) : '----' }}
-                                                
+
                                             </td>
                                             <td>
-                                                <a href="{{ route('viewJob', $item->id) }}" class="">View Details</a>
+                                                <a href="{{ route('viewJob', $item->id) }}" class="">View
+                                                    Details</a>
                                             </td>
                                             <td>
-            
-                                                <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip"
+                                                <button class="btn btn-danger btn-sm text-white" data-toggle="modal"
+                                                    data-id="{{ $item->id }}" data-target="#deleteModal"><i
+                                                        class="fa fa-trash-o"></i></button>
+
+                                                {{-- <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip"
                                                     data-original-title="Delete"
                                                     href="{{ route('candidate.savedjob.delete', $item->id) }}"><i
-                                                        class="fa fa-trash-o"></i></a>
+                                                        class="fa fa-trash-o"></i></a> --}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -90,6 +94,54 @@
             </div>
         </div>
     </section>
+
+    {{-- Delete Modal --}}
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Saved Job</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure, you want to delete this saved job?</p>
+                    <form action="#" method="POSt" id="deleteForm">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="deleteJob">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- End Delete Modal --}}
 @endsection
 @section('script')
+    <script>
+        $(document).ready(function() {
+            $("#deleteModal").on('show.bs.modal', function(e){
+                var button = $(e.relatedTarget);
+                var jobId = $(button).data("id");
+                var action = "{{ route('candidate.savedjob.delete', ':id') }}";
+                action = action.replace(':id', jobId);
+                $("#deleteForm").attr("action", action);
+            });
+
+            $("#deleteJob").on('click', function(e){
+                e.preventDefault();
+                $("#deleteForm").submit();
+            });
+
+            $("#deleteModal").on("hide.bs.modal", function(){
+                $("#deleteForm").attr("action", "#");
+            });
+        }); 
+    </script>
 @endsection
