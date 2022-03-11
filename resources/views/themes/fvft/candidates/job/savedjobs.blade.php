@@ -56,7 +56,9 @@
                                                 {{ !empty($item->job) ? $item->job->title : '' }}
                                             </td>
                                             <td>
-                                                {{ !empty($item->job) && !empty($item->job->company) ? $item->job->company->company_name : '' }}
+                                                <a href="{{ !empty($item->job) && !empty($item->job->company) ? route('site.companydetail', $item->job->company->id) : '#' }}">
+                                                    {{ !empty($item->job) && !empty($item->job->company) ? $item->job->company->company_name : '' }}
+                                                </a>
                                             </td>
 
                                             <td>
@@ -73,8 +75,7 @@
                                             </td>
                                             <td>
                                                 <button class="btn btn-danger btn-sm text-white" data-toggle="modal"
-                                                    data-id="{{ $item->id }}" data-target="#deleteModal"><i
-                                                        class="fa fa-trash-o"></i></button>
+                                                    data-id="{{ $item->id }}" data-target="#deleteModal">Remove</button>
 
                                                 {{-- <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip"
                                                     data-original-title="Delete"
@@ -126,7 +127,7 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            $("#deleteModal").on('show.bs.modal', function(e){
+            $("#deleteModal").on('show.bs.modal', function(e) {
                 var button = $(e.relatedTarget);
                 var jobId = $(button).data("id");
                 var action = "{{ route('candidate.savedjob.delete', ':id') }}";
@@ -134,14 +135,14 @@
                 $("#deleteForm").attr("action", action);
             });
 
-            $("#deleteJob").on('click', function(e){
+            $("#deleteJob").on('click', function(e) {
                 e.preventDefault();
                 $("#deleteForm").submit();
             });
 
-            $("#deleteModal").on("hide.bs.modal", function(){
+            $("#deleteModal").on("hide.bs.modal", function() {
                 $("#deleteForm").attr("action", "#");
             });
-        }); 
+        });
     </script>
 @endsection
