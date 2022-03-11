@@ -12,7 +12,10 @@
         </div>
     </div>
     <div class="item1-links  mb-0">
-        <a href="/candidate/jobs" class="@if(Route::currentRouteName()=="candidate.jobs" OR Route::currentRouteName()=="candidate.dashboard") active @endif   d-flex  border-bottom">
+        <a href="{{ route('candidate.dashboard') }}" class="@if(Route::currentRouteName()=="candidate.dashboard") active @endif   d-flex  border-bottom">
+            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Dashboard
+        </a>
+        <a href="/candidate/jobs" class="@if(Route::currentRouteName()=="candidate.jobs") active @endif   d-flex  border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> My Jobs
         </a>
         <a href="/candidate/profile" class="@if(Route::currentRouteName()=="candidate.profile") active @endif d-flex border-bottom">
