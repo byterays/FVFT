@@ -56,9 +56,10 @@
                                                 {{ !empty($item->job) ? $item->job->title : '' }}
                                             </td>
                                             <td>
-                                                <a href="{{ !empty($item->job) && !empty($item->job->company) ? route('site.companydetail',$item->job->company->id) : '#' }}">
-                                                {{ !empty($item->job) && !empty($item->job->company) ? $item->job->company->company_name : '' }}
-                                            </a>
+                                                <a
+                                                    href="{{ !empty($item->job) && !empty($item->job->company)? route('site.companydetail', $item->job->company->id): '#' }}">
+                                                    {{ !empty($item->job) && !empty($item->job->company) ? $item->job->company->company_name : '' }}
+                                                </a>
                                             </td>
 
                                             <td>
@@ -127,7 +128,7 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            $("#deleteModal").on('show.bs.modal', function(e){
+            $("#deleteModal").on('show.bs.modal', function(e) {
                 var button = $(e.relatedTarget);
                 var jobId = $(button).data("id");
                 var action = "{{ route('candidate.savedjob.delete', ':id') }}";
@@ -135,14 +136,14 @@
                 $("#deleteForm").attr("action", action);
             });
 
-            $("#deleteJob").on('click', function(e){
+            $("#deleteJob").on('click', function(e) {
                 e.preventDefault();
                 $("#deleteForm").submit();
             });
 
-            $("#deleteModal").on("hide.bs.modal", function(){
+            $("#deleteModal").on("hide.bs.modal", function() {
                 $("#deleteForm").attr("action", "#");
             });
-        }); 
+        });
     </script>
 @endsection
