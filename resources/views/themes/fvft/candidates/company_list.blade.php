@@ -59,6 +59,7 @@
                                 <div class="tab-content company-list">
                                     <div class="tab-pane active" id="tab-11">
                                         <div class="row">
+                                            @if($companies != null)
                                             @foreach ($companies as $company)
                                                 @php
                                                     $company_logo = $company->company_logo != null ? $company->company_logo : 'uploads/company/default_company.jpg';
@@ -68,13 +69,15 @@
                                                         <div class="d-sm-flex card-body p-3">
                                                             <div class="p-0 m-0 mr-3">
                                                                 <div class="">
-                                                                    <a href="{{ route('site.companydetail', $company->id) }}"></a>
+                                                                    <a
+                                                                        href="{{ route('site.companydetail', $company->id) }}"></a>
                                                                     <img src="{{ asset($company_logo) }}" alt="img"
                                                                         class="w-9 h-9">
                                                                 </div>
                                                             </div>
                                                             <div class="item-card9 mt-3 mt-md-5">
-                                                                <a href="{{ route('site.companydetail', $company->id) }}" class="text-dark">
+                                                                <a href="{{ route('site.companydetail', $company->id) }}"
+                                                                    class="text-dark">
                                                                     <h4 class="font-weight-semibold mt-1">
                                                                         {{ $company->company_name }}</h4>
                                                                 </a>
@@ -82,48 +85,58 @@
                                                             </div>
                                                             <div class="ml-auto">
                                                                 <a class="btn btn-light mt-3 mt-md-6 mr-4 font-weight-semibold text-dark"
-                                                                    href="{{ route('site.companydetail', $company->id) }}"><i class="fa fa-eye"></i>View Detail</a>
+                                                                    href="{{ route('site.companydetail', $company->id) }}"><i
+                                                                        class="fa fa-eye"></i>View Detail</a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             @endforeach
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="tab-12">
                                         <div class="row">
-                                            @foreach ($companies as $company)
-                                                @php
-                                                    $company_logo = $company->company_logo != null ? $company->company_logo : 'uploads/company/default_company.jpg';
-                                                @endphp
-                                                <div class="col-lg-6 col-md-12 col-xl-4">
-                                                    <div class="card overflow-hidden br-0 overflow-hidden">
-                                                        <div class="d-sm-flex card-body p-3">
-                                                            <div class="p-0 m-0 mr-3">
-                                                                <div class="">
-                                                                    <a href="{{ route('site.companydetail', $company->id) }}"></a>
-                                                                    <img src="{{ asset($company_logo) }}"
-                                                                        alt="img" class="w-8 h-8">
+            
+                                            @if ($companies != null)
+                                                @foreach ($companies as $company)
+                                                    @php
+                                                        $company_logo = $company->company_logo != null ? $company->company_logo : 'uploads/company/default_company.jpg';
+                                                    @endphp
+                                                    <div class="col-lg-6 col-md-12 col-xl-4">
+                                                        <div class="card overflow-hidden br-0 overflow-hidden">
+                                                            <div class="d-sm-flex card-body p-3">
+                                                                <div class="p-0 m-0 mr-3">
+                                                                    <div class="">
+                                                                        <a
+                                                                            href="{{ route('site.companydetail', $company->id) }}"></a>
+                                                                        <img src="{{ asset($company_logo) }}" alt="img"
+                                                                            class="w-8 h-8">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="item-card9 mt-2">
+                                                                    <a href="{{ route('site.companydetail', $company->id) }}"
+                                                                        class="text-dark">
+                                                                        <h4 class="font-weight-semibold mt-1">
+                                                                            {{ $company->company_name }}</h4>
+                                                                    </a>
+                                                                    <h6>{{ $company->company_address }}</h6>
                                                                 </div>
                                                             </div>
-                                                            <div class="item-card9 mt-2">
-                                                                <a href="{{ route('site.companydetail', $company->id) }}" class="text-dark">
-                                                                    <h4 class="font-weight-semibold mt-1">{{ $company->company_name }}</h4>
-                                                                </a>
-                                                                <h6>{{ $company->company_address }}</h6>
-                                                            </div>
+
                                                         </div>
-                                                                                                               
                                                     </div>
-                                                </div>
-                                            @endforeach
+                                                @endforeach
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            @if($companies != null)
                             <div class="center-block text-center">
                                 {{ $companies->links() }}
                             </div>
+                            @endif
                         </div>
                     </div>
                     <!--/Job lists-->
@@ -137,5 +150,5 @@
 @endsection
 @section('script')
 @endsection
-{{-- <h6 class="mb-0 mt-3">Showing @if($companies->count()>1)<b>1 to {{ $companies->count() }}
+{{-- <h6 class="mb-0 mt-3">Showing @if ($companies->count() > 1)<b>1 to {{ $companies->count() }}
     @else {{$companies->count()}} @endif</b> of {{$companies->total()}} Entries</h6> --}}

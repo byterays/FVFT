@@ -16,6 +16,9 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class DashController extends Controller
 {
@@ -223,18 +226,28 @@ class DashController extends Controller
 
     public function company_lists()
     {
-        // $employ = Employe::where('user_id', \Auth::user()->id)->first();
+        $employ = Employe::where('user_id', \Auth::user()->id)->first();
+        if(!empty($employ->job_preference)){
+            $companies = Company::where('country_id', $employ->job_preference->country_id)->get();
+            $companys = Company::whereHas('jobs', function($query) use ($employ){
+                 return $query->where('job_categories_id', $employ->job_preference->job_category_id);
+            })->get();
+            $companies = paginateCollection($companies->merge($companys), 12);
+            // $companies = $this->paginate($companies->merge($companys), 12);
+        } else {
+            $companies = null;
+        }
         // $job_id = $employ->job_applications()->pluck('job_id');
         // $companies_id = Job::whereIn('id', $job_id)->pluck('company_id')->toArray();
         // $unique_company_id = getApplicantCompanyList($employ);
         // $companies = Company::whereIn('id', $unique_company_id)->get();
-        $companies = Company::whereHas('jobs', function ($query) {
-            return $query->whereHas('job_applications', function ($query2) {
-                $query2->whereHas('employe', function ($query3) {
-                    return $query3->where('user_id', Auth::user()->id);
-                });
-            });
-        })->paginate(12);
+        // $companies = Company::whereHas('jobs', function ($query) {
+        //     return $query->whereHas('job_applications', function ($query2) {
+        //         $query2->whereHas('employe', function ($query3) {
+        //             return $query3->where('user_id', Auth::user()->id);
+        //         });
+        //     });
+        // })->paginate(12); Do not delete the query
         return $this->client_view('candidates.company_list', [
             'companies' => $companies,
             // 'companies' => Company::whereIn('id', $unique_company_id)->paginate(12),
@@ -452,5 +465,12 @@ class DashController extends Controller
                 }
             }
         }
+    }
+
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }
