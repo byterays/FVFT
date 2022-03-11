@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end align-items-center ">
-                                    <button class="btn btn-success w-150" type="submit">Save</button>
+                                    <button class="btn btn-primary w-150" type="submit">Save</button>
                                 </div>
                             </div>  
                         </div>
