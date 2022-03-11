@@ -56,7 +56,9 @@
                                                 {{ !empty($item->job) ? $item->job->title : '' }}
                                             </td>
                                             <td>
+                                                <a href="{{ !empty($item->job) && !empty($item->job->company) ? route('site.companydetail',$item->job->company->id) : '#' }}">
                                                 {{ !empty($item->job) && !empty($item->job->company) ? $item->job->company->company_name : '' }}
+                                            </a>
                                             </td>
 
                                             <td>
@@ -73,8 +75,7 @@
                                             </td>
                                             <td>
                                                 <button class="btn btn-danger btn-sm text-white" data-toggle="modal"
-                                                    data-id="{{ $item->id }}" data-target="#deleteModal"><i
-                                                        class="fa fa-trash-o"></i></button>
+                                                    data-id="{{ $item->id }}" data-target="#deleteModal">Remove</button>
 
                                                 {{-- <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip"
                                                     data-original-title="Delete"
