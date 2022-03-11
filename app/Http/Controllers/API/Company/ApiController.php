@@ -12,7 +12,7 @@ class ApiController extends Controller
     use ApiMethods;
     public function listing()
     {
-        $companies = Company::where('is_active', 1)->paginate(20);
+        $companies = Company::with(['country', 'state', 'city', 'industry'])->where('is_active', 1)->paginate(20);
         $responseData = $this->sendResponse(compact('companies'), 'success');
         return $responseData;
     }
