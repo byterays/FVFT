@@ -164,12 +164,25 @@ class DashController extends Controller
     }
     public function saveSettings(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+            'password' => ['required', 'min:8'],
+            'confirm-password' => ['required', 'same:password']
+        ],[
+            'password.required' => 'Password is required',
+            'password.min' => 'Password must be 8 characters',
+            'confirm-password.required' => 'Confirm Password field is required',
+            'confirm-password.same' => 'Confirm password didn\'t match with password',
+        ]);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         $fields = [];
         $user = User::find(auth()->user()->id);
         // $request->has('email') ? $fields['email'] = $request->email : null;
         $request->has('password') ? $fields['password'] = bcrypt($request->password) : null;
         $user->update($fields);
-        return $this->client_view('candidates.settings');
+        return redirect()->back()->with(notifyMsg('success', 'Password changed successfully'));
+        // return $this->client_view('candidates.settings')->with(notifyMsg('message', 'Password changed successfully'));
     }
     public function applyjob($id)
     {
