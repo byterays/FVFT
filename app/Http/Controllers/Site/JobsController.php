@@ -13,7 +13,8 @@ class JobsController extends Controller
     use ThemeMethods;
     public function index(Request $request)
     {
-        $jobs = new Job();
+        // $jobs = new Job();
+        $jobs = Job::query();
         global $search;
         if ($request->has('search')) {
             $search = $request->search;
@@ -22,11 +23,13 @@ class JobsController extends Controller
                 $jobs->where('title', 'LIKE', '%' . $search . '%');
             });
         }
-        if ($request->has("job_catagory")) {
-            foreach ($request->job_catagory as $item) {
-                $jobs = $jobs->where('job_categories_id', $item);
-            }
+        if ($request->has("job_category")) {
+            // foreach ($request->job_category as $item) {
+            //     $jobs = $jobs->where('job_categories_id', $item);
+            // }
+            $jobs = $jobs->whereIn('job_categories_id', (array)$request->job_category);
         }
+        // dd($jobs->where('job_categories_id', $request->job_category)->get());
         $request->has("salary_from") ? $jobs->where('salary_from', ">=", $request->salary_from) : null;
         $request->has("salary_to") ? $jobs->where('salary_to', "<=", $request->salary_to) : null;
         $job_categories = DB::table('job_categories')->get();

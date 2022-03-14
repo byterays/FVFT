@@ -17,7 +17,7 @@
                                         <input type="text" class="form-control input-lg br-tr-md-0 br-br-md-0"
                                             id="jobSearch" placeholder="Search Jobs" name="search">
                                     </div>
-                                    <div class="form-group  col-xl-3 col-lg-3 col-md-12 mb-0 bg-white">
+                                    <div class="form-group col-xl-3 col-lg-3 col-md-12 select2-lg mb-0 bg-white">
                                         {{-- <input type="text" class="form-control input-lg br-md-0" id="text5" placeholder="Select Location"> --}}
                                         <select class="form-control select2-show-search  border-bottom-0"
                                             data-placeholder="Select Country" id="select-country" name="country">
@@ -29,7 +29,7 @@
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white">
                                         <select class="form-control select2-show-search  border-bottom-0"
-                                            data-placeholder="Select Category" name="category">
+                                            data-placeholder="Select Category" name="job_category">
                                             <optgroup label="Categories">
                                                 <option>All Categories</option>
                                                 @foreach ($job_categories as $item)
@@ -58,7 +58,7 @@
                             <div class="card mb-0">
                                 <div class="card-body p-3">
                                     <div class="cat-item d-flex">
-                                        <a href="/jobs/{{ $item->id }}"></a>
+                                        <a href="{{ route('site.jobs', ['job_category' => $item->id]) }}"></a>
                                         <div class="cat-img mr-4 bg-primary-transparent p-3 brround">
                                             <img src="https://avatars.dicebear.com/api/initials/{{ $item->functional_area }}.svg"
                                                 alt="img">
