@@ -9,8 +9,10 @@ use App\Models\Job;
 use App\Models\SavedJob;
 use App\Traits\Site\CandidateMethods;
 use App\Traits\Site\ThemeMethods;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\UnauthorizedException;
 
 class JobController extends Controller
 {
@@ -46,11 +48,10 @@ class JobController extends Controller
             } else {
                 return response()->json(['redirectRoute' => route('candidate.login')]);
             }
-            
-            
-            
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             return response()->json(['db_error' => $e->getMessage()]);
+        } catch (UnauthorizedException $ex){
+            return response()->json(['redirectRoute' => route('candidate.login')]);
         }
 
     }
