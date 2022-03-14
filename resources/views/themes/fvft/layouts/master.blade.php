@@ -17,7 +17,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('uploads/imgs/') }}/fvft_favicon.png" type="image/x-icon" />
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('uploads/imgs/') }}/fvft_favicon.png" />
-
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <!-- Title -->
     <title>FreeVisaFreeTicket -
         @yield('title')
