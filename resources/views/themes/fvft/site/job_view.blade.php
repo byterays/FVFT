@@ -18,7 +18,7 @@
 									<div class="col">
 										<div class="profile-pic mb-0">
 											<div class="d-md-flex">
-												<img src="{{asset("/")}}{{$job->feature_image_url}}" class="w-20 h-20" alt="user">
+												<img src="{{asset("/")}}{{$job->feature_image_url != null ? $job->feature_image_url : 'uploads/defaultimage.jpg'}}" class="w-20 h-20" alt="user">
 												<div class="ml-4">
 													<a href="/job/{{$job->id}}" class="text-dark"><h4 class="mt-3 mb-1 fs-20 font-weight-bold">{{ $job->title }}</h4></a>
 													<div class="">
@@ -180,7 +180,7 @@
 							</div>
 							<div class="card-body  item-user">
 								<div class="profile-pic mb-0">
-									<img src="{{asset("/")}}{{$company_contact_persons->avatar}}" class="brround avatar-xxl" alt="user">
+									<img src="{{asset("/")}}{{$company_contact_persons->avatar != null ? $company_contact_persons->avatar : 'uploads/default.jpg'}}" class="brround avatar-xxl" alt="user">
 									<div class="">
 										<a href="userprofile.html" class="text-dark"><h4 class="mt-3 mb-1 font-weight-semibold">{{ $company_contact_persons->name}}</h4></a>
 										<span class="text-gray">{{ $company_contact_persons->position}} of {{$company->company_name}}</span>
