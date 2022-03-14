@@ -12,7 +12,7 @@
 				   <div class="item">
 					   <div class="card mb-0">
 						   <div class="card-body">
-							   <img src="{{asset('/')}}{{$item->company_logo}}" alt="company1">
+							   <img src="{{asset('/')}}{{$item->company_logo ?? 'uploads/defaultimage.jpg'}}" alt="company1">
 						   </div>
 					   </div>
 				   </div>
