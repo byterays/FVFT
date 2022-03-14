@@ -1,4 +1,5 @@
 @extends('themes.fvft.candidates.layouts.dashmaster')
+@section('title', 'Company Lists')
 @section('style')
     <!-- file Uploads -->
     <link href="/themes/fvft/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
@@ -92,6 +93,8 @@
                                                     </div>
                                                 </div>
                                             @endforeach
+                                            @else
+                                            <p>No company to show</p>
                                             @endif
                                         </div>
                                     </div>
@@ -127,6 +130,8 @@
                                                         </div>
                                                     </div>
                                                 @endforeach
+                                                @else
+                                                <p>No company to show</p>
                                             @endif
                                         </div>
                                     </div>

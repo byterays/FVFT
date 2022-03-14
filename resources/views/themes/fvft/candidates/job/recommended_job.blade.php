@@ -1,4 +1,5 @@
 @extends('themes.fvft.candidates.layouts.dashmaster')
+@section('title', 'Recommended Jobs')
 @section('style')
 @endsection
 

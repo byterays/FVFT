@@ -1,4 +1,5 @@
 @extends('themes.fvft.candidates.layouts.dashmaster')
+@section('title', 'Saved Jobs')
 @section('style')
     <!-- file Uploads -->
     <link href="/themes/fvft/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
@@ -50,6 +51,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if(count($saved_jobs) > 0)
                                     @foreach ($saved_jobs as $item)
                                         <tr>
                                             <td>
@@ -85,6 +87,9 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                    @else
+                                    <p>No Saved Jobs</p>
+                                    @endif
                                 </tbody>
                             </table>
                             <div class="d-flex justify-content-center mt-3">

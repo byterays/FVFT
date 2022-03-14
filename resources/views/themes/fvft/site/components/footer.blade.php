@@ -14,7 +14,7 @@ $pages= DB::table("pages")->limit(5)->get();
 								<hr class="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto">
 								<ul class="list-unstyled mb-0">
 									@foreach ($footer_cats as $item)
-									<li><a href="/jobs&catagory_id={{$item->id}}">{{$item->functional_area}}</a></li>
+									<li><a href="{{ route('site.jobs',['job_category' => $item->id]) }}"> {{$item->functional_area}} </a></li>
 									@endforeach
 								</ul>
 							</div>

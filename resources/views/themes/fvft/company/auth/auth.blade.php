@@ -1,5 +1,6 @@
 @extends('themes.fvft.layouts.master')
 {{-- @dd($countries) --}}
+@section('title') Login or Register @endsection
 @section('main')
     @include('themes.fvft.site.components.header')
 

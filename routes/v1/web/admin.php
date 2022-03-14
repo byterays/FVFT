@@ -25,7 +25,7 @@ Route::get('login', function () {
 })->name('admin.login');
 
 Route::middleware(['auth', 'is_admin'])->group(function () {
-    Route::get('/', [DashboardController::class, 'index']);
+    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/jobs-list', [JobsController::class, 'index'])->name('admin.jobs-list');
     Route::get('/jobs-save', [JobsController::class, 'edit']);
     Route::post('/jobs-save', [JobsController::class, 'save']);

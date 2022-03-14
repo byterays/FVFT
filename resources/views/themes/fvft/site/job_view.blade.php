@@ -1,4 +1,5 @@
 @extends('themes.fvft.layouts.master')
+@section('title', 'Job Detail')
 @section('style')
 <!-- jquery ui RangeSlider -->
 <link href="{{asset('themes/fvft/')}}/assets/plugins/jquery-uislider/jquery-ui.css" rel="stylesheet">

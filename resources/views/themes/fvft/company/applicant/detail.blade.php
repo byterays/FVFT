@@ -1,4 +1,6 @@
 @extends('themes.fvft.company.layouts.dashmaster')
+@section('title', 'Applicant Detail')
+@section('applicants', 'active')
 @section('content')
         {{-- <div class="card">
             <div class="card-header">

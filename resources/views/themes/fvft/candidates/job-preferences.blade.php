@@ -1,4 +1,5 @@
 @extends('themes.fvft.candidates.layouts.dashmaster')
+@section('title', 'Job Preference')
 @section('style')
 <!-- file Uploads -->
 <link href="/themes/fvft/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />

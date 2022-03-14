@@ -1,4 +1,6 @@
 @extends('themes.fvft.company.layouts.dashmaster')
+@section('title', 'Edit Job')
+@section('jobs', 'active')
 @section('css')
     <link href="{{ asset('/') }}themes/fvft/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/datepicker.min.css') }}">
