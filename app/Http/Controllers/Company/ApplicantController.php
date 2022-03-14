@@ -14,6 +14,11 @@ class ApplicantController extends Controller
 {
     use CompanyMethods;
 
+    public function __construct()
+    {
+        $GLOBALS['page-name'] = "Applicant";
+    }
+
     public function applicants(Request $request)
     {
         if ($request->filled('job_title')) {

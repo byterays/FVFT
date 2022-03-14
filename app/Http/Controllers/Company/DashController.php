@@ -11,6 +11,7 @@ use App\Traits\Site\CompanyMethods;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 
 class DashController extends Controller
 {
@@ -30,6 +31,7 @@ class DashController extends Controller
     }
     public function profile()
     {
+        $GLOBALS['page-name'] = 'Profile';
         $company = @Company::where('user_id', \Auth::user()->id)->first();
         $contact_person = @DB::table('company_contact_persons')->where('company_id', $company->id)->first();
         return $this->company_view('company.profile', [
@@ -95,6 +97,7 @@ class DashController extends Controller
 
     public function jobs(Request $request)
     {
+        $GLOBALS['page-name'] = 'Job';
         $company = Company::where('user_id', auth()->user()->id)->first();
         if($request->filled('term')){
             $all_jobs = Job::filterjob($request->term)->where('company_id', $company->id)->paginate(10);
@@ -264,5 +267,37 @@ class DashController extends Controller
 
         }
         return $jobs->paginate(10);
+    }
+
+
+    public function settings()
+    {
+        $GLOBALS['page-name'] = 'Setting';
+        return $this->company_view('company.settings',[
+            'user' => \Auth::user(),
+        ]);
+    }
+
+    public function saveSettings(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'password' => ['required', 'min:8'],
+            'confirm-password' => ['required', 'same:password']
+        ],[
+            'password.required' => 'Password is required',
+            'password.min' => 'Password must be 8 characters',
+            'confirm-password.required' => 'Confirm Password field is required',
+            'confirm-password.same' => 'Confirm password didn\'t match with password',
+        ]);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $fields = [];
+        $user = User::find(auth()->user()->id);
+        // $request->has('email') ? $fields['email'] = $request->email : null;
+        $request->has('password') ? $fields['password'] = bcrypt($request->password) : null;
+        $user->update($fields);
+        return redirect()->back()->with(notifyMsg('success', 'Password changed successfully'));
+        // return $this->client_view('candidates.settings')->with(notifyMsg('message', 'Password changed successfully'));
     }
 }

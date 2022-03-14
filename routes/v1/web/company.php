@@ -19,7 +19,8 @@ Route::middleware(['auth', 'is_company'])->group(function () {
     Route::get('/jobs', [DashController::class, 'jobs'])->name('company.jobs');
     // Route::get('/edit/job/{id}', [DashController::class, 'edit'])->name('company.editjob');
     Route::get('/applicants', [DashController::class, 'applicants'])->name('company.applicants');
-    Route::get('/settings', [DashController::class, 'profile'])->name('company.settings');
+    Route::get('/settings', [DashController::class, 'settings'])->name('company.settings');
+    Route::post('/save-settings', [DashController::class, 'saveSettings'])->name('company.saveSettings');
 
 
     Route::get('add-new-job', [JobController::class, "addNewJob"])->name("company.addNewJob");
