@@ -1,4 +1,7 @@
 @extends('themes.fvft.layouts.master')
+@section('title')
+Home Page
+@endsection
 {{-- @dd($countries) --}}
 @section('main')
         @include('themes.fvft.site.components.header')

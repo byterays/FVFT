@@ -16,6 +16,7 @@ class JobController extends Controller
 
     public function __construct()
     {
+        $GLOBALS['page-name'] = "Job";
         $this->experiencelevels = DB::table('experiencelevels')->get();
         $this->educationlevels = DB::table('educationlevels')->get();
         $this->job_shifts = DB::table('job_shifts')->get();

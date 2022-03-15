@@ -13,27 +13,41 @@ class JobsController extends Controller
     use ThemeMethods;
     public function index(Request $request)
     {
-        $jobs = new Job();
+        // $jobs = new Job();
+        $jobs = Job::query();
         global $search;
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $search = $request->search;
             $jobs = $jobs->orWhere(function ($jobs) {
                 global $search;
                 $jobs->where('title', 'LIKE', '%' . $search . '%');
             });
         }
-        if ($request->has("job_catagory")) {
-            foreach ($request->job_catagory as $item) {
-                $jobs = $jobs->where('job_categories_id', $item);
-            }
+        if($request->filled('country') && $request->country != 'All Countries'){
+            $jobs = $jobs->where('country_id', $request->country);
         }
-        $request->has("salary_from") ? $jobs->where('salary_from', ">=", $request->salary_from) : null;
-        $request->has("salary_to") ? $jobs->where('salary_to', "<=", $request->salary_to) : null;
+        if ($request->filled("job_catagory") && $request->job_catagory != 'All Categories') {
+            // foreach ($request->job_category as $item) {
+            //     $jobs = $jobs->where('job_categories_id', $item);
+            // }
+            $jobs = $jobs->whereIn('job_categories_id', (array)$request->job_catagory);
+        }
+        // dd($jobs->where('job_categories_id', $request->job_category)->get());
+        $request->filled("salary_from") ? $jobs->where('salary_from', ">=", $request->salary_from) : null;
+        $request->filled("salary_to") ? $jobs->where('salary_to', "<=", $request->salary_to) : null;
         $job_categories = DB::table('job_categories')->get();
         $job_shifts = DB::table('job_shifts')->get();
-
+        $jobs = $jobs->paginate(9)->setPath('');
         $fields = [
-            "jobs" => $jobs->paginate(9),
+            "jobs" => $jobs,
+            "pagination" => $jobs->appends(array(
+                'search' => $request->search,
+                'country' => $request->country,
+                'job_catagory' => $request->job_catagory,
+                'salary_from' => $request->salary_from,
+                'salary_to' => $request->salary_to,
+                
+            )),
             "job_categories" => $job_categories,
             "job_shifts" => $job_shifts,
         ];

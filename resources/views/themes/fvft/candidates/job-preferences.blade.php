@@ -1,4 +1,5 @@
 @extends('themes.fvft.candidates.layouts.dashmaster')
+@section('title', 'Job Preference')
 @section('style')
 <!-- file Uploads -->
 <link href="/themes/fvft/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
@@ -62,7 +63,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end align-items-center ">
-                                    <button class="btn btn-success w-150" type="submit">Save</button>
+                                    <button class="btn btn-primary w-150" type="submit">Save</button>
                                 </div>
                             </div>  
                         </div>

@@ -14,7 +14,7 @@
     @include('themes.fvft.site.components.header')
     @include('themes.fvft.site.components.breadcrumb',[
     "page" =>[
-    "title" => "My Dashboard",
+    "title" => $GLOBALS['page-name'] ?? "My Dashboard",
     "img_url" => ""
     ]
     ])

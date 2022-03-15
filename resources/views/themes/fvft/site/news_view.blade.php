@@ -32,7 +32,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="item7-card-img">
-                                <img src="{{asset("/")}}{{$news->feature_img}}" alt="img" class="w-100">
+                                <img src="{{asset("/")}}{{$news->feature_img ?? 'uploads/defaultimage.jpg'}}" alt="img" class="w-100">
                                 <div class="item7-card-text">
                                     <span class="badge badge-pink">Jobs</span>
                                 </div>

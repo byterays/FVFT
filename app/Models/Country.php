@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\EmployJobPreference;
 
 class Country extends Model
 {
@@ -13,4 +14,9 @@ class Country extends Model
     'currency_symbol', 'tld', 'native', 'region', 'subregion', 'timezones', 'translations', 'latitude', 'longitude', 'emoji',
     'emojiU', 'is_active'
 ];
+  
+  public function job_preference()
+    {
+        return $this->belongsTo(EmployJobPreference::class, "country_id");
+    }
 }

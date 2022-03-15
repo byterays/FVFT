@@ -1,4 +1,6 @@
 @extends('themes.fvft.company.layouts.dashmaster')
+@section('title', 'Add New Job')
+@section('jobs', 'active')
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/datepicker.min.css') }}">
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">

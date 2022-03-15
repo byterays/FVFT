@@ -1,4 +1,5 @@
 @extends('themes.fvft.layouts.master')
+@section('title')Companies @endsection
 @section('main')
         @include('themes.fvft.site.components.header')
         <section class="sptb">

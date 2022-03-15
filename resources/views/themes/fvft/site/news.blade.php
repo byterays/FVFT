@@ -1,4 +1,5 @@
 @extends('themes.fvft.layouts.master')
+@section('title') News @endsection
 @section('style')
 <!-- jquery ui RangeSlider -->
 <link href="{{asset('themes/fvft/')}}/assets/plugins/jquery-uislider/jquery-ui.css" rel="stylesheet">
@@ -38,7 +39,7 @@
 										<div class="col-xl-4 col-lg-12 col-md-12">
 											<div class="item7-card-img">
 												<a href="/news/{{$item->slug}}"></a>
-												<img src="{{asset('/')}}{{$item->feature_img}}" alt="img" class="cover-image">
+												<img src="{{asset('/')}}{{$item->feature_img ?? 'uploads/defaultimage.jpg'}}" alt="img" class="cover-image">
 												<div class="item7-card-text">
 													<span class="badge badge-warning">Jobs</span>
 												</div>

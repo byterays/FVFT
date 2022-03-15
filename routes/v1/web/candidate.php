@@ -8,7 +8,7 @@ use App\Http\Controllers\Candidates\JobController;
 Route::get('/login', [AuthController::class, 'login'])->name('candidate.login');
 Route::post('/register', [AuthController::class, 'register'])->name('candidate.register');
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', [DashController::class, 'jobs'])->name('candidate.dashboard');
+    Route::get('/', [DashController::class, 'dashboard'])->name('candidate.dashboard');
     Route::get('/jobs', [DashController::class, 'jobs'])->name('candidate.jobs');
     Route::get('/profile', [DashController::class, 'profile'])->name('candidate.profile');
     Route::get('/show/{id}', [DashController::class, 'show'])->name('candidate.profile.show');
@@ -30,7 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['prefix' => 'saved-jobs/', 'as' => 'candidate.savedjob.'], function(){
         Route::get('lists', [JobController::class, 'saveJobLists'])->name('saveJobLists');
         Route::post('store', [JobController::class, 'saveJob'])->name('saveJob');
-        Route::get('delete/{id}', [JobController::class, 'delete'])->name('delete');
+        Route::delete('delete/{id}', [JobController::class, 'delete'])->name('delete');
     });
 
     Route::group(['prefix' => 'recommended-job/', 'as' => 'candidate.'], function(){
