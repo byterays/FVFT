@@ -18,7 +18,6 @@ class CompanyController extends Controller
     use AdminMethods;
     public function __construct()
     {
-
         $this->countries = DB::table('countries')->get();
         $this->industries = Industry::get();
     }
@@ -112,13 +111,13 @@ class CompanyController extends Controller
                     $logoName = time() . '_' . $logo->getClientOriginalName();
                     $company->company_logo = $this->Destination . $logoName;
                     $logo->move(public_path($this->Destination, 'public'), $logoName);
-                } 
+                }
                 if ($request->has('company_cover')) {
                     $cover = $request->file('company_cover');
                     $coverName = time() . '_' . $cover->getClientOriginalName();
                     $company->company_cover = $this->Destination . $coverName;
                     $cover->move(public_path($this->Destination, 'public'), $coverName);
-                } 
+                }
                 $company->company_phone = $request->mobile_phone1;
                 $company->company_email = $request->company_email;
                 $company->industry_id = $request->industry_id;
@@ -155,7 +154,7 @@ class CompanyController extends Controller
 
     public function updateCompany(Request $request, $id)
     {
-        
+
         $validator = Validator::make($request->all(), [
             'company_name' => ['required'],
             'industry_id' => ['required'],

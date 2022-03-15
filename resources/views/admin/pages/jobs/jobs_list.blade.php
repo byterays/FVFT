@@ -98,7 +98,7 @@
 
                                         <td><img src="/{{ $job->feature_image_url }}" alt="" srcset="" width="50px"></td>
                                         <td>{{ $job->title }}</td>
-                                        <td>{{ DB::table('companies')->find($job->company_id)->company_name }}</td>
+                                        <td>{{ DB::table('companies')->find($job->company_id)->company_name ?? '' }}</td>
                                         <td>
                                             <i
                                                 class="fa fa-{{ $job->is_featured ? 'check-' : '' }}circle-o {{ $job->is_featured ? 'text-success' : 'text-warning' }}"></i>
@@ -109,10 +109,10 @@
                                         </td> --}}
                                         <td>
                                             @php
-                                            $job_status = ['Draft' => 'primary', 'Pending' => 'warning', 'Active' => 'success', 'Approved' => 'success', 
+                                            $job_status = ['Draft' => 'primary', 'Pending' => 'warning', 'Active' => 'success', 'Approved' => 'success',
                                             'Not Approved'=>'warning', 'Published'=>'success', 'Unpublished'=>'warning', 'Expired'=>'danger', 'Rejected'=>'danger'];
                                             @endphp
-                                            <span class="label label-{{ $job_status[$job->status] }}">
+                                            <span class="label label-{{ $job_status[$job->status] ?? '' }}">
                                                 {{ $job->status }}
                                             </span>
                                         </td>
@@ -128,7 +128,7 @@
                                         </td> --}}
                                         {{-- <td>
                                             @php
-                                                
+
                                                 $job_status_color = $job->publish_status == 1 ? 'success' : 'warning';
                                                 $published_status = $job->publish_status == 1 ? 'Published' : 'Not Published';
                                             @endphp
