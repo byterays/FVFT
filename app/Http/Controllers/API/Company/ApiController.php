@@ -19,8 +19,13 @@ class ApiController extends Controller
 
     public function display($company_id)
     {
-        $company = Company::with(['industry'])->whereId($company_id)->first();
-        $responseData = $this->sendResponse(compact('company'), 'success');
-        return $responseData;
+        try{
+            $company = Company::with(['country', 'state', 'city', 'industry'])->whereId($company_id)->firstOrFail();
+            $responseData = $this->sendResponse(compact('company'), 'success');
+            return $responseData;
+        }catch (\Exception $exception){
+            $responseData = $this->sendError($exception->getMessage(),404,'');
+            return $responseData;
+        }
     }
 }
