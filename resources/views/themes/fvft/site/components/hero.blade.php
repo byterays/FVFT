@@ -29,7 +29,7 @@
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white">
                                         <select class="form-control select2-show-search  border-bottom-0"
-                                            data-placeholder="Select Category" name="job_category">
+                                            data-placeholder="Select Category" name="job_catagory">
                                             <optgroup label="Categories">
                                                 <option>All Categories</option>
                                                 @foreach ($job_categories as $item)
