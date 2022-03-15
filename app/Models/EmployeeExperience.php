@@ -10,6 +10,8 @@ class EmployeeExperience extends Model
     use HasFactory;
     protected $table = 'employes_experience';
 
+    protected $fillable = ['id', 'employ_id', 'experiencelevels_id', 'created_at', 'updated_at', 'country_id', 'job_category_id', 'job_title_id', 'working_year', 'working_month'];
+
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_id');

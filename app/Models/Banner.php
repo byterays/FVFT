@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Language extends Model
+class Banner extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'lang', 'native', 'iso_code', 'is_active', 'is_default', 'created_at', 'updated_at'];
+    protected $table = 'banners';
+    protected $fillable = ['alt', 'url', 'sort_order', 'is_active'];
 }

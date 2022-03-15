@@ -17,7 +17,7 @@ class CreateEducationlevelsTable extends Migration
             $table->bigIncrements('id')->unique('id');
             $table->string('title', 225);
             $table->boolean('is_active');
-            $table->integer('sort_order');
+            $table->integer('sort_order')->nullable();
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();
             $table->timestamp('updated_at')->nullable();
         });

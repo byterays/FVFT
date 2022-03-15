@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Page extends Model
 {
     use HasFactory;
-    protected $fillable =[
-    'title', 'body', 'seo_title', 'seo_description', 'seo_keywords', 'slug','updated_at'
+    protected $fillable =['id', 'html_content',
+    'title', 'body', 'seo_title', 'seo_description', 'seo_keywords', 'slug','updated_at', 'created_at'
     ];
 }

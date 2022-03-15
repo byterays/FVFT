@@ -9,5 +9,5 @@ class CompanyContactPerson extends Model
 {
     use HasFactory;
     protected $table = 'company_contact_persons';
-    protected $fillable = ['name', 'email', 'phone', 'position', 'company_id', 'avatar','updated_at'];
+    protected $fillable = ['name', 'email', 'phone', 'position', 'company_id', 'avatar','updated_at', 'person_designation', 'isocode', 'dialcode'];
 }

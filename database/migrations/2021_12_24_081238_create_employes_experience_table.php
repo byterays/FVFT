@@ -16,7 +16,7 @@ class CreateEmployesExperienceTable extends Migration
         Schema::create('employes_experience', function (Blueprint $table) {
             $table->bigIncrements('id')->unique('id');
             $table->unsignedBigInteger('employ_id')->index('const_ employes_relation');
-            $table->unsignedBigInteger('experiencelevels_id')->index('const_experience_relation');
+            $table->unsignedBigInteger('experiencelevels_id')->index('const_experience_relation')->nullable();
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();
             $table->timestamp('updated_at')->nullable();
         });
