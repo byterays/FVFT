@@ -15,7 +15,7 @@ class CreateEmployesCvTable extends Migration
     {
         Schema::create('employes_cv', function (Blueprint $table) {
             $table->bigIncrements('id')->unique('id');
-            $table->string('title', 225);
+            $table->string('title', 225)->nullable();
             $table->text('cv_file');
             $table->unsignedBigInteger('employ_id')->index('const_employes_cv');
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();

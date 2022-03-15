@@ -10,4 +10,6 @@ class EducationLevel extends Model
     use HasFactory;
 
     protected $table = 'educationlevels';
+
+    protected $fillable = ['title', 'is_active', 'sort_order'];
 }
