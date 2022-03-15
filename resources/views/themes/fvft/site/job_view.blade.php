@@ -23,7 +23,7 @@
 													<a href="/job/{{$job->id}}" class="text-dark"><h4 class="mt-3 mb-1 fs-20 font-weight-bold">{{ $job->title }}</h4></a>
 													<div class="">
 														<ul class="mb-0 d-flex">
-															<li class="mr-3"><a href="#" class="icons"><i class="si si-briefcase text-muted mr-1"></i>  {{ $company->company_name}}</a></li>
+															<li class="mr-3"><a href="#" class="icons"><i class="si si-briefcase text-muted mr-1"></i>  {{ $company->company_name ?? ''}}</a></li>
 															<li class="mr-3"><a href="#" class="icons"><i class="si si-location-pin text-muted mr-1"></i> {{@DB::table('countries')->find($job->country_id)->name}} </a></li>
 															<li class="mr-3"><a href="#" class="icons"><i class="si si-calendar text-muted mr-1"></i>{{ \Carbon\Carbon::parse($job->created_at)->diffForHumans() }}</a></li>
 															{{-- <li class="mr-3"><a href="#" class="icons"><i class="si si-eye text-muted mr-1"></i> 765</a></li> --}}
@@ -58,8 +58,8 @@
 													</div>
 													<div class="icons">
 														@auth
-														    @if(auth()->user()->user_type == 'candidate')																	  	 
-																@php 
+														    @if(auth()->user()->user_type == 'candidate')
+																@php
 																	$application = \DB::table('job_applications')->where('job_id',$job->id)->where('employ_id', $employ->id)->first();
 																@endphp
 																@if($application)
@@ -72,7 +72,7 @@
 														@else
 															<a href="/apply-job/{{$job->id}}" class="btn btn-info icons"> Apply Now</a>
 														@endauth
-														
+
 													</div>
 												</div>
 											</div>
@@ -84,7 +84,7 @@
 								<h4 class="mb-4 card-title">Job Description</h4>
 								<div class="mb-4">
 									<p>{!! html_entity_decode($job->description_intro) !!}</p>
-					
+
 								</div>
 								<h4 class="mb-4 card-title">Job Details</h4>
 								<div class="row">
@@ -122,7 +122,7 @@
 														<td class="w-150 px-0"><span class="font-weight-semibold">Eligibility</span></td> <td><span>:</span></td> <td><span> {{ @DB::table('educationlevels')->find($job->education_level_id)->title}}</span></td>
 													</tr>
 													<tr>
-														<td class="w-150 px-0"><span class="font-weight-semibold">Company</span></td> <td><span>:</span></td> <td><span> {{ $company->company_name}}</span></td>
+														<td class="w-150 px-0"><span class="font-weight-semibold">Company</span></td> <td><span>:</span></td> <td><span> {{ $company->company_name ?? ''}}</span></td>
 													</tr>
 												</tbody>
 											</table>
@@ -137,7 +137,7 @@
 											<a class="mb-0">Job ID : #{{$job->id}}</a>
 										</div>
 										<div class="col col-auto">
-											Posted By <a class="mb-0 font-weight-bold">{{ $company->company_name}}</a> /  {{ \Carbon\Carbon::parse($job->created_at)->diffForHumans() }}
+											Posted By <a class="mb-0 font-weight-bold">{{ $company->company_name ?? ''}}</a> /  {{ \Carbon\Carbon::parse($job->created_at)->diffForHumans() }}
 										</div>
 									</div>
 								</div>
@@ -145,8 +145,8 @@
 							<div class="card-footer bg-light-50">
 								<div class="icons">
 									@auth
-										@if(auth()->user()->user_type == 'candidate')																	  	 
-											@php 
+										@if(auth()->user()->user_type == 'candidate')
+											@php
 												$application = \DB::table('job_applications')->where('job_id',$job->id)->where('employ_id', $employ->id)->first();
 												@endphp
 												@if($application)
@@ -166,7 +166,7 @@
 							</div>
 						</div>
 						<!--Jobs Description-->
-					
+
 					</div>
 
 					<!--Right Side Content-->
@@ -212,7 +212,7 @@
 							</div>
 						</div>
                         @endif
-						
+
 						<div class="card">
 							<div class="card-header">
 								<h3 class="card-title">Shares</h3>
@@ -227,7 +227,7 @@
 								</div>
 							</div>
 						</div>
-				
+
 					</div>
 					<!--/Right Side Content-->
 				</div>
