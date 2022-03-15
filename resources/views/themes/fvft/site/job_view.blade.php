@@ -1,4 +1,5 @@
 @extends('themes.fvft.layouts.master')
+@section('title', 'Job Detail')
 @section('style')
 <!-- jquery ui RangeSlider -->
 <link href="{{asset('themes/fvft/')}}/assets/plugins/jquery-uislider/jquery-ui.css" rel="stylesheet">
@@ -17,7 +18,7 @@
 									<div class="col">
 										<div class="profile-pic mb-0">
 											<div class="d-md-flex">
-												<img src="{{asset("/")}}{{$job->feature_image_url}}" class="w-20 h-20" alt="user">
+												<img src="{{asset("/")}}{{$job->feature_image_url != null ? $job->feature_image_url : 'uploads/defaultimage.jpg'}}" class="w-20 h-20" alt="user">
 												<div class="ml-4">
 													<a href="/job/{{$job->id}}" class="text-dark"><h4 class="mt-3 mb-1 fs-20 font-weight-bold">{{ $job->title }}</h4></a>
 													<div class="">
@@ -62,7 +63,8 @@
 																	$application = \DB::table('job_applications')->where('job_id',$job->id)->where('employ_id', $employ->id)->first();
 																@endphp
 																@if($application)
-																	<a href="/remove-application/{{$job->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
+																	<a href="javascript:void(0);" class="btn btn-danger icons mt-1 mb-1" >Applied</a>
+																	{{-- <a href="/remove-application/{{$job->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a> --}}
 																@else
 																	<a href="/apply-job/{{$job->id}}" class="btn btn-info icons"> Apply Now</a>
 																@endif
@@ -81,7 +83,7 @@
 							<div class="card-body border-top">
 								<h4 class="mb-4 card-title">Job Description</h4>
 								<div class="mb-4">
-									<p>{{ $job->description }}</p>
+									<p>{!! html_entity_decode($job->description_intro) !!}</p>
 					
 								</div>
 								<h4 class="mb-4 card-title">Job Details</h4>
@@ -148,7 +150,8 @@
 												$application = \DB::table('job_applications')->where('job_id',$job->id)->where('employ_id', $employ->id)->first();
 												@endphp
 												@if($application)
-													<a href="/remove-application/{{$job->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a>
+													<a href="javascript:void(0);" class="btn btn-danger icons mt-1 mb-1" >Applied</a>
+													{{-- <a href="/remove-application/{{$job->id}}" class="btn btn-danger icons mt-1 mb-1" > Remove Application</a> --}}
 												@else
 													<a href="/apply-job/{{$job->id}}" class="btn btn-info icons"> Apply Now</a>
 												@endif
@@ -177,7 +180,7 @@
 							</div>
 							<div class="card-body  item-user">
 								<div class="profile-pic mb-0">
-									<img src="{{asset("/")}}{{$company_contact_persons->avatar}}" class="brround avatar-xxl" alt="user">
+									<img src="{{asset("/")}}{{$company_contact_persons->avatar != null ? $company_contact_persons->avatar : 'uploads/default.jpg'}}" class="brround avatar-xxl" alt="user">
 									<div class="">
 										<a href="userprofile.html" class="text-dark"><h4 class="mt-3 mb-1 font-weight-semibold">{{ $company_contact_persons->name}}</h4></a>
 										<span class="text-gray">{{ $company_contact_persons->position}} of {{$company->company_name}}</span>

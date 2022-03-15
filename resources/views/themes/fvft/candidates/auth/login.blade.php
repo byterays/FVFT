@@ -1,5 +1,6 @@
 {{-- @dd(Route::currentRouteName()) --}}
 @extends('themes.fvft.layouts.master')
+@section('title') Login or Register @endsection
 {{-- @dd($countries) --}}
 @section('main')
     @include('themes.fvft.site.components.header')

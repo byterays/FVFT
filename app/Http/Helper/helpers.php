@@ -3,6 +3,9 @@
 use App\Models\Job;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 if(!function_exists('createSlug')){
     function createSlug($title){
@@ -45,6 +48,14 @@ if(!function_exists('checkUserType')){
             return true;
         }
         return false;
+    }
+}
+
+if(!function_exists('paginateCollection')){
+    function paginateCollection($items, $perPage = 5, $page = null, $options = []){
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }
 

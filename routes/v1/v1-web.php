@@ -23,9 +23,9 @@ Auth::routes();
 // Site Routes
 Route::get('/', [HomeController::class, 'home']);
 Route::get('/mark-as-read/{id}', [HomeController::class, 'markRead'])->name('markread');
-Route::get('/companies', [HomeController::class, 'companies']);
+Route::get('/companies', [HomeController::class, 'companies'])->name('site.companies');
 // Route::get('/company-view/{id}', [HomeController::class, 'company'])->middleware('viewCompanyDetail');
-Route::get('/company-view/{id}', [HomeController::class, 'company']);
+Route::get('/company-view/{id}', [HomeController::class, 'company'])->name('site.companydetail');
 Route::get('jobs/', [JobsController::class, 'index'])->name('site.jobs');
 Route::get('job/{id}', [JobsController::class, 'jobindex'])->name('viewJob');
 Route::get('news/', [NewsController::class, 'index']);

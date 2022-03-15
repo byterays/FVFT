@@ -1,4 +1,5 @@
 @extends('themes.fvft.candidates.layouts.dashmaster')
+@section('title', 'Saved Jobs')
 @section('style')
     <!-- file Uploads -->
     <link href="/themes/fvft/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
@@ -17,11 +18,11 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">Profile</h1>
+                    <h1 class="">Saved Jobs</h1>
                     <ol class="breadcrumb text-center">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">Profile</li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Saved Jobs</li>
                     </ol>
                 </div>
             </div>
@@ -50,35 +51,45 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if(count($saved_jobs) > 0)
                                     @foreach ($saved_jobs as $item)
                                         <tr>
                                             <td>
                                                 {{ !empty($item->job) ? $item->job->title : '' }}
                                             </td>
                                             <td>
-                                                {{ !empty($item->job) && !empty($item->job->company) ? $item->job->company->company_name : '' }}
+                                                <a
+                                                    href="{{ !empty($item->job) && !empty($item->job->company)? route('site.companydetail', $item->job->company->id): '#' }}">
+                                                    {{ !empty($item->job) && !empty($item->job->company) ? $item->job->company->company_name : '' }}
+                                                </a>
                                             </td>
 
                                             <td>
                                                 @php
                                                     $deadline = !empty($item->job) ? $item->job->expiry_date : '';
-
+                                                    
                                                 @endphp
                                                 {{ $deadline != '' ? date('Y-m-d', strtotime($deadline)) : '----' }}
-                                                
+
                                             </td>
                                             <td>
-                                                <a href="" class="">View Details</a>
+                                                <a href="{{ route('viewJob', $item->id) }}" class="">View
+                                                    Details</a>
                                             </td>
                                             <td>
-            
-                                                <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip"
+                                                <button class="btn btn-danger btn-sm text-white" data-toggle="modal"
+                                                    data-id="{{ $item->id }}" data-target="#deleteModal">Remove</button>
+
+                                                {{-- <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip"
                                                     data-original-title="Delete"
                                                     href="{{ route('candidate.savedjob.delete', $item->id) }}"><i
-                                                        class="fa fa-trash-o"></i></a>
+                                                        class="fa fa-trash-o"></i></a> --}}
                                             </td>
                                         </tr>
                                     @endforeach
+                                    @else
+                                    <p>No Saved Jobs</p>
+                                    @endif
                                 </tbody>
                             </table>
                             <div class="d-flex justify-content-center mt-3">
@@ -90,6 +101,54 @@
             </div>
         </div>
     </section>
+
+    {{-- Delete Modal --}}
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white font-weight-bold">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Saved Job</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure, you want to delete this saved job?</p>
+                    <form action="#" method="POSt" id="deleteForm">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="deleteJob">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- End Delete Modal --}}
 @endsection
 @section('script')
+    <script>
+        $(document).ready(function() {
+            $("#deleteModal").on('show.bs.modal', function(e) {
+                var button = $(e.relatedTarget);
+                var jobId = $(button).data("id");
+                var action = "{{ route('candidate.savedjob.delete', ':id') }}";
+                action = action.replace(':id', jobId);
+                $("#deleteForm").attr("action", action);
+            });
+
+            $("#deleteJob").on('click', function(e) {
+                e.preventDefault();
+                $("#deleteForm").submit();
+            });
+
+            $("#deleteModal").on("hide.bs.modal", function() {
+                $("#deleteForm").attr("action", "#");
+            });
+        });
+    </script>
 @endsection

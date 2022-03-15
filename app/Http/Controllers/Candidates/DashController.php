@@ -16,6 +16,9 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class DashController extends Controller
 {
@@ -161,12 +164,25 @@ class DashController extends Controller
     }
     public function saveSettings(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+            'password' => ['required', 'min:8'],
+            'confirm-password' => ['required', 'same:password']
+        ],[
+            'password.required' => 'Password is required',
+            'password.min' => 'Password must be 8 characters',
+            'confirm-password.required' => 'Confirm Password field is required',
+            'confirm-password.same' => 'Confirm password didn\'t match with password',
+        ]);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         $fields = [];
         $user = User::find(auth()->user()->id);
         // $request->has('email') ? $fields['email'] = $request->email : null;
         $request->has('password') ? $fields['password'] = bcrypt($request->password) : null;
         $user->update($fields);
-        return $this->client_view('candidates.settings');
+        return redirect()->back()->with(notifyMsg('success', 'Password changed successfully'));
+        // return $this->client_view('candidates.settings')->with(notifyMsg('message', 'Password changed successfully'));
     }
     public function applyjob($id)
     {
@@ -223,18 +239,28 @@ class DashController extends Controller
 
     public function company_lists()
     {
-        // $employ = Employe::where('user_id', \Auth::user()->id)->first();
+        $employ = Employe::where('user_id', \Auth::user()->id)->first();
+        if(!empty($employ->job_preference)){
+            $companies = Company::where('country_id', $employ->job_preference->country_id)->get();
+            $companys = Company::whereHas('jobs', function($query) use ($employ){
+                 return $query->where('job_categories_id', $employ->job_preference->job_category_id);
+            })->get();
+            $companies = paginateCollection($companies->merge($companys), 12);
+            // $companies = $this->paginate($companies->merge($companys), 12);
+        } else {
+            $companies = null;
+        }
         // $job_id = $employ->job_applications()->pluck('job_id');
         // $companies_id = Job::whereIn('id', $job_id)->pluck('company_id')->toArray();
         // $unique_company_id = getApplicantCompanyList($employ);
         // $companies = Company::whereIn('id', $unique_company_id)->get();
-        $companies = Company::whereHas('jobs', function ($query) {
-            return $query->whereHas('job_applications', function ($query2) {
-                $query2->whereHas('employe', function ($query3) {
-                    return $query3->where('user_id', Auth::user()->id);
-                });
-            });
-        })->paginate(12);
+        // $companies = Company::whereHas('jobs', function ($query) {
+        //     return $query->whereHas('job_applications', function ($query2) {
+        //         $query2->whereHas('employe', function ($query3) {
+        //             return $query3->where('user_id', Auth::user()->id);
+        //         });
+        //     });
+        // })->paginate(12); Do not delete the query
         return $this->client_view('candidates.company_list', [
             'companies' => $companies,
             // 'companies' => Company::whereIn('id', $unique_company_id)->paginate(12),
@@ -255,6 +281,7 @@ class DashController extends Controller
             'first_name' => ['required'],
             'last_name' => ['required'],
             'english_dob' => ['required'],
+            'nepali_dob' => ['required'],
             'gender' => ['required'],
             'marital_status' => ['required'],
             'education_level_id' => ['required'],
@@ -263,6 +290,13 @@ class DashController extends Controller
             'profile_picture' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:12096'],
             'full_picture' => ['nullable'],
             'full_picture.*' => ['image', 'mimes:jpeg,png,jpg', 'max:12096'],
+        ],[
+            'first_name.required' => 'The first name field is required',
+            'last_name.required' => 'The last name field is required',
+            'english_dob.required' => 'Date of birth field is required',
+            'nepali_dob.required' => 'Date of birth field is required',
+            'education_level_id.required' => 'The education level field is required',
+            'mobile_number1.required' => 'The mobile number field is required',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()]);
@@ -444,5 +478,12 @@ class DashController extends Controller
                 }
             }
         }
+    }
+
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }

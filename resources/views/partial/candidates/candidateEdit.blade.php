@@ -165,7 +165,7 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control datetime" value="{{ $employ->dob }}"
                                    name="english_dob" readonly placeholder="Enter Birth Date">
-                            <div class="require text-danger english_dob"></div>
+                            {{-- <div class="require text-danger english_dob"></div> --}}
                         </div>
                     </div>
                 </div>
@@ -225,7 +225,7 @@
                 <div class="form-group">
                     <label for="" class="form-label">Email ID</label>
                     <input type="email" class="form-control" name="email" value="{{ $employ->user->email }}"
-                           placeholder="Enter Email ID">
+                           placeholder="Enter Email ID" readonly>
                     <div class="require text-danger email"></div>
                 </div>
                 <div class="form-group">

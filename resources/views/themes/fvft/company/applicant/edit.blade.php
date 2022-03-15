@@ -1,4 +1,6 @@
 @extends('themes.fvft.company.layouts.dashmaster')
+@section('title', 'Edit Applicant')
+@section('applicants', 'active')
 @section('content')
     <form action="{{ route('company.applicant.updateApplication', $application->id) }}" method="POST" id="applicantForm">
         @csrf

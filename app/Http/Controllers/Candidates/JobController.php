@@ -9,8 +9,10 @@ use App\Models\Job;
 use App\Models\SavedJob;
 use App\Traits\Site\CandidateMethods;
 use App\Traits\Site\ThemeMethods;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\UnauthorizedException;
 
 class JobController extends Controller
 {
@@ -30,22 +32,26 @@ class JobController extends Controller
     public function saveJob(Request $request)
     {
         try {
-            if($request->job_id != null && $request->employ_id != null){
-                if(SavedJob::where('employ_id', $request->employ_id)->where('job_id', $request->job_id)->exists()){
-                    return response()->json(['error' => 'This job is already saved on your profile']);
+            if(auth()->check() && auth()->user()->user_type == 'candidate'){
+                if($request->job_id != null && $request->employ_id != null){
+                    if(SavedJob::where('employ_id', $request->employ_id)->where('job_id', $request->job_id)->exists()){
+                        return response()->json(['error' => 'This job is already saved on your profile']);
+                    }
+                    $saveJob = SavedJob::create([
+                        'employ_id' => $request->employ_id,
+                        'job_id' => $request->job_id,
+                    ]);
+                    return response()->json(['msg' => 'Job saved to your profile successfully.']);
+                } else {
+                    return response()->json(['error' => 'Something went wrong']);
                 }
-                $saveJob = SavedJob::create([
-                    'employ_id' => $request->employ_id,
-                    'job_id' => $request->job_id,
-                ]);
-                return response()->json(['msg' => 'Job saved to your profile successfully.']);
             } else {
-                return response()->json(['error' => 'Something went wrong']);
+                return response()->json(['redirectRoute' => route('candidate.login')]);
             }
-            
-            
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             return response()->json(['db_error' => $e->getMessage()]);
+        } catch (UnauthorizedException $ex){
+            return response()->json(['redirectRoute' => route('candidate.login')]);
         }
 
     }
@@ -60,6 +66,13 @@ class JobController extends Controller
     public function recommended_job()
     {
         $employe=@Employe::where('user_id',Auth::user()->id)->first();
+        // dd($employe);
+        // $recommended_jobs = Job::whereHas("job_applications.employe", function($query) use($employe){
+        //     return $query->whereHas('job_preference', function($q2) use($employe) {
+        //         return $q2->where('job_categories_id', $employe->job_preference->job_category_id)
+        //         ->where('country_id', $employe->job_preference->country_id);
+        //     });
+        // })->paginate(10); //Todo Check Query
         if(!empty($employe->job_preference)){
             $job_preference = EmployJobPreference::where('employ_id', $employe->id)->first();
             $recommended_jobs = Job::where('job_categories_id', $job_preference->job_category_id)->where('country_id', $job_preference->country_id)->paginate(10);

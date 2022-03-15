@@ -1,4 +1,5 @@
 @extends('themes.fvft.candidates.layouts.dashmaster')
+@section('title', 'Recommended Jobs')
 @section('style')
 @endsection
 
@@ -41,9 +42,9 @@
                                                     <div class="d-md-flex">
                                                         <div class="p-0 m-0 item-card9-img">
                                                             <div class="item-card9-imgs">
-                                                                <a
-                                                                    href="{{ route('viewJob', $recommended_job->id) }}">
-                                                                    <img src="{{ asset('/'.$recommended_job->feature_image_url) }}" alt="img" class="h-100">
+                                                                <a href="{{ route('viewJob', $recommended_job->id) }}">
+                                                                    <img src="{{ asset('/' . $recommended_job->feature_image_url) }}"
+                                                                        alt="img" class="h-100">
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -51,7 +52,8 @@
                                                             class="card overflow-hidden  border-0 box-shadow-0 border-left br-0 mb-0">
                                                             <div class="card-body pt-0 pt-md-5">
                                                                 <div class="item-card9">
-                                                                    <a href="{{ route('viewJob', $recommended_job->id) }}" class="text-dark">
+                                                                    <a href="{{ route('viewJob', $recommended_job->id) }}"
+                                                                        class="text-dark">
                                                                         <h4 class="font-weight-semibold mt-1">
                                                                             {{ $recommended_job->title }}</h4>
                                                                     </a>
@@ -93,10 +95,20 @@
                                                                                 class="d-block text-default">{{ \Carbon\Carbon::parse($recommended_job->created_at)->diffForHumans() }}</small>
                                                                         </div>
                                                                     </div>
+                                                                    @php
+                                                                        $employ = App\Models\Employe::where('user_id', auth()->user()->id)->first();
+                                                                        $application = App\Models\JobApplication::where('job_id', $recommended_job->id)->where('employ_id', $employ->id);
+                                                                        
+                                                                    @endphp
                                                                     <div class="ml-auto">
-                                                                        <a href="/apply-job/{{ $recommended_job->id }}"
-                                                                            class="btn btn-primary"> Apply
-                                                                            Now</a>
+                                                                        @if ($application->exists())
+                                                                            <a href="javascript:void(0)"
+                                                                                class="btn btn-primary">Applied</a>
+                                                                        @else
+                                                                            <a href="/apply-job/{{ $recommended_job->id }}"
+                                                                                class="btn btn-primary"> Apply
+                                                                                Now</a>
+                                                                        @endif
                                                                     </div>
                                                                 </div>
                                                             </div>

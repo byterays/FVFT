@@ -8,6 +8,9 @@
 
 @section('content')
     <style>
+        .req {
+            color: red;
+        }
         .form-control {
             color: #272626 !important;
         }

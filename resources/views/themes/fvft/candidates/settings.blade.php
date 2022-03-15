@@ -2,6 +2,7 @@
 $user=Auth::user();
 @endphp
 @extends('themes.fvft.candidates.layouts.dashmaster')
+@section('title', 'Setting')
 @section('style')
 <!-- file Uploads -->
 <link href="/themes/fvft/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
@@ -45,8 +46,20 @@ $user=Auth::user();
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="form-label text-dark">Password</label>
-                                <input type="password" class="form-control text-dark" placeholder="Password" name="password">
+                                <label class="form-label text-dark">New Password</label>
+                                <input type="password" class="form-control text-dark" placeholder="Enter Password" value="{{ old('password') }}" name="password" autocomplete="off">
+                                @error('password')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label text-dark">Confirm Password</label>
+                                <input type="password" class="form-control text-dark" placeholder="Re-type Password" value="{{ old('confirm-password') }}" name="confirm-password" autocomplete="off">
+                                @error('confirm-password')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         
@@ -54,7 +67,7 @@ $user=Auth::user();
                 </div>
             </div>
                 <div class="float-right mb-4 mb-lg-0">
-                    <button class="btn btn-success w-150" type="submit">Save</button>
+                    <button class="btn btn-primary w-150" type="submit">Save</button>
                 </div>
             </div>
            
