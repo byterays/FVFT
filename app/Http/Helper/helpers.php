@@ -59,3 +59,9 @@ if(!function_exists('paginateCollection')){
     }
 }
 
+if(!function_exists('wrapInTag')){
+    function wrapInTag($arr, $tag='span', $atts='', $sep=',') {
+        return "<$tag $atts>". implode("</$tag>$sep<$tag $atts>", $arr) ."</$tag>";
+      }
+}
+

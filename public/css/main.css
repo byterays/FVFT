@@ -9,3 +9,7 @@
 .ico-grid-font{
     font-size: 15px;
 }
+
+.blue{
+   color: var(--blue);
+}
