@@ -96,20 +96,20 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                         @if(Auth::user()->unReadNotifications->count() > 0)
-                        @foreach(Auth::user()->unReadNotifications()->get() as $ntitem)
-                        <a href="{{ route('markread', $ntitem->id) }}" class="dropdown-item d-flex pb-3">
-                        {{-- <a href="{!! $ntitem->data['link'] != null ? $ntitem->data['link'] : '#' !!}" class="dropdown-item d-flex pb-3"> --}}
-                            <img src="{{asset('themes/fvft/')}}/assets/images/users/male/41.jpg" alt="avatar-img" class="avatar brround mr-3 align-self-center">
-                            <div>
-                                <span>{!! $ntitem->data['msg'] !!}</span>
-                                <div class="small text-muted"></div>
-                            </div>
-                        </a>
-                        @endforeach
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item text-center">View all Notification</a>
+                            @foreach(Auth::user()->unReadNotifications()->get() as $ntitem)
+                                <a href="{{ route('markread', $ntitem->id) }}" class="dropdown-item d-flex pb-3">
+                                    {{-- <a href="{!! $ntitem->data['link'] != null ? $ntitem->data['link'] : '#' !!}" class="dropdown-item d-flex pb-3"> --}}
+                                    <img src="{{asset('themes/fvft/')}}/assets/images/users/male/41.jpg" alt="avatar-img" class="avatar brround mr-3 align-self-center">
+                                    <div>
+                                        <span>{!! $ntitem->data['msg'] !!}</span>
+                                        <div class="small text-muted"></div>
+                                    </div>
+                                </a>
+                            @endforeach
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item text-center">View all Notification</a>
                         @else
-                        <span class="dropdown-item text-center">No Notification</span>
+                            <span class="dropdown-item text-center">No Notification</span>
                         @endif
                     </div>
                 </div>
@@ -163,7 +163,11 @@
                 </div> --}}
                 <div class="dropdown ">
                     <a href="{{ route('admin.user.profile') }}" class="nav-link pr-0 leading-none user-img" data-toggle="dropdown">
-                        <img src="{{asset('/')}}{{ $user["profile"] }}" alt="profile-img" class="avatar avatar-md brround">
+                        @if(!blank($user["profile"]))
+                            <img src="{{ asset('/')}}{{ $user["profile"] }}" alt="profile-img" class="avatar avatar-md brround">
+                        @else
+                            <img src="{{ asset('/defaults/profile.png') }}" alt="profile-img" class="avatar avatar-md brround">
+                        @endif
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow ">
                         <a class="dropdown-item" href="{{ route('admin.user.profile') }}">
@@ -177,9 +181,9 @@
                         </a>
                         <form action="/admin/logout" method="post">
                             @csrf
-                        <button type="submit" class="dropdown-item">
-                            <i class="dropdown-icon icon icon-power"></i> Log out
-                        </button>
+                            <button type="submit" class="dropdown-item">
+                                <i class="dropdown-icon icon icon-power"></i> Log out
+                            </button>
                         </form>
                     </div>
                 </div>

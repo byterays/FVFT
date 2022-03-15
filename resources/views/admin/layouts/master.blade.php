@@ -173,23 +173,24 @@
 
         $(function() {
             var mainInput = document.getElementsByClassName("nepaliDatePicker");
-            mainInput.nepaliDatePicker({
-                language: "english",
-                onChange: function() {
-                    let nepalidate = $(".nepaliDatePicker").val();
-                    let dateObj = NepaliFunctions.ParseDate(nepalidate);
-                    let engDate = NepaliFunctions.BS2AD(dateObj.parsedDate);
-                    let year = engDate.year;
-                    let month = NepaliFunctions.Get2DigitNo(engDate.month);
-                    let day = NepaliFunctions.Get2DigitNo(engDate.day);
-                    let engValue = year + '-' + month + '-' + day;
-                    $(".datetime").val(engValue);
-                },
-                ndpYear: true,
-                ndpMonth: true,
-                ndpYearCount: 200
-            });
-
+            if (mainInput.length) {
+                mainInput.nepaliDatePicker({
+                    language: "english",
+                    onChange: function () {
+                        let nepalidate = $(".nepaliDatePicker").val();
+                        let dateObj = NepaliFunctions.ParseDate(nepalidate);
+                        let engDate = NepaliFunctions.BS2AD(dateObj.parsedDate);
+                        let year = engDate.year;
+                        let month = NepaliFunctions.Get2DigitNo(engDate.month);
+                        let day = NepaliFunctions.Get2DigitNo(engDate.day);
+                        let engValue = year + '-' + month + '-' + day;
+                        $(".datetime").val(engValue);
+                    },
+                    ndpYear: true,
+                    ndpMonth: true,
+                    ndpYearCount: 200
+                });
+            }
 
             $(".datetimepicker").datepicker({
                 format: 'yyyy-mm-dd',
