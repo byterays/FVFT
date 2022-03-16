@@ -35,6 +35,11 @@ class Job extends Model
         return $this->belongsTo(JobCategory::class, "job_categories_id");
     }
 
+    public function education_level()
+    {
+        return $this->belongsTo(EducationLevel::class, 'education_level_id');
+    }
+
     public function countApplicant()
     {
         return $this->job_applications->count();

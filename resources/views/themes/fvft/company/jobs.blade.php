@@ -34,6 +34,7 @@
             <div class="row mb-5">
                 <div class="col-md-6">
                     <a href="{{ route('company.addNewJob') }}" class="btn btn-success">Add New Job</a>
+                    <a href="{{ route('company.newjob.get_job_detail') }}" class="btn btn-success">Add Again Job</a>
                 </div>
                 <div class="col-md-6">
                     <form action="{{ route('company.jobs') }}" method="GET">
