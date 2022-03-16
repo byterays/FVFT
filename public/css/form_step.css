@@ -79,6 +79,17 @@
     color: #fff
 }
 
+.steps .step.active .step-icon-wrap::before,
+.steps .step.active .step-icon-wrap::after {
+    background-color: #0da9ef
+}
+
+.steps .step.active .step-icon {
+    border-color: #0da9ef;
+    background-color: #c7c2c2;
+    color: #fff
+}
+
 @media (max-width: 576px) {
 
     .flex-sm-nowrap .step .step-icon-wrap::before,
