@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Company\AuthController;
 use App\Http\Controllers\Company\DashController;
 use App\Http\Controllers\Company\JobController;
+use App\Http\Controllers\Company\NewJobController;
 
 Route::get('/login', [AuthController::class, 'login'])->name('company.login');
 Route::post('/register', [AuthController::class, 'register'])->name('company.register');
@@ -35,5 +36,9 @@ Route::middleware(['auth', 'is_company'])->group(function () {
         Route::get('applicant-detail/{id}', [ApplicantController::class, 'applicant_detail'])->name('detail');
         Route::get('edit/{id}', [ApplicantController::class, 'edit_application'])->name('editApplication');
         Route::put('update-application/{id}', [ApplicantController::class, 'updateApplication'])->name('updateApplication');
+    });
+
+    Route::group(['prefix' => 'job/', 'as' => 'company.newjob.'], function(){
+        Route::get('job_detail', [NewJobController::class, "get_job_detail"])->name('get_job_detail');
     });
 });
