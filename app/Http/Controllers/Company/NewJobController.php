@@ -83,6 +83,7 @@ class NewJobController extends Controller
                         'no_of_male' => $request->male_employee,
                         'no_of_female' => $request->female_employee,
                         'any_gender' => $request->any_employee,
+                        'num_of_positions' => $request->male_employee + $request->female_employee + $request->any_employee,
                         'job_categories_id' => $request->category_id,
                         'working_hours' => $request->working_hours,
                         'working_days' => $request->working_days,
@@ -219,9 +220,46 @@ class NewJobController extends Controller
     public function get_job_preview(Request $request)
     {
         $job = Job::where("id", $request->job_id)->with(['company', 'job_category', 'country', 'education_level'])->first();
-        return $this->company_view('admin.newjob.get_job_preview',[
+        return $this->company_view('company.newjob.get_job_preview',[
             'job' => $job,
         ]);
+    }
+
+    public function get_approval_form(Request $request)
+    {
+        $job = Job::find($request->job_id);
+        return $this->company_view('company.newjob.get_approval_form',[
+            'job' => $job,
+        ]);
+    }
+
+    public function post_approval_form(Request $request)
+    {
+        // dd($request->all());
+        $validator = Validator::make($request->all(),[
+            'job_id' => ['required'],
+        ], [
+            'job_id.required' => 'Job is not found',
+        ]);
+        if($validator->fails()){
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        if($validator->passes()){
+            try{
+                DB::beginTransaction();
+                $job = Job::find($request->job_id);
+                $job->update([
+                    'status' => $request->saveType == 'save_as_draft' ? 'Draft' : 'Pending',
+                    'draft_date' => $request->saveType == 'save_as_draft' ? date('Y-m-d H:i:s') : null,
+                ]);
+                DB::commit();
+                $msg = $request->saveType == "save_as_draft" ? 'Your job has been saved and you can proceed to approval at any time. Thank you' : 'Your job has been send to admin for verification. Your job will be posted automatically after the verification. Thank you';
+                return response()->json(['msg' => $msg, 'redirectRoute' => route('company.jobs')]);
+            } catch(\Exception $e){
+                DB::rollBack();
+                return response()->json(['db_error' => $e->getMessage()]);
+            }
+        }
     }
 
 }

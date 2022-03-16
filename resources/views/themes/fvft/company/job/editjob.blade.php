@@ -320,7 +320,7 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label for="salary" class="form-label">Salary&nbsp;<span
+                                        <label for="salary" class="form-label">Basic Salary&nbsp;<span
                                                 class="req">*</span></label>
                                     </div>
                                     <div class="col-md-8">
@@ -356,6 +356,41 @@
                                                 <span class="custom-switch-description">Hide Salary</span>
                                             </label>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="salary" class="form-label">Average Earnings&nbsp;<span
+                                                class="req">*</span></label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <input type="text" name="earning_country_salary"
+                                                            value="{{ $job->earning_country_salary }}" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="" class="form-label countrylabel">USD</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="col-md-8">
+                                                        <input type="text" name="earning_nepali_salary"
+                                                            value="{{ $job->earning_nepali_salary }}" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="" class="form-label">NPR</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="require text-danger earning_country_salary"></div>
+                                            <div class="require text-danger earning_nepali_salary"></div>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>

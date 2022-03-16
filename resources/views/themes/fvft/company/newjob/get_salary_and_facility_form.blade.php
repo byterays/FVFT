@@ -54,7 +54,7 @@
                                         <div class="col-md-12">
                                             <div class="row">
                                                 <div class="col-md-8">
-                                                    <input type="text" name="country_salary" class="form-control">
+                                                    <input type="text" name="country_salary" value="{{ setParameter($job, 'country_salary') }}" class="form-control">
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="" class="form-label countrylabel">{{ isset($currency) ? $currency : 'NPR' }}</label>
@@ -62,7 +62,7 @@
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-8">
-                                                    <input type="text" name="nepali_salary" class="form-control">
+                                                    <input type="text" name="nepali_salary" value="{{ setParameter($job, 'nepali_salary') }}" class="form-control">
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="" class="form-label">NPR</label>
@@ -74,7 +74,7 @@
                                     </div>
                                     <div class="form-group mt-2">
                                         <label class="custom-switch-checkbox">
-                                            <input type="checkbox" name="hide_salary" class="custom-switch-input">
+                                            <input type="checkbox" name="hide_salary" class="custom-switch-input" {{ setParameter($job, 'hide_salary') == 1 ? 'checked' : '' }}>
                                             <span class="custom-switch-indicator"></span>
                                             <span class="custom-switch-description">Hide Salary</span>
                                         </label>
@@ -93,7 +93,7 @@
                                         <div class="col-md-12">
                                             <div class="row">
                                                 <div class="col-md-8">
-                                                    <input type="text" name="earning_country_salary" class="form-control">
+                                                    <input type="text" name="earning_country_salary" value="{{ setParameter($job, 'earning_country_salary') }}" class="form-control">
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="" class="form-label countrylabel">{{ isset($currency) ? $currency : '' }}</label>
@@ -101,7 +101,7 @@
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-8">
-                                                    <input type="text" name="earning_nepali_salary" class="form-control">
+                                                    <input type="text" name="earning_nepali_salary" value="{{ setParameter($job, 'earning_nepali_salary') }}" class="form-control">
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="" class="form-label">NPR</label>
@@ -123,8 +123,8 @@
                                 <div class="col-md-8">
                                     <select name="accomodation" class="form-control select2">
                                         <option value="">Select</option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
+                                        <option value="1" {{ setParameter($job, 'accomodation') == 1 ? 'selected' : '' }}>Yes</option>
+                                        <option value="0" {{ setParameter($job, 'accomodation') == 0 ? 'selected' : '' }}>No</option>
                                     </select>
                                     <div class="require text-danger accomodation"></div>
                                 </div>
@@ -139,8 +139,8 @@
                                 <div class="col-md-8">
                                     <select name="food" class="form-control select2">
                                         <option value="">Select</option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
+                                        <option value="1" {{ setParameter($job, 'food') == 1 ? 'selected' : '' }}>Yes</option>
+                                        <option value="0" {{ setParameter($job, 'food') == 0 ? 'selected' : '' }}>No</option>
                                     </select>
                                     <div class="require text-danger food"></div>
                                 </div>
@@ -155,8 +155,8 @@
                                 <div class="col-md-8">
                                     <select name="annual_vacation" class="form-control select2">
                                         <option value="">Select</option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
+                                        <option value="1" {{ setParameter($job, 'annual_vacation') == 1 ? 'selected' : '' }}>Yes</option>
+                                        <option value="0" {{ setParameter($job, 'annual_vacation') == 0 ? 'selected' : '' }}>No</option>
                                     </select>
                                     <div class="require text-danger annual_vacation"></div>
                                 </div>
@@ -171,8 +171,8 @@
                                 <div class="col-md-8">
                                     <select name="over_time" class="form-control select2">
                                         <option value="">Select</option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
+                                        <option value="1" {{ setParameter($job, 'over_time') == 1 ? 'selected' : '' }}>Yes</option>
+                                        <option value="0" {{ setParameter($job, 'over_time') == 0 ? 'selected' : '' }}>No</option>
                                     </select>
                                     <div class="require text-danger over_time"></div>
                                 </div>
@@ -184,8 +184,8 @@
                                     <label for="requirements" class="form-label">Other Benefits</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="hidden" class="form-control" name="other_benefits" id="benefitID">
-                                    <input type="hidden" class="form-control" name="benefit_intro" id="benefit_intro">
+                                    <input type="hidden" class="form-control" value="{{ setParameter($job, 'benefits') }}" name="other_benefits" id="benefitID">
+                                    <input type="hidden" class="form-control" name="benefit_intro" value="{{ setParameter($job, 'benefit_intro') }}" id="benefit_intro">
                                     <div id="benefitEditor" style="min-height: 15rem;">
                                     </div>
                                 </div>

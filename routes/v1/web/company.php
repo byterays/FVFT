@@ -46,5 +46,7 @@ Route::middleware(['auth', 'is_company'])->group(function () {
         Route::get('get_salary_and_facility_form', [NewJobController::class, "get_salary_and_facility_form"])->name('get_salary_and_facility_form');
         Route::post('post_salary_and_facility_form', [NewJobController::class, "post_salary_and_facility"])->name('post_salary_and_facility');
         Route::get('get_job_preview', [NewJobController::class, "get_job_preview"])->name('get_job_preview');
+        Route::get('get_approval', [NewJobController::class, "get_approval_form"])->name('get_approval_form');
+        Route::post('post_approval', [NewJobController::class, "post_approval_form"])->name('post_approval_form');
     });
 });

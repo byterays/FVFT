@@ -268,7 +268,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <input type="file" class="form-control dropify" name="feature_image"
-                                        data-allowed-file-extensions="png jpg jpeg" data-placeholder="{{ setParameter($job, 'feature_image_url') }}">
+                                        data-allowed-file-extensions="png jpg jpeg" data-default-file="{{ setParameter($job, 'feature_image_url') }}">
                                     <div class="require text-danger feature_image"></div>
                                 </div>
                             </div>
