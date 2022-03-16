@@ -30,7 +30,7 @@ class NewJobController extends Controller
 
     public function get_job_detail(Request $request)
     {
-        $job = $request->session()->get($this->job_session);
+        $job = Job::where('id', $request->job_id)->first();
         return $this->company_view('company.newjob.get_job',[
             'job' => $job,
             'job_categories' => $this->job_categories,
@@ -40,6 +40,30 @@ class NewJobController extends Controller
 
     public function postJobDetail(Request $request)
     {
+        dd($request->all());
+        // array:20 [
+        //     "_token" => "h1pHFpk2tLjfLOlhLn0n3s1h8tTngy0ySPtU4qHl"
+        //     "title" => null
+        //     "job_id" => null
+        //     "company_id" => "20"
+        //     "company_name" => "NTJobs"
+        //     "male_employee" => null
+        //     "female_employee" => null
+        //     "any_employee" => null
+        //     "category_id" => null
+        //     "working_hours" => null
+        //     "working_days" => null
+        //     "deadline" => null
+        //     "country" => "1"
+        //     "state" => "3870"
+        //     "city_id" => "71"
+        //     "contract_year" => null
+        //     "contract_month" => null
+        //     "job_description" => null
+        //     "job_description_intro" => null
+        //     "feature_image" => Illuminate\Http\UploadedFile {#1967
+        //     }
+        //   ]
         $validator = Validator::make($request->all(), [
             'title' => ['required'],
             'company_id' => ['required'],
@@ -62,18 +86,19 @@ class NewJobController extends Controller
             return response()->json(['errors' => $validator->errors()]);
         }
         if($validator->passes()){
-            $input = $request->except("_token");
-            if(empty($request->session()->get($this->job_session))){
-                $job = new Job();
-                $job->fill($input);
-                $request->session()->put($this->session, $job);
-            } else {
-                $job = $request->session()->get($this->job_session);
-                $job->fill($input);
-                $request->session()->put($this->session, $job);
-            }
-            $redirectTo = route('company.newjob.applicant_detail');
+            $job = Job
+            $redirectTo = route('company.newjob.get_applicant_form');
             return response()->json(['redirectRoute' => $redirectTo]);
         }
+    }
+
+    public function get_applicant_form(Request $request)
+    {
+        $job = Job::where('id', $request->job_id);
+        return $this->company_view('company.newjob.get_applicant_form',[
+            'job' => $job,
+            "educationlevels" => $this->educationlevels,
+            'skills' => DB::table('skills')->get(),
+        ]);
     }
 }

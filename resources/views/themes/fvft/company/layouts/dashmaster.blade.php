@@ -8,6 +8,7 @@
     </style>
     <link href="{{ asset('themes/fvft/') }}/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet"
         type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/form_step.css') }}">
     @yield('css')
 @endsection
 @section('main')

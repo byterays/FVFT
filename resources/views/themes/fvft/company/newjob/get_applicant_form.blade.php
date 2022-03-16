@@ -18,20 +18,54 @@
             height: 0 !important;
         }
 
+        
+
     </style>
 @endsection
 @section('data')
-<?php 
-    function setParameter($job, $parameter){
-        return $data = $job != null ? $job->$parameter : '';
-    }
-?>
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Add New Job</h3>
         </div>
     </div>
-    @include('partial.job.step')
+    <div class="card">
+        <div class="card-body">
+            <link rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+            <div class="steps d-flex flex-wrap flex-sm-nowrap justify-content-between padding-top-2x padding-bottom-1x">
+                <div class="step completed">
+                    <div class="step-icon-wrap">
+                        <div class="step-icon">1</div>
+                    </div>
+                    <h4 class="step-title">{{ strtoupper('Job Details') }}</h4>
+                </div>
+                <div class="step completed">
+                    <div class="step-icon-wrap">
+                        <div class="step-icon">2</div>
+                    </div>
+                    <h4 class="step-title">{{ strtoupper('Applicant Qualification') }}</h4>
+                </div>
+                <div class="step completed">
+                    <div class="step-icon-wrap">
+                        <div class="step-icon">3</div>
+                    </div>
+                    <h4 class="step-title">{{ strtoupper('Salary and Facility') }}</h4>
+                </div>
+                <div class="step">
+                    <div class="step-icon-wrap">
+                        <div class="step-icon">4</div>
+                    </div>
+                    <h4 class="step-title">{{ strtoupper('Preview') }}</h4>
+                </div>
+                <div class="step">
+                    <div class="step-icon-wrap">
+                        <div class="step-icon">5</div>
+                    </div>
+                    <h4 class="step-title">{{ strtoupper('Final') }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="alert alert-secondary d-none" role="alert"><button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">×</button><span id="db_error" class="db_error"></span></div>
     <form action="{{ route('company.newjob.postJobDetail') }}" method="POST" enctype="multipart/form-data" id="jobForm">
@@ -50,8 +84,7 @@
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" value="{{ setParameter($job, 'title') }}" name="title" class="form-control" placeholder="Enter Job Title">
-                                    <input type="hidden" class="form-control" name="job_id" value="{{ setParameter($job, 'id') }}">
+                                    <input type="text" name="title" class="form-control" placeholder="Enter Job Title">
                                     <div class="require text-danger title"></div>
                                 </div>
                             </div>
@@ -81,17 +114,17 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label for="male_employee" class="form-label">Male</label>
-                                            <input type="number" min="1" value="{{ setParameter($job, 'no_of_male') }}" oninput="preventNegativeNo($(this));"
+                                            <input type="number" min="1" oninput="preventNegativeNo($(this));"
                                                 class="form-control" name="male_employee" placeholder="Enter number">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="female_employee" class="form-label">Female</label>
-                                            <input type="number" min="1" value="{{ setParameter($job, 'no_of_female') }}" oninput="preventNegativeNo($(this));"
+                                            <input type="number" min="1" oninput="preventNegativeNo($(this));"
                                                 class="form-control" name="female_employee" placeholder="Enter number">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="any_employee" class="form-label">Any</label>
-                                            <input type="number" min="1" value="{{ setParameter($job, 'any_gender') }}" oninput="preventNegativeNo($(this));"
+                                            <input type="number" min="1" oninput="preventNegativeNo($(this));"
                                                 class="form-control" name="any_employee" placeholder="Enter number">
                                         </div>
                                     </div>
@@ -111,7 +144,7 @@
                                     <select name="category_id" class="form-control select2-show-search" data-placeholder="Select Job Category">
                                         <option value="">Select Job Category</option>
                                         @foreach ($job_categories as $category)
-                                            <option value="{{ $category->id }}" {{ setParameter($job, 'job_categories_id') == $category->id ? 'selected' : '' }}>{{ $category->functional_area }}
+                                            <option value="{{ $category->id }}">{{ $category->functional_area }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -127,13 +160,13 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="number" value="{{ setParameter($job, 'working_hours') }}" class="form-control" name="working_hours"
-                                            placeholder="eg, 8" oninput="preventNegativeNo($(this));">
+                                        <input type="number" class="form-control" name="working_hours"
+                                            placeholder="eg, 8">
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-primary">In Hour(/hr)</button>
                                         </div>
                                     </div>
-                                    <div class="require text-danger working_hours"></div>
+                                    <div class="require text-danger working_hour"></div>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +178,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="number" value="{{ setParameter($job, 'working_days') }}" class="form-control" name="working_days" placeholder="eg, 5" oninput="preventNegativeNo($(this));">
+                                        <input type="number" class="form-control" name="working_days" placeholder="eg, 5">
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-primary">Days</button>
                                         </div>
@@ -161,7 +194,7 @@
                                     <label for="deadline" class="form-label">Apply Before</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" name="deadline" value="{{ setParameter($job, 'expiry_date') != null ? date('Y-m-d', strtotime($job->expiry_date)) : '' }}" class="form-control datetime" readonly>
+                                    <input type="text" name="deadline" class="form-control datetime" readonly>
                                     <div class="require text-danger deadline"></div>
                                 </div>
                             </div>
@@ -173,7 +206,7 @@
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="country" id="select-country" class="form-control select2-show-search" data-placeholder="Select Country"
+                                    <select name="country" id="select-country" class="form-control select2-flag-search"
                                         value="{{ isset($job->country_id) ? $job->country_id : '' }}"
                                         onchange="patchStates(this)">
                                         @foreach ($countries as $item)
@@ -195,7 +228,7 @@
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="state" id="select-state" class="form-control select2-show-search" data-placeholder="Select State"
+                                    <select name="state" id="select-state" class="form-control select2-flag-search"
                                         value="{{ isset($job->state_id) ? $job->state_id : '' }}"
                                         onchange="patchCities(this)">
                                     </select>
@@ -210,7 +243,7 @@
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="city_id" id="select-city" class="form-control select2-show-search" data-placeholder="Select City"
+                                    <select name="city_id" id="select-city" class="form-control select2-flag-search"
                                         value="{{ isset($job->city_id) ? $job->city_id : '' }}">
                                     </select>
                                     <div class="require text-danger city_id"></div>
@@ -230,7 +263,7 @@
                                             <select name="contract_year" class="form-control select2">
                                                 <option value="">Select Year</option>
                                                 @for ($i = 1; $i <= 10; $i++)
-                                                    <option value="{{ $i }}" {{ setParameter($job, 'contract_year') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                    <option value="{{ $i }}">{{ $i }}</option>
                                                 @endfor
                                             </select>
                                         </div>
@@ -238,7 +271,7 @@
                                             <select name="contract_month" class="form-control select2">
                                                 <option value="">Select Month</option>
                                                 @for ($i = 1; $i <= 12; $i++)
-                                                    <option value="{{ $i }}" {{ setParameter($job, 'contract_month') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                    <option value="{{ $i }}">{{ $i }}</option>
                                                 @endfor
                                             </select>
                                         </div>
@@ -257,10 +290,10 @@
                                     <label for="job_description" class="form-label">Job Description</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="hidden" class="form-control" value="{{ setParameter($job, 'description') }}" name="job_description"
+                                    <input type="hidden" class="form-control" name="job_description"
                                         id="jobdescriptionID">
                                     <input type="hidden" class="form-control" name="job_description_intro"
-                                        id="job_description_intro" value="{{ setParameter($job, 'description_intro') }}">
+                                        id="job_description_intro">
                                     <div id="JobDescription" style="min-height: 15rem;">
                                     </div>
                                 </div>
@@ -273,7 +306,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <input type="file" class="form-control dropify" name="feature_image"
-                                        data-allowed-file-extensions="png jpg jpeg" data-placeholder="{{ setParameter($job, 'feature_image_url') }}">
+                                        data-allowed-file-extensions="png jpg jpeg">
                                     <div class="require text-danger feature_image"></div>
                                 </div>
                             </div>
@@ -281,7 +314,7 @@
                     </div>
                 </div>
                 <div class="mx-auto">
-                    <button type="button" onclick="submitForm(event);"
+                    <button type="button" name="saveType" value="save_as_draft" onclick="submitForm(event);"
                         class="btn btn-primary rounded-0">Next <i class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>Applicant Qualification</span>
                 </div>
             </div>
@@ -334,7 +367,7 @@
             $('.require').css('display', 'none');
             let url = $("#jobForm").attr("action");
             var formData = new FormData($("#jobForm")[0]);
-            // formData.append('saveType', saveType);
+            formData.append('saveType', saveType);
             $.ajax({
                 url: url,
                 type: 'post',
@@ -385,19 +418,19 @@
             ['bold', 'italic', 'underline'],
             ['link', 'image']
         ];
-        // var req_quill = new Quill('#editor', {
-        //     theme: 'snow',
-        //     modules: {
-        //         toolbar: toolbarOptions
-        //     }
-        // });
+        var req_quill = new Quill('#editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: toolbarOptions
+            }
+        });
 
-        // var ben_quill = new Quill('#benefitEditor', {
-        //     theme: 'snow',
-        //     modules: {
-        //         toolbar: toolbarOptions
-        //     }
-        // });
+        var ben_quill = new Quill('#benefitEditor', {
+            theme: 'snow',
+            modules: {
+                toolbar: toolbarOptions
+            }
+        });
 
         var jd_quill = new Quill('#JobDescription', {
             theme: 'snow',
@@ -406,24 +439,24 @@
             }
         });
 
-        // req_quill.on('text-change', function() {
-        //     requirement = JSON.stringify(req_quill.getContents());
-        //     $("#requirementID")[0].value = requirement;
-        //     $("#requirement_intro")[0].value = escapeHtml($('.ql-editor').html());
-        // });
-        // if ($("#requirementID")[0].value != '') {
-        //     req_quill.setContents(JSON.parse($("#requirementID")[0].value))
-        // }
+        req_quill.on('text-change', function() {
+            requirement = JSON.stringify(req_quill.getContents());
+            $("#requirementID")[0].value = requirement;
+            $("#requirement_intro")[0].value = escapeHtml($('.ql-editor').html());
+        });
+        if ($("#requirementID")[0].value != '') {
+            req_quill.setContents(JSON.parse($("#requirementID")[0].value))
+        }
 
         // for benefits
-        // ben_quill.on('text-change', function() {
-        //     benefits = JSON.stringify(ben_quill.getContents());
-        //     $("#benefitID")[0].value = benefits;
-        //     $("#benefit_intro")[0].value = escapeHtml($('.ql-editor').html());
-        // });
-        // if ($("#benefitID")[0].value != '') {
-        //     ben_quill.setContents(JSON.parse($("#benefitID")[0].value))
-        // }
+        ben_quill.on('text-change', function() {
+            benefits = JSON.stringify(ben_quill.getContents());
+            $("#benefitID")[0].value = benefits;
+            $("#benefit_intro")[0].value = escapeHtml($('.ql-editor').html());
+        });
+        if ($("#benefitID")[0].value != '') {
+            ben_quill.setContents(JSON.parse($("#benefitID")[0].value))
+        }
 
         // for job_description
         jd_quill.on('text-change', function() {

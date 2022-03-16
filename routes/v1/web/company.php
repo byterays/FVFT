@@ -40,5 +40,6 @@ Route::middleware(['auth', 'is_company'])->group(function () {
 
     Route::group(['prefix' => 'job/', 'as' => 'company.newjob.'], function(){
         Route::get('job_detail', [NewJobController::class, "get_job_detail"])->name('get_job_detail');
+        Route::post('job_detail', [NewJobController::class, "postJobDetail"])->name('postJobDetail');
     });
 });
