@@ -21,11 +21,6 @@
     </style>
 @endsection
 @section('data')
-<?php 
-    function setParameter($job, $parameter){
-        return $data = $job != null ? $job->$parameter : '';
-    }
-?>
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Add New Job</h3>
@@ -304,28 +299,11 @@
                 todayHighlight: true,
             });
 
-
-            $("#Picture").on("change", function() {
-                if ($("#Picture")[0].files.length > 5) {
-                    alert("You can select only 5 images");
-                    $("#Picture").val(null);
-                }
-            });
-
             $('.dropify').dropify({
                 error: {
 
                     'imageFormat': 'The image format is not allowed (png, jpg, jpeg only).'
                 }
-            });
-
-            var currency_name = $("#select-country option:selected").data('name');
-            $(".countrylabel").html(currency_name);
-
-
-            $("#select-country").on('change', function() {
-                var currency_name = $(this).find('option:selected').data('name');
-                $(".countrylabel").html(currency_name);
             });
         });
 
@@ -357,15 +335,13 @@
                         });
                     } else if (!data.errors && !data.db_error) {
                         location.href = data.redirectRoute;
-                        toastr.success(data.msg);
+                        // toastr.success(data.msg);
                     }
                 }
             });
         }
 
 
-        let requirement = "";
-        let benefits = "";
         let job_description = "";
 
         var toolbarOptions = [
@@ -385,19 +361,6 @@
             ['bold', 'italic', 'underline'],
             ['link', 'image']
         ];
-        // var req_quill = new Quill('#editor', {
-        //     theme: 'snow',
-        //     modules: {
-        //         toolbar: toolbarOptions
-        //     }
-        // });
-
-        // var ben_quill = new Quill('#benefitEditor', {
-        //     theme: 'snow',
-        //     modules: {
-        //         toolbar: toolbarOptions
-        //     }
-        // });
 
         var jd_quill = new Quill('#JobDescription', {
             theme: 'snow',
@@ -405,25 +368,6 @@
                 toolbar: toolbarOptions
             }
         });
-
-        // req_quill.on('text-change', function() {
-        //     requirement = JSON.stringify(req_quill.getContents());
-        //     $("#requirementID")[0].value = requirement;
-        //     $("#requirement_intro")[0].value = escapeHtml($('.ql-editor').html());
-        // });
-        // if ($("#requirementID")[0].value != '') {
-        //     req_quill.setContents(JSON.parse($("#requirementID")[0].value))
-        // }
-
-        // for benefits
-        // ben_quill.on('text-change', function() {
-        //     benefits = JSON.stringify(ben_quill.getContents());
-        //     $("#benefitID")[0].value = benefits;
-        //     $("#benefit_intro")[0].value = escapeHtml($('.ql-editor').html());
-        // });
-        // if ($("#benefitID")[0].value != '') {
-        //     ben_quill.setContents(JSON.parse($("#benefitID")[0].value))
-        // }
 
         // for job_description
         jd_quill.on('text-change', function() {
