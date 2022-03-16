@@ -118,7 +118,7 @@
                             </div>
                         </div>
                     </div>
-    
+
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-4">
@@ -157,7 +157,7 @@
                                 <label class="form-label">Country&nbsp;<span class="req">*</span></label>
                             </div>
                             <div class="col-md-8">
-                                <select name="country" id="select-country" class="form-control select2-flag-search"
+                                <select name="country" id="select-country" class="form-control"
                                     value="{{ isset($job->country_id) ? $job->country_id : '' }}"
                                     onchange="patchStates(this)">
                                     @foreach ($countries as $item)
@@ -165,12 +165,12 @@
                                             {{ isset($job->country_id) ? ($item->id == $job->country_id ? 'selected' : '') : null }}>
                                             {{ $item->name }}</option>
                                     @endforeach
-    
+
                                 </select>
                                 <div class="require text-danger country"></div>
                             </div>
                         </div>
-    
+
                     </div>
                     <div class="form-group">
                         <div class="row">
@@ -179,7 +179,7 @@
                                         class="req">*</span></label>
                             </div>
                             <div class="col-md-8">
-                                <select name="state" id="select-state" class="form-control select2-flag-search"
+                                <select name="state" id="select-state" class="form-control"
                                     value="{{ isset($job->state_id) ? $job->state_id : '' }}"
                                     onchange="patchCities(this)">
                                 </select>
@@ -200,7 +200,7 @@
                                 <div class="require text-danger city_id"></div>
                             </div>
                         </div>
-    
+
                     </div>
                     <div class="form-group">
                         <div class="row">
@@ -233,7 +233,7 @@
                                 <div class="require text-danger contract_month"></div>
                                 {{-- <div class="require text-danger contract_description"></div> --}}
                             </div>
-    
+
                         </div>
                     </div>
                     <div class="form-group">
@@ -265,7 +265,7 @@
                 </div>
             </div>
         </div>
-       
+
         <div class="row">
             <div class="card m-b-20">
                 <div class="card-header">
@@ -508,7 +508,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="row ml-2">
             <div class="card m-b-20">
                 <div class="card-header">
@@ -540,7 +540,7 @@
                         </div>
                     </div>
 
-                    
+
                 </div>
             </div>
 
@@ -552,10 +552,10 @@
 </div>
 {{-- <div class="row">
     <div class="col-xl-6">
-        
+
     </div>
     <div class="col-xl-6">
-        
+
     </div>
 </div>
 <div class="row mb-5">

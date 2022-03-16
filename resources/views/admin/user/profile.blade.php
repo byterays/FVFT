@@ -23,8 +23,11 @@
                         <div class="row">
                             <div class="col-md-6 col-lg-6">
                                 <div class="form-group">
-                                    <img src="{{ asset('/') }}{{ $admin_detail->avatar }}" alt="profile-img"
-                                        class="avatar avatar-md brround">
+                                    @if(!blank($admin_detail->avatar))
+                                        <img src="{{ asset('/') }}{{ $admin_detail->avatar }}" alt="profile-img" class="avatar avatar-md brround">
+                                    @else
+                                        <img src="{{ asset('/defaults/profile.png') }}" alt="profile-img" class="avatar avatar-md brround">
+                                    @endif
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Name</label>

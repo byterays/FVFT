@@ -8,7 +8,7 @@
         </div>
 
         <div class="row">
-            @foreach ($totals as $item)                
+            @foreach ($totals as $item)
             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
                 <div class="card overflow-hidden">
                     <div class="card-header">
@@ -44,7 +44,7 @@
                                     @foreach ($companies as $item)
                                     <span class="avatar brround cover-image cover-image" data-image-src="{{asset('/')}}{{$item->company_logo}}" style="background: url(&quot;{{asset('themes/fvft/')}}/assets/images/users/female/12.jpg&quot;) center center;"></span>
                                     @endforeach
-                                    
+
                                     <span class="avatar brround cover-image cover-image">{{ $totals[0]["total"]-10 >0?"+".$totals[0]["total"]-10:"" }}</span>
                                 </div>
                                 <!-- Team Board Details -->
@@ -79,12 +79,12 @@
                     </div>
                 </div>
             </div>
-            
+
             @foreach ($latest_jobs as $item)
-            @php 
+            @php
                 $job_shift=\DB::table('job_shifts')->find($item->job_shift_id);
                 $company=\DB::table('companies')->find($item->company_id);
-            @endphp            
+            @endphp
             <div class="col-xl-4 col-lg-6 col-md-12">
                 <div class="item">
                 <div class="card">
@@ -105,10 +105,13 @@
                         </div>
                         <div class="item-card7-text">
                             <ul class="icon-card mb-0">
-                                <li class=""><a href="#" class="icons"><i class="si si-location-pin text-muted mr-1"></i>{{\DB::table('cities')->find($item->city_id)->name}},{{\DB::table('countries')->find($item->country_id)->name}}</a></li>
-                                <li><a href="#" class="icons"><i class="si si-event text-muted mr-1"></i> {{$item->updated_at}}</a></li>
-                                <li class="mb-0"><a href="#" class="icons"><i class="si si-user text-muted mr-1"></i>{{$company->company_name}}</a></li>
-                                <li class="mb-0"><a href="#" class="icons"><i class="si si-phone text-muted mr-1"></i> {{$company->company_phone}}</a></li>
+                                <li class=""><a href="#" class="icons"><i class="si si-location-pin text-muted mr-1"></i>
+                                        {{\DB::table('cities')->find($item->city_id)->name ?? ''}},{{\DB::table('countries')->find($item->country_id)->name ?? ''}}
+                                    </a>
+                                </li>
+                                <li><a href="#" class="icons"><i class="si si-event text-muted mr-1"></i> {{$item->updated_at ?? ''}}</a></li>
+                                <li class="mb-0"><a href="#" class="icons"><i class="si si-user text-muted mr-1"></i>{{$company->company_name ?? ''}}</a></li>
+                                <li class="mb-0"><a href="#" class="icons"><i class="si si-phone text-muted mr-1"></i> {{$company->company_phone ?? ''}}</a></li>
                             </ul>
                         </div>
                     </div>

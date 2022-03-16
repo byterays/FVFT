@@ -10,12 +10,12 @@
     @include('themes.fvft.site.components.header')
 
     @php
-    if (checkUserType('candidate')) {
-        $employ_id = App\Models\Employe::where('user_id', \Auth::user()->id)->first()->id;
-        // dd($employ_id);
-    } else {
-        $employ_id = '';
-    }
+        if (checkUserType('candidate')) {
+            $employ_id = App\Models\Employe::where('user_id', \Auth::user()->id)->first()->id;
+            // dd($employ_id);
+        } else {
+            $employ_id = '';
+        }
     @endphp
     <!--Breadcrumb-->
     <div class="bg-white border-bottom">
@@ -46,16 +46,16 @@
                                         <div class="p-5 bg-white item2-gl-nav d-flex">
                                             <h6 class="mb-0 mt-3">Showing @if ($jobs->count() > 1)
                                                     <b>1 to {{ $jobs->count() }}
-                                                    @else
-                                                        {{ $jobs->count() }}
-                                                @endif
-                                                </b> of {{ $jobs->total() }} Entries</h6>
+                                                        @else
+                                                            {{ $jobs->count() }}
+                                                        @endif
+                                                    </b> of {{ $jobs->total() }} Entries</h6>
                                             <ul class="nav item2-gl-menu mt-1 ml-auto">
                                                 <li class=""><a href="#tab-11" class="active show"
-                                                        data-toggle="tab" title="List style"><i
+                                                                data-toggle="tab" title="List style"><i
                                                             class="fa fa-list"></i></a></li>
                                                 <li><a href="#tab-12" data-toggle="tab" class=""
-                                                        title="Grid"><i class="fa fa-th"></i></a></li>
+                                                       title="Grid"><i class="fa fa-th"></i></a></li>
                                             </ul>
                                             {{-- <div class="d-flex">
 													<label class="mr-2 mt-2 mb-sm-1">Sort By:</label>
@@ -83,8 +83,11 @@
                                                     <div class="p-0 m-0 item-card9-img">
                                                         <div class="item-card9-imgs">
                                                             <a href="job/{{ $item->id }}"></a>
-                                                            <img src="{{ asset('/') }}{{ $item->feature_image_url ?? 'uploads/defaultimage.jpg' }}"
-                                                                alt="img" class="h-100">
+                                                            @if($item->feature_image_url)
+                                                                <img src="{{ asset($item->feature_image_url) }}" alt="img" class="h-100">
+                                                            @else
+                                                                <img src="{{ asset('uploads/defaultimage.jpg') }}" alt="img" class="h-100">
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     <div
@@ -99,7 +102,7 @@
                                                                 <div class="mt-2 mb-2">
                                                                     @isset($company)
                                                                         <a href="/company-view/{{ $company->id }}"
-                                                                            class="mr-4"><span><i
+                                                                           class="mr-4"><span><i
                                                                                     class="fa fa-building-o text-muted mr-1"></i>
                                                                                 {{ $company->company_name }}</span></a>
                                                                     @endisset
@@ -113,8 +116,8 @@
                                                                             @endphp
                                                                             {{-- <i class="fa fa-map-marker text-muted mr-1"></i> --}}
                                                                             <img class="mb-1"
-                                                                                src="{{ asset('https://flagcdn.com/16x12/' . strtolower($country_flag) . '.png') }}"
-                                                                                alt="">
+                                                                                 src="{{ asset('https://flagcdn.com/16x12/' . strtolower($country_flag) . '.png') }}"
+                                                                                 alt="">
                                                                             {{ @DB::table('countries')->find($item->country_id)->name }}
                                                                         </span>
                                                                     </a>
@@ -122,9 +125,9 @@
                                                                         <span>
                                                                             Basic Salary:
                                                                             <span style="color: blue">
-                                                                                {{ $cntry->currency }}&nbsp;{{ $item->country_salary }}&nbsp;&nbsp;
-                                                                                @if ($cntry->currency != 'NPR')
-                                                                                    NPR: {{ $item->nepali_salary }}
+                                                                                {{ $cntry->currency ?? '' }}&nbsp;{{ $item->country_salary ?? '' }}&nbsp;&nbsp;
+                                                                                @if ($cntry AND $cntry->currency != 'NPR')
+                                                                                    NPR: {{ $item->nepali_salary ?? '' }}
                                                                                 @endif
 
                                                                             </span>
@@ -162,23 +165,23 @@
                                                                             <div class="col-md-3">
                                                                                 @if ($application)
                                                                                     <a href="javascript:void(0);"
-                                                                                        class="btn btn-primary mr-5">Applied</a>
+                                                                                       class="btn btn-primary mr-5">Applied</a>
                                                                                 @else
                                                                                     <a href="/apply-job/{{ $item->id }}"
-                                                                                        class="btn btn-primary mr-5"> Apply
+                                                                                       class="btn btn-primary mr-5"> Apply
                                                                                         Now</a>
                                                                                 @endif
                                                                             </div>
                                                                             <div class="col-md-3">
                                                                                 @if ($savedJob->exists())
                                                                                     <a href="javascript:void(0);"
-                                                                                        class="saveJobButton ico-font">
+                                                                                       class="saveJobButton ico-font">
                                                                                         <i class="fa fa-heart"></i> Saved
                                                                                     </a>
                                                                                 @else
                                                                                     <a href="javascript:void(0);"
-                                                                                        onclick="savejob({{ $item->id }})"
-                                                                                        class="saveJobButton ico-font">
+                                                                                       onclick="savejob({{ $item->id }})"
+                                                                                       class="saveJobButton ico-font">
                                                                                         <i class="fa fa-heart-o"></i> Save Job
                                                                                     </a>
                                                                                 @endif
@@ -190,7 +193,7 @@
                                                                             </div>
                                                                             <div class="col-md-3">
                                                                                 <a href="/job/{{ $item->id }}"
-                                                                                    class="ico-font">
+                                                                                   class="ico-font">
                                                                                     <i class="fa fa-eye"></i>&nbsp;View
                                                                                     Details
                                                                                 </a>
@@ -203,7 +206,7 @@
                                                                             </div>
                                                                             <div class="col-md-3">
                                                                                 <a href="/job/{{ $item->id }}"
-                                                                                    class="ico-font">
+                                                                                   class="ico-font">
                                                                                     <i class="fa fa-eye"></i>&nbsp;View
                                                                                     Details
                                                                                 </a>
@@ -212,7 +215,7 @@
                                                                     @else
                                                                         <div class="col-md-3">
                                                                             <a href="/apply-job/{{ $item->id }}"
-                                                                                class="btn btn-primary mr-3"> Apply Now</a>
+                                                                               class="btn btn-primary mr-3"> Apply Now</a>
                                                                         </div>
                                                                         {{-- <div class="col-md-3">
                                                                             <a href="javascript:void(0);"
@@ -228,7 +231,7 @@
                                                                         </div>
                                                                         <div class="col-md-3">
                                                                             <a href="/job/{{ $item->id }}"
-                                                                                class="ico-font">
+                                                                               class="ico-font">
                                                                                 <i class="fa fa-eye"></i>&nbsp;View
                                                                                 Details
                                                                             </a>
@@ -258,13 +261,13 @@
                                                             <div class="item-card9-imgs">
                                                                 <a href="{{ route('viewJob', $item->id) }}"></a>
                                                                 <img src="{{ asset('/') }}{{ $item->feature_image_url ?? 'uploads/defaultimage.jpg' }}"
-                                                                    alt="img" class="h-100">
+                                                                     alt="img" class="h-100">
                                                             </div>
                                                         </div>
                                                         <div class="card-body">
                                                             <div class="item-card9">
                                                                 <a href="{{ route('viewJob', $item->id) }}"
-                                                                    class="text-dark mt-2">
+                                                                   class="text-dark mt-2">
                                                                     <h4 class="font-weight-semibold mt-1 mb-2">
                                                                         {{ $item->title }}({{ $item->num_of_positions }})
                                                                     </h4>
@@ -272,7 +275,7 @@
                                                                 <div class="mt-2 mb-2">
                                                                     @isset($company)
                                                                         <a href="/company-view/{{ $company->id }}"
-                                                                            class="mr-4"><span><i
+                                                                           class="mr-4"><span><i
                                                                                     class="fa fa-building-o text-muted mr-1"></i>
                                                                                 {{ $company->company_name }}</span></a>
                                                                     @endisset
@@ -285,8 +288,8 @@
                                                                             @endphp
                                                                             {{-- <i class="fa fa-map-marker text-muted mr-1"></i> --}}
                                                                             <img class="mb-1"
-                                                                                src="{{ asset('https://flagcdn.com/16x12/' . strtolower($country_flag) . '.png') }}"
-                                                                                alt="">
+                                                                                 src="{{ asset('https://flagcdn.com/16x12/' . strtolower($country_flag) . '.png') }}"
+                                                                                 alt="">
                                                                             {{ @DB::table('countries')->find($item->country_id)->name }}
                                                                         </span>
                                                                     </a>
@@ -296,9 +299,9 @@
                                                                         <span>
                                                                             Basic Salary:
                                                                             <span style="color: blue">
-                                                                                {{ $cntry->currency }}&nbsp;{{ $item->country_salary }}&nbsp;&nbsp;
-                                                                                @if ($cntry->currency != 'NPR')
-                                                                                    NPR: {{ $item->nepali_salary }}
+                                                                                {{ $cntry->currency ?? '' }}&nbsp;{{ $item->country_salary ?? '' }}&nbsp;&nbsp;
+                                                                                @if ($cntry AND $cntry->currency != 'NPR')
+                                                                                    NPR: {{ $item->nepali_salary ?? '' }}
                                                                                 @endif
 
                                                                             </span>
@@ -341,13 +344,13 @@
                                                                             <div class="col-md-6">
                                                                                 @if ($savedJob->exists())
                                                                                     <a href="javascript:void(0);"
-                                                                                        class="saveJobButton ico-grid-font">
+                                                                                       class="saveJobButton ico-grid-font">
                                                                                         <i class="fa fa-heart"></i> Saved
                                                                                     </a>
                                                                                 @else
                                                                                     <a href="javascript:void(0);"
-                                                                                        onclick="savejob({{ $item->id }})"
-                                                                                        class="saveJobButton ico-grid-font">
+                                                                                       onclick="savejob({{ $item->id }})"
+                                                                                       class="saveJobButton ico-grid-font">
                                                                                         <i class="fa fa-heart-o"></i> Save Job
                                                                                     </a>
                                                                                 @endif
@@ -360,16 +363,16 @@
                                                                             <div class="col-md-6 mt-3">
                                                                                 @if ($application)
                                                                                     <a href="javascript:void(0);"
-                                                                                        class="btn btn-primary mr-5">Applied</a>
+                                                                                       class="btn btn-primary mr-5">Applied</a>
                                                                                 @else
                                                                                     <a href="/apply-job/{{ $item->id }}"
-                                                                                        class="btn btn-primary mr-5"> Apply
+                                                                                       class="btn btn-primary mr-5"> Apply
                                                                                         Now</a>
                                                                                 @endif
                                                                             </div>
                                                                             <div class="col-md-6 mt-3">
                                                                                 <a href="/job/{{ $item->id }}"
-                                                                                    class="ico-grid-font">
+                                                                                   class="ico-grid-font">
                                                                                     <i class="fa fa-eye"></i>&nbsp;View
                                                                                     Details
                                                                                 </a>
@@ -382,7 +385,7 @@
                                                                             </div>
                                                                             <div class="col-md-6">
                                                                                 <a href="/job/{{ $item->id }}"
-                                                                                    class="ico-grid-font">
+                                                                                   class="ico-grid-font">
                                                                                     <i class="fa fa-eye"></i>&nbsp;View
                                                                                     Details
                                                                                 </a>
@@ -396,16 +399,16 @@
                                                                         </div>
                                                                         <div class="col-md-6">
                                                                             <a href="/apply-job/{{ $item->id }}"
-                                                                                class="btn btn-primary mr-3"> Apply Now</a>
+                                                                               class="btn btn-primary mr-3"> Apply Now</a>
                                                                         </div>
                                                                         <div class="col-md-6 mt-3">
                                                                             <a href="/job/{{ $item->id }}"
-                                                                                class="ico-grid-font">
+                                                                               class="ico-grid-font">
                                                                                 <i class="fa fa-eye"></i>&nbsp;View
                                                                                 Details
                                                                             </a>
                                                                         </div>
-                                                                        
+
 
                                                                     @endauth
 

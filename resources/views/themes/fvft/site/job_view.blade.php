@@ -557,6 +557,7 @@
 @endsection
 @section('script')
     <script>
+        @if(auth()->check() && auth()->user()->user_type == 'candidate')
         function savejob(job_id) {
             var url = "{{ route('candidate.savedjob.saveJob') }}";
             $.ajax({
@@ -585,5 +586,6 @@
                 },
             });
         }
+        @endif
     </script>
 @endsection
