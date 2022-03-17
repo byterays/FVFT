@@ -349,6 +349,8 @@ class JobsController extends Controller
         $job->max_experience = $request->max_experience;
         $job->min_age = $request->min_age;
         $job->max_age = $request->max_age;
+        $job->earning_country_salary = $request->earning_country_salary;
+        $job->earning_nepali_salary = $request->earning_nepali_salary;
         if (!empty($request->skills)) {
             foreach ($request->skills as $key => $skill) {
                 $skillData[] = $skill;
