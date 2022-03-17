@@ -361,6 +361,23 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
+                                                    <label for="" class="form-label">Average
+                                                        Earning&nbsp;:</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    @php
+                                                        $country = App\Models\Country::where('id', $job->country_id)->first() ?? null;
+                    
+                                                    @endphp
+                                                    {{ $job->country_id != null && $country != null && $job->earning_country_salary != null? 'Per Month ' . $country->currency . ' ' . $job->earning_country_salary: '' }}
+                                                    {{ $job->country_id != null && $country != null && $job->earning_nepali_salary != null? '- '.$country->currency . ' ' . $job->earning_nepali_salary: '' }}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-4">
                                                     <label for="" class="form-label">Accomodation&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
