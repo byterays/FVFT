@@ -165,8 +165,11 @@ class NewJobController extends Controller
     public function get_salary_and_facility_form(Request $request)
     {
         $job = Job::where('id', $request->job_id)->first();
-        $country = Country::where('id', $job->country_id)->first();
-        $currency = $country != null ? $country->currency : 'NPR';
+        // $currency = Country::where("id", $job->country_id)->first()->currency ?? 'NPR';
+        $currency = Country::where("id",  $job->country_id)->value('currency') ?? 'NPR';
+        // dd($currency);
+        // $country = Country::where('id', $job->country_id)->first();
+        // $currency = $country != null ? $country->currency : 'NPR';
         return $this->company_view('company.newjob.get_salary_and_facility_form', [
             'job' => $job,
             'currency' => $currency,
