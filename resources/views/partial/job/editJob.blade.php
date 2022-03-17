@@ -336,7 +336,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="salary" class="form-label">Average Salary&nbsp;<span
+                                <label for="salary" class="form-label">Average Earnings&nbsp;<span
                                         class="req">*</span></label>
                             </div>
                             <div class="col-md-8">
@@ -357,7 +357,7 @@
                                                     value="{{ $job->earning_nepali_salary }}" class="form-control">
                                             </div>
                                             <div class="col-md-4">
-                                                <label for="" class="form-label">NPR</label>
+                                                <label for="" class="form-label countrylabel">NPR</label>
                                             </div>
                                         </div>
                                     </div>

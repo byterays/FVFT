@@ -314,7 +314,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="salary" class="form-label">Average Salary</label>
+                                <label for="salary" class="form-label">Average Earnings</label>
                             </div>
                             <div class="col-md-8">
                                 <div class="row">
@@ -332,7 +332,7 @@
                                                 <input type="text" name="earning_nepali_salary" class="form-control">
                                             </div>
                                             <div class="col-md-4">
-                                                <label for="" class="form-label">NPR</label>
+                                                <label for="" class="form-label countrylabel">NPR</label>
                                             </div>
                                         </div>
                                     </div>

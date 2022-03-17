@@ -383,7 +383,7 @@
                                                             value="{{ $job->earning_nepali_salary }}" class="form-control">
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="" class="form-label">NPR</label>
+                                                        <label for="" class="form-label countrylabel">NPR</label>
                                                     </div>
                                                 </div>
                                             </div>

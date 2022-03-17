@@ -11,6 +11,8 @@ class Job extends Model
 {
     use HasFactory;
 
+    // earning_country_salary is equivalent to average_salary_from, and earning_nepali_salaryy is equivalent to average_salary_to
+
     protected $fillable = ['company_id', 'title', 'description', 'feature_image_url', 'benefits', 'salary_from', 'salary_to',
         'hide_salary', 'salary_currency', 'job_categories_id', 'job_shift_id', 'num_of_positions', 'expiry_date',
         'education_level_id', 'job_experience_id', 'is_active', 'is_featured', 'country_id', 'state_id', 'city_id',

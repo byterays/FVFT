@@ -104,7 +104,7 @@
                                                     <input type="text" name="earning_nepali_salary" value="{{ setParameter($job, 'earning_nepali_salary') }}" class="form-control">
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">NPR</label>
+                                                    <label for="" class="form-label countrylabel">{{ isset($currency) ? $currency : '' }}</label>
                                                 </div>
                                             </div>
                                         </div>
