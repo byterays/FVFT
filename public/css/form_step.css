@@ -41,14 +41,16 @@
                 height: 80px; */
     width: 40px;
     height: 40px;
-    border: 1px solid #e1e7ec;
+    border: 2px solid #292b2c;
     border-radius: 50%;
-    background-color: #f5f5f5;
-    color: #374250;
+    background-color: #c7c2c2;
+    color: #ffff;
+    /* background-color: #f5f5f5;
+    color: #374250; */
     /* font-size: 38px;
             line-height: 81px; */
     font-size: 25px;
-    line-height: 42px;
+    line-height: 40px;
     z-index: 5
 }
 
