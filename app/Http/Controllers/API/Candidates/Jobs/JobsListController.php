@@ -3,10 +3,18 @@
 namespace App\Http\Controllers\API\Candidates\Jobs;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
+use App\Models\Company;
+use App\Models\Country;
+use App\Models\Employe;
+use App\Models\JobCategory;
+use App\Models\SavedJob;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Traits\Api\ApiMethods;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class JobsListController extends Controller
 {
@@ -51,11 +59,11 @@ class JobsListController extends Controller
         if($request->has('include_applied')){
             if($request->include_applied){
                 $jobs->whereNotExists(function($query)
-                  {
-                      $query->select(DB::raw(1))
-                            ->from('job_applications')
-                            ->whereRaw('jobs.id = job_applications.job_id');
-                  });
+                {
+                    $query->select(DB::raw(1))
+                        ->from('job_applications')
+                        ->whereRaw('jobs.id = job_applications.job_id');
+                });
             }
         }
         $total_records=$jobs->count();
@@ -83,15 +91,15 @@ class JobsListController extends Controller
             "page_no"=>(int)$page_no,
         ];
         $page_no>1?
-        $pagination=array_merge(
-        $pagination,
-        ["previous"=>$page_no-1]
-        ):null;
+            $pagination=array_merge(
+                $pagination,
+                ["previous"=>$page_no-1]
+            ):null;
         $page_no<$total_page_no?
-        $pagination=array_merge(
-        $pagination,
-        ["next"=>$page_no+1]
-        ):null;
+            $pagination=array_merge(
+                $pagination,
+                ["next"=>$page_no+1]
+            ):null;
         return $this->sendResponse($results,"Jobs List.",$pagination);
     }
     public function process($job){
@@ -99,16 +107,16 @@ class JobsListController extends Controller
         $jobshifts=[];
         $job_shifts=DB::table("manage_job_shifts")->where("job_id",$job->id)->get();
         // dd($job_shifts);
-            foreach($job_shifts as $index=>$shift){
-                $jobshift= DB::table('job_shifts')->find($shift->job_shifts_id);
-                if($jobshift){
-                    $jobshifts[$index]=
-                        [
-                            "id"=>(int)$jobshift->id,
-                            "shift"=>$jobshift->job_shift
-                        ];
-                }
+        foreach($job_shifts as $index=>$shift){
+            $jobshift= DB::table('job_shifts')->find($shift->job_shifts_id);
+            if($jobshift){
+                $jobshifts[$index]=
+                    [
+                        "id"=>(int)$jobshift->id,
+                        "shift"=>$jobshift->job_shift
+                    ];
             }
+        }
         $educationlevels=DB::table('educationlevels')->find($job->education_level_id);
         $experiencelevels=DB::table('experiencelevels')->find($job->job_experience_id);
         $country=DB::table('countries')->find($job->country_id);
@@ -166,4 +174,62 @@ class JobsListController extends Controller
         ];
     }
 
+    public function getHome()
+    {
+        $banners = Banner::where('type', 'job')->where('is_active', 1)->get();
+
+        // 10 countries order by number of jobs desc
+        $countries = Country::has('jobs')->limit(10)->get();
+
+        // 5 categories
+        $categories = JobCategory::has('jobs')->limit(5)->get();
+
+        // 5 latest jobs
+        $new_jobs = Job::orderBy('id', 'desc')->limit(5)->get();
+
+
+        $all_jobs = Job::all()->random(5);
+
+        // 5 companies
+        $companies = Company::has('jobs')->limit(5)->get();
+
+        // 5 featured jobs
+//        $featured_jobs = $this->getFeaturedJobs();
+
+        $preferred_jobs= [];
+        $saved_jobs= [];
+
+        if (auth()->guard('api')->check()){
+            $user = auth()->guard('api')->user();
+            // 5 user preferred jobs
+            $employee = Employe::where('user_id',  $user->id)->first();
+            $preferred_jobs = $employee->preferredJobs();
+
+            // 5 latest user saved jobs
+            $saved_jobs_pivot = SavedJob::with('job')->where('employ_id', $employee->id)->limit(5)->get();
+            if (!blank($saved_jobs_pivot)){
+                foreach($saved_jobs_pivot as $value){
+                    $saved_jobs[] = $value->job;
+                }
+            }
+        }
+
+        return $this->sendResponse(compact(
+            'banners',
+            'countries',
+            'categories',
+            'preferred_jobs',
+            'new_jobs',
+            'new_jobs',
+            'all_jobs',
+            'companies',
+            'saved_jobs'
+        ),"success");
+    }
+
+
+    public function getFeaturedJobs()
+    {
+        return [];
+    }
 }

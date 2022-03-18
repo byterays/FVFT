@@ -167,5 +167,11 @@ class Employe extends Model
 
 
 
+    public function preferredJobs($limit=10)
+    {
+        $category = EmployJobPreference::where('employ_id', $this->id)->first();
+        $jobs = Job::where('job_categories_id', $category->job_category_id)->orWhere('country_id', $category->country_id)->limit($limit)->get();
+        return $jobs;
+    }
 
 }
