@@ -54,3 +54,7 @@ Route::get('news', [NewsController::class, 'list']);
 Route::get('news/{id}', [NewsController::class, 'index']);
 
 Route::get('banners', [BannerController::class, 'list']);
+
+Route::prefix('job/')->group(function () {
+    Route::get('home', [JobsListController::class, 'getHome']);
+});
