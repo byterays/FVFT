@@ -11,6 +11,8 @@ class Job extends Model
 {
     use HasFactory;
 
+    // earning_country_salary is equivalent to average_salary_from, and earning_nepali_salaryy is equivalent to average_salary_to
+
     protected $fillable = ['company_id', 'title', 'description', 'feature_image_url', 'benefits', 'salary_from', 'salary_to',
         'hide_salary', 'salary_currency', 'job_categories_id', 'job_shift_id', 'num_of_positions', 'expiry_date',
         'education_level_id', 'job_experience_id', 'is_active', 'is_featured', 'country_id', 'state_id', 'city_id',
@@ -18,7 +20,7 @@ class Job extends Model
         'no_of_male', 'no_of_female', 'any_gender', 'working_hours', 'working_days', 'contract_year',
         'contract_month', 'contract_description', 'min_experience', 'max_experience', 'min_age', 'max_age', 'skills',
         'requirement_intro', 'requirements', 'benefit_intro', 'accomodation', 'food', 'annual_vacation', 'over_time',
-        'pictures', 'description_intro', 'draft_status', 'draft_date', 'publish_date'];
+        'pictures', 'description_intro', 'draft_status', 'draft_date', 'publish_date', 'earning_country_salary', 'earning_nepali_salary'];
 
     public function company()
     {
@@ -38,6 +40,11 @@ class Job extends Model
     public function education_level()
     {
         return $this->belongsTo(EducationLevel::class, 'education_level_id');
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class, "country_id");
     }
 
     public function countApplicant()

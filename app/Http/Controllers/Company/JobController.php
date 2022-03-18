@@ -249,6 +249,8 @@ class JobController extends Controller
         $job->food = $request->food;
         $job->annual_vacation = $request->annual_vacation;
         $job->over_time = $request->over_time;
+        $job->earning_country_salary = $request->earning_country_salary;
+        $job->earning_nepali_salary = $request->earning_nepali_salary;
         $job->pictures = '';
         if ($request->hasFile('picture')) {
             if(!file_exists($this->picturedestination)){

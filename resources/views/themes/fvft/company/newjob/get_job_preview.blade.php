@@ -1,28 +1,39 @@
-@extends('themes.fvft.layouts.master')
-@section('title', 'Job Detail')
-@section('style')
-    <!-- jquery ui RangeSlider -->
-    <link href="{{ asset('themes/fvft/') }}/assets/plugins/jquery-uislider/jquery-ui.css" rel="stylesheet">
-@endsection
-@section('main')
-    @include('themes.fvft.site.components.header')
-    @php
-    $country = App\Models\Country::where('id', $job->country_id);
-    if ($country->exists()) {
-        $country = $country->first();
-    } else {
-        $country = null;
-    }
-    @endphp
+@extends('themes.fvft.company.layouts.dashmaster')
+@section('title', 'Add New Job')
+@section('jobs', 'active')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/datepicker.min.css') }}">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <style>
-        .hr hr {
-            margin-top: 1rem !important;
-            margin-bottom: 1rem !important;
+        .req {
+            color: red;
+        }
+
+        .tempcolor {
+            color: #1650e2;
+            font-weight: bold;
+        }
+
+        .ql-container {
+            height: 0 !important;
         }
 
     </style>
-    <section class="sptb">
-        <div class="container">
+@endsection
+@section('data')
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Add New Job</h3>
+        </div>
+    </div>
+    @include('partial.job.step')
+    <div class="alert alert-secondary d-none" role="alert"><button type="button" class="close" data-dismiss="alert"
+            aria-hidden="true">×</button><span id="db_error" class="db_error"></span></div>
+    <form action="{{ route('company.newjob.post_salary_and_facility') }}" method="POST" enctype="multipart/form-data"
+        id="jobForm">
+        @csrf
+        <input type="hidden" value="{{ setParameter($job, 'id') }}" name="job_id" class="form-control">
+        <div class="col-xl-12">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12">
                     <!--Jobs Description-->
@@ -35,9 +46,9 @@
                                             <img src="{{ asset('/') }}{{ $job->feature_image_url != null ? $job->feature_image_url : 'uploads/defaultimage.jpg' }}"
                                                 class="w-20 h-20" alt="user">
                                             <div class="ml-4">
-                                                <a href="/job/{{ $job->id }}" class="text-dark">
+                                                <span class="text-dark">
                                                     <h4 class="mt-3 mb-1 fs-20 font-weight-bold">{{ $job->title }}</h4>
-                                                </a>
+                                                </span>
                                                 <div class="">
                                                     <ul class="mb-0 d-flex">
                                                         <li class="mr-3"><a href="#" class="icons"><i
@@ -48,16 +59,16 @@
                                                     <ul class="mb-0 mt-2 d-flex">
                                                         <li class="mr-3">
                                                             <a href="#" class="icons">
-                                                                <img src="{{ asset($country != null ? 'https://flagcdn.com/16x12/' . strtolower($country->iso2) . '.png' : '') }}"
+                                                                <img src="{{ asset(!empty($job->country) ? 'https://flagcdn.com/16x12/' . strtolower($job->country->iso2) . '.png' : '') }}"
                                                                     class="mb-1" alt="">
-                                                                {{ $country != null ? $country->name : '' }}
+                                                                {{ !empty($job->country) ? $job->country->name : '' }}
                                                             </a>
                                                         </li>
                                                         <li class="mr-3">
                                                             <a href="#" class="icons">
                                                                 Basic Salary: <span class="blue">
-                                                                    {{ $country->currency }}&nbsp;{{ $job->country_salary }}&nbsp;&nbsp;
-                                                                    @if ($country->currency != 'NPR')
+                                                                    {{ !empty($job->country) ? $job->country->currency : '' }}&nbsp;{{ $job->country_salary }}&nbsp;&nbsp;
+                                                                    @if (!empty($job->country) && $job->country->currency != 'NPR')
                                                                         NPR: {{ $job->nepali_salary }}
                                                                     @endif
                                                                 </span>
@@ -80,89 +91,7 @@
                                                 <div class="hr">
                                                     <hr>
                                                 </div>
-                                                <div class="icons">
-                                                    <div class="row">
-                                                        @auth
-                                                            @if (auth()->user()->user_type == 'candidate')
-                                                                @php
-                                                                    $application = \DB::table('job_applications')
-                                                                        ->where('job_id', $job->id)
-                                                                        ->where('employ_id', $employ->id)
-                                                                        ->first();
-                                                                    $savedJob = App\Models\SavedJob::where('employ_id', $employ->id)->where('job_id', $job->id);
-                                                                @endphp
-
-                                                                <div class="col-md-3">
-                                                                    @if ($application)
-                                                                        <a href="javascript:void(0);"
-                                                                            class="btn btn-primary mr-5">Applied</a>
-                                                                    @else
-                                                                        <a href="/apply-job/{{ $job->id }}"
-                                                                            class="btn btn-primary mr-5"> Apply
-                                                                            Now</a>
-                                                                    @endif
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    @if ($savedJob->exists())
-                                                                        <a href="javascript:void(0);"
-                                                                            class="saveJobButton ico-grid-font">
-                                                                            <i class="fa fa-heart"></i> Saved
-                                                                        </a>
-                                                                    @else
-                                                                        <a href="javascript:void(0);"
-                                                                            onclick="savejob({{ $job->id }})"
-                                                                            class="saveJobButton ico-grid-font">
-                                                                            <i class="fa fa-heart-o"></i> Save Job
-                                                                        </a>
-                                                                    @endif
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <a href="#" class="ico-grid-font">
-                                                                        <i class="fa fa-share-alt"></i>&nbsp;Share
-                                                                    </a>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <a href="/job/{{ $job->id }}" class="ico-grid-font">
-                                                                        <i class="fa fa-eye"></i>&nbsp;View
-                                                                        Details
-                                                                    </a>
-                                                                </div>
-                                                            @elseif(auth()->user()->user_type == 'company')
-                                                                <div class="col-md-3">
-                                                                    <a href="#" class="ico-grid-font">
-                                                                        <i class="fa fa-share-alt"></i>&nbsp;Share
-                                                                    </a>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <a href="/job/{{ $job->id }}" class="ico-grid-font">
-                                                                        <i class="fa fa-eye"></i>&nbsp;View
-                                                                        Details
-                                                                    </a>
-                                                                </div>
-                                                            @endif
-                                                        @else
-                                                            <div class="col-md-3">
-                                                                <a href="/apply-job/{{ $job->id }}"
-                                                                    class="btn btn-primary mr-3"> Apply Now</a>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <a href="#" class="ico-grid-font">
-                                                                    <i class="fa fa-share-alt"></i>&nbsp;Share
-                                                                </a>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <a href="/job/{{ $job->id }}" class="ico-grid-font">
-                                                                    <i class="fa fa-eye"></i>&nbsp;View
-                                                                    Details
-                                                                </a>
-                                                            </div>
-
-                                                        @endauth
-
-                                                    </div>
-
-                                                </div>
+                                                {{-- icons code here saved job, apply now --}}
                                             </div>
                                         </div>
                                     </div>
@@ -315,9 +244,8 @@
                                                             ->pluck('title')
                                                             ->toArray()
                                                         : '';
-                                            
-                                                // $skills = '<span class="badge badge-success">' . implode('</span> <span class="badge badge-success">', $skills) . '</span>'; //working code(converted to function)
-												$skills = $skills != null ? wrapInTag($skills, 'span', 'class="badge badge-success"', ' ') : '';
+                                                
+                                               $skills = $skills != null ? wrapInTag($skills, 'span', 'class="badge badge-success"', ' ') : '';
                                                 
                                             @endphp
                                             <div class="row">
@@ -325,8 +253,8 @@
                                                     <label for="" class="form-label">Skills&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
-													{!! $skills !!}
-                                                    
+                                                    {!! $skills !!}
+
                                                 </div>
                                             </div>
                                         </div>
@@ -437,172 +365,55 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="card-body border-top">
-                            <h4 class="mb-4 card-title">Job Description</h4>
-                            <div class="mb-4">
-                                <p>{!! html_entity_decode($job->description_intro) !!}</p>
-
-                            </div>
-                            <h4 class="mb-4 card-title">Job Details</h4>
-                            <div class="row">
-                                <div class="col-xl-12 col-md-12">
-                                    <div class="table-responsive">
-                                        <table class="table row table-borderless w-100 m-0 text-nowrap ">
-                                            <tbody class="col-lg-12 col-xl-6 p-0">
-                                                <tr>
-                                                    <td class="w-150 px-0"><span class="font-weight-semibold">Job
-                                                            Type</span></td>
-                                                    <td><span>:</span></td>
-                                                    <td><span>
-                                                            {{ @DB::table('job_shifts')->find($item->job_shift_id)->job_shift }}</span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="w-150 px-0"><span class="font-weight-semibold">Min
-                                                            Salary</span></td>
-                                                    <td><span>:</span></td>
-                                                    <td><span> Rs.{{ $job->salary_from }}/-</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="w-150 px-0"><span class="font-weight-semibold">Max
-                                                            Salary</span></td>
-                                                    <td><span>:</span></td>
-                                                    <td><span> Rs.{{ $job->salary_to }}/-</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="w-150 px-0"><span class="font-weight-semibold">Uploads
-                                                            at</span></td>
-                                                    <td><span>:</span></td>
-                                                    <td><span>{{ \Carbon\Carbon::parse($job->updated_at)->diffForHumans() }}</span>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <tbody class="col-lg-12 col-xl-6 p-0">
-                                                <tr>
-                                                    <td class="w-150 px-0"><span class="font-weight-semibold">
-                                                            Expired</span></td>
-                                                    <td><span>:</span></td>
-                                                    <td><span>
-                                                            {{ \Carbon\Carbon::parse($job->expiry_date)->diffForHumans() }}</span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="w-150 px-0"><span
-                                                            class="font-weight-semibold">Location</span></td>
-                                                    <td><span>:</span></td>
-                                                    <td><span>
-                                                            {{ @DB::table('cities')->find($item->city_id)->name . ',' }}
-                                                            {{ @DB::table('countries')->find($item->country_id)->name }}</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="w-150 px-0"><span
-                                                            class="font-weight-semibold">Eligibility</span></td>
-                                                    <td><span>:</span></td>
-                                                    <td><span>
-                                                            {{ @DB::table('educationlevels')->find($job->education_level_id)->title }}</span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="w-150 px-0"><span
-                                                            class="font-weight-semibold">Company</span></td>
-                                                    <td><span>:</span></td>
-                                                    <td><span> {{ $company->company_name }}</span></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="list-id">
-                                <div class="row">
-                                    <div class="col">
-                                        <a class="mb-0">Job ID : #{{ $job->id }}</a>
-                                    </div>
-                                    <div class="col col-auto">
-                                        Posted By <a class="mb-0 font-weight-bold">{{ $company->company_name }}</a> /
-                                        {{ \Carbon\Carbon::parse($job->created_at)->diffForHumans() }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-light-50">
-                            <div class="icons">
-                                @auth
-                                    @if (auth()->user()->user_type == 'candidate')
-                                        @php
-                                            $application = \DB::table('job_applications')
-                                                ->where('job_id', $job->id)
-                                                ->where('employ_id', $employ->id)
-                                                ->first();
-                                        @endphp
-                                        @if ($application)
-                                            <a href="javascript:void(0);" class="btn btn-danger icons mt-1 mb-1">Applied</a>
-                                            
-                                        @else
-                                            <a href="/apply-job/{{ $job->id }}" class="btn btn-info icons"> Apply Now</a>
-                                        @endif
-                                    @endif
-                                @else
-                                    <a href="/apply-job/{{ $job->id }}" class="btn btn-info icons"> Apply Now</a>
-                                @endauth
-                                <a href="#" class="btn btn-primary icons mt-1 mb-1"><i class="si si-share mr-1"></i> Share
-                                    Job</a>
-                                <a href="#" class="btn btn-info icons mt-1 mb-1"><i class="si si-printer  mr-1"></i>
-                                    Print</a>
-                                <a href="#" class="btn btn-danger icons mt-1 mb-1" data-toggle="modal"
-                                    data-target="#report"><i class="icon icon-exclamation mr-1"></i> Report Abuse</a>
-                            </div>
-                        </div> --}}
                     </div>
-                    <!--Jobs Description-->
-
                 </div>
-
-                <!--Right Side Content-->
-
-                <!--/Right Side Content-->
+                <div class="mx-auto">
+                    <span>Salary and Facility</span>&nbsp;&nbsp;&nbsp;<a
+                        href="{{ route('company.newjob.get_salary_and_facility_form', ['job_id' => request()->job_id]) }}"
+                        class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i> Back</a>
+                    <a href="{{ route('company.newjob.get_approval_form', ['job_id' => request()->job_id]) }}" class="btn btn-primary rounded-0 ml-5">Next <i
+                            class="fa fa-arrow-right"></i></a>&nbsp;&nbsp;&nbsp;<span>Send To Approval</span>
+                </div>
             </div>
         </div>
-    </section>
-
-    @include('themes.fvft.site.components.footer')
+    </form>
 @endsection
 @section('script')
     <script>
-        @if(auth()->check() && auth()->user()->user_type == 'candidate')
-        function savejob(job_id) {
-            var url = "{{ route('candidate.savedjob.saveJob') }}";
+        const _token = $('meta[name="csrf-token"]')[0].content;
+        const appurl = "{{ env('APP_URL') }}";
+
+        function submitForm(e) {
+            e.preventDefault();
+            $('.require').css('display', 'none');
+            let url = $("#jobForm").attr("action");
+            var formData = new FormData($("#jobForm")[0]);
             $.ajax({
                 url: url,
-                type: 'POST',
-                data: {
-                    'job_id': job_id,
-                    'employ_id': '{{ $employ->id }}',
-                },
-                beforeSend: function() {
-                    $(".saveJobButton").attr('disabled', true);
-                },
-                success: function(response) {
-                    if (response.db_error) {
-                        toastr.warning(response.db_error);
-                    } else if (response.error) {
-                        toastr.warning(response.error);
-                    } else if (response.redirectRoute) {
-                        location.href = response.redirectRoute
-                    } else {
-                        toastr.success(response.msg);
+                type: 'post',
+                data: formData,
+                // data: new FormData($("#jobForm")[0]),
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data) {
+                    // return true;
+                    if (data.db_error) {
+                        $(".alert-warning").css('display', 'block');
+                        $(".db_error").html(data.db_error);
+                        toastr.warning(data.db_error);
+                    } else if (data.errors) {
+                        var error_html = "";
+                        $.each(data.errors, function(key, value) {
+                            error_html = '<div>' + value + '</div>';
+                            $('.' + key).css('display', 'block').html(error_html);
+                        });
+                    } else if (!data.errors && !data.db_error) {
+                        location.href = data.redirectRoute;
+                        // toastr.success(data.msg);
                     }
-                },
-                complete: function() {
-                    $(".saveJobButton").attr('disabled', false);
-                },
+                }
             });
         }
-        @endif
     </script>
 @endsection
