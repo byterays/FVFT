@@ -90,6 +90,7 @@ class JobController extends Controller
             "countries" => $this->countries,
             'skills' => DB::table('skills')->get(),
         ];
+        // return $this->company_view('company.newjob.get_job', $fields);
         return $this->company_view('company.job.editjob', $fields);
     }
 

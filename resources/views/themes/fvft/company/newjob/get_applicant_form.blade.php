@@ -27,9 +27,11 @@
         </div>
     </div>
     @include('partial.job.step')
+    @dd($editRoute)
     <div class="alert alert-secondary d-none" role="alert"><button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">×</button><span id="db_error" class="db_error"></span></div>
-    <form action="{{ route('company.newjob.post_applicant_form') }}" method="POST" enctype="multipart/form-data" id="jobForm">
+    <form action="{{ route('company.newjob.post_applicant_form') }}" method="POST" enctype="multipart/form-data"
+        id="jobForm">
         @csrf
         <div class="col-xl-12">
             <div class="row">
@@ -41,16 +43,21 @@
                         <div class="form-group">
                             <input type="hidden" value="{{ setParameter($job, 'id') }}" class="form-control"
                                 name="job_id">
+                            <input type="hidden" class="form-control" name="editRoute"
+                                value="{{ $editRoute }}">
                             <div class="row">
                                 <div class="col-md-4">
                                     <label for="education_level" class="form-label">Minimum
                                         Qualification&nbsp;<span class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="education_level" class="form-contorl select2-show-search" data-placeholder="Select Qualification">
+                                    <select name="education_level" class="form-contorl select2-show-search"
+                                        data-placeholder="Select Qualification">
                                         <option value="">Select Qualification</option>
                                         @foreach ($educationlevels as $educationlevel)
-                                            <option value="{{ $educationlevel->id }}" {{ setParameter($job, 'education_level_id') == $educationlevel->id ? 'selected' : '' }}>{{ $educationlevel->title }}
+                                            <option value="{{ $educationlevel->id }}"
+                                                {{ setParameter($job, 'education_level_id') == $educationlevel->id ? 'selected' : '' }}>
+                                                {{ $educationlevel->title }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -69,7 +76,9 @@
                                             <select name="min_experience" class="form-control select2">
                                                 <option value="">Min</option>
                                                 @for ($i = 0; $i <= 10; $i++)
-                                                    <option value="{{ $i }}" {{ setParameter($job, 'min_experience') != null && setParameter($job, 'min_experience') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                    <option value="{{ $i }}"
+                                                        {{ setParameter($job, 'min_experience') != null && setParameter($job, 'min_experience') == $i ? 'selected' : '' }}>
+                                                        {{ $i }}</option>
                                                 @endfor
                                             </select>
                                         </div>
@@ -77,7 +86,9 @@
                                             <select name="max_experience" class="form-control select2">
                                                 <option value="">Max</option>
                                                 @for ($i = 1; $i <= 15; $i++)
-                                                    <option value="{{ $i }}" {{ setParameter($job, 'max_experience') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                    <option value="{{ $i }}"
+                                                        {{ setParameter($job, 'max_experience') == $i ? 'selected' : '' }}>
+                                                        {{ $i }}</option>
                                                 @endfor
                                             </select>
                                         </div>
@@ -98,7 +109,9 @@
                                             <select name="min_age" class="form-control select2">
                                                 <option value="">Min</option>
                                                 @for ($i = 18; $i <= 25; $i++)
-                                                    <option value="{{ $i }}" {{ setParameter($job, 'min_age') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                    <option value="{{ $i }}"
+                                                        {{ setParameter($job, 'min_age') == $i ? 'selected' : '' }}>
+                                                        {{ $i }}</option>
                                                 @endfor
                                             </select>
                                         </div>
@@ -106,7 +119,9 @@
                                             <select name="max_age" class="form-control select2">
                                                 <option value="">Max</option>
                                                 @for ($i = 18; $i <= 50; $i++)
-                                                    <option value="{{ $i }}" {{ setParameter($job, 'max_age') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                    <option value="{{ $i }}"
+                                                        {{ setParameter($job, 'max_age') == $i ? 'selected' : '' }}>
+                                                        {{ $i }}</option>
                                                 @endfor
                                             </select>
                                         </div>
@@ -124,7 +139,9 @@
                                 <div class="col-md-6">
                                     <select name="skills[]" id="skill" class="form-control select2" multiple="multiple">
                                         @foreach ($skills as $skill)
-                                            <option value="{{ $skill->id }}" {{ json_decode(setParameter($job, 'skills'), true) != null && in_array($skill->id, json_decode(setParameter($job, 'skills'), true))? 'selected': '' }}>{{ $skill->title }}</option>
+                                            <option value="{{ $skill->id }}"
+                                                {{ json_decode(setParameter($job, 'skills'), true) != null &&in_array($skill->id, json_decode(setParameter($job, 'skills'), true))? 'selected': '' }}>
+                                                {{ $skill->title }}</option>
                                         @endforeach
                                     </select>
                                     <div class="require text-danger skills"></div>
@@ -141,9 +158,11 @@
                                     <label for="requirements" class="form-label">Other Requirements</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="hidden" class="form-control" value="{{ setParameter($job, 'requirements') }}" name="other_requirements"
+                                    <input type="hidden" class="form-control"
+                                        value="{{ setParameter($job, 'requirements') }}" name="other_requirements"
                                         id="requirementID">
-                                    <input type="hidden" class="form-control" value="{{ setParameter($job, 'requirement_intro') }}" name="requirement_intro"
+                                    <input type="hidden" class="form-control"
+                                        value="{{ setParameter($job, 'requirement_intro') }}" name="requirement_intro"
                                         id="requirement_intro">
                                     <div id="editor" style="min-height: 15rem;">
                                     </div>
@@ -153,9 +172,16 @@
                     </div>
                 </div>
                 <div class="mx-auto">
-                    <span>Job Details</span>&nbsp;&nbsp;&nbsp;<a
-                        href="{{ route('company.newjob.get_job_detail', ['job_id' => request()->job_id]) }}"
-                        class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i> Back</a>
+                    @if (request()->editRoute == 'company.editjob')
+                        <span>Job Details</span>&nbsp;&nbsp;&nbsp;<a
+                            href="{{ route('company.editjob', request()->job_id) }}" class="btn btn-primary rounded-0"><i
+                                class="fa fa-arrow-left"></i> Back</a>
+                    @else
+                        <span>Job Details</span>&nbsp;&nbsp;&nbsp;<a
+                            href="{{ route('company.newjob.get_job_detail', ['job_id' => request()->job_id]) }}"
+                            class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i> Back</a>
+                    @endif
+
                     <button type="button" onclick="submitForm(event);" class="btn btn-primary rounded-0 ml-5">Next <i
                             class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>Salary and Facility</span>
                 </div>

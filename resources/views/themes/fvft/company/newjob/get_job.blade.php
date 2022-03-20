@@ -47,6 +47,8 @@
                                 <div class="col-md-8">
                                     <input type="text" value="{{ setParameter($job, 'title') }}" name="title" class="form-control" placeholder="Enter Job Title">
                                     <input type="hidden" class="form-control" name="job_id" value="{{ setParameter($job, 'id') }}">
+                                    <input type="hidden" class="form-control" name="status" value="{{ setParameter($job, 'status') }}">
+                                    <input type="hidden" class="form-control" name="editRoute" value="{{ Route::currentRouteName() }}">
                                     <div class="require text-danger title"></div>
                                 </div>
                             </div>
