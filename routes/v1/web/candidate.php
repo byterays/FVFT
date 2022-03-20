@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Candidates\AuthController;
 use App\Http\Controllers\Candidates\DashController;
 use App\Http\Controllers\Candidates\JobController;
+use App\Http\Controllers\Candidates\ProfileController;
 
 Route::get('/login', [AuthController::class, 'login'])->name('candidate.login');
 Route::post('/register', [AuthController::class, 'register'])->name('candidate.register');
@@ -35,5 +36,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['prefix' => 'recommended-job/', 'as' => 'candidate.'], function(){
         Route::get('', [JobController::class, 'recommended_job'])->name('recommended_job');
+    });
+
+
+    // Workout on New profile design
+    Route::group(['prefix' => 'profile/', 'as' => 'candidate.profile.'], function(){
+        Route::get('index', [ProfileController::class, 'profile'])->name('index');
     });
 });

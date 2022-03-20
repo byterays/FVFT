@@ -95,6 +95,11 @@ class Employe extends Model
         return $this->belongsTo(City::class, 'city_id');
     }
 
+    public function education_level()
+    {
+        return $this->belongsTo(EducationLevel::class, 'education_level_id');
+    }
+
     public function job_applications()
     {
         return $this->hasMany(JobApplication::class, 'employ_id');
