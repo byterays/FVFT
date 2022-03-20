@@ -49,5 +49,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('get-qualification',[ProfileController::class, 'get_qualification'])->name('get_qualification');
         Route::post('post-qualification',[ProfileController::class, 'post_qualification'])->name('post_qualification');
         Route::get('get-experience', [ProfileController::class, 'get_experience'])->name('get_experience');
+        Route::post('post-experience', [ProfileController::class, 'post_experience'])->name('post_experience');
+        Route::get('get-preview', [ProfileController::class, 'get_preview'])->name('get_preview');
+        Route::get('get-save', [ProfileController::class, 'get_save'])->name('get_save');
     });
 });

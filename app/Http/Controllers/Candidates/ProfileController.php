@@ -205,7 +205,7 @@ class ProfileController extends Controller
                         $skillData[] = $skill;
                     }
                     // $employe->skills = json_encode($skillData);
-                    $fields['skills'] = json_encode($trainingData);
+                    $fields['skills'] = json_encode($skillData);
                 }
                 if (!empty($request->language)) {
                     $languageData = [];
@@ -216,16 +216,18 @@ class ProfileController extends Controller
                                 'language_level' => $request->get('language_level')[$key],
                             ];
                         }
-        
+
                     }
                     if (!empty($languageData)) {
                         // $employe->languages = json_encode($languageData);
-                        $fields['languages'] = json_encode($trainingData);
+                        $fields['languages'] = json_encode($languageData);
                     }
-        
+
                 }
                 $fields['education_level_id'] = $request->education_level_id;
                 $employe->update($fields);
+                $this->__updateEmployeeSkill($employe->id, $request);
+                $this->__updateEmployeLanguage($employe->id, $request);
                 DB::commit();
                 $redirectTo = route('candidate.profile.get_experience');
                 return response()->json(['redirectRoute' => $redirectTo]);
@@ -242,6 +244,61 @@ class ProfileController extends Controller
             'employ' => $employ,
             'jobs' => $this->jobs,
             'languages' => $this->languages,
+        ]);
+    }
+
+    public function post_experience(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $employe = Employe::where('user_id', $request->user_id)->first();
+            $fields = [];
+            $fields['is_experience'] = $request->is_experience !== null && $request->is_experience == 'Yes' ? 1 : 0;
+            if ($request->is_experience != null && $request->is_experience == 'Yes' && !empty($request->country_id)) {
+                $experienceData = [];
+                foreach ($request->country_id as $key => $country) {
+                    if ($country != null) {
+                        $experienceData[] =
+                            [
+                            'country_id' => $country,
+                            'job_category_id' => $request->get('job_category_id')[$key],
+                            'job_title_id' => $request->get('job_title')[$key],
+                            'working_year' => $request->get('working_year')[$key],
+                            'working_month' => $request->get('working_month')[$key],
+                        ];
+                    }
+
+                }
+                if (!empty($experienceData)) {
+                    $fields['experiences'] = json_encode($experienceData);
+                    // $employe->experiences = json_encode($experienceData);
+                }
+
+            }
+            $employe->update($fields);
+            $this->__updateExperience($employe->id, $request);
+            DB::commit();
+            $redirectTo = route('candidate.profile.get_preview');
+            return response()->json(['redirectRoute' => $redirectTo]);
+        } catch (\Exception$e) {
+            DB::rollBack();
+            return response()->json(['db_error' => $e->getMessage()]);
+        }
+    }
+
+    public function get_preview()
+    {
+        $employ = Employe::where('user_id', Auth::user()->id)->with(['user:id,email', 'country:id,name', 'state:id,name', 'city:id,name', 'education_level:id,title', 'employeeSkills.skill:id,title', 'employeeLanguage.language:id,lang', 'experience.country:id,name', 'experience.job_category:id,functional_area', 'experience.job:id,title'])->first();
+        return $this->client_view('candidates.profile.get_preview', [
+            'employ' => $employ,
+        ]);
+    }
+
+    public function get_save()
+    {
+        $employ = $this->employe();
+        return $this->client_view('candidates.profile.get_save', [
+            'employ' => $employ,
         ]);
     }
 
