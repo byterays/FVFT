@@ -42,5 +42,12 @@ Route::middleware(['auth'])->group(function () {
     // Workout on New profile design
     Route::group(['prefix' => 'profile/', 'as' => 'candidate.profile.'], function(){
         Route::get('index', [ProfileController::class, 'profile'])->name('index');
+        Route::get('get-personal-information',[ProfileController::class, 'get_personal_information'])->name('get_personal_information');
+        Route::post('post-personal-information',[ProfileController::class, 'post_personal_information'])->name('post_personal_information');
+        Route::get('get-contact-information',[ProfileController::class, 'get_contact_information'])->name('get_contact_information');
+        Route::post('post-contact-information',[ProfileController::class, 'post_contact_information'])->name('post_contact_information');
+        Route::get('get-qualification',[ProfileController::class, 'get_qualification'])->name('get_qualification');
+        Route::post('post-qualification',[ProfileController::class, 'post_qualification'])->name('post_qualification');
+        Route::get('get-experience', [ProfileController::class, 'get_experience'])->name('get_experience');
     });
 });
