@@ -27,7 +27,6 @@
         </div>
     </div>
     @include('partial.job.step')
-    @dd($editRoute)
     <div class="alert alert-secondary d-none" role="alert"><button type="button" class="close" data-dismiss="alert"
             aria-hidden="true">×</button><span id="db_error" class="db_error"></span></div>
     <form action="{{ route('company.newjob.post_applicant_form') }}" method="POST" enctype="multipart/form-data"
