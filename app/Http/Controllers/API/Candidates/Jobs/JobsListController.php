@@ -185,14 +185,25 @@ class JobsListController extends Controller
         $categories = JobCategory::has('jobs')->limit(5)->get();
 
         // 5 latest jobs
-        $new_jobs = Job::orderBy('id', 'desc')->limit(5)->get();
+        $new_jobs = Job::with(['company', 'country'])->orderBy('id', 'desc')->limit(5)->get();
 
 
-        $all_jobs = Job::all()->random(5);
+        $all_jobs = Job::with(['company', 'country'])->all()->random(5);
+
+        $featured_jobs = Job::where('is_featured', 1)->with(['company', 'country'])->all()->random(5);
 
         // 5 companies
         $companies = Company::has('jobs')->limit(5)->get();
 
+//        company => object
+//education_level => object
+//job_category  => object
+//job_shift => object
+//job_experience => object
+//counrty => object
+//state => object
+//city => object
+//
         // 5 featured jobs
 //        $featured_jobs = $this->getFeaturedJobs();
 
@@ -206,7 +217,7 @@ class JobsListController extends Controller
             $preferred_jobs = $employee->preferredJobs();
 
             // 5 latest user saved jobs
-            $saved_jobs_pivot = SavedJob::with('job')->where('employ_id', $employee->id)->limit(5)->get();
+            $saved_jobs_pivot = SavedJob::with(['job', 'job.company', 'job.country'])->where('employ_id', $employee->id)->limit(5)->get();
             if (!blank($saved_jobs_pivot)){
                 foreach($saved_jobs_pivot as $value){
                     $saved_jobs[] = $value->job;
