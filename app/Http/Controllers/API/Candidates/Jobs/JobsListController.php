@@ -179,21 +179,21 @@ class JobsListController extends Controller
         $banners = Banner::where('type', 'job')->where('is_active', 1)->get();
 
         // 10 countries order by number of jobs desc
-        $countries = Country::has('jobs')->limit(10)->get();
+        $countries = Country::has('jobs')->inRandomOrder(10)->get();
 
         // 5 categories
-        $categories = JobCategory::has('jobs')->limit(5)->get();
+        $categories = JobCategory::has('jobs')->inRandomOrder(5)->get();
 
         // 5 latest jobs
         $new_jobs = Job::with(['company', 'country'])->orderBy('id', 'desc')->limit(5)->get();
 
 
-        $all_jobs = Job::with(['company', 'country'])->all()->random(5);
+        $all_jobs = Job::with(['company', 'country'])->inRandomOrder(5)->get();
 
-        $featured_jobs = Job::where('is_featured', 1)->with(['company', 'country'])->all()->random(5);
+        $featured_jobs = Job::where('is_featured', 1)->with(['company', 'country'])->inRandomOrder(5)->get();
 
         // 5 companies
-        $companies = Company::has('jobs')->limit(5)->get();
+        $companies = Company::has('jobs')->inRandomOrder(5)->get();
 
 //        company => object
 //education_level => object
@@ -234,7 +234,8 @@ class JobsListController extends Controller
             'new_jobs',
             'all_jobs',
             'companies',
-            'saved_jobs'
+            'saved_jobs',
+            'featured_jobs'
         ),"success");
     }
 
