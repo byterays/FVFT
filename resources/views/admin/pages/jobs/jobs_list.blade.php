@@ -28,53 +28,77 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-
             <div class="card">
-                <div class="card-header d-flex">
-                    <h3 class="card-title" style="width: 100%;">Jobs List</h3>
+                <div class="card-header">
+
                     <form action="{{ route('admin.jobs-list') }}" method="GET">
-                        <input type="text" name="title" value="{{ request('title') }}" class="form-control"
-                            placeholder="Search By Title">
-                        <select name="category_id" class="form-control">
-                            <option value="">Select Category</option>
-                            @foreach ($job_categories as $job_category)
-                                <option value="{{ $job_category->id }}"
-                                    {{ request('category_id') == $job_category->id ? 'selected' : '' }}>
-                                    {{ $job_category->functional_area }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <select name="employer_id" class="form-control">
-                            <option value="">Select Employer</option>
-                            @foreach ($companies as $company)
-                                <option value="{{ $company->id }}"
-                                    {{ request('employer_id') == $company->id ? 'selected' : '' }}>
-                                    {{ $company->company_name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <select name="country_id" class="form-control">
-                            <option value="">Select Country</option>
-                            @foreach ($countries as $country)
-                                <option value="{{ $country->id }}"
-                                    {{ request('country_id') == $country->id ? 'selected' : '' }}>{{ $country->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @php
-                            $statuses = ['Pending', 'Approved', 'Published', 'Expired'];
-                        @endphp
-                        <select name="job_status" class="form-control">
-                            <option value="">Select Status</option>
-                            @foreach($statuses as $value)
-                            <option value="{{ $value }}" {{ request('job_status') == $value ? 'selected': '' }}>{{ $value }}</option>
-                            @endforeach
-                        </select>
-                        <button type="submit" class="btn btn-primary">Search</button>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h3 class="card-title mt-2" style="width: 100%;">Jobs List</h3>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <a href="/admin/jobs-new" class="btn btn-primary float-right"><i class="fe fe-plus mr-2"></i>Add New</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" name="title" value="{{ request('title') }}" class="form-control"
+                                    placeholder="Search By Title">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <select name="category_id" class="form-control">
+                                    <option value="">Select Category</option>
+                                    @foreach ($job_categories as $job_category)
+                                        <option value="{{ $job_category->id }}"
+                                            {{ request('category_id') == $job_category->id ? 'selected' : '' }}>
+                                            {{ $job_category->functional_area }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <select name="employer_id" class="form-control">
+                                    <option value="">Select Employer</option>
+                                    @foreach ($companies as $company)
+                                        <option value="{{ $company->id }}"
+                                            {{ request('employer_id') == $company->id ? 'selected' : '' }}>
+                                            {{ $company->company_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <select name="country_id" class="form-control">
+                                    <option value="">Select Country</option>
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}"
+                                            {{ request('country_id') == $country->id ? 'selected' : '' }}>
+                                            {{ $country->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                @php
+                                    $statuses = ['Pending', 'Approved', 'Published', 'Expired'];
+                                @endphp
+                                <select name="job_status" class="form-control">
+                                    <option value="">Select Status</option>
+                                    @foreach ($statuses as $value)
+                                        <option value="{{ $value }}"
+                                            {{ request('job_status') == $value ? 'selected' : '' }}>{{ $value }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                            
+                        </div>
+                        
                     </form>
-                    <div class="d-flex flex-row-reverse mb-2">
-                        <a href="/admin/jobs-new" class="btn btn-primary"><i class="fe fe-plus mr-2"></i>Add New</a>
-                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive border-top">
@@ -109,8 +133,7 @@
                                         </td> --}}
                                         <td>
                                             @php
-                                            $job_status = ['Draft' => 'primary', 'Pending' => 'warning', 'Active' => 'success', 'Approved' => 'success',
-                                            'Not Approved'=>'warning', 'Published'=>'success', 'Unpublished'=>'warning', 'Expired'=>'danger', 'Rejected'=>'danger'];
+                                                $job_status = ['Draft' => 'primary', 'Pending' => 'warning', 'Active' => 'success', 'Approved' => 'success', 'Not Approved' => 'warning', 'Published' => 'success', 'Unpublished' => 'warning', 'Expired' => 'danger', 'Rejected' => 'danger'];
                                             @endphp
                                             <span class="label label-{{ $job_status[$job->status] ?? '' }}">
                                                 {{ $job->status }}

@@ -15,11 +15,11 @@
         <a href="{{ route('candidate.dashboard') }}" class="@if(Route::currentRouteName()=="candidate.dashboard") active @endif   d-flex  border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Dashboard
         </a>
+        <a href="{{ route('candidate.profile.index') }}" class="@if(Route::currentRouteName()=="candidate.profile.index") active @endif d-flex border-bottom">
+            <span class="icon1 mr-2"><i class="typcn typcn-edit fs-20"></i></span> Profile
+        </a>
         <a href="/candidate/jobs" class="@if(Route::currentRouteName()=="candidate.jobs") active @endif   d-flex  border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> My Jobs
-        </a>
-        <a href="/candidate/profile" class="@if(Route::currentRouteName()=="candidate.profile") active @endif d-flex border-bottom">
-            <span class="icon1 mr-2"><i class="typcn typcn-edit fs-20"></i></span> Profile
         </a>
         <a href="{{ route('candidate.savedjob.saveJobLists') }}" class="@if(Route::currentRouteName()=="candidate.savedjob.saveJobLists") active @endif   d-flex  border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Saved Jobs

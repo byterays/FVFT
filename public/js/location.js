@@ -1,4 +1,5 @@
 const loadStates = (country_id) => {
+    console.log('helo')
     fetch(appurl + "ajax/states", {
         method: "POST",
         headers: {
@@ -26,6 +27,7 @@ const loadStates = (country_id) => {
                 );
             });
             loadCities($("#select-state").val());
+            loadDistricts($("#select-state").val());
         });
 };
 const loadCities = async (state_id) => {
@@ -64,7 +66,7 @@ const loadDistricts = async (state_id) => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            _token: token,
+            _token: _token,
             state_id: state_id,
         }),
     })
@@ -87,6 +89,7 @@ const loadDistricts = async (state_id) => {
 
 
 const getDistricts = (state_id) => {
+    console.log(state_id);
     fetch(appurl + "ajax/districts", {
         method: "POST",
         headers: {

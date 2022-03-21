@@ -52,6 +52,8 @@ class Employe extends Model
         'height',
         'weight',
         'city_street',
+        'bio',
+        'website',
     ];
 
 
@@ -93,6 +95,11 @@ class Employe extends Model
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id');
+    }
+
+    public function education_level()
+    {
+        return $this->belongsTo(EducationLevel::class, 'education_level_id');
     }
 
     public function job_applications()

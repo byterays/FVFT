@@ -37,6 +37,7 @@ class NewJobController extends Controller
             'job' => $job,
             'job_categories' => $this->job_categories,
             'countries' => $this->countries,
+            'editRoute' => $request->editRoute,
         ]);
     }
     private $destination = 'uploads/jobs/';
@@ -98,7 +99,7 @@ class NewJobController extends Controller
                         'feature_image_url' => $request->has('feature_image') ? $feature_image_url : $oldImage,
                         'is_active' => 0,
                         'is_featured' => 0,
-                        'status' => 'Pending',
+                        // 'status' => $request->status == null ? 'Pending' : $request->status,
                     ]
                 );
                 $redirectTo = route('company.newjob.get_applicant_form',['job_id' => $job->id]);
@@ -119,6 +120,7 @@ class NewJobController extends Controller
             'job' => $job,
             "educationlevels" => $this->educationlevels,
             'skills' => Skill::get(),
+            'editRoute' => $request->editRoute,
         ]);
     }
 
@@ -173,6 +175,7 @@ class NewJobController extends Controller
         return $this->company_view('company.newjob.get_salary_and_facility_form', [
             'job' => $job,
             'currency' => $currency,
+            'editRoute' => $request->editRoute,
         ]);
     }
 
@@ -225,6 +228,7 @@ class NewJobController extends Controller
         $job = Job::where("id", $request->job_id)->with(['company', 'job_category', 'country', 'education_level'])->first();
         return $this->company_view('company.newjob.get_job_preview',[
             'job' => $job,
+            'editRoute' => $request->editRoute,
         ]);
     }
 
@@ -233,6 +237,7 @@ class NewJobController extends Controller
         $job = Job::find($request->job_id);
         return $this->company_view('company.newjob.get_approval_form',[
             'job' => $job,
+            'editRoute' => $request->editRoute,
         ]);
     }
 
@@ -251,6 +256,16 @@ class NewJobController extends Controller
             try{
                 DB::beginTransaction();
                 $job = Job::find($request->job_id);
+                $oldStatus = $job->status;
+                $fields = [];
+                if($request->saveType == "save_as_draft"){
+                    $fields['status'] = 'Draft';
+                    $fields['draft_date'] = date('Y-m-d H:i:s');
+                } else if($request->saveType == 'proceed_to_approval'){
+                    $fields['status'] = 'Pending';
+                } else if($request->saveType == 'update'){
+                    $fields['status'] = $request->status != null ? $request->status : $oldStatus;
+                }
                 $job->update([
                     'status' => $request->saveType == 'save_as_draft' ? 'Draft' : 'Pending',
                     'draft_date' => $request->saveType == 'save_as_draft' ? date('Y-m-d H:i:s') : null,

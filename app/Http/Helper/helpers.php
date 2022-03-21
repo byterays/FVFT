@@ -70,8 +70,8 @@ if (!function_exists('wrapInTag')) {
     }
 }
 if (!function_exists('setParameter')) {
-    function setParameter($job, $parameter)
+    function setParameter($model, $parameter)
     {
-        return $data = $job != null ? $job->$parameter : '';
+        return $data = $model != null ? $model->$parameter : '';
     }
 }

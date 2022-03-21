@@ -45,7 +45,8 @@
     <link href="{{ asset('themes/fvft/') }}/assets/plugins/owl-carousel/owl.carousel.css" rel="stylesheet" />
 
     <!-- Custom scroll bar css-->
-    <link href="{{ asset('themes/fvft/') }}/assets/plugins/scroll-bar/jquery.mCustomScrollbar.css" rel="stylesheet" />
+    <link href="{{ asset('themes/fvft/') }}/assets/plugins/scroll-bar/jquery.mCustomScrollbar.css"
+        rel="stylesheet" />
 
     <!-- COLOR-SKINS -->
     <link id="theme" rel="stylesheet" type="text/css" media="all"
@@ -55,6 +56,7 @@
     <link rel="stylesheet" href="{{ asset('themes/fvft/assets/css/jquery-ui.css') }}">
     <link rel="stylesheet" href="{{ asset('css/nepali.datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form_step.css') }}">
     <style>
         .toast-top-container {
             position: absolute;
@@ -62,6 +64,14 @@
             width: 280px;
             right: 40px;
             height: auto;
+        }
+
+        .cur_sor{
+            cursor: pointer;
+        }
+
+        .req{
+            color: red;
         }
 
     </style>
@@ -185,8 +195,8 @@
         });
 
 
-        function preventNegativeNo(this_value){
-            if(!!$(this_value).val() && Math.abs($(this_value).val()) >= 1){
+        function preventNegativeNo(this_value) {
+            if (!!$(this_value).val() && Math.abs($(this_value).val()) >= 1) {
                 $(this_value).val(Math.abs($(this_value).val()));
             } else {
                 $(this_value).val(null);

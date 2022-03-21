@@ -403,7 +403,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Job Category</label>
                                             <select name="job_category_id[]" class="form-control select2" id="">
@@ -467,7 +467,7 @@
                                             </div>
 
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         @endforeach
