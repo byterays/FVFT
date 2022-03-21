@@ -179,21 +179,21 @@ class JobsListController extends Controller
         $banners = Banner::where('type', 'job')->where('is_active', 1)->get();
 
         // 10 countries order by number of jobs desc
-        $countries = Country::has('jobs')->inRandomOrder(10)->get();
+        $countries = Country::has('jobs')->inRandomOrder()->limit(10)->get();
 
         // 5 categories
-        $categories = JobCategory::has('jobs')->inRandomOrder(5)->get();
+        $categories = JobCategory::has('jobs')->inRandomOrder()->limit(5)->get();
 
         // 5 latest jobs
         $new_jobs = Job::with(['company', 'country'])->orderBy('id', 'desc')->limit(5)->get();
 
 
-        $all_jobs = Job::with(['company', 'country'])->inRandomOrder(5)->get();
+        $all_jobs = Job::with(['company', 'country'])->inRandomOrder()->limit(5)->get();
 
-        $featured_jobs = Job::where('is_featured', 1)->with(['company', 'country'])->inRandomOrder(5)->get();
+        $featured_jobs = Job::where('is_featured', 1)->with(['company', 'country'])->inRandomOrder()->limit(5)->get();
 
         // 5 companies
-        $companies = Company::has('jobs')->inRandomOrder(5)->get();
+        $companies = Company::has('jobs')->inRandomOrder()->limit(5)->get();
 
 //        company => object
 //education_level => object
