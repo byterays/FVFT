@@ -234,7 +234,8 @@ class JobsListController extends Controller
             'new_jobs',
             'all_jobs',
             'companies',
-            'saved_jobs'
+            'saved_jobs',
+            'featured_jobs'
         ),"success");
     }
 
