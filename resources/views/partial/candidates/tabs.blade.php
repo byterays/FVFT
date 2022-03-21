@@ -27,7 +27,8 @@ use Illuminate\Support\Facades\Route;
 $route = 'candidate.profile.';
 $RouteName = Route::currentRouteName();
 $_index = $RouteName == $route.'index';
-$_edit = $RouteName == ($route.'get_contact_information' || $route.'get_personal_information' || $route.'get_qualification' || $route.'get_experience' || $route.'get_preview' || $route.'get_save');
+$_edit = ($RouteName ==  $route.'get_personal_information' || $RouteName == $route.'get_contact_information' || $RouteName == $route.'get_qualification'
+|| $RouteName == $route.'get_experience' || $RouteName == $route.'get_preview' || $RouteName == $route.'get_save');
 ?>
 <ul class="nav nav-tabs nav-justified navtab-wizard tabItems bg-muted"
     style="border-bottom: 0px solid #e8ebf3 !important; ">

@@ -45,10 +45,14 @@
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" value="{{ setParameter($job, 'title') }}" name="title" class="form-control" placeholder="Enter Job Title">
-                                    <input type="hidden" class="form-control" name="job_id" value="{{ setParameter($job, 'id') }}">
-                                    <input type="hidden" class="form-control" name="status" value="{{ setParameter($job, 'status') }}">
-                                    <input type="hidden" class="form-control" name="editRoute" value="{{ Route::currentRouteName() }}">
+                                    <input type="text" value="{{ setParameter($job, 'title') }}" name="title"
+                                        class="form-control" placeholder="Enter Job Title">
+                                    <input type="hidden" class="form-control" name="job_id"
+                                        value="{{ setParameter($job, 'id') }}">
+                                    <input type="hidden" class="form-control" name="status"
+                                        value="{{ setParameter($job, 'status') }}">
+                                    <input type="hidden" class="form-control" name="editRoute"
+                                        value="{{ Route::currentRouteName() }}">
                                     <div class="require text-danger title"></div>
                                 </div>
                             </div>
@@ -78,18 +82,21 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label for="male_employee" class="form-label">Male</label>
-                                            <input type="number" min="1" value="{{ setParameter($job, 'no_of_male') }}" oninput="preventNegativeNo($(this));"
-                                                class="form-control" name="male_employee" placeholder="Enter number">
+                                            <input type="number" min="1" value="{{ setParameter($job, 'no_of_male') }}"
+                                                oninput="preventNegativeNo($(this));" class="form-control"
+                                                name="male_employee" placeholder="Enter number">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="female_employee" class="form-label">Female</label>
-                                            <input type="number" min="1" value="{{ setParameter($job, 'no_of_female') }}" oninput="preventNegativeNo($(this));"
-                                                class="form-control" name="female_employee" placeholder="Enter number">
+                                            <input type="number" min="1" value="{{ setParameter($job, 'no_of_female') }}"
+                                                oninput="preventNegativeNo($(this));" class="form-control"
+                                                name="female_employee" placeholder="Enter number">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="any_employee" class="form-label">Any</label>
-                                            <input type="number" min="1" value="{{ setParameter($job, 'any_gender') }}" oninput="preventNegativeNo($(this));"
-                                                class="form-control" name="any_employee" placeholder="Enter number">
+                                            <input type="number" min="1" value="{{ setParameter($job, 'any_gender') }}"
+                                                oninput="preventNegativeNo($(this));" class="form-control"
+                                                name="any_employee" placeholder="Enter number">
                                         </div>
                                     </div>
                                     <div class="require text-danger male_employee"></div>
@@ -105,10 +112,13 @@
                                             class="req"></span></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="category_id" class="form-control select2-show-search" data-placeholder="Select Job Category">
+                                    <select name="category_id" class="form-control select2-show-search"
+                                        data-placeholder="Select Job Category">
                                         <option value="">Select Job Category</option>
                                         @foreach ($job_categories as $category)
-                                            <option value="{{ $category->id }}" {{ setParameter($job, 'job_categories_id') == $category->id ? 'selected' : '' }}>{{ $category->functional_area }}
+                                            <option value="{{ $category->id }}"
+                                                {{ setParameter($job, 'job_categories_id') == $category->id ? 'selected' : '' }}>
+                                                {{ $category->functional_area }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -124,8 +134,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="number" value="{{ setParameter($job, 'working_hours') }}" class="form-control" name="working_hours"
-                                            placeholder="eg, 8" oninput="preventNegativeNo($(this));">
+                                        <input type="number" value="{{ setParameter($job, 'working_hours') }}"
+                                            class="form-control" name="working_hours" placeholder="eg, 8"
+                                            oninput="preventNegativeNo($(this));">
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-primary">In Hour(/hr)</button>
                                         </div>
@@ -142,7 +153,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="number" value="{{ setParameter($job, 'working_days') }}" class="form-control" name="working_days" placeholder="eg, 5" oninput="preventNegativeNo($(this));">
+                                        <input type="number" value="{{ setParameter($job, 'working_days') }}"
+                                            class="form-control" name="working_days" placeholder="eg, 5"
+                                            oninput="preventNegativeNo($(this));">
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-primary">Days</button>
                                         </div>
@@ -158,7 +171,9 @@
                                     <label for="deadline" class="form-label">Apply Before</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" name="deadline" value="{{ setParameter($job, 'expiry_date') != null ? date('Y-m-d', strtotime($job->expiry_date)) : '' }}" class="form-control datetime" readonly>
+                                    <input type="text" name="deadline"
+                                        value="{{ setParameter($job, 'expiry_date') != null ? date('Y-m-d', strtotime($job->expiry_date)) : '' }}"
+                                        class="form-control datetime" readonly>
                                     <div class="require text-danger deadline"></div>
                                 </div>
                             </div>
@@ -166,11 +181,11 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label class="form-label">Country&nbsp;<span
-                                            class="req">*</span></label>
+                                    <label class="form-label">Country&nbsp;<span class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="country" id="select-country" class="form-control select2-show-search" data-placeholder="Select Country"
+                                    <select name="country" id="select-country" class="form-control select2-show-search"
+                                        data-placeholder="Select Country"
                                         value="{{ isset($job->country_id) ? $job->country_id : '' }}"
                                         onchange="patchStates(this)">
                                         @foreach ($countries as $item)
@@ -188,11 +203,11 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label class="form-label">States&nbsp;<span
-                                            class="req">*</span></label>
+                                    <label class="form-label">States&nbsp;<span class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="state" id="select-state" class="form-control select2-show-search" data-placeholder="Select State"
+                                    <select name="state" id="select-state" class="form-control select2-show-search"
+                                        data-placeholder="Select State"
                                         value="{{ isset($job->state_id) ? $job->state_id : '' }}"
                                         onchange="patchCities(this)">
                                     </select>
@@ -207,7 +222,8 @@
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="city_id" id="select-city" class="form-control select2-show-search" data-placeholder="Select City"
+                                    <select name="city_id" id="select-city" class="form-control select2-show-search"
+                                        data-placeholder="Select City"
                                         value="{{ isset($job->city_id) ? $job->city_id : '' }}">
                                     </select>
                                     <div class="require text-danger city_id"></div>
@@ -215,6 +231,28 @@
                             </div>
 
                         </div>
+                        {{-- @if (setParameter($job, 'status') == 'Active')
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="" class="form-label">Status</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @php
+                                            $statuses = ['Published' => 'Published', 'Unpublished' => 'Unpublished'];
+                                        @endphp
+                                        <select name="status" class="form-control select2">
+                                            <option value="">Select Status</option>
+                                            @foreach ($statuses as $key => $value)
+                                                <option value="{{ $key }}">{{ $value }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="require text-danger status"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif --}}
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
@@ -227,7 +265,9 @@
                                             <select name="contract_year" class="form-control select2">
                                                 <option value="">Select Year</option>
                                                 @for ($i = 1; $i <= 10; $i++)
-                                                    <option value="{{ $i }}" {{ setParameter($job, 'contract_year') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                    <option value="{{ $i }}"
+                                                        {{ setParameter($job, 'contract_year') == $i ? 'selected' : '' }}>
+                                                        {{ $i }}</option>
                                                 @endfor
                                             </select>
                                         </div>
@@ -235,7 +275,9 @@
                                             <select name="contract_month" class="form-control select2">
                                                 <option value="">Select Month</option>
                                                 @for ($i = 1; $i <= 12; $i++)
-                                                    <option value="{{ $i }}" {{ setParameter($job, 'contract_month') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                                    <option value="{{ $i }}"
+                                                        {{ setParameter($job, 'contract_month') == $i ? 'selected' : '' }}>
+                                                        {{ $i }}</option>
                                                 @endfor
                                             </select>
                                         </div>
@@ -254,7 +296,8 @@
                                     <label for="job_description" class="form-label">Job Description</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="hidden" class="form-control" value="{{ setParameter($job, 'description') }}" name="job_description"
+                                    <input type="hidden" class="form-control"
+                                        value="{{ setParameter($job, 'description') }}" name="job_description"
                                         id="jobdescriptionID">
                                     <input type="hidden" class="form-control" name="job_description_intro"
                                         id="job_description_intro" value="{{ setParameter($job, 'description_intro') }}">
@@ -270,7 +313,8 @@
                                 </div>
                                 <div class="col-md-8">
                                     <input type="file" class="form-control dropify" name="feature_image"
-                                        data-allowed-file-extensions="png jpg jpeg" data-default-file="{{ asset(setParameter($job, 'feature_image_url')) }}">
+                                        data-allowed-file-extensions="png jpg jpeg"
+                                        data-default-file="{{ asset(setParameter($job, 'feature_image_url')) }}">
                                     <div class="require text-danger feature_image"></div>
                                 </div>
                             </div>
@@ -278,8 +322,8 @@
                     </div>
                 </div>
                 <div class="mx-auto">
-                    <button type="button" onclick="submitForm(event);"
-                        class="btn btn-primary rounded-0">Next <i class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>Applicant Qualification</span>
+                    <button type="button" onclick="submitForm(event);" class="btn btn-primary rounded-0">Next <i
+                            class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>Applicant Qualification</span>
                 </div>
             </div>
         </div>

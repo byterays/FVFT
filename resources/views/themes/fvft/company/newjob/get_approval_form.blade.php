@@ -36,8 +36,22 @@
         <div class="col-xl-12">
             <div class="row">
                 <div class="mx-auto">
-                    <button onclick="submitForm(event, 'save_as_draft')"; class="btn btn-primary rounded-0">Save as Draft</button>
-                    <button onclick="submitForm(event, 'proceed_to_approval')"; class="btn btn-primary rounded-0 ml-5">Proceed To Approval</button>
+                    {{-- @if (setParameter($job, 'status') == 'Draft')
+                        <button onclick="submitForm(event, 'proceed_to_approval')" ;
+                            class="btn btn-primary rounded-0 ml-5">Proceed To Approval</button>
+                    @elseif(setParameter($job, 'status') == null)
+                        <button onclick="submitForm(event, 'save_as_draft')" ; class="btn btn-primary rounded-0">Save as
+                            Draft</button>
+                        <button onclick="submitForm(event, 'proceed_to_approval')" ;
+                            class="btn btn-primary rounded-0 ml-5">Proceed To Approval</button>
+                    @else
+                       <button onclick="submitForm(event, 'update')" ;
+                            class="btn btn-primary rounded-0 ml-5">Update</button>
+                    @endif --}}
+                    <button onclick="submitForm(event, 'save_as_draft')" ; class="btn btn-primary rounded-0">Save as
+                        Draft</button>
+                    <button onclick="submitForm(event, 'proceed_to_approval')" ;
+                        class="btn btn-primary rounded-0 ml-5">Proceed To Approval</button>
                 </div>
             </div>
         </div>

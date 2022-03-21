@@ -21,7 +21,7 @@
             <span class="icon1 mr-2"><i class="typcn typcn-home fs-20"></i></span> Home
         </a>
         <a href="{{ route('company.edit_profile') }}" class="@yield('edit_profile') d-flex border-bottom">
-            <span class="icon1 mr-2"><i class="typcn typcn-edit fs-20"></i></span> Edit Profile
+            <span class="icon1 mr-2"><i class="typcn typcn-edit fs-20"></i></span> Profile
         </a>
         <a href="{{ route('company.jobs') }}" class="@yield('jobs') d-flex border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> My Jobs
