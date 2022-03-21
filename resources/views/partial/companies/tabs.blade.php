@@ -1,46 +1,4 @@
-<style>
-    .tabItems .nav-item {
-        background-color: #4e4a4a;
-    }
-
-    .tabItems .nav-item.active {
-        color: white;
-        background-color: blue;
-    }
-
-    .tabItems.nav-tabs .nav-link {
-        color: white;
-    }
-
-    .tabItems.nav-tabs .nav-link:hover {
-        color: white;
-        background-color: #4e4a4a;
-    }
-
-    .tabItems.nav-tabs .nav-item.active .nav-link:hover {
-        color: white;
-        background-color: blue;
-    }
-
-    /* .navtab-wizard li:last-of-type a {
-        border-right: 1px solid #fff !important;
-    } */
-    .navtab-wizard li  {
-        border-right: 1px solid #fff !important;
-        border-left:none !important;
-    }
-    .navtab-wizard li .nav-link  {
-        border-left:none !important;
-        padding: 1rem 1.6rem;
-    }
-
-    .nav-tabs .nav-link {
-
-        padding: 0;
-
-    }
-
-</style>
+<link rel="stylesheet" href="{{ asset('css/tabs.css') }}">
 <?php
 use Illuminate\Support\Facades\Route;
 $route = 'company.';

@@ -52,6 +52,8 @@ class Employe extends Model
         'height',
         'weight',
         'city_street',
+        'bio',
+        'website',
     ];
 
 

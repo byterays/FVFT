@@ -5,6 +5,7 @@ use App\Http\Controllers\Candidates\AuthController;
 use App\Http\Controllers\Candidates\DashController;
 use App\Http\Controllers\Candidates\JobController;
 use App\Http\Controllers\Candidates\ProfileController;
+use App\Http\Controllers\Candidates\SettingController;
 
 Route::get('/login', [AuthController::class, 'login'])->name('candidate.login');
 Route::post('/register', [AuthController::class, 'register'])->name('candidate.register');
@@ -52,5 +53,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('post-experience', [ProfileController::class, 'post_experience'])->name('post_experience');
         Route::get('get-preview', [ProfileController::class, 'get_preview'])->name('get_preview');
         Route::get('get-save', [ProfileController::class, 'get_save'])->name('get_save');
+    });
+
+    Route::group(['prefix' => 'account-setting/', 'as' => 'candidate.account_setting.'], function(){
+        Route::get('index', [SettingController::class, 'get_setting'])->name('index');
+        Route::post('update-setting', [SettingController::class, 'update_setting'])->name('update_setting');
     });
 });

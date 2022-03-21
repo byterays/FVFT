@@ -12,8 +12,8 @@ trait CandidateMethods{
         return $this->site_view($path, array_merge($obj,["employe"=>$employe]));
     }
 
-    public function employe()
+    public function employe($rel = [])
     {
-        return Employe::where('user_id', Auth::user()->id)->first();
+        return Employe::where('user_id', Auth::user()->id)->with($rel)->first();
     }
 }
