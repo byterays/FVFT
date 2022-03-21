@@ -58,5 +58,9 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['prefix' => 'account-setting/', 'as' => 'candidate.account_setting.'], function(){
         Route::get('index', [SettingController::class, 'get_setting'])->name('index');
         Route::post('update-setting', [SettingController::class, 'update_setting'])->name('update_setting');
+        Route::get('change-password',[SettingController::class, 'get_change_password'])->name('get_change_password');
+        Route::post('post-change-password',[SettingController::class, 'post_change_password'])->name('post_change_password');
+        Route::get('get-account-setting',[SettingController::class, 'get_account_setting'])->name('get_account_setting');
+        Route::post('post-account-setting',[SettingController::class, 'post_account_setting'])->name('post_account_setting');
     });
 });
