@@ -39,16 +39,23 @@
                             <div class="card-body">
                                 @if ($employe->job_preferences->isEmpty())
                                     <div class="col-md-6">
-                                        <h3 class="card-title">{{ strtoupper('Job Category') }}</h3>
+                                        {{-- <h3 class="card-title">{{ strtoupper('Job Category') }}</h3> --}}
                                         <form action="{{ route('candidate.job_setting.post_job_preference') }}"
                                             method="POST" id="preferenceForm">
                                             @csrf
-                                            <div class="form-group">
-                                                <div class="form-label">Toggle switch single</div>
-                                                <label class="custom-switch">
-                                                    <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
-                                                    <span class="custom-switch-indicator"></span>
-                                                </label>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <h3 class="card-title">{{ strtoupper('Job Category') }}</h3>
+                                                </div>
+                                                <div class="col-md-6 my-auto">
+                                                    <div class="form-group">
+                                                        <label class="custom-switch">
+                                                            <input type="checkbox" name="job_notify" class="custom-switch-input">
+                                                            <span class="custom-switch-indicator"></span>
+                                                            <span class="custom-switch-description">Notify me for job</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <input type="text" value="All Job Category" placeholder="All Job Category"

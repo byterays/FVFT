@@ -13,8 +13,8 @@ $jt_count = 0;
             <div class="col-md-6 my-auto">
                 <div class="form-group">
                     <label class="custom-switch">
-                        <input type="checkbox" name="job_notify" class="custom-switch-input">
-                        <span class="custom-switch-indicator"></span>
+                        <input type="checkbox" name="job_notify" class="custom-switch-input" {{ setParameter($employe, 'job_notify') ? 'checked' : '' }}>
+                        <span class="custom-switch-indicator"></span> 
                         <span class="custom-switch-description">Notify me for job</span>
                     </label>
                 </div>

@@ -1,5 +1,5 @@
 @extends('themes.fvft.candidates.layouts.dashmaster')
-@section('title') Account Setting @stop
+@section('title') Job Search @stop
 @section('content')
     <section>
         <div class="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg"
