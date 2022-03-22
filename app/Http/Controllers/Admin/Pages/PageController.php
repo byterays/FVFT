@@ -35,6 +35,7 @@ class PageController extends Controller
         $fields = [];
         $request->title?$fields['title']=$request->title:null;
         $request->body?$fields['body']=$request->body:null;
+        $request->html_content?$fields['html_content']=$request->html_content:null;
         $request->seo_title?$fields['seo_title']=$request->seo_title:null;
         $request->seo_description?$fields['seo_description']=$request->seo_description:null;
         $request->seo_keywords?$fields['seo_keywords']=$request->seo_keywords:null;

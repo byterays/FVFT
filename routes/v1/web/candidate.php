@@ -1,11 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Candidates\JobController;
 use App\Http\Controllers\Candidates\AuthController;
 use App\Http\Controllers\Candidates\DashController;
-use App\Http\Controllers\Candidates\JobController;
 use App\Http\Controllers\Candidates\ProfileController;
 use App\Http\Controllers\Candidates\SettingController;
+use App\Http\Controllers\Candidates\SupportController;
+use App\Http\Controllers\Candidates\JobSettingController;
 
 Route::get('/login', [AuthController::class, 'login'])->name('candidate.login');
 Route::post('/register', [AuthController::class, 'register'])->name('candidate.register');
@@ -62,5 +64,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('post-change-password',[SettingController::class, 'post_change_password'])->name('post_change_password');
         Route::get('get-account-setting',[SettingController::class, 'get_account_setting'])->name('get_account_setting');
         Route::post('post-account-setting',[SettingController::class, 'post_account_setting'])->name('post_account_setting');
+    });
+
+    Route::group(['prefix' => 'job-setting/', 'as' => 'candidate.job_setting.'], function(){
+        Route::get('index', [JobSettingController::class, "get_job_preference"])->name("index");
+        Route::post('post-job-preference', [JobSettingController::class, "post_job_preference"])->name("post_job_preference");
+    });
+
+    Route::group(['prefix' => 'support/', 'as' => 'candidate.support.'], function(){
+        Route::get('index', [SupportController::class, 'get_support'])->name('index');
     });
 });
