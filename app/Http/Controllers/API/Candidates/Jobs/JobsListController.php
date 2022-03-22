@@ -19,10 +19,50 @@ use Illuminate\Support\Facades\Auth;
 class JobsListController extends Controller
 {
     use ApiMethods;
+
+    public function jobListing(Request $request)
+    {
+        $query =Job::query();
+        $query->where('is_active', 1);
+        $query->with(['company', 'country', 'education_level','jobExperience', 'job_category', 'jobShift']);
+
+        if(!$request->has("type")) {
+            $type = $request->type;
+        }
+
+        $jobs = $query->paginate(20);
+
+        dd($jobs);
+        $jobs->setCollection(
+            $jobs->getCollection()->transform(function ($value) {
+                return [
+                    'id' => $value->id,
+                    'sku' => $value->sku,
+                    'name' => $value->name,
+                    'description' => $value->description,
+                    'main_image_original' => $value->main_image_original,
+                    'main_image_large' => $value->main_image_large,
+                    'main_image_medium' => $value->main_image_medium,
+                    'main_image_thumbnail' => $value->main_image_thumbnail,
+                    'category' => $value->category,
+                    'brand' => $value->brand,
+                    'quantity' => $quantity,
+                    'images' => $value->images,
+                    'current_price' => $current_price,
+                    'old_price' => null,
+                    'has_discount' => false,
+                ];
+            })
+        );
+
+        return $this->sendResponse(compact('jobs'),"success.");
+    }
+
     public function listing(Request $request){
         // dd($request);
         $limit= $request->has("limit")?$request->limit:10;
         $jobs =Job::query();
+        $jobs->with(['company', 'country', 'job_category']);
         if($request->has("is_active")){
             $jobs->where('is_active',$request->is_active);
         }
@@ -102,6 +142,7 @@ class JobsListController extends Controller
             ):null;
         return $this->sendResponse($results,"Jobs List.",$pagination);
     }
+
     public function process($job){
         $company=DB::table('companies')->find($job->company_id);
         $jobshifts=[];
@@ -185,25 +226,15 @@ class JobsListController extends Controller
         $categories = JobCategory::has('jobs')->inRandomOrder()->limit(5)->get();
 
         // 5 latest jobs
-        $new_jobs = Job::with(['company', 'country'])->orderBy('id', 'desc')->limit(5)->get();
+        $new_jobs = Job::with(['company', 'country', 'education_level','jobExperience', 'job_category', 'jobShift'])->orderBy('id', 'desc')->limit(5)->get();
 
+        $all_jobs = Job::with(['company', 'country', 'education_level','jobExperience', 'job_category', 'jobShift'])->inRandomOrder()->limit(5)->get();
 
-        $all_jobs = Job::with(['company', 'country'])->inRandomOrder()->limit(5)->get();
-
-        $featured_jobs = Job::where('is_featured', 1)->with(['company', 'country'])->inRandomOrder()->limit(5)->get();
+        $featured_jobs = Job::where('is_featured', 1)->with(['company', 'country', 'education_level','jobExperience', 'job_category', 'jobShift'])->inRandomOrder()->limit(5)->get();
 
         // 5 companies
         $companies = Company::has('jobs')->inRandomOrder()->limit(5)->get();
 
-//        company => object
-//education_level => object
-//job_category  => object
-//job_shift => object
-//job_experience => object
-//counrty => object
-//state => object
-//city => object
-//
         // 5 featured jobs
 //        $featured_jobs = $this->getFeaturedJobs();
 
@@ -217,14 +248,21 @@ class JobsListController extends Controller
             $preferred_jobs = $employee->preferredJobs();
 
             // 5 latest user saved jobs
-            $saved_jobs_pivot = SavedJob::with(['job', 'job.company', 'job.country'])->where('employ_id', $employee->id)->limit(5)->get();
+            $saved_jobs_pivot = SavedJob::with([
+                'job',
+                'job.company',
+                'job.country',
+                'job.education_level',
+                'job.jobExperience',
+                'job.job_category',
+                'job.jobShift',
+            ])->where('employ_id', $employee->id)->limit(5)->get();
             if (!blank($saved_jobs_pivot)){
                 foreach($saved_jobs_pivot as $value){
                     $saved_jobs[] = $value->job;
                 }
             }
         }
-
         return $this->sendResponse(compact(
             'banners',
             'countries',
