@@ -233,11 +233,11 @@ class JobsListController extends Controller
         $featured_jobs = Job::where('is_featured', 1)->with(['company', 'country', 'education_level','jobExperience', 'job_category', 'jobShift'])->inRandomOrder()->limit(5)->get();
 
         // 5 companies
-        $companies = Company::has('jobs')->inRandomOrder()->limit(5)->get();
+        $companies = Company::has('jobs')->with(['country', 'state', 'city'])->inRandomOrder()->limit(5)->get();
 
         // 5 featured jobs
 //        $featured_jobs = $this->getFeaturedJobs();
-
+//    )PHhKs]9(q.=
         $preferred_jobs= [];
         $saved_jobs= [];
 
