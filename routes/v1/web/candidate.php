@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Candidates\JobController;
 use App\Http\Controllers\Candidates\AuthController;
 use App\Http\Controllers\Candidates\DashController;
+use App\Http\Controllers\Candidates\JobSearchController;
 use App\Http\Controllers\Candidates\ProfileController;
 use App\Http\Controllers\Candidates\SettingController;
 use App\Http\Controllers\Candidates\SupportController;
@@ -74,4 +75,10 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['prefix' => 'support/', 'as' => 'candidate.support.'], function(){
         Route::get('index', [SupportController::class, 'get_support'])->name('index');
     });
+
+    Route::group(['prefix' => 'job-search/', 'as' => 'candidate.job_search.'], function(){
+        Route::get('index', [JobSearchController::class, 'index'])->name('index');
+    });
+
+    // End Working out New Profile Design
 });

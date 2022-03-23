@@ -58,6 +58,11 @@ class Job extends Model
         return $jobs;
     }
 
+    public function saved_jobs()
+    {
+        return $this->hasMany(SavedJob::class, 'job_id');
+    }
+
     protected static function boot()
     {
         parent::boot();

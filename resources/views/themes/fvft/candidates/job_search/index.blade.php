@@ -1,6 +1,45 @@
 @extends('themes.fvft.candidates.layouts.dashmaster')
 @section('title') Job Search @stop
 @section('content')
+    <style>
+        .tabs-menu1 .nav {
+            flex-wrap: nowrap;
+            padding-left: 15px;
+        }
+
+        .tabs-menu1 li a:not(:active) {
+            background-color: #868e96;
+            border-color: #868e96;
+            color: #171a1d;
+        }
+
+        .tabs-menu1 li a:focus {
+            background-color: #868e96;
+            border-color: #868e96;
+            color: #171a1d;
+        }
+
+        .tabs-menu1 li a.active {
+            background-color: #2861b1;
+            border-color: #2861b1;
+            color: #fff;
+        }
+
+        .input-icons i {
+            position: absolute;
+        }
+
+        .input-icons input {
+            text-indent: 20px;
+        }
+
+        .icon {
+            padding: 10px;
+            min-width: 40px;
+            z-index: 99999
+        }
+
+    </style>
     <section>
         <div class="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg"
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
@@ -25,187 +64,203 @@
                 <div class="col-xl-9 col-lg-12 col-md-12">
                     <div class="row">
                         <div class="card mb-2">
-                            <div class="card-body">
-                                <h3 class="font-weight-bold">{{ strtoupper('Settings') }}</h3>
-                                <div id="basicwizard" class="border pt-0">
-                                    @include('partial/candidates/setting_tabs')
-                                </div>
+                            <div class="card-header">
+                                <h3 class="card-title">Job Search</h3>
                             </div>
                         </div>
-                        @include(
-                            'partial/candidates/accountsetting/pilltab'
-                        )
                     </div>
+                    @include('partial.candidates.job_search.tabs')
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="card mb-2">
-                                <div class="card-header">
-                                    <h3 class="card-title">{{ strtoupper('My Profile') }}</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-inline-flex justify-content-between">
-                                        <img class="avatar cover-image avatar-lg brround"
-                                            src="{{ asset($employ->avatar ?? 'uploads/default.jpg') }}" alt="">
-                                        <h3 class="my-auto ml-5 text-center">{{ $employ->full_name }}</h3>
-                                    </div>
-                                    <div class="row mt-5">
-                                        <div class="col-md-12">
-                                            <form action="{{ route('candidate.account_setting.update_setting') }}"
-                                                id="firstForm" method="POST">
-                                                @csrf
-                                                <div class="form-group">
-                                                    <label for="">Bio</label>
-                                                    <textarea name="bio" class="form-control" rows="5">{{ setParameter($employ, 'bio') }}</textarea>
-                                                    <span class="require bio text-danger"></span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="email">Email Address</label>
-                                                    <input type="text" class="form-control" name="email"
-                                                        value="{{ setParameter($employ->user, 'email') }}" readonly>
-                                                    <span class="require email text-danger"></span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="password">Password</label>
-                                                    <input type="password" class="form-control" name="password"
-                                                        placeholder="Enter Password" autocomplete="off">
-                                                    <span class="require password text-danger"></span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="password">Website</label>
-                                                    <input type="text" class="form-control" name="website"
-                                                        value="{{ setParameter($employ, 'website') }}">
-                                                    <span class="require website text-danger"></span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <button type="button" onclick="submitForm(event, 'firstForm');"
-                                                        class="btn btn-primary w-100">Save</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card mb-2">
-                                <div class="card-header">
-                                    <h3 class="card-title">Edit Profile</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <form action="{{ route('candidate.account_setting.update_setting') }}"
-                                                method="POST" id="settingForm">
-                                                @csrf
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-6">
-                                                        <label for="first_name">First Name&nbsp;<span
-                                                                class="req">*</span></label>
-                                                        <input type="text" class="form-control" name="first_name"
-                                                            value="{{ setParameter($employ, 'first_name') }}">
-                                                        <span class="require first_name text-danger"></span>
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label for="last_name">Last Name&nbsp;<span
-                                                                class="req">*</span></label>
-                                                        <input type="text" class="form-control" name="last_name"
-                                                            value="{{ setParameter($employ, 'last_name') }}">
-                                                        <span class="require last_name text-danger"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-3">
-                                                        <label for="gender">Gender&nbsp;<span
-                                                                class="req">*</span></label>
-                                                        <select name="gender" class="form-control select2">
-                                                            <option value="">Select Gender</option>
-                                                            <option value="Male"
-                                                                {{ setParameter($employ, 'gender') == 'Male' ? 'selected' : '' }}>
-                                                                Male</option>
-                                                            <option value="Female"
-                                                                {{ setParameter($employ, 'gender') == 'Female' ? 'selected' : '' }}>
-                                                                Female</option>
-                                                            <option value="Other"
-                                                                {{ setParameter($employ, 'gender') == 'Other' ? 'selected' : '' }}>
-                                                                Other</option>
-                                                        </select>
-                                                        <span class="require gender text-danger"></span>
-                                                    </div>
-                                                    <div class="form-group col-md-4">
-                                                        <label for="mobile_phone">Mobile Phone&nbsp;<span
-                                                                class="req">*</span></label>
-                                                        <input type="text" class="form-control" name="mobile_phone"
-                                                            value="{{ setParameter($employ, 'mobile_phone') }}">
-                                                        <span class="require mobile_phone text-danger"></span>
-                                                    </div>
-                                                    <div class="form-group col-md-5">
-                                                        <label for="email">Email&nbsp;<span
-                                                                class="req">*</span></label>
-                                                        <input type="text" class="form-control" name="email"
-                                                            value="{{ setParameter($employ->user, 'email') }}" readonly>
-                                                        <span class="require email text-danger"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-6">
-                                                        <label for="country">Country</label>
-                                                        <select name="country_id" id="select-country"
-                                                            onchange="patchStates(this)"
-                                                            value="{{ setParameter($employ, 'country_id') }}"
-                                                            class="form-control select2-show-search"
-                                                            data-placeholder="Select Country">
-                                                            <option value="">Select Country</option>
-                                                            @foreach ($countries as $country)
-                                                                <option value="{{ $country->id }}"
-                                                                    {{ setParameter($employ, 'country_id') == $country->id ? 'selected' : '' }}>
-                                                                    {{ $country->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <span class="require country_id text-danger"></span>
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label for="state">State</label>
-                                                        <select name="state_id" id="select-state"
-                                                            onchange="patchGetDistricts(this)"
-                                                            value="{{ setParameter($employ, 'state_id') }}"
-                                                            class="form-control select2-show-search"
-                                                            data-placeholder="Select State">
-                                                            <option value="">Select State</option>
-                                                        </select>
-                                                        <span class="require state_id text-danger"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-6">
-                                                        <label for="district">District</label>
-                                                        <select name="district_id" id="districts"
-                                                            value="{{ setParameter($employ, 'district_id') }}"
-                                                            class="form-control select2-show-search"
-                                                            data-placeholder="Select District">
-                                                            <option value="">Select District</option>
+                        <div class="mb-lg-0">
+                            <div class="">
+                                <div class="item2-gl">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab-11">
+                                            @foreach ($jobs as $item)
+                                                @php
+                                                    $company = DB::table('companies')->find($item->company_id);
+                                                    $cntry = App\Models\Country::where('id', $item->country_id)->first();
+                                                @endphp
+                                                <div class="card overflow-hidden  shadow-none">
+                                                    <div class="d-md-flex">
+                                                        <div class="p-0 m-0 item-card9-img">
+                                                            <div class="item-card9-imgs">
+                                                                <a href="job/{{ $item->id }}"></a>
+                                                                @if ($item->feature_image_url)
+                                                                    <img src="{{ asset($item->feature_image_url) }}"
+                                                                        alt="img" class="h-100">
+                                                                @else
+                                                                    <img src="{{ asset('uploads/defaultimage.jpg') }}"
+                                                                        alt="img" class="h-100">
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                        <div
+                                                            class="card overflow-hidden  border-0 box-shadow-0 border-left br-0 mb-0">
+                                                            <div class="card-body pt-0 pt-md-5">
+                                                                <div class="item-card9">
+                                                                    <a href="/job/{{ $item->id }}"
+                                                                        class="text-dark">
+                                                                        <h4 class="font-weight-semibold mt-1">
+                                                                            {{ $item->title }}({{ $item->num_of_positions }})
+                                                                        </h4>
+                                                                    </a>
+                                                                    <div class="mt-2 mb-2">
+                                                                        @isset($company)
+                                                                            <a href="/company-view/{{ $company->id }}"
+                                                                                class="mr-4"><span><i
+                                                                                        class="fa fa-building-o text-muted mr-1"></i>
+                                                                                    {{ $company->company_name }}</span></a>
+                                                                        @endisset
 
-                                                        </select>
-                                                        <span class="require district_id text-danger"></span>
+                                                                    </div>
+                                                                    <div class="mt-2 mb-2">
+                                                                        <a class="mr-4">
+                                                                            <span>
+                                                                                @php
+                                                                                    $country_flag = @DB::table('countries')->find($item->country_id)->iso2;
+                                                                                @endphp
+                                                                                {{-- <i class="fa fa-map-marker text-muted mr-1"></i> --}}
+                                                                                <img class="mb-1"
+                                                                                    src="{{ asset('https://flagcdn.com/16x12/' . strtolower($country_flag) . '.png') }}"
+                                                                                    alt="">
+                                                                                {{ @DB::table('countries')->find($item->country_id)->name }}
+                                                                            </span>
+                                                                        </a>
+                                                                        <a class="mr-4">
+                                                                            <span>
+                                                                                Basic Salary:
+                                                                                <span style="color: blue">
+                                                                                    {{ $cntry->currency ?? '' }}&nbsp;{{ $item->country_salary ?? '' }}&nbsp;&nbsp;
+                                                                                    @if ($cntry and $cntry->currency != 'NPR')
+                                                                                        NPR:
+                                                                                        {{ $item->nepali_salary ?? '' }}
+                                                                                    @endif
+
+                                                                                </span>
+                                                                            </span>
+                                                                        </a>
+                                                                        <a class="mr-4">
+                                                                            <span>
+                                                                                Post On:
+                                                                                {{ $item->publish_date != null ? date('j M Y', strtotime($item->publish_date)) : '' }}
+                                                                            </span>
+                                                                        </a>
+                                                                        <a class="mr-4">
+                                                                            <span>
+                                                                                Apply Before:
+                                                                                {{ $item->expiry_date != null ? date('j M Y', strtotime($item->expiry_date)) : '' }}
+                                                                            </span>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-footer pt-3 pb-3">
+                                                                <div class="item-card9-footer">
+
+                                                                    <div class="row">
+                                                                        @auth
+                                                                            @if (auth()->user()->user_type == 'candidate')
+                                                                                @php
+                                                                                    $application = \DB::table('job_applications')
+                                                                                        ->where('job_id', $item->id)
+                                                                                        ->where('employ_id', $employ->id)
+                                                                                        ->first();
+                                                                                    $savedJob = App\Models\SavedJob::where('employ_id', $employ->id)->where('job_id', $item->id);
+                                                                                @endphp
+
+                                                                                <div class="col-md-3">
+                                                                                    @if ($application)
+                                                                                        <a href="javascript:void(0);"
+                                                                                            class="btn btn-primary mr-5">Applied</a>
+                                                                                    @else
+                                                                                        <a href="/apply-job/{{ $item->id }}"
+                                                                                            class="btn btn-primary mr-5"> Apply
+                                                                                            Now</a>
+                                                                                    @endif
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    @if ($savedJob->exists())
+                                                                                        <a href="javascript:void(0);"
+                                                                                            class="saveJobButton ico-font">
+                                                                                            <i class="fa fa-heart"></i> Saved
+                                                                                        </a>
+                                                                                    @else
+                                                                                        <a href="javascript:void(0);"
+                                                                                            onclick="savejob({{ $item->id }})"
+                                                                                            class="saveJobButton ico-font">
+                                                                                            <i class="fa fa-heart-o"></i> Save
+                                                                                            Job
+                                                                                        </a>
+                                                                                    @endif
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <a href="#" class="ico-font">
+                                                                                        <i
+                                                                                            class="fa fa-share-alt"></i>&nbsp;Share
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <a href="/job/{{ $item->id }}"
+                                                                                        class="ico-font">
+                                                                                        <i class="fa fa-eye"></i>&nbsp;View
+                                                                                        Details
+                                                                                    </a>
+                                                                                </div>
+                                                                            @elseif(auth()->user()->user_type == 'company')
+                                                                                <div class="col-md-3">
+                                                                                    <a href="#" class="ico-font">
+                                                                                        <i
+                                                                                            class="fa fa-share-alt"></i>&nbsp;Share
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <a href="/job/{{ $item->id }}"
+                                                                                        class="ico-font">
+                                                                                        <i class="fa fa-eye"></i>&nbsp;View
+                                                                                        Details
+                                                                                    </a>
+                                                                                </div>
+                                                                            @endif
+                                                                        @else
+                                                                            <div class="col-md-3">
+                                                                                <a href="/apply-job/{{ $item->id }}"
+                                                                                    class="btn btn-primary mr-3"> Apply Now</a>
+                                                                            </div>
+                                                                            {{-- <div class="col-md-3">
+                                                                                <a href="javascript:void(0);"
+                                                                                    onclick="savejob({{ $item->id }})"
+                                                                                    class="saveJobButton ico-font">
+                                                                                    <i class="fa fa-heart-o"></i> Save Job
+                                                                                </a>
+                                                                            </div> --}}
+                                                                            <div class="col-md-3">
+                                                                                <a href="#" class="ico-font">
+                                                                                    <i class="fa fa-share-alt"></i>&nbsp;Share
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                <a href="/job/{{ $item->id }}"
+                                                                                    class="ico-font">
+                                                                                    <i class="fa fa-eye"></i>&nbsp;View
+                                                                                    Details
+                                                                                </a>
+                                                                            </div>
+
+                                                                        @endauth
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label for="municipality">Municipality</label>
-                                                        <input type="text" name="municipality" class="form-control"
-                                                            value="{{ setParameter($employ, 'municipality') }}">
-                                                            <span class="require municipality text-danger"></span>
-                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="bio">About Me</label>
-                                                    <textarea name="about_me" class="form-control" rows="5"></textarea>
-                                                    <span class="require about_me text-danger"></span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <button type="button" onclick="submitForm(event, 'settingForm')"
-                                                        class="btn btn-primary float-right w-25">Update</button>
-                                                </div>
-                                            </form>
+                                            @endforeach
                                         </div>
                                     </div>
+                                </div>
+                                <div class="center-block text-center">
+                                    {{ $jobs->links('vendor.pagination.bootstrap-4') }}
                                 </div>
                             </div>
                         </div>
@@ -249,13 +304,5 @@
                 }
             });
         }
-    </script>
-    <script>
-        const _token = $('meta[name="csrf-token"]')[0].content;
-        const country_id = {{ isset($employ->country_id) ? $employ->country_id : '154' }}
-        const state_id = {{ isset($employ->state_id) ? $employ->state_id : '5068' }};
-        const city_id = {{ isset($employ->city_id) ? $employ->city_id : 'null' }};
-        const district_id = {{ isset($employ->district_id) ? $employ->district_id : 'null' }};
-        const appurl = "{{ env('APP_URL') }}";
     </script>
 @endsection
