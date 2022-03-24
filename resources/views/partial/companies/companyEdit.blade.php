@@ -21,7 +21,7 @@
                         <div class="form-group company_logo" id="company_logo">
                             <label for="">Display Picture</label>
                             <input type="file" name="company_logo"
-                                data-default-file="{{ $company->company_logo != null && file_exists($company->company_logo) ? env('APP_URL') . $company->company_logo: '' }}"
+                                data-default-file="{{ ($company->company_logo) ? asset($company->company_logo) : '' }}"
                                 class="dropify" data-allowed-file-extensions="png jpg jpeg" data-height="180">
                             <div class="require text-danger profile_picture"></div>
                         </div>
@@ -29,7 +29,7 @@
                     <div class="col-xl-4">
                         <div class="form-group company_logo">
                             <label for="">Cover Picture</label>
-                            <input type="file" name="company_cover" data-default-file="{{ env('APP_URL').$company->company_cover }}"
+                            <input type="file" name="company_cover" data-default-file="{{ ($company->company_cover) ? asset($company->company_cover) : '' }}"
                                 class="dropify" data-height="180" data-allowed-file-extensions="png jpg jpeg">
                             <div class="require text-danger company_cover"></div>
                         </div>
@@ -307,7 +307,7 @@
                         </div>
                         @php
                             $hasContactPerson = !empty($company->company_contact_person);
-                            
+
                         @endphp
                         <div class="col-md-2">
                             <select name="person_designation" class="form-control select2">

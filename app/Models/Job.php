@@ -47,6 +47,25 @@ class Job extends Model
         return $this->belongsTo(Country::class, "country_id");
     }
 
+    public function state()
+    {
+        return $this->belongsTo(State::class, "state_id");
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, "city_id");
+    }
+
+    public function jobExperience()
+    {
+        return $this->belongsTo(ExperienceLevel::class, "job_experience_id");
+    }
+    public function jobShift()
+    {
+        return $this->belongsTo(JobShift::class, "job_shift_id");
+    }
+
     public function countApplicant()
     {
         return $this->job_applications->count();

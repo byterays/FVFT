@@ -21,7 +21,7 @@ class JobController extends Controller
         $this->educationlevels = DB::table('educationlevels')->get();
         $this->job_shifts = DB::table('job_shifts')->get();
         $this->job_categories = DB::table('job_categories')->get();
-        $this->countries = \DB::table('countries')->get();
+        $this->countries = \DB::table('countries')->where('is_active', 1)->get();
     }
 
     public function addNewJob()
@@ -206,7 +206,7 @@ class JobController extends Controller
         } else {
             $job->feature_image_url = $oldImage;
         }
-        
+
         $job->benefits = $request->other_benefits;
         $job->salary_from = $request->salary_from;
         $job->salary_to = $request->salary_to;

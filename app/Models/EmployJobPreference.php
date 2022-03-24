@@ -22,6 +22,7 @@ class EmployJobPreference extends Model
     public function category(){
         return $this->belongsTo(JobCategory::class, 'job_category_id');
     }
+
     public function country(){
         return $this->belongsTo(Country::class, 'country_id');
     }

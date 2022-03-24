@@ -23,7 +23,7 @@
             <div class="page-header">
                 <h4 class="page-title">Jobs list </h4>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Jobs list</li>
                 </ol>
             </div>
