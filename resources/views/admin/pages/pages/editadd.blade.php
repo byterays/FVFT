@@ -102,8 +102,24 @@
     quill.on('text-change', function() {
         body=JSON.stringify(quill.getContents());
         $("#body_id")[0].value=body;
-        $("#html_content_id")[0].value=$(".ql-editor")[0];
+        $("#html_content_id")[0].value=escapeHtml($('.ql-editor').html());
+        // $("#html_content_id")[0].value=$(".ql-editor")[0];
     });
     quill.setContents(JSON.parse($("#body_id")[0].value))
+
+
+    function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+
+            return text.replace(/[&<>"']/g, function(m) {
+                return map[m];
+            });
+        }
 </script>
 @endsection

@@ -11,7 +11,7 @@ class EmployJobPreference extends Model
 {
     use HasFactory;
     protected $table ="employ_job_preference";
-    protected $fillable = ['id', 'employ_id', 'job_category_id', 'country_id', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'employ_id', 'job_category_id', 'country_id', 'job_title', 'created_at', 'updated_at'];
 
 
     public function employ()

@@ -66,11 +66,11 @@
             height: auto;
         }
 
-        .cur_sor{
+        .cur_sor {
             cursor: pointer;
         }
 
-        .req{
+        .req {
             color: red;
         }
 
@@ -201,6 +201,11 @@
             } else {
                 $(this_value).val(null);
             }
+        }
+
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
         }
 
 

@@ -54,6 +54,7 @@ class Employe extends Model
         'city_street',
         'bio',
         'website',
+        'job_notify'
     ];
 
 
@@ -115,6 +116,11 @@ class Employe extends Model
     public function job_preference()
     {
         return $this->hasOne(EmployJobPreference::class, 'employ_id');
+    }
+
+    public function job_preferences()
+    {
+        return $this->hasMany(EmployJobPreference::class, 'employ_id');
     }
 
     public function employeeSkills()

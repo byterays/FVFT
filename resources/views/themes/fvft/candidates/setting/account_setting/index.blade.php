@@ -1,12 +1,12 @@
 @extends('themes.fvft.candidates.layouts.dashmaster')
-@section('title') My Jobs @stop
+@section('title') Account Setting @stop
 @section('content')
     <section>
         <div class="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg"
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">My Jobs</h1>
+                    <h1 class="">Account Setting</h1>
                     <ol class="breadcrumb text-center">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
@@ -129,7 +129,7 @@
                                                                 {{ setParameter($employ, 'gender') == 'Other' ? 'selected' : '' }}>
                                                                 Other</option>
                                                         </select>
-                                                        <span class="require first_name text-danger"></span>
+                                                        <span class="require gender text-danger"></span>
                                                     </div>
                                                     <div class="form-group col-md-4">
                                                         <label for="mobile_phone">Mobile Phone&nbsp;<span
@@ -161,6 +161,7 @@
                                                                     {{ $country->name }}</option>
                                                             @endforeach
                                                         </select>
+                                                        <span class="require country_id text-danger"></span>
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <label for="state">State</label>
@@ -171,6 +172,7 @@
                                                             data-placeholder="Select State">
                                                             <option value="">Select State</option>
                                                         </select>
+                                                        <span class="require state_id text-danger"></span>
                                                     </div>
                                                 </div>
                                                 <div class="form-row">
@@ -183,16 +185,19 @@
                                                             <option value="">Select District</option>
 
                                                         </select>
+                                                        <span class="require district_id text-danger"></span>
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <label for="municipality">Municipality</label>
                                                         <input type="text" name="municipality" class="form-control"
                                                             value="{{ setParameter($employ, 'municipality') }}">
+                                                            <span class="require municipality text-danger"></span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="bio">About Me</label>
                                                     <textarea name="about_me" class="form-control" rows="5"></textarea>
+                                                    <span class="require about_me text-danger"></span>
                                                 </div>
                                                 <div class="form-group">
                                                     <button type="button" onclick="submitForm(event, 'settingForm')"
@@ -226,7 +231,7 @@
                 contentType: false,
                 cache: false,
                 success: function(data) {
-                    return true;
+                    // return true;
                     if (data.db_error) {
                         $(".alert-secondary").css('display', 'block');
                         $(".db_error").html(data.db_error);

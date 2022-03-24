@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\EmployJobPreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\EmployJobPreference;
 
 class Country extends Model
 {
@@ -12,7 +12,7 @@ class Country extends Model
 
     protected $fillable = ['name', 'iso3', 'numeric_code', 'iso2', 'phonecode', 'capital', 'currency', 'currency_name',
         'currency_symbol', 'tld', 'native', 'region', 'subregion', 'timezones', 'translations', 'latitude', 'longitude', 'emoji',
-        'emojiU', 'is_active'
+        'emojiU', 'is_active',
     ];
 
     public function job_preference()
@@ -22,6 +22,6 @@ class Country extends Model
 
     public function jobs()
     {
-        return $this->hasMany(Job::class, "country_id");
+        return $this->hasMany(Job::class, 'country_id');
     }
 }

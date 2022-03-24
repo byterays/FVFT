@@ -1,5 +1,5 @@
 @extends('themes.fvft.candidates.layouts.dashmaster')
-@section('title') My Jobs @stop
+@section('title') Preview @stop
 @section('content')
     <style>
         .widgets-cards .wrp.icon-circle {
@@ -13,7 +13,7 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">My Jobs</h1>
+                    <h1 class="">My Profile</h1>
                     <ol class="breadcrumb text-center">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
