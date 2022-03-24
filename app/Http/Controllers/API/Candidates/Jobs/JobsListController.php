@@ -22,40 +22,102 @@ class JobsListController extends Controller
 
     public function jobListing(Request $request)
     {
-        $query =Job::query();
-        $query->where('is_active', 1);
-        $query->with(['company', 'country', 'education_level','jobExperience', 'job_category', 'jobShift']);
-
-        if(!$request->has("type")) {
-            $type = $request->type;
+//        11. date range (from-to)
+        $limit= $request->has("limit") ? $request->limit : 20;
+        $user = null;
+        $employee = null;
+        if (auth()->guard('api')->user()) {
+            $user = auth()->guard('api')->user();
         }
 
-        $jobs = $query->paginate(20);
+        if ($request->has("preferred_job")) {
+            return $this->getUserPreferredJobs($user);
+        }
 
-        dd($jobs);
-        $jobs->setCollection(
-            $jobs->getCollection()->transform(function ($value) {
-                return [
-                    'id' => $value->id,
-                    'sku' => $value->sku,
-                    'name' => $value->name,
-                    'description' => $value->description,
-                    'main_image_original' => $value->main_image_original,
-                    'main_image_large' => $value->main_image_large,
-                    'main_image_medium' => $value->main_image_medium,
-                    'main_image_thumbnail' => $value->main_image_thumbnail,
-                    'category' => $value->category,
-                    'brand' => $value->brand,
-                    'quantity' => $quantity,
-                    'images' => $value->images,
-                    'current_price' => $current_price,
-                    'old_price' => null,
-                    'has_discount' => false,
-                ];
-            })
-        );
+        if ($request->has("saved_job")) {
+            return $this->getUserSavedJobs($user);
+        }
+
+
+        $query =Job::query();
+        $query->where('is_active', 1);
+        $query->with([
+            'company', 'company.country', 'company.state', 'company.city',
+            'country',
+            'education_level',
+            'jobExperience',
+            'job_category',
+            'jobShift'
+        ]);
+
+        if($request->has("country_id")) {
+            $query->where('country_id', $request->country_id);
+        }
+
+        if ($request->has("category_id")) {
+            $query->where('job_categories_id', $request->category_id);
+        }
+
+        if ($request->has("company_id")) {
+            $query->where('company_id', $request->company_id);
+        }
+
+        if ($request->has("expired_job") AND $request->has("expired_job") == 'true') {
+            $query->where('is_expired', 1);
+        }
+
+        if ($request->has("active_job") AND $request->has("active_job") == 'true') {
+            $query->where('status', 'Active');
+        }
+
+        if ($request->has("featured_job") AND $request->has("featured_job") == 'true') {
+            $query->where('is_featured', 1);
+        }
+
+        if ($request->has("latest_job") AND $request->has("latest_job") == 'true') {
+            $query->orderBy('id', 'desc');
+        }
+
+        $jobs = $query->paginate($limit);
 
         return $this->sendResponse(compact('jobs'),"success.");
+    }
+
+    public function getUserPreferredJobs($user)
+    {
+        if (!$user){
+            return $this->sendResponse([],"Authentication token missing.", '', false);
+        }
+        $employee = Employe::where('user_id', $user->id)->first();
+        $preferred_jobs = $employee->preferredJobs();
+        return $this->sendResponse(compact('preferred_jobs'),"success");
+    }
+
+    public function getUserSavedJobs($user)
+    {
+        if (!$user){
+            return $this->sendResponse([],"Authentication token missing.", '', false);
+        }
+        $employee = Employe::where('user_id', $user->id)->first();
+        $saved_jobs = [];
+        // 5 latest user saved jobs
+        $saved_jobs_pivot = SavedJob::with([
+            'job',
+            'job.company',
+            'job.country',
+            'job.education_level',
+            'job.jobExperience',
+            'job.job_category',
+            'job.jobShift',
+        ])->where('employ_id', $employee->id)->get();
+
+        if (!blank($saved_jobs_pivot)){
+            foreach($saved_jobs_pivot as $value){
+                $saved_jobs[] = $value->job;
+            }
+        }
+
+        return $this->sendResponse(compact('saved_jobs'),"success");
     }
 
     public function listing(Request $request){
@@ -226,9 +288,9 @@ class JobsListController extends Controller
         $categories = JobCategory::has('jobs')->inRandomOrder()->limit(5)->get();
 
         // 5 latest jobs
-        $new_jobs = Job::with(['company', 'country', 'education_level','jobExperience', 'job_category', 'jobShift'])->orderBy('id', 'desc')->limit(5)->get();
+        $new_jobs = Job::with(['company','company.country', 'company.state', 'company.city', 'country', 'education_level','jobExperience', 'job_category', 'jobShift'])->orderBy('id', 'desc')->limit(5)->get();
 
-        $all_jobs = Job::with(['company', 'country', 'education_level','jobExperience', 'job_category', 'jobShift'])->inRandomOrder()->limit(5)->get();
+        $all_jobs = Job::with(['company','company.country', 'company.state', 'company.city', 'country', 'education_level','jobExperience', 'job_category', 'jobShift'])->inRandomOrder()->limit(5)->get();
 
         $featured_jobs = Job::where('is_featured', 1)->with(['company', 'country', 'education_level','jobExperience', 'job_category', 'jobShift'])->inRandomOrder()->limit(5)->get();
 
