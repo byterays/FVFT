@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class LocationAjaxController extends Controller
 {
     public function countries(Request $request){
-        $countries=\DB::table('countries');
+        $countries=\DB::table('countries')->where('is_active', 1);
         return \Response::json($countries->get());
     }
     public function states(Request $request){

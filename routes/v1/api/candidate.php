@@ -46,7 +46,9 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/preference/country/{id}', [PreferenceController::class, 'delete_employes_country'])->name('candidate.preference.country.delete');
 });
 // Listing
+Route::get('job/home', [JobsListController::class, 'getHome']);
 Route::get('job-list', [JobsListController::class, 'listing']);
+Route::get('job-list-new', [JobsListController::class, 'jobListing']);
 Route::get('job-categories', [JobCategoryController::class, 'list']);
 
 Route::get('news-categories', [NewsCategoryController::class, 'list']);
