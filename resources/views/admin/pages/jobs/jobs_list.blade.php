@@ -35,7 +35,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <h3 class="card-title mt-2" style="width: 100%;">Jobs List</h3>
-                                
+
                             </div>
                             <div class="col-md-6">
                                 <a href="/admin/jobs-new" class="btn btn-primary float-right"><i class="fe fe-plus mr-2"></i>Add New</a>
@@ -95,9 +95,9 @@
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary">Search</button>
                             </div>
-                            
+
                         </div>
-                        
+
                     </form>
                 </div>
                 <div class="card-body">
@@ -124,8 +124,7 @@
                                         <td>{{ $job->title }}</td>
                                         <td>{{ DB::table('companies')->find($job->company_id)->company_name ?? '' }}</td>
                                         <td>
-                                            <i
-                                                class="fa fa-{{ $job->is_featured ? 'check-' : '' }}circle-o {{ $job->is_featured ? 'text-success' : 'text-warning' }}"></i>
+                                            <i class="fa fa-{{ $job->is_featured ? 'check-' : '' }}circle-o {{ $job->is_featured ? 'text-success' : 'text-warning' }}"></i>
                                         </td>
                                         {{-- <td>
                                             <span
