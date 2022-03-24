@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Candidates\JobApplicationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Candidates\JobController;
 use App\Http\Controllers\Candidates\AuthController;
@@ -78,6 +79,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['prefix' => 'job-search/', 'as' => 'candidate.job_search.'], function(){
         Route::get('index', [JobSearchController::class, 'index'])->name('index');
+    });
+
+    Route::group(['prefix' => 'job-application/', 'as' => 'candidate.job_application.'], function(){
+        Route::get('index/{type?}', [JobApplicationController::class, 'index'])->name('index');
     });
 
     // End Working out New Profile Design

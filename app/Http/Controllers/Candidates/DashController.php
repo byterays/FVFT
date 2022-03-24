@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers\Candidates;
 
-use App\Http\Controllers\Controller;
+use DB;
+use stdClass;
+use App\Models\User;
 use App\Models\Company;
 use App\Models\Employe;
-use App\Models\EmployJobPreference;
-use App\Models\JobApplication;
 use App\Models\SavedJob;
 use App\Models\Training;
-use App\Models\User;
-use App\Traits\Site\CandidateMethods;
-use App\Traits\Site\ThemeMethods;
-use DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Pagination\Paginator;
+use App\Models\JobApplication;
+use App\Traits\Site\ThemeMethods;
 use Illuminate\Support\Collection;
+use App\Models\EmployJobPreference;
+use App\Http\Controllers\Controller;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
+use App\Traits\Site\CandidateMethods;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class DashController extends Controller
@@ -42,23 +43,108 @@ class DashController extends Controller
     public function dashboard()
     {
         $employe = Employe::where('user_id', auth()->user()->id)->first();
-        return $this->client_view('candidates.dash',[
+        return $this->client_view('candidates.dash', [
             "totals" => [
                 [
                     'title' => 'Applied Jobs',
                     'links' => route('candidate.jobs'),
-                    'total' => $this->applications(new JobApplication())->where('employ_id', $employe->id)->count()
+                    'total' => $this->applications(new JobApplication())->where('employ_id', $employe->id)->count(),
                 ],
                 [
                     'title' => 'Saved Jobs',
                     'links' => route('candidate.savedjob.saveJobLists'),
                     'total' => $this->applications(new SavedJob())->where('employ_id', $employe->id)->count(),
-                ]
-            ]
+                ],
+            ],
+            "application_datas" => $this->__datas()['application_datas'],
+            "profile_datas" => $this->__datas()['profile_datas'],
         ]);
     }
 
-    private function applications($model){
+    private function __route($type)
+    {
+        return route('candidate.job_application.index', $type);
+    }
+
+    private function __datas()
+    {
+        /* TODO work with stdClass to create multiple object instance */
+        return [
+            'application_datas' => [
+                [
+                    'title' => 'All Applications',
+                    'link' => $this->__route('all-applications'),
+                    'totalcount' => $this->employe()->job_applications->count(),
+                    'image' => 'mail.svg',
+                    'bg-color' => 'bg-blue',
+                ],
+                [
+                    'title' => 'Unscreened Applications',
+                    'link' => $this->__route('unscreened-applications'),
+                    'totalcount' => $this->employe()->job_applications->where('status', 'pending')->count(),
+                    'image' => 'megaphone.svg',
+                    'bg-color' => 'bg-gray',
+                ],
+                [
+                    'title' => 'Shortlisted Applications',
+                    'link' => $this->__route('shortlisted-applications'),
+                    'totalcount' => $this->employe()->job_applications->where('status', 'shortlisted')->count(),
+                    'image' => 'blogging.svg',
+                    'bg-color' => 'bg-pink',
+                ],
+                [
+                    'title' => 'Interviewed Applications',
+                    'link' => $this->__route('interviewed-applications'),
+                    'totalcount' => $this->employe()->job_applications->where('status', 'selectedForInterview')->count(),
+                    'image' => 'picture.svg',
+                    'bg-color' => 'bg-orange',
+                ],
+                [
+                    'title' => 'Selected Applications',
+                    'link' => $this->__route('selected-applications'),
+                    'totalcount' => $this->employe()->job_applications->where('status', 'accepted')->count(),
+                    'image' => 'picture.svg',
+                    'bg-color' => 'bg-green',
+                ],
+                [
+                    'title' => 'Rejected Applications',
+                    'link' => $this->__route('rejected-applications'),
+                    'totalcount' => $this->employe()->job_applications->where('status', 'rejected')->count(),
+                    'image' => 'box-closed.svg',
+                    'bg-color' => 'bg-red',
+                ],
+            ],
+            "profile_datas" => [
+                [
+                    'title' => 'My Profile',
+                    'link' => route('candidate.profile.index'),
+                    'totalcount' => '',
+                    'icon' => 'fa fa-user-circle-o',
+                ],
+                [
+                    'title' => 'My CV',
+                    'link' => '#',
+                    'totalcount' => '',
+                    'icon' => 'fa fa-file-word-o',
+                ],
+                [
+                    'title' => 'New Message',
+                    'link' => '#',
+                    'totalcount' => 2,
+                    'icon' => 'icon icon-people',
+                ],
+                [
+                    'title' => 'New Notification',
+                    'link' => '#',
+                    'totalcount' => 2,
+                    'icon' => 'fa fa-bell-o',
+                ],
+            ],
+        ];
+    }
+
+    private function applications($model)
+    {
         return get_class($model)::query();
     }
 
@@ -164,16 +250,16 @@ class DashController extends Controller
     }
     public function saveSettings(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'password' => ['required', 'min:8'],
-            'confirm-password' => ['required', 'same:password']
-        ],[
+            'confirm-password' => ['required', 'same:password'],
+        ], [
             'password.required' => 'Password is required',
             'password.min' => 'Password must be 8 characters',
             'confirm-password.required' => 'Confirm Password field is required',
             'confirm-password.same' => 'Confirm password didn\'t match with password',
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $fields = [];
@@ -240,10 +326,10 @@ class DashController extends Controller
     public function company_lists()
     {
         $employ = Employe::where('user_id', \Auth::user()->id)->first();
-        if(!empty($employ->job_preference)){
+        if (!empty($employ->job_preference)) {
             $companies = Company::where('country_id', $employ->job_preference->country_id)->get();
-            $companys = Company::whereHas('jobs', function($query) use ($employ){
-                 return $query->where('job_categories_id', $employ->job_preference->job_category_id);
+            $companys = Company::whereHas('jobs', function ($query) use ($employ) {
+                return $query->where('job_categories_id', $employ->job_preference->job_category_id);
             })->get();
             $companies = paginateCollection($companies->merge($companys), 12);
             // $companies = $this->paginate($companies->merge($companys), 12);
@@ -290,7 +376,7 @@ class DashController extends Controller
             'profile_picture' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:12096'],
             'full_picture' => ['nullable'],
             'full_picture.*' => ['image', 'mimes:jpeg,png,jpg', 'max:12096'],
-        ],[
+        ], [
             'first_name.required' => 'The first name field is required',
             'last_name.required' => 'The last name field is required',
             'english_dob.required' => 'Date of birth field is required',
@@ -355,7 +441,7 @@ class DashController extends Controller
                 $photoData[] = $this->fullPictureDestination . $photoName;
             }
 //            $employe->full_picture = json_encode($photoData);
-            $employe->full_picture = json_encode( array_merge(
+            $employe->full_picture = json_encode(array_merge(
                 $photoData,
                 json_decode($employe->full_picture, true)
             ));
@@ -455,7 +541,7 @@ class DashController extends Controller
     {
         DB::table('employes_skills')->where('employ_id', $employ_id)->delete();
         $fields = [];
-        if (isset($request->skill) AND !blank($request->skill)){
+        if (isset($request->skill) and !blank($request->skill)) {
             foreach ($request->skill as $key => $skill) {
                 $fields['employ_id'] = $employ_id;
                 $fields['skills_id'] = $skill;
@@ -468,9 +554,9 @@ class DashController extends Controller
     {
         DB::table('employes_languages')->where('employ_id', $employ_id)->delete();
         $fields = [];
-        if (isset($request->language) AND !blank($request->language)) {
+        if (isset($request->language) and !blank($request->language)) {
             foreach ($request->language as $key => $language) {
-                if(!blank($language)){
+                if (!blank($language)) {
                     $fields['employ_id'] = $employ_id;
                     $fields['language_id'] = $language;
                     $fields['language_level'] = $request->get('language_level')[$key];

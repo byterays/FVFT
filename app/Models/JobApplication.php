@@ -26,6 +26,6 @@ class JobApplication extends Model
 
     public function company()
     {
-        // return $this->job->whereHas('job.company')->with(['job.company']);
+        return $this->job()->whereHas('company')->with(['company']);
     }
 }

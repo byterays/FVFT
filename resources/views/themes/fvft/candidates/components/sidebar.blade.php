@@ -21,7 +21,7 @@
         <a href="{{ route('candidate.job_search.index',['type' => 'all']) }}" class="@if(Route::currentRouteName()=="candidate.job_search.index") active @endif   d-flex  border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Jobs Search
         </a>
-        <a href="/candidate/jobs" class="@if(Route::currentRouteName()=="candidate.jobs") active @endif   d-flex  border-bottom">
+        <a href="{{ route('candidate.job_application.index') }}" class="@if(Route::currentRouteName()=="candidate.job_application.index") active @endif   d-flex  border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> My Job Applications
         </a>
         <a href="{{ route('candidate.savedjob.saveJobLists') }}" class="@if(Route::currentRouteName()=="candidate.savedjob.saveJobLists") active @endif   d-flex  border-bottom">
@@ -31,7 +31,7 @@
             <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Recommended Jobs
         </a>
         <a href="{{ route('candidate.company_lists') }}" class="@if(Route::currentRouteName()=="candidate.company_lists") active @endif   d-flex  border-bottom">
-            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Company Lists
+            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Employers
         </a>
         {{-- <a href="/pages/tips" class="d-flex border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-flag-outline fs-20"></i></span> Safety Tips
