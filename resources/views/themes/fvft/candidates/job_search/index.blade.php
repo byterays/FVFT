@@ -112,7 +112,6 @@
                                                                                         class="fa fa-building-o text-muted mr-1"></i>
                                                                                     {{ $company->company_name }}</span></a>
                                                                         @endisset
-
                                                                     </div>
                                                                     <div class="mt-2 mb-2">
                                                                         <a class="mr-4">
@@ -157,7 +156,6 @@
                                                             </div>
                                                             <div class="card-footer pt-3 pb-3">
                                                                 <div class="item-card9-footer">
-
                                                                     <div class="row">
                                                                         @auth
                                                                             @if (auth()->user()->user_type == 'candidate')
@@ -227,13 +225,6 @@
                                                                                 <a href="/apply-job/{{ $item->id }}"
                                                                                     class="btn btn-primary mr-3"> Apply Now</a>
                                                                             </div>
-                                                                            {{-- <div class="col-md-3">
-                                                                                <a href="javascript:void(0);"
-                                                                                    onclick="savejob({{ $item->id }})"
-                                                                                    class="saveJobButton ico-font">
-                                                                                    <i class="fa fa-heart-o"></i> Save Job
-                                                                                </a>
-                                                                            </div> --}}
                                                                             <div class="col-md-3">
                                                                                 <a href="#" class="ico-font">
                                                                                     <i class="fa fa-share-alt"></i>&nbsp;Share
@@ -248,7 +239,6 @@
                                                                             </div>
 
                                                                         @endauth
-
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -274,34 +264,32 @@
 @section('script')
     <script src="{{ env('APP_URL') }}js/location.js"></script>
     <script>
-        function submitForm(e, formId) {
-            e.preventDefault();
-            $('.require').css('display', 'none');
-            let url = $("#" + formId).attr("action");
+        function savejob(job_id) {
+            var url = "{{ route('candidate.savedjob.saveJob') }}";
             $.ajax({
                 url: url,
-                type: 'post',
-                data: new FormData($("#" + formId)[0]),
-                processData: false,
-                contentType: false,
-                cache: false,
-                success: function(data) {
-                    // return true;
-                    if (data.db_error) {
-                        $(".alert-secondary").css('display', 'block');
-                        $(".db_error").html(data.db_error);
-                        toastr.warning(data.db_error);
-                    } else if (data.errors) {
-                        var error_html = "";
-                        $.each(data.errors, function(key, value) {
-                            error_html = '<div>' + value + '</div>';
-                            $('.' + key).css('display', 'block').html(error_html);
-                        });
-                    } else if (!data.errors && !data.db_error) {
-                        location.href = data.redirectRoute;
-                        toastr.success(data.msg);
+                type: 'POST',
+                data: {
+                    'job_id': job_id,
+                    'employ_id': '{{ $employ->id }}',
+                },
+                beforeSend: function() {
+                    $(".saveJobButton").attr('disabled', true);
+                },
+                success: function(response) {
+                    if (response.db_error) {
+                        toastr.warning(response.db_error);
+                    } else if (response.error) {
+                        toastr.warning(response.error);
+                    } else if (response.redirectRoute) {
+                        location.href = response.redirectRoute
+                    } else {
+                        toastr.success(response.msg);
                     }
-                }
+                },
+                complete: function() {
+                    $(".saveJobButton").attr('disabled', false);
+                },
             });
         }
     </script>
