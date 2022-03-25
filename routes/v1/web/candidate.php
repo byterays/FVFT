@@ -1,14 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Candidates\JobController;
 use App\Http\Controllers\Candidates\AuthController;
 use App\Http\Controllers\Candidates\DashController;
+use App\Http\Controllers\Candidates\JobApplicationController;
+use App\Http\Controllers\Candidates\JobController;
 use App\Http\Controllers\Candidates\JobSearchController;
+use App\Http\Controllers\Candidates\JobSettingController;
+use App\Http\Controllers\Candidates\NewsController;
 use App\Http\Controllers\Candidates\ProfileController;
 use App\Http\Controllers\Candidates\SettingController;
 use App\Http\Controllers\Candidates\SupportController;
-use App\Http\Controllers\Candidates\JobSettingController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [AuthController::class, 'login'])->name('candidate.login');
 Route::post('/register', [AuthController::class, 'register'])->name('candidate.register');
@@ -28,56 +30,64 @@ Route::middleware(['auth'])->group(function () {
 
     Route::put('/update-profile/{id}', [DashController::class, 'update'])->name('candidate.updateProfile');
 
-    Route::group(['prefix' => 'company/', 'as' => 'candidate.'], function(){
+    Route::group(['prefix' => 'company/', 'as' => 'candidate.'], function () {
         Route::get('lists', [DashController::class, 'company_lists'])->name('company_lists');
     });
 
-    Route::group(['prefix' => 'saved-jobs/', 'as' => 'candidate.savedjob.'], function(){
+    Route::group(['prefix' => 'saved-jobs/', 'as' => 'candidate.savedjob.'], function () {
         Route::get('lists', [JobController::class, 'saveJobLists'])->name('saveJobLists');
         Route::post('store', [JobController::class, 'saveJob'])->name('saveJob');
         Route::delete('delete/{id}', [JobController::class, 'delete'])->name('delete');
     });
 
-    Route::group(['prefix' => 'recommended-job/', 'as' => 'candidate.'], function(){
+    Route::group(['prefix' => 'recommended-job/', 'as' => 'candidate.'], function () {
         Route::get('', [JobController::class, 'recommended_job'])->name('recommended_job');
     });
 
-
     // Workout on New profile design
-    Route::group(['prefix' => 'profile/', 'as' => 'candidate.profile.'], function(){
+    Route::group(['prefix' => 'profile/', 'as' => 'candidate.profile.'], function () {
         Route::get('index', [ProfileController::class, 'profile'])->name('index');
-        Route::get('get-personal-information',[ProfileController::class, 'get_personal_information'])->name('get_personal_information');
-        Route::post('post-personal-information',[ProfileController::class, 'post_personal_information'])->name('post_personal_information');
-        Route::get('get-contact-information',[ProfileController::class, 'get_contact_information'])->name('get_contact_information');
-        Route::post('post-contact-information',[ProfileController::class, 'post_contact_information'])->name('post_contact_information');
-        Route::get('get-qualification',[ProfileController::class, 'get_qualification'])->name('get_qualification');
-        Route::post('post-qualification',[ProfileController::class, 'post_qualification'])->name('post_qualification');
+        Route::get('get-personal-information', [ProfileController::class, 'get_personal_information'])->name('get_personal_information');
+        Route::post('post-personal-information', [ProfileController::class, 'post_personal_information'])->name('post_personal_information');
+        Route::get('get-contact-information', [ProfileController::class, 'get_contact_information'])->name('get_contact_information');
+        Route::post('post-contact-information', [ProfileController::class, 'post_contact_information'])->name('post_contact_information');
+        Route::get('get-qualification', [ProfileController::class, 'get_qualification'])->name('get_qualification');
+        Route::post('post-qualification', [ProfileController::class, 'post_qualification'])->name('post_qualification');
         Route::get('get-experience', [ProfileController::class, 'get_experience'])->name('get_experience');
         Route::post('post-experience', [ProfileController::class, 'post_experience'])->name('post_experience');
         Route::get('get-preview', [ProfileController::class, 'get_preview'])->name('get_preview');
         Route::get('get-save', [ProfileController::class, 'get_save'])->name('get_save');
     });
 
-    Route::group(['prefix' => 'account-setting/', 'as' => 'candidate.account_setting.'], function(){
+    Route::group(['prefix' => 'account-setting/', 'as' => 'candidate.account_setting.'], function () {
         Route::get('index', [SettingController::class, 'get_setting'])->name('index');
         Route::post('update-setting', [SettingController::class, 'update_setting'])->name('update_setting');
-        Route::get('change-password',[SettingController::class, 'get_change_password'])->name('get_change_password');
-        Route::post('post-change-password',[SettingController::class, 'post_change_password'])->name('post_change_password');
-        Route::get('get-account-setting',[SettingController::class, 'get_account_setting'])->name('get_account_setting');
-        Route::post('post-account-setting',[SettingController::class, 'post_account_setting'])->name('post_account_setting');
+        Route::get('change-password', [SettingController::class, 'get_change_password'])->name('get_change_password');
+        Route::post('post-change-password', [SettingController::class, 'post_change_password'])->name('post_change_password');
+        Route::get('get-account-setting', [SettingController::class, 'get_account_setting'])->name('get_account_setting');
+        Route::post('post-account-setting', [SettingController::class, 'post_account_setting'])->name('post_account_setting');
     });
 
-    Route::group(['prefix' => 'job-setting/', 'as' => 'candidate.job_setting.'], function(){
+    Route::group(['prefix' => 'job-setting/', 'as' => 'candidate.job_setting.'], function () {
         Route::get('index', [JobSettingController::class, "get_job_preference"])->name("index");
         Route::post('post-job-preference', [JobSettingController::class, "post_job_preference"])->name("post_job_preference");
     });
 
-    Route::group(['prefix' => 'support/', 'as' => 'candidate.support.'], function(){
+    Route::group(['prefix' => 'support/', 'as' => 'candidate.support.'], function () {
         Route::get('index', [SupportController::class, 'get_support'])->name('index');
     });
 
-    Route::group(['prefix' => 'job-search/', 'as' => 'candidate.job_search.'], function(){
+    Route::group(['prefix' => 'job-search/', 'as' => 'candidate.job_search.'], function () {
         Route::get('index', [JobSearchController::class, 'index'])->name('index');
+    });
+
+    Route::group(['prefix' => 'job-application/', 'as' => 'candidate.job_application.'], function () {
+        Route::get('index/{type?}', [JobApplicationController::class, 'index'])->name('index');
+    });
+
+    Route::group(['prefix' => 'news/', 'as' => 'candidate.news.'], function () {
+        Route::get('index', [NewsController::class, 'index'])->name('index');
+        Route::get('detail/{slug}', [NewsController::class, 'newsdetail'])->name('detail');
     });
 
     // End Working out New Profile Design

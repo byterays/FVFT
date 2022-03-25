@@ -163,6 +163,7 @@ class Employe extends Model
         $countExperiences = DB::table('employes_experience')->where('employ_id', $this->id)->count();
         $countLanguages = DB::table('employes_languages')->where('employ_id', $this->id)->count();
         $countSkills = DB::table('employes_skills')->where('employ_id', $this->id)->count();
+        $countPreferences = $this->job_preferences()->count();
         if($countExperiences > 0){
             $completed++;
         }
@@ -172,7 +173,10 @@ class Employe extends Model
         if($countLanguages > 0){
             $completed++;
         }
-        $total = $total + 3;
+        if($countPreferences > 0){
+            $completed++;
+        }
+        $total = $total + 4;
         $completed = ($completed / $total) * 100;
         // dd($completed);
         return round($completed, 2);

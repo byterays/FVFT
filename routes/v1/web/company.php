@@ -6,6 +6,7 @@ use App\Http\Controllers\Company\AuthController;
 use App\Http\Controllers\Company\DashController;
 use App\Http\Controllers\Company\JobController;
 use App\Http\Controllers\Company\NewJobController;
+use App\Http\Controllers\Company\JobsController;
 
 Route::get('/login', [AuthController::class, 'login'])->name('company.login');
 Route::post('/register', [AuthController::class, 'register'])->name('company.register');
@@ -17,7 +18,8 @@ Route::middleware(['auth', 'is_company'])->group(function () {
     Route::get('/view-my-profile', [DashController::class, 'show'])->name('company.view_profile');
 
 
-    Route::get('/jobs', [DashController::class, 'jobs'])->name('company.jobs');
+    Route::get('/jobs', [JobsController::class, 'index'])->name('company.jobs');
+    // Route::get('/jobs', [DashController::class, 'jobs'])->name('company.jobs');
     // Route::get('/edit/job/{id}', [DashController::class, 'edit'])->name('company.editjob');
     Route::get('/applicants', [DashController::class, 'applicants'])->name('company.applicants');
     Route::get('/settings', [DashController::class, 'settings'])->name('company.settings');
