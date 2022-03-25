@@ -15,11 +15,13 @@ use App\Traits\Site\ThemeMethods;
 use Illuminate\Support\Collection;
 use App\Models\EmployJobPreference;
 use App\Http\Controllers\Controller;
+use App\Models\Country;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\Site\CandidateMethods;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Models\News;
 
 class DashController extends Controller
 {
@@ -38,11 +40,13 @@ class DashController extends Controller
         $this->states = \DB::table('states')->get();
         $this->languages = \DB::table('languages')->get();
         $this->jobs = \DB::table('jobs')->get();
+        $this->Countries = Country::whereHas('jobs')->select('id', 'name', 'iso2', 'iso3')->withCount('jobs')->take(6)->get();
     }
 
     public function dashboard()
     {
         $employe = Employe::where('user_id', auth()->user()->id)->first();
+        $saved_jobs = SavedJob::where('employ_id', $this->employe()->id)->orderBy('id', 'DESC')->take(2)->with(['job', 'job.company:id,company_name', 'job.country:id,name,iso2,iso3,currency'])->get();
         return $this->client_view('candidates.dash', [
             "totals" => [
                 [
@@ -58,6 +62,9 @@ class DashController extends Controller
             ],
             "application_datas" => $this->__datas()['application_datas'],
             "profile_datas" => $this->__datas()['profile_datas'],
+            'saved_jobs' => $saved_jobs,
+            'Countries' => $this->Countries,
+            'news' => News::orderBy('id', 'DESC')->take(3)->get(),
         ]);
     }
 
