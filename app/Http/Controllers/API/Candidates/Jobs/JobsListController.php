@@ -86,7 +86,7 @@ class JobsListController extends Controller
     public function getUserPreferredJobs($user)
     {
         if (!$user){
-            return $this->sendResponse([],"Authentication token missing.", '', false);
+            return $this->sendResponse([],"Authentication token mismatch.", '', false);
         }
         $employee = Employe::where('user_id', $user->id)->first();
         $preferred_jobs = $employee->preferredJobs();
@@ -96,7 +96,7 @@ class JobsListController extends Controller
     public function getUserSavedJobs($user)
     {
         if (!$user){
-            return $this->sendResponse([],"Authentication token missing.", '', false);
+            return $this->sendResponse([],"Authentication token mismatch.", '', false);
         }
         $employee = Employe::where('user_id', $user->id)->first();
         $saved_jobs = [];

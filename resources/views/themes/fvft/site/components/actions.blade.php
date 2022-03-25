@@ -1,5 +1,5 @@
 		<!--section-->
-		<section class="sptb bg-white">
+		<section class="sptb">
 			<div class="container">
 				<div class="row no-gutters row-deck find-job">
 					<div class="col-md-6">
