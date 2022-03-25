@@ -1,11 +1,12 @@
 <?php
 
+use Carbon\Carbon;
 use App\Models\Job;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 if (!function_exists('createSlug')) {
     function createSlug($title)
@@ -73,5 +74,18 @@ if (!function_exists('setParameter')) {
     function setParameter($model, $parameter)
     {
         return $data = $model != null ? $model->$parameter : '';
+    }
+}
+
+
+if(!function_exists('str_limit')){
+    function str_limit($desc, $limit){
+        return Str::limit($desc, $limit);
+    }
+}
+
+if(!function_exists('parseDate')){
+    function parseDate($date){
+        return Carbon::parse($date)->diffForHumans();
     }
 }

@@ -53,4 +53,9 @@ class Company extends Model
         return $this->hasMany("App\Models\Job", "company_id", "id");
     }
 
+    public function job_applications()
+    {
+        return $this->hasManyThrough(JobApplication::class, Job::class);
+    }
+
 }
