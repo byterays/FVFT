@@ -7,11 +7,11 @@ use App\Models\Company;
 use App\Models\CompanyContactPerson;
 use App\Models\Industry;
 use App\Models\Job;
+use App\Models\User;
 use App\Traits\Site\CompanyMethods;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\User;
 
 class DashController extends Controller
 {
@@ -27,7 +27,137 @@ class DashController extends Controller
     }
     public function dashboard()
     {
-        return $this->company_view('company.dash');
+        return $this->company_view('company.dash', [
+            "job_datas" => $this->__datas()['job_datas'],
+            "profile_datas" => $this->__datas()['profile_datas'],
+            "application_datas" => $this->__datas()['application_datas'],
+        ]);
+    }
+
+    private function __route($type)
+    {
+        return route('company.jobs', ['type' => $type]);
+    }
+
+    private function __datas()
+    {
+        /* TODO work with stdClass to create multiple object instance */
+        return [
+            'job_datas' => [
+                [
+                    'title' => 'Total Jobs',
+                    'link' => $this->__route('all'),
+                    'totalcount' => $this->company()->jobs->count(),
+                    'image' => 'mail.svg',
+                    'bg-color' => 'bg-blue',
+                ],
+                [
+                    'title' => 'Drafted Jobs',
+                    'link' => $this->__route('draft_jobs'),
+                    'totalcount' => $this->company()->jobs->where('status', 'Draft')->count(),
+                    'image' => 'megaphone.svg',
+                    'bg-color' => 'bg-gray',
+                ],
+                [
+                    'title' => 'Pending Jobs',
+                    'link' => $this->__route('pending_jobs'),
+                    'totalcount' => $this->company()->jobs->where('status', 'Pending')->count(),
+                    'image' => 'blogging.svg',
+                    'bg-color' => 'bg-pink',
+                ],
+                [
+                    'title' => 'Published Jobs',
+                    'link' => $this->__route('published_jobs'),
+                    'totalcount' => $this->company()->jobs->where('status', 'Published')->count(),
+                    'image' => 'picture.svg',
+                    'bg-color' => 'bg-orange',
+                ],
+                [
+                    'title' => 'Expired Jobs',
+                    'link' => $this->__route('expired_jobs'),
+                    'totalcount' => $this->company()->jobs->where('status', 'Expired')->count(),
+                    'image' => 'picture.svg',
+                    'bg-color' => 'bg-green',
+                ],
+                [
+                    'title' => 'Rejected Jobs',
+                    'link' => $this->__route('rejected_jobs'),
+                    'totalcount' => $this->company()->jobs->where('status', 'Rejected')->count(),
+                    'image' => 'box-closed.svg',
+                    'bg-color' => 'bg-red',
+                ],
+            ],
+            "profile_datas" => [
+                [
+                    'title' => 'Post New Job',
+                    'link' => route('company.newjob.get_job_detail'),
+                    'totalcount' => '',
+                    'icon' => '',
+                ],
+                [
+                    'title' => 'Search Applicants',
+                    'link' => '#',
+                    'totalcount' => '',
+                    'icon' => '',
+                ],
+                [
+                    'title' => 'New Message',
+                    'link' => '#',
+                    'totalcount' => 2,
+                    'icon' => 'icon icon-people',
+                ],
+                [
+                    'title' => 'New Notification',
+                    'link' => '#',
+                    'totalcount' => 2,
+                    'icon' => 'fa fa-bell-o',
+                ],
+            ],
+            'application_datas' => [
+                [
+                    'title' => 'All Applications',
+                    'link' => route('company.applicant.index'),
+                    'totalcount' => $this->company()->job_applications->count(),
+                    'image' => 'mail.svg',
+                    'bg-color' => 'bg-blue',
+                ],
+                [
+                    'title' => 'Unscreened Applications',
+                    'link' => route('company.applicant.index'),
+                    'totalcount' => $this->company()->job_applications->where('status', 'pending')->count(),
+                    'image' => 'megaphone.svg',
+                    'bg-color' => 'bg-gray',
+                ],
+                [
+                    'title' => 'Shortlisted Applications',
+                    'link' => route('company.applicant.index'),
+                    'totalcount' => $this->company()->job_applications->where('status', 'shortlisted')->count(),
+                    'image' => 'blogging.svg',
+                    'bg-color' => 'bg-pink',
+                ],
+                [
+                    'title' => 'Interviewed Applications',
+                    'link' => route('company.applicant.index'),
+                    'totalcount' => $this->company()->job_applications->where('status', 'selectedForInterview')->count(),
+                    'image' => 'picture.svg',
+                    'bg-color' => 'bg-orange',
+                ],
+                [
+                    'title' => 'Selected Applications',
+                    'link' => route('company.applicant.index'),
+                    'totalcount' => $this->company()->job_applications->where('status', 'accepted')->count(),
+                    'image' => 'picture.svg',
+                    'bg-color' => 'bg-green',
+                ],
+                [
+                    'title' => 'Rejected Applications',
+                    'link' => route('company.applicant.index'),
+                    'totalcount' => $this->company()->job_applications->where('status', 'rejected')->count(),
+                    'image' => 'box-closed.svg',
+                    'bg-color' => 'bg-red',
+                ],
+            ],
+        ];
     }
     public function profile()
     {
@@ -66,15 +196,15 @@ class DashController extends Controller
         // Remove old file if exist
         // ....
 
-        if ($request->hasFile('company_logo')){
+        if ($request->hasFile('company_logo')) {
             $logofile = time() . '_' . $request->company_logo->getClientOriginalName();
             $request->company_logo->move(public_path($upload_path, 'public'), $logofile);
-            $company->company_logo = $upload_path.$logofile;
+            $company->company_logo = $upload_path . $logofile;
         }
         if ($request->hasFile('company_cover')) {
             $coverfile = time() . '_' . $request->company_cover->getClientOriginalName();
             $request->company_cover->move(public_path($upload_path, 'public'), $coverfile);
-            $company->company_cover = $upload_path.$coverfile;
+            $company->company_cover = $upload_path . $coverfile;
         }
         $company->save();
         CompanyContactPerson::updateOrCreate(
@@ -99,12 +229,12 @@ class DashController extends Controller
     {
         $GLOBALS['page-name'] = 'Job';
         $company = Company::where('user_id', auth()->user()->id)->first();
-        if($request->filled('term')){
+        if ($request->filled('term')) {
             $all_jobs = Job::filterjob($request->term)->where('company_id', $company->id)->paginate(10);
         } else {
             $all_jobs = $this->jobsquery('all', false);
         }
-        
+
         $approved_jobs = $this->jobsquery('Approved');
         $unapproved_jobs = $this->jobsquery('Not Approved');
         $published_jobs = $this->jobsquery('Published');
@@ -269,27 +399,26 @@ class DashController extends Controller
         return $jobs->paginate(10);
     }
 
-
     public function settings()
     {
         $GLOBALS['page-name'] = 'Setting';
-        return $this->company_view('company.settings',[
+        return $this->company_view('company.settings', [
             'user' => \Auth::user(),
         ]);
     }
 
     public function saveSettings(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'password' => ['required', 'min:8'],
-            'confirm-password' => ['required', 'same:password']
-        ],[
+            'confirm-password' => ['required', 'same:password'],
+        ], [
             'password.required' => 'Password is required',
             'password.min' => 'Password must be 8 characters',
             'confirm-password.required' => 'Confirm Password field is required',
             'confirm-password.same' => 'Confirm password didn\'t match with password',
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $fields = [];

@@ -123,7 +123,7 @@
                                 </div>
                                 <div class="col-md-6 my-auto">
                                     <div class="row float-right">
-                                        <a href="{{ route('candidate.savedjob.saveJobLists') }}">View all</a>
+                                        <a href="{{ route('candidate.job_search.index', ['type' => 'saved_jobs']) }}">View all</a>
                                     </div>
                                 </div>
                             </div>
@@ -357,7 +357,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="row float-right">
-                                                <a href="#" class="float-right">View All</a>
+                                                <a href="{{ route('candidate.news.index') }}" class="float-right">View All</a>
                                             </div>
                                         </div>
                                     </div>

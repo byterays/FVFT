@@ -18,7 +18,7 @@
     </div>
     <div class="item1-links  mb-0">
         <a href="{{ route('company.dash') }}" class="@yield('dashboard') d-flex border-bottom">
-            <span class="icon1 mr-2"><i class="typcn typcn-home fs-20"></i></span> Home
+            <span class="icon1 mr-2"><i class="typcn typcn-home fs-20"></i></span> Dashboard
         </a>
         <a href="{{ route('company.edit_profile') }}" class="@yield('edit_profile') d-flex border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-edit fs-20"></i></span> Profile
