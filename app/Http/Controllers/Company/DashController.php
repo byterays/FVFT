@@ -41,7 +41,6 @@ class DashController extends Controller
 
     private function __datas()
     {
-        /* TODO work with stdClass to create multiple object instance */
         return [
             'job_datas' => [
                 [
