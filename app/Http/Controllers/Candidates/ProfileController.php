@@ -404,12 +404,12 @@ class ProfileController extends Controller
         //     'employ' => $this->employe(['user:id,email', 'country:id,name', 'state:id,name', 'city:id,name', 'education_level:id,title', 'employeeSkills.skill:id,title', 'employeeLanguage.language:id,lang', 'experience.country:id,name', 'experience.job_category:id,functional_area', 'experience.job:id,title']),
         //     'jobs' => $jobs,
         // ]);
-        $pdf = PDF::loadView('themes.fvft.candidates.profile.cv1', compact('employ', 'jobs'))->setPaper('a4', 'portrait');
+        $pdf = PDF::loadView('themes.fvft.candidates.profile.cv', compact('employ', 'jobs'))->setPaper('a4', 'portrait');
         PDF::setOptions(['dpi' => 300]);
         if ($request->type == 'preview') {
-            return $pdf->stream('cv.pdf');
+            return $pdf->stream($employ->full_name.'.pdf');
         }
-        return $pdf->download('cv.pdf');
+        return $pdf->download($employ->full_name.'.pdf');
 
     }
 }

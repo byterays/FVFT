@@ -48,7 +48,7 @@
                                             <div class="card">
                                                 <p class="text-center mt-3">CV generated from profile</p>
                                                 <div class="d-flex mx-auto mb-5 mt-2">
-                                                    <a href="{{ route('candidate.profile.downloadGeneratedCV', ['type' => 'preview']) }}" class="btn btn-primary">Preview</a>
+                                                    <a href="{{ route('candidate.profile.downloadGeneratedCV', ['type' => 'preview']) }}" target="_blank" class="btn btn-primary">Preview</a>
                                                     <a href="{{ route('candidate.profile.downloadGeneratedCV') }}" class="btn btn-primary ml-5">Download <i class="fa fa-download"></i></a>
                                                 </div>
                                             </div>
