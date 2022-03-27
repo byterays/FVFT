@@ -5,12 +5,14 @@ namespace App\Http\Controllers\company;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\CompanyContactPerson;
+use App\Models\Employe;
 use App\Models\Industry;
 use App\Models\Job;
 use App\Models\User;
 use App\Traits\Site\CompanyMethods;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class DashController extends Controller
@@ -27,10 +29,12 @@ class DashController extends Controller
     }
     public function dashboard()
     {
+        // dd(json_encode($this->__getChartData()['genderCount']));
         return $this->company_view('company.dash', [
             "job_datas" => $this->__datas()['job_datas'],
             "profile_datas" => $this->__datas()['profile_datas'],
             "application_datas" => $this->__datas()['application_datas'],
+            'genderDatas' => $this->__getChartData()['genderCount'],
         ]);
     }
 
@@ -427,5 +431,27 @@ class DashController extends Controller
         $user->update($fields);
         return redirect()->back()->with(notifyMsg('success', 'Password changed successfully'));
         // return $this->client_view('candidates.settings')->with(notifyMsg('message', 'Password changed successfully'));
+    }
+
+    private function __getChartData()
+    {
+        $company = Company::where('user_id', auth()->user()->id)->with(['job_applications.employe'])->first();
+        $employe_ids = [];
+        foreach ($company->job_applications as $job_application) {
+            $employe_ids[] = $job_application->employe->id;
+        }
+        $male_count = Employe::whereIn('id', $employe_ids)->where('gender', 'Male')->count();
+        $female_count = Employe::whereIn('id', $employe_ids)->where('gender', 'Female')->count();
+        $other_count = Employe::whereIn('id', $employe_ids)->where('gender', 'Other')->count();
+        return [
+            'genderCount' => [
+                [
+                    'male' => $male_count,
+                    'female' => $female_count,
+                    'other' => $other_count,
+                ],
+            ],
+        ];
+
     }
 }

@@ -57,6 +57,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('post-experience', [ProfileController::class, 'post_experience'])->name('post_experience');
         Route::get('get-preview', [ProfileController::class, 'get_preview'])->name('get_preview');
         Route::get('get-save', [ProfileController::class, 'get_save'])->name('get_save');
+        Route::get('get-cv', [ProfileController::class, 'get_cv'])->name('get_cv');
+        Route::get('download-cv', [ProfileController::class, 'downloadGeneratedCV'])->name('downloadGeneratedCV');
     });
 
     Route::group(['prefix' => 'account-setting/', 'as' => 'candidate.account_setting.'], function () {

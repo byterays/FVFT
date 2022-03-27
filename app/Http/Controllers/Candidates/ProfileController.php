@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers\Candidates;
 
-use App\Http\Controllers\Controller;
-use App\Models\EducationLevel;
-use App\Models\Employe;
-use App\Models\EmployeeSkill;
-use App\Models\ExperienceLevel;
+use PDF;
 use App\Models\Job;
-use App\Models\JobShift;
-use App\Models\Language;
 use App\Models\Skill;
 use App\Models\State;
+use App\Models\Employe;
+use App\Models\JobShift;
+use App\Models\Language;
 use App\Models\Training;
-use App\Traits\Site\CandidateMethods;
-use App\Traits\Site\ThemeMethods;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\EmployeeSkill;
+use App\Models\EducationLevel;
+use App\Models\ExperienceLevel;
+use App\Traits\Site\ThemeMethods;
 use Illuminate\Support\Facades\DB;
+use App\Models\EmployJobPreference;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Traits\Site\CandidateMethods;
 use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
@@ -109,7 +111,7 @@ class ProfileController extends Controller
                 DB::commit();
                 $redirectTo = route('candidate.profile.get_contact_information');
                 return response()->json(['redirectRoute' => $redirectTo]);
-            } catch (\Exception$e) {
+            } catch (\Exception $e) {
                 DB::rollBack();
                 return response()->json(['db_error' => $e->getMessage()]);
             }
@@ -159,7 +161,7 @@ class ProfileController extends Controller
                 DB::commit();
                 $redirectTo = route('candidate.profile.get_qualification');
                 return response()->json(['redirectRoute' => $redirectTo]);
-            } catch (\Exception$e) {
+            } catch (\Exception $e) {
                 DB::rollBack();
                 return response()->json(['db_error' => $e->getMessage()]);
             }
@@ -231,7 +233,7 @@ class ProfileController extends Controller
                 DB::commit();
                 $redirectTo = route('candidate.profile.get_experience');
                 return response()->json(['redirectRoute' => $redirectTo]);
-            } catch (\Exception$e) {
+            } catch (\Exception $e) {
                 DB::rollBack();
                 return response()->json(['db_error' => $e->getMessage()]);}
         }
@@ -280,7 +282,7 @@ class ProfileController extends Controller
             DB::commit();
             $redirectTo = route('candidate.profile.get_preview');
             return response()->json(['redirectRoute' => $redirectTo]);
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['db_error' => $e->getMessage()]);
         }
@@ -351,5 +353,63 @@ class ProfileController extends Controller
             }
 
         }
+    }
+
+    public function get_cv(Request $request)
+    {
+        $employ = $this->employe();
+        return $this->client_view('candidates.profile.get_cv', [
+            'employ' => $employ,
+        ]);
+    }
+
+    public function downloadGeneratedCV(Request $request)
+    {
+        $q = Job::query();
+        $category_id = [];
+        $job_title = [];
+        $country_id = [];
+        $preference = EmployJobPreference::where('employ_id', $this->employe()->id)->get();
+        $category_id = array_merge(
+            $category_id,
+            $preference
+                ->whereNotNull('job_category_id')
+                ->pluck('job_category_id')
+                ->toArray(),
+        );
+        $job_title = array_merge(
+            $job_title,
+            $preference
+                ->whereNotNull('job_title')
+                ->pluck('job_title')
+                ->toArray(),
+        );
+        $country_id = array_merge(
+            $country_id,
+            $preference
+                ->whereNotNull('country_id')
+                ->pluck('country_id')
+                ->toArray(),
+        );
+        $q->whereIn('job_categories_id', $category_id)
+            ->orWhereIn('country_id', $country_id)
+            ->when($job_title, function ($q3) use ($job_title) {
+                foreach ($job_title as $title) {
+                    $q3->orWhere('title', 'LIKE', '%' . $title . '%');
+                }
+            });
+        $jobs = $q->take(5)->get('title');
+        $employ = $this->employe(['user:id,email', 'country:id,name', 'state:id,name', 'city:id,name', 'education_level:id,title', 'employeeSkills.skill:id,title', 'employeeLanguage.language:id,lang', 'experience.country:id,name', 'experience.job_category:id,functional_area', 'experience.job:id,title']);
+        // return $this->client_view('candidates.profile.cv', [
+        //     'employ' => $this->employe(['user:id,email', 'country:id,name', 'state:id,name', 'city:id,name', 'education_level:id,title', 'employeeSkills.skill:id,title', 'employeeLanguage.language:id,lang', 'experience.country:id,name', 'experience.job_category:id,functional_area', 'experience.job:id,title']),
+        //     'jobs' => $jobs,
+        // ]);
+        $pdf = PDF::loadView('themes.fvft.candidates.profile.cv1', compact('employ', 'jobs'))->setPaper('a4', 'portrait');
+        PDF::setOptions(['dpi' => 300]);
+        if ($request->type == 'preview') {
+            return $pdf->stream('cv.pdf');
+        }
+        return $pdf->download('cv.pdf');
+
     }
 }
