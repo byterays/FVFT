@@ -1,5 +1,4 @@
 const loadStates = (country_id) => {
-    console.log('helo')
     fetch(appurl + "ajax/states", {
         method: "POST",
         headers: {

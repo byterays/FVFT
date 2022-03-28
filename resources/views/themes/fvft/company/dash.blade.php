@@ -114,41 +114,44 @@
     <script src="{{ asset('themes/fvft/') }}/assets/plugins/charts-c3/d3.v5.min.js"></script>
     <script src="{{ asset('themes/fvft/') }}/assets/plugins/charts-c3/c3-chart.js"></script>
     <script>
-        // const _token = $('meta[name="csrf-token"]')[0].content;
-        // const appurl = "{{ env('APP_URL') }}";
+        const _token = $('meta[name="csrf-token"]')[0].content;
+        const appurl = "{{ env('APP_URL') }}";
         // Chart Start
         $(document).ready(function() {
-            var data = <?php echo json_encode($genderDatas) ?>;
-            var array = JSON.parse(data[0]);
-            console.log(array);
-            $.each(data, function(key, value){
-                console.log(value);
-            });
-            // console.log(data);
+            /** Working Code don't delete'
+            // var genderDatas = <?php echo json_encode($genderDatas); ?>;
+            // var gender_array = new Array();
+            // $.each(Object.entries(genderDatas['genders']), function(key, value) {
+            //     gender_array.push(value);
+            // });
+            **/
+            var genderDatas = '<?php echo json_encode($genderDatas); ?>';
+            var gender_array = Object.entries(JSON.parse(genderDatas)['genders']);
             var chart = c3.generate({
-                bindto: '#chart-donut3', // id of chart wrapper
+                bindto: '#chart-donut4', // id of chart wrapper
                 data: {
-                    columns: [
-                        // each columns data
-                        ['data1', 78],
-                        ['data2', 95],
-                        ['data3', 95],
-                        ['data4', 95]
-                    ],
+                    // columns: [
+                    //     // each columns data
+                    //     ['data1', 78],
+                    //     ['data2', 95],
+                    //     ['data3', 95],
+                    //     ['data4', 95]
+                    // ],
+                    columns: gender_array,
                     type: 'donut', // default type of chart
-                    colors: {
-                        data1: '#4801FF ',
-                        data2: '#ec296b',
-                        data3: '#ec296b',
-                        data4: '#ec296b',
-                    },
-                    names: {
-                        // name of each serie
-                        'data1': 'sales1',
-                        'data2': 'sales2',
-                        'data3': 'sales3',
-                        'data4': 'sales3'
-                    }
+                    // colors: {
+                    //     male: '#4801FF ',
+                    //     female: '#ec296b',
+                    //     other: '#ec296b',
+                    // },
+                    colors: JSON.parse(genderDatas)['colors'],
+                    names: JSON.parse(genderDatas)['names'],
+                    // names: {
+                    //     // name of each series
+                    //     'male': 'Male',
+                    //     'female': 'Female',
+                    //     'other': 'Other',
+                    // }
                 },
                 axis: {},
                 legend: {
@@ -158,30 +161,39 @@
                     bottom: 0,
                     top: 0
                 },
+                donut: {
+                    label: {
+                        format: function(value, ratio, id) {
+                            return value;
+                        }
+                    }
+                },
+                tooltip: {
+                    format: {
+                        value: function(value, ratio, id) {
+                            return value;
+                        }
+                    }
+                }
             });
         });
 
+        /** Working code don't delete'
+        // var age_group = <?php echo json_encode($ageDatas); ?>;
+        // var age_array = new Array();
+        // $.each(Object.entries(age_group), function(key, value) {
+        //     age_array.push(value);
+        // });
+        **/
+        var age_group = '<?php echo json_encode($ageDatas); ?>';
+        var age_array = Object.entries(JSON.parse(age_group)['ages']);
         var chart = c3.generate({
-            bindto: '#chart-donut4', // id of chart wrapper
+            bindto: '#chart-donut3', // id of chart wrapper
             data: {
-                columns: [
-                    // each columns data
-                    ['data1', 78],
-                    ['data2', 95],
-                    ['data3', 95],
-                ],
+                columns: age_array,
                 type: 'donut', // default type of chart
-                colors: {
-                    data1: '#4801FF ',
-                    data2: '#ec296b',
-                    data3: '#ec296b',
-                },
-                names: {
-                    // name of each serie
-                    'data1': 'Male',
-                    'data2': 'Female',
-                    'data3': 'Other',
-                }
+                colors: JSON.parse(age_group)['colors'],
+                names: JSON.parse(age_group)['names'],
             },
             axis: {},
             legend: {
@@ -191,6 +203,20 @@
                 bottom: 0,
                 top: 0
             },
+            donut: {
+                label: {
+                    format: function(value, ratio, id) {
+                        return value;
+                    }
+                }
+            },
+            tooltip: {
+                format: {
+                    value: function(value, ratio, id) {
+                        return value;
+                    }
+                }
+            }
         });
         // Chart End
     </script>

@@ -10,7 +10,7 @@ use App\Models\Industry;
 use App\Models\Job;
 use App\Models\User;
 use App\Traits\Site\CompanyMethods;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -35,6 +35,7 @@ class DashController extends Controller
             "profile_datas" => $this->__datas()['profile_datas'],
             "application_datas" => $this->__datas()['application_datas'],
             'genderDatas' => $this->__getChartData()['genderCount'],
+            'ageDatas' => $this->__getChartData()['age_group'],
         ]);
     }
 
@@ -443,12 +444,46 @@ class DashController extends Controller
         $male_count = Employe::whereIn('id', $employe_ids)->where('gender', 'Male')->count();
         $female_count = Employe::whereIn('id', $employe_ids)->where('gender', 'Female')->count();
         $other_count = Employe::whereIn('id', $employe_ids)->where('gender', 'Other')->count();
+        $below20 = Employe::whereIn('id', $employe_ids)->where(DB::raw('TIMESTAMPDIFF(YEAR,dob,CURDATE())'), '<', 20)->count();
+        $age_20_30 = Employe::whereIn('id', $employe_ids)->whereBetween(DB::raw('TIMESTAMPDIFF(YEAR,dob,CURDATE())'), [20,30])->count();
+        $age_31_40 = Employe::whereIn('id', $employe_ids)->whereBetween(DB::raw('TIMESTAMPDIFF(YEAR,dob,CURDATE())'), [31,40])->count();
+        $above40 = Employe::whereIn('id', $employe_ids)->where(DB::raw('TIMESTAMPDIFF(YEAR,dob,CURDATE())'), '>', 40 )->count();
         return [
-            'genderCount' => [
-                [
+            'genderCount' =>[
+                'genders' => [
                     'male' => $male_count,
                     'female' => $female_count,
                     'other' => $other_count,
+                ],
+                'colors' => [
+                    'male' => '#4801FF',
+                    'female' => '#ec296b',
+                    'other' => '#ec296b',
+                ],
+                'names' => [
+                    'male' => 'Male',
+                    'female' => 'Female',
+                    'other' => 'Other',
+                ],
+            ],
+            'age_group' => [
+                'ages' => [
+                    'below20' => $below20,
+                    '20-30' => $age_20_30,
+                    '31-40' => $age_31_40,
+                    'above40' => $above40,
+                ],
+                'colors' => [
+                    'below20' => '#4801FF',
+                    '20-30' => '#ec296b',
+                    '31-40' => '#ec296b',
+                    'above40' => '#ec296b',
+                ],
+                'names' => [
+                    'below20' => 'Below 20',
+                    '20-30' => 'Age Group 20-30',
+                    '31-40' => 'Age Group 31-40',
+                    'above40' => 'Above 40',
                 ],
             ],
         ];
