@@ -24,6 +24,7 @@ class JobsListController extends Controller
     {
 //        11. date range (from-to)
         $limit= $request->has("limit") ? $request->limit : 20;
+
         $user = null;
         $employee = null;
         if (auth()->guard('api')->user()) {
@@ -49,6 +50,12 @@ class JobsListController extends Controller
             'job_category',
             'jobShift'
         ]);
+
+        if($request->has("search_query")) {
+            $searchTerm = $request->search_query;
+            $query->where('title', 'LIKE', "%{$searchTerm}%");
+            $query->orWhere('description', 'LIKE', "%{$searchTerm}%");
+        }
 
         if($request->has("country_id")) {
             $query->where('country_id', $request->country_id);
