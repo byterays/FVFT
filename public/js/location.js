@@ -1,4 +1,5 @@
 const loadStates = (country_id) => {
+    console.log('I am here');
     fetch(appurl + "ajax/states", {
         method: "POST",
         headers: {
@@ -106,7 +107,6 @@ const getDistricts = (state_id) => {
             districts = json;
             $("#districts").empty();
             json.forEach((district) => {
-                // console.log(district);
                 let selection = "";
                 if (district_id == district.id) {
                     selection = "selected";

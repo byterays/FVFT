@@ -64,9 +64,9 @@
                                                                     data-placeholder="Select Country">
                                                                     <option value="">Select Country</option>
                                                                     @foreach ($countries as $country)
-                                                                        <option value="{{ $country->id }}"
-                                                                            {{ $country->id == $employ_experience['country_id'] ? 'selected' : '' }}>
-                                                                            {{ $country->name }}</option>
+                                                                        <option value="{{ $country->id }}" {{ $country->id == $employ_experience['country_id'] ? 'selected' : '' }}>
+                                                                            {{ $country->name }}
+                                                                        </option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -173,7 +173,7 @@
                                     <div class="mx-auto">
                                         <span>Contact
                                             Information</span> &nbsp;&nbsp;&nbsp;<a
-                                            href="{{ route('candidate.profile.get_contact_information') }}"
+                                            href="{{ route('candidate.profile.get_qualification') }}"
                                             class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i>Back </a>
                                         <button type="button" onclick="submitForm(event);"
                                             class="btn btn-primary ml-3 rounded-0">Next <i
@@ -325,6 +325,7 @@
                     } else if (response.errors) {
                         var error_html = "";
                         $.each(response.errors, function(key, value) {
+                            toastr.error(value);
                             error_html = '<div>' + value + '</div>';
                             $('.' + key).css('display', 'block').html(error_html);
                         });
