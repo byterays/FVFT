@@ -76,6 +76,14 @@
 								<li><a class="slide-item" href="/admin/news/new">Add New</a></li>
 							</ul>
 						</li>
+                        <li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="#">
+                                <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Useful Informations</span><i class="angle fa fa-angle-right"></i></a>
+							<ul class="slide-menu">
+								<li><a class="slide-item" href="{{ route('admin.usefulinfo.index') }}">List Information</a></li>
+								<li><a class="slide-item" href="{{ route('admin.usefulinfo.create') }}">Add New</a></li>
+							</ul>
+						</li>
 						<li class="slide">
 							<a class="side-menu__item" data-toggle="slide" href="#">
                                 <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Industry</span><i class="angle fa fa-angle-right"></i></a>

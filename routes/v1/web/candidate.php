@@ -10,6 +10,7 @@ use App\Http\Controllers\Candidates\NewsController;
 use App\Http\Controllers\Candidates\ProfileController;
 use App\Http\Controllers\Candidates\SettingController;
 use App\Http\Controllers\Candidates\SupportController;
+use App\Http\Controllers\Candidates\UsefulInformationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [AuthController::class, 'login'])->name('candidate.login');
@@ -68,6 +69,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('post-change-password', [SettingController::class, 'post_change_password'])->name('post_change_password');
         Route::get('get-account-setting', [SettingController::class, 'get_account_setting'])->name('get_account_setting');
         Route::post('post-account-setting', [SettingController::class, 'post_account_setting'])->name('post_account_setting');
+    });
+
+    Route::group(['prefix' => 'useful-info/', 'as' => 'candidate.usefulinfo.'], function () {
+        Route::get('index', [UsefulInformationController::class, 'index'])->name('index');
+        Route::get('detail/{slug}', [UsefulInformationController::class, 'detail'])->name('detail');
     });
 
     Route::group(['prefix' => 'job-setting/', 'as' => 'candidate.job_setting.'], function () {

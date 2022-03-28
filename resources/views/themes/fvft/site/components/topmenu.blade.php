@@ -23,26 +23,44 @@
                     <div class="clearfix">
                         <ul class="contact border-left">
                             <li class="d-lg-none">
-                                <a href="#" class="callnumber"><span><i class="fa fa-phone mr-1"></i>: +425 345 8765</span></a>
+                                <a href="#" class="callnumber"><span><i class="fa fa-phone mr-1"></i>: +425 345
+                                        8765</span></a>
                             </li>
                             <li class="select-country">
                                 <select class="form-control select2-flag-search" data-placeholder="Select Country">
-                                    @foreach($countries as $index => $country)
-                                        <option value="{{$country->iso2}}">{{$country->name}}</option>
+                                    @foreach ($countries as $index => $country)
+                                        <option value="{{ $country->iso2 }}">{{ $country->name }}</option>
                                     @endforeach
                                 </select>
                             </li>
                             <li class="dropdown d-none d-xl-inline-block">
-                                <a href="#" class="" data-toggle="dropdown"><span> Language <i class="fa fa-caret-down"></i></span> </a>
+                                <a href="#" class="" data-toggle="dropdown"><span>
+                                        {{ in_array($current_locale, array_keys($available_locales)) ? __('messages.'.$available_locales[$current_locale]) : __('messages.English') }}
+                                        <i class="fa fa-caret-down"></i></span> </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    <a href="#" class="dropdown-item" >
-                                        English
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        Nepali
-                                    </a>
+                                    @if (in_array($current_locale, array_keys($available_locales)))
+                                        <a class="dropdown-item" href="{{ url('lang/'.$current_locale) }}">
+                                            {{ $available_locales[$current_locale] }}
+                                        </a>
+                                        @foreach ($available_locales as $key => $value)
+                                            @if ($current_locale != $key)
+                                                <a class="dropdown-item" href="{{ url('lang/'.$key) }}">
+                                                    {{ $value }}
+                                                </a>
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        @foreach ($available_locales as $key => $value)
+                                            <a class="dropdown-item" href="{{ url('lang/'.$key) }}">
+                                                {{ $value }}
+                                            </a>
+                                        @endforeach
+                                    @endif
+
+
                                 </div>
                             </li>
+
                             {{-- <li class="dropdown d-none d-xl-inline-block">
                                 <a href="#" class="" data-toggle="dropdown"><span>Currency <i class="fa fa-caret-down"></i></span></a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
@@ -69,36 +87,40 @@
                     <ul class="custom">
                         @guest
                             <li>
-                                <a href="{{ route('candidate.login') }}" class=""><i class="fa fa-user mr-1"></i> <span>Register</span></a>
+                                <a href="{{ route('candidate.login') }}" class=""><i
+                                        class="fa fa-user mr-1"></i> <span>Register</span></a>
                             </li>
                             <li>
-                                <a href="{{ route('candidate.login') }}" class=""><i class="fa fa-sign-in mr-1"></i> <span>Login</span></a>
+                                <a href="{{ route('candidate.login') }}" class=""><i
+                                        class="fa fa-sign-in mr-1"></i> <span>Login</span></a>
                             </li>
                             <li>
-                                <a href="{{ route('company.login') }}" class=""><i class="fa fa-black-tie mr-1"></i> <span>For Employer</span></a>
+                                <a href="{{ route('company.login') }}" class=""><i
+                                        class="fa fa-black-tie mr-1"></i> <span>For Employer</span></a>
                             </li>
                             <li>
-                                <a href="{{ route('candidate.login') }}" class=""><i class="fa fa-users mr-1"></i> <span>For Employee</span></a>
+                                <a href="{{ route('candidate.login') }}" class=""><i
+                                        class="fa fa-users mr-1"></i> <span>For Employee</span></a>
                             </li>
                         @endguest
                         @auth
-                            {{--<li class="dropdown">--}}
-                            {{--<a href="#" class="" data-toggle="dropdown"><i class="fa fa-home mr-1"></i><span> My Dashboard</span></a>--}}
-                            {{--<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">--}}
-                            {{--<a href="{{ route('company.dash') }}" class="dropdown-item" >--}}
-                            {{--<i class="dropdown-icon icon icon-user"></i> My Profile--}}
-                            {{--</a>--}}
-                            {{--<a class="dropdown-item" href="{{ route('company.dash') }}">--}}
-                            {{--<i class="dropdown-icon icon icon-speech"></i> Inbox--}}
-                            {{--</a>--}}
-                            {{--<a class="dropdown-item" href="{{ route('company.dash') }}">--}}
-                            {{--<i class="dropdown-icon icon icon-bell"></i> Notifications--}}
-                            {{--</a>--}}
-                            {{--<a href="{{ route('company.dash') }}" class="dropdown-item" >--}}
-                            {{--<i class="dropdown-icon  icon icon-settings"></i> Account Settings--}}
-                            {{--</a>--}}
-                            {{--</div>--}}
-                            {{--</li>--}}
+                            {{-- <li class="dropdown"> --}}
+                            {{-- <a href="#" class="" data-toggle="dropdown"><i class="fa fa-home mr-1"></i><span> My Dashboard</span></a> --}}
+                            {{-- <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"> --}}
+                            {{-- <a href="{{ route('company.dash') }}" class="dropdown-item" > --}}
+                            {{-- <i class="dropdown-icon icon icon-user"></i> My Profile --}}
+                            {{-- </a> --}}
+                            {{-- <a class="dropdown-item" href="{{ route('company.dash') }}"> --}}
+                            {{-- <i class="dropdown-icon icon icon-speech"></i> Inbox --}}
+                            {{-- </a> --}}
+                            {{-- <a class="dropdown-item" href="{{ route('company.dash') }}"> --}}
+                            {{-- <i class="dropdown-icon icon icon-bell"></i> Notifications --}}
+                            {{-- </a> --}}
+                            {{-- <a href="{{ route('company.dash') }}" class="dropdown-item" > --}}
+                            {{-- <i class="dropdown-icon  icon icon-settings"></i> Account Settings --}}
+                            {{-- </a> --}}
+                            {{-- </div> --}}
+                            {{-- </li> --}}
                         @endauth
                     </ul>
                 </div>

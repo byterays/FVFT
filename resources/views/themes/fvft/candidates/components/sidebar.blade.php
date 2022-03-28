@@ -30,6 +30,9 @@
         <a href="{{ route('candidate.news.index') }}" class="@if(Route::currentRouteName()=="candidate.news.index" || Route::currentRouteName()=="candidate.news.detail") active @endif   d-flex  border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> News
         </a>
+        <a href="{{ route('candidate.usefulinfo.index') }}" class="@if(Route::currentRouteName()=="candidate.usefulinfo.index" || Route::currentRouteName()=="candidate.usefulinfo.detail") active @endif   d-flex  border-bottom">
+            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Informations
+        </a>
         <a href="{{ route('candidate.savedjob.saveJobLists') }}" class="@if(Route::currentRouteName()=="candidate.savedjob.saveJobLists") active @endif   d-flex  border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Saved Jobs
         </a>

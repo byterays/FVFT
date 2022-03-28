@@ -15,6 +15,14 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('lang/{locale?}', function($locale = null){
+    if(isset($locale) && in_array($locale, array_keys(config('app.available_locales')))){
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+    }
+    return redirect()->back();
+    
+});
 Route::group(['prefix' => 'skill/', 'as' => 'admin.skill.'], function(){
     Route::post('ajax-store-skill', [AddController::class, "ajaxStoreSKill"])->name("ajaxAddSkill");
 });
