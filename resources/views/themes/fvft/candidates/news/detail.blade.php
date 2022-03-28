@@ -49,7 +49,7 @@
                                         <p>{{ date('F j, Y', strtotime($news->created_at)) }}</p>
                                         <div class="image">
                                             <div class="item7-card-img">
-                                                <img src="{{ asset('/') }}{{ $news->feature_img ?? 'uploads/defaultimage.jpg' }}"
+                                                <img src="{{ asset('/') }}{{ $news->feature_img ?? 'images/defaultimage.jpg' }}"
                                                     alt="img" class="cover-image">
                                             </div>
                                             <p class="mt-3 text-center">{{ $news->title }}</p>
@@ -72,7 +72,7 @@
                                                 <div class="d-flex justify-content-between">
                                                     <div class="news-image w-25">
                                                         <a href="{{ route('candidate.news.detail', $onitem->slug) }}">
-                                                            <img src="{{ asset('/') }}{{ $onitem->feature_img ?? 'uploads/defaultimage.jpg' }}"
+                                                            <img src="{{ asset('/') }}{{ $onitem->feature_img ?? 'images/defaultimage.jpg' }}"
                                                                 alt="img">
                                                         </a>
                                                     </div>

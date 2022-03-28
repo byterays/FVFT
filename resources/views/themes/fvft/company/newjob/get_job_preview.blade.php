@@ -43,7 +43,7 @@
                                 <div class="col">
                                     <div class="profile-pic mb-0">
                                         <div class="d-md-flex">
-                                            <img src="{{ asset('/') }}{{ $job->feature_image_url != null ? $job->feature_image_url : 'uploads/defaultimage.jpg' }}"
+                                            <img src="{{ asset('/') }}{{ $job->feature_image_url != null ? $job->feature_image_url : 'images/defaultimage.jpg' }}"
                                                 class="w-20 h-20" alt="user">
                                             <div class="ml-4">
                                                 <span class="text-dark">

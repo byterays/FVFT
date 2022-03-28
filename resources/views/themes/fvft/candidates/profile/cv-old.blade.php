@@ -11433,7 +11433,7 @@
             <div class="col-md-4">
                 <div class="row">
                     <div class="image">
-                        <img src="{{ public_path($employ->avatar ?? 'uploads/defaultimage.jpg') }}" class="w-25"
+                        <img src="{{ public_path($employ->avatar ?? 'images/defaultimage.jpg') }}" class="w-25"
                             alt="">
                     </div>
                 </div>

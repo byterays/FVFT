@@ -80,7 +80,7 @@
     <div class="card">
         <div class="row d-flex">
             <div class="column">
-                <img src="{{ public_path($employ->avatar ?? 'uploads/defaultimage.jpg') }}" alt="" />
+                <img src="{{ public_path($employ->avatar ?? 'images/defaultimage.jpg') }}" alt="" />
             </div>
             <div class="column1">
                 <h1>{{ $employ->full_name }}</h1>

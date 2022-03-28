@@ -142,7 +142,7 @@
                                                                         <img src="{{ asset($item->feature_image_url) }}"
                                                                             alt="img" class="h-100">
                                                                     @else
-                                                                        <img src="{{ asset('uploads/defaultimage.jpg') }}"
+                                                                        <img src="{{ asset('images/defaultimage.jpg') }}"
                                                                             alt="img" class="h-100">
                                                                     @endif
                                                                 </div>

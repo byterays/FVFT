@@ -39,7 +39,7 @@
 										<div class="col-xl-4 col-lg-12 col-md-12">
 											<div class="item7-card-img">
 												<a href="/news/{{$item->slug}}"></a>
-												<img src="{{asset('/')}}{{$item->feature_img ?? 'uploads/defaultimage.jpg'}}" alt="img" class="cover-image">
+												<img src="{{asset('/')}}{{$item->feature_img ?? 'images/defaultimage.jpg'}}" alt="img" class="cover-image">
 												<div class="item7-card-text">
 													<span class="badge badge-warning">Jobs</span>
 												</div>

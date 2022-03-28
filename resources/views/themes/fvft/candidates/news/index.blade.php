@@ -42,7 +42,7 @@
                                                     <div class="card">
                                                         <a href="{{ route('candidate.news.detail', $nitem->slug) }}">
                                                             <div class="item7-card-img">
-                                                                <img src="{{ asset('/') }}{{ $nitem->feature_img ?? 'uploads/defaultimage.jpg' }}"
+                                                                <img src="{{ asset('/') }}{{ $nitem->feature_img ?? 'images/defaultimage.jpg' }}"
                                                                     alt="img" class="cover-image">
                                                             </div>
                                                         </a>
