@@ -47,9 +47,8 @@ Route::middleware('auth:api')->group(function () {
 });
 // Listing
 Route::get('job/home', [JobsListController::class, 'getHome']);
-//Route::get('job-list', [JobsListController::class, 'listing']);
 Route::get('job-list', [JobsListController::class, 'jobListing']);
-Route::get('job-categories', [JobCategoryController::class, 'list']);
+Route::get('job-categories', [JobCategoryController::class, 'categoryListing']);
 
 Route::get('news-categories', [NewsCategoryController::class, 'list']);
 Route::get('news', [NewsController::class, 'list']);

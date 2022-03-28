@@ -120,90 +120,90 @@ class JobsListController extends Controller
         return $this->sendResponse(compact('saved_jobs'),"success");
     }
 
-    public function listing(Request $request){
-        // dd($request);
-        $limit= $request->has("limit")?$request->limit:10;
-        $jobs =Job::query();
-        $jobs->with(['company', 'country', 'job_category']);
-        if($request->has("is_active")){
-            $jobs->where('is_active',$request->is_active);
-        }
-        if($request->has("is_featured")){
-            $jobs->where('is_featured',$request->is_featured);
-        }
-        if($request->has("job_experience_id")){
-            $jobs->where('job_experience_id',$request->job_experience_id);
-        }
-        if($request->has("job_categories_id")){
-            $jobs->where('job_categories_id',$request->job_categories_id);
-        }
-        if($request->has("slug")){
-            $jobs->where('slug',$request->slug);
-        }
-        if($request->has("id")){
-            $jobs->where('id',$request->id);
-        }
-        if($request->has("only_latest")){
-            if($request->only_latest==true){
-                $t=time();
-                $jobs->where('expiry_date',">=",date("Y-m-d",$t));
-            }
-        }
-        if($request->has('country_id')){
-            $jobs->where('country_id',$request->country_id);
-        }
-        if($request->has('state_id')){
-            $jobs->where('state_id',$request->state_id);
-        }
-        if($request->has('city_id')){
-            $jobs->where('city_id',$request->city_id);
-        }
-        if($request->has('include_applied')){
-            if($request->include_applied){
-                $jobs->whereNotExists(function($query)
-                {
-                    $query->select(DB::raw(1))
-                        ->from('job_applications')
-                        ->whereRaw('jobs.id = job_applications.job_id');
-                });
-            }
-        }
-        $total_records=$jobs->count();
-        // dd($total_records);
-        if($request->has("page_no")){
-            $jobs->limit($limit)->offset($request->page_no>=1?($request->page_no-1)*10:1);
-        }else{
-            $jobs->limit($limit);
-        }
-
-        $j=$jobs->get();
-        // dd($j);
-        $results = [];
-        foreach($j as $index=>$job){
-            $results[$index] = $this->process($job);
-        }
-
-        // dd($total_records);
-        $total_page_no=(int)($total_records/$limit);
-        $page_no=$request->has("page_no")?$request->page_no:1;
-        $pagination=[
-            "total_records"=>(int)$total_records,
-            "total_pages"=>(int)$total_page_no,
-            "limit"=>(int)$limit,
-            "page_no"=>(int)$page_no,
-        ];
-        $page_no>1?
-            $pagination=array_merge(
-                $pagination,
-                ["previous"=>$page_no-1]
-            ):null;
-        $page_no<$total_page_no?
-            $pagination=array_merge(
-                $pagination,
-                ["next"=>$page_no+1]
-            ):null;
-        return $this->sendResponse($results,"Jobs List.",$pagination);
-    }
+//    public function listing(Request $request){
+//        // dd($request);
+//        $limit= $request->has("limit")?$request->limit:10;
+//        $jobs =Job::query();
+//        $jobs->with(['company', 'country', 'job_category']);
+//        if($request->has("is_active")){
+//            $jobs->where('is_active',$request->is_active);
+//        }
+//        if($request->has("is_featured")){
+//            $jobs->where('is_featured',$request->is_featured);
+//        }
+//        if($request->has("job_experience_id")){
+//            $jobs->where('job_experience_id',$request->job_experience_id);
+//        }
+//        if($request->has("job_categories_id")){
+//            $jobs->where('job_categories_id',$request->job_categories_id);
+//        }
+//        if($request->has("slug")){
+//            $jobs->where('slug',$request->slug);
+//        }
+//        if($request->has("id")){
+//            $jobs->where('id',$request->id);
+//        }
+//        if($request->has("only_latest")){
+//            if($request->only_latest==true){
+//                $t=time();
+//                $jobs->where('expiry_date',">=",date("Y-m-d",$t));
+//            }
+//        }
+//        if($request->has('country_id')){
+//            $jobs->where('country_id',$request->country_id);
+//        }
+//        if($request->has('state_id')){
+//            $jobs->where('state_id',$request->state_id);
+//        }
+//        if($request->has('city_id')){
+//            $jobs->where('city_id',$request->city_id);
+//        }
+//        if($request->has('include_applied')){
+//            if($request->include_applied){
+//                $jobs->whereNotExists(function($query)
+//                {
+//                    $query->select(DB::raw(1))
+//                        ->from('job_applications')
+//                        ->whereRaw('jobs.id = job_applications.job_id');
+//                });
+//            }
+//        }
+//        $total_records=$jobs->count();
+//        // dd($total_records);
+//        if($request->has("page_no")){
+//            $jobs->limit($limit)->offset($request->page_no>=1?($request->page_no-1)*10:1);
+//        }else{
+//            $jobs->limit($limit);
+//        }
+//
+//        $j=$jobs->get();
+//        // dd($j);
+//        $results = [];
+//        foreach($j as $index=>$job){
+//            $results[$index] = $this->process($job);
+//        }
+//
+//        // dd($total_records);
+//        $total_page_no=(int)($total_records/$limit);
+//        $page_no=$request->has("page_no")?$request->page_no:1;
+//        $pagination=[
+//            "total_records"=>(int)$total_records,
+//            "total_pages"=>(int)$total_page_no,
+//            "limit"=>(int)$limit,
+//            "page_no"=>(int)$page_no,
+//        ];
+//        $page_no>1?
+//            $pagination=array_merge(
+//                $pagination,
+//                ["previous"=>$page_no-1]
+//            ):null;
+//        $page_no<$total_page_no?
+//            $pagination=array_merge(
+//                $pagination,
+//                ["next"=>$page_no+1]
+//            ):null;
+//        return $this->sendResponse($results,"Jobs List.",$pagination);
+//    }
 
     public function process($job){
         $company=DB::table('companies')->find($job->company_id);
