@@ -25,13 +25,6 @@
                             <li class="d-lg-none">
                                 <a href="#" class="callnumber"><span><i class="fa fa-phone mr-1"></i>: +425 345 8765</span></a>
                             </li>
-                            <li class="select-country">
-                                <select class="form-control select2-flag-search" data-placeholder="Select Country">
-                                    @foreach($countries as $index => $country)
-                                        <option value="{{$country->iso2}}">{{$country->name}}</option>
-                                    @endforeach
-                                </select>
-                            </li>
                             <li class="dropdown d-none d-xl-inline-block">
                                 <a href="#" class="" data-toggle="dropdown"><span> Language <i class="fa fa-caret-down"></i></span> </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
@@ -42,6 +35,13 @@
                                         Nepali
                                     </a>
                                 </div>
+                            </li>
+                            <li class="select-country">
+                                <select class="form-control select2-flag-search" data-placeholder="Select Country">
+                                    @foreach($countries as $index => $country)
+                                        <option value="{{$country->iso2}}">{{$country->name}}</option>
+                                    @endforeach
+                                </select>
                             </li>
                             {{-- <li class="dropdown d-none d-xl-inline-block">
                                 <a href="#" class="" data-toggle="dropdown"><span>Currency <i class="fa fa-caret-down"></i></span></a>

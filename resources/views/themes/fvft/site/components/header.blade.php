@@ -1,6 +1,6 @@
 		<!--Loader-->
 		<div id="global-loader">
-			<img src="{{asset('themes/fvft/')}}/assets/images/loader.svg" class="loader-img" alt="">
+			<img src="{{asset('themes/fvft/assets/images/loader.svg')}}" class="loader-img" alt="">
 		</div>
 
 		<!--Header Main-->
@@ -8,10 +8,10 @@
             @include('themes.fvft.site.components.topmenu')
 			<!-- Mobile Header -->
 				<div class="sticky">
-					 <div class="horizontal-header clearfix ">
+					 <div class="horizontal-header clearfix">
 						<div class="container">
 							<a id="horizontal-navtoggle" class="animated-arrow"><span></span></a>
-							<span class="smllogo"><img src="{{asset('uploads/site/')}}/fvft_logo.jpeg" width="120" alt="img"/></span>
+							<span class="smllogo"><img src="{{asset('uploads/site/logo.png')}}" width="120" alt="img"/></span>
 							<a href="#" class="callusbtn bg-light"><i class="fa fa-bell text-body" aria-hidden="true"></i></a>
 						</div>
 					</div>

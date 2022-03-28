@@ -18,7 +18,7 @@ Route::post('register', [AuthController::class, 'register']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('profile', [ProfileController::class, 'get_profile']);
-    Route::post('profile', [ProfileController::class, 'save_profile']);
+    Route::post('profile', [ProfileController::class, 'updateProfile']);
     Route::post('job-application', [JobApplicationController::class, 'apply']);
     Route::post('job-application/{id}', [JobApplicationController::class, 'index']);
     Route::post('job-application-list', [JobApplicationController::class, 'list']);
@@ -47,9 +47,8 @@ Route::middleware('auth:api')->group(function () {
 });
 // Listing
 Route::get('job/home', [JobsListController::class, 'getHome']);
-//Route::get('job-list', [JobsListController::class, 'listing']);
 Route::get('job-list', [JobsListController::class, 'jobListing']);
-Route::get('job-categories', [JobCategoryController::class, 'list']);
+Route::get('job-categories', [JobCategoryController::class, 'categoryListing']);
 
 Route::get('news-categories', [NewsCategoryController::class, 'list']);
 Route::get('news', [NewsController::class, 'list']);
