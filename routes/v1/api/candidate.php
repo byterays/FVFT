@@ -18,7 +18,7 @@ Route::post('register', [AuthController::class, 'register']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('profile', [ProfileController::class, 'get_profile']);
-    Route::post('profile', [ProfileController::class, 'save_profile']);
+    Route::post('profile', [ProfileController::class, 'updateProfile']);
     Route::post('job-application', [JobApplicationController::class, 'apply']);
     Route::post('job-application/{id}', [JobApplicationController::class, 'index']);
     Route::post('job-application-list', [JobApplicationController::class, 'list']);

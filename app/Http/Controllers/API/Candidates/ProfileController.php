@@ -38,43 +38,88 @@ class ProfileController extends Controller
             'job_applications',
             'job_preference'])
             ->where('user_id', $user->id)->first();
-//        dd($employee);
         $responseData = $this->sendResponse(compact('employee', 'user'), 'success', '');
         return $responseData;
     }
-    public function save_profile(Request $request)
+
+    private $destination = 'uploads/candidates/profiles/';
+//    private $fullPictureDestination = 'uploads/candidates/full_picture/';
+    public function updateProfile(Request $request)
     {
         $user = User::find(Auth::user()->id);
-        $employe = Employe::where('user_id', $user->id)->first();
+        $employee = Employe::where('user_id', $user->id)->first();
 
-        if($request->has('phone')){
-            $employe->update(["mobile_phone"=>$request->phone]);
-        }
-
-        if($request->has('first_name')){
-            $employe->update(["first_name"=>$request->first_name]);
-        }
-
-        if($request->has('middle_name')){
-            $employe->update(["middle_name"=>$request->middle_name]);
-        }
-
-        if($request->has('last_name')){
-            $employe->update([ "last_name"=>$request->last_name]);
-        }
-
-        if($request->has('profile_img')){
-            $base64 =  $request->profile_img["base64"];
-            $image_info = getimagesize($base64);
-            $extension = (isset($image_info["mime"]) ? explode('/', $image_info["mime"] )[1]: "");
-            $suported_type= array('png', 'jpg', 'jpeg');
-            if (in_array($extension,$suported_type)){
-                $upload=$this->upload($request->profile_img["base64"]);
-                $employe->update(["avatar"=>$upload]);
+        if ($request->page == 'personal_information') {
+            if ($request->hasFile('profile_picture')) {
+                $prf = $request->file('profile_picture');
+                $prfName = time() . '_' . $prf->getClientOriginalName();
+                $avatar = $this->destination . $prfName;
+                $prf->move(public_path($this->destination, 'public'), $prfName);
+            } else {
+                $avatar = $employee->avatar;
             }
-        }
 
-        return $this->get_profile("Profile Update Succesful !");
+            $employee->update([
+                'first_name' => $request->first_name,
+                'middle_name' => $request->middle_name,
+                'last_name' => $request->last_name,
+                'dob' => $request->english_dob,
+                'gender' => $request->gender,
+                'marital_status' => $request->marital_status,
+                'height' => $request->height,
+                'weight' => $request->weight,
+                'avatar' => $avatar,
+                'passport_number' => $request->passport_number,
+                'passport_expiry_date' => $request->passport_expiry_date,
+            ]);
+
+            $responseData = $this->sendResponse(compact('employee', 'user'), 'success', '');
+            return $responseData;
+        }else{
+            $responseData = $this->sendResponse([], 'page value mismatch', '', false);
+            return $responseData;
+        }
+    }
+
+    public function save_profile(Request $request)
+    {
+        try {
+            $user = User::find(Auth::user()->id);
+
+            $employe = Employe::where('user_id', $user->id)->first();
+
+            if ($request->has('phone')) {
+                $employe->update(["mobile_phone" => $request->phone]);
+            }
+
+            if ($request->has('first_name')) {
+                $employe->update(["first_name" => $request->first_name]);
+            }
+
+            if ($request->has('middle_name')) {
+                $employe->update(["middle_name" => $request->middle_name]);
+            }
+
+            if ($request->has('last_name')) {
+                $employe->update(["last_name" => $request->last_name]);
+            }
+
+            if ($request->has('profile_img')) {
+                $base64 = $request->profile_img["base64"];
+                $image_info = getimagesize($base64);
+                $extension = (isset($image_info["mime"]) ? explode('/', $image_info["mime"])[1] : "");
+                $suported_type = array('png', 'jpg', 'jpeg');
+                if (in_array($extension, $suported_type)) {
+                    $upload = $this->upload($request->profile_img["base64"]);
+                    $employe->update(["avatar" => $upload]);
+                }
+            }
+
+            return $this->get_profile("Profile Update Succesful !");
+        }catch (\Exception $e){
+            $responseData = $this->sendResponse([], $e->getMessage(), '', false);
+            return $responseData;
+        }
 
     }
     private function process($user){
