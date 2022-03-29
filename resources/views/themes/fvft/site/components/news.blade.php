@@ -2,7 +2,7 @@
 		<section class="sptb bg-white">
 			<div class="container">
 				<div class="section-title center-block text-center">
-					<h1>News</h1>
+					<h1>{{ __('News') }}</h1>
 				
 				</div>
 				<div id="defaultCarousel" class="owl-carousel Card-owlcarousel owl-carousel-icons">

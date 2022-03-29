@@ -11,11 +11,11 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">My Profile</h1>
+                    <h1 class="">{{ __('My Profile') }}</h1>
                     <ol class="breadcrumb text-center">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">My Profile</li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Dashboard') }} </a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ __('My Profile') }}</li>
                     </ol>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                                     @include('partial/candidates/step')
                                 </div>
                             </div>
-                            <h3 class="mt-5 ml-3">Personal Information</h3>
+                            <h3 class="mt-5 ml-3">{{ __('Personal Information') }}</h3>
                             <div class="card mb-2">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -51,7 +51,7 @@
                                                 <input type="hidden" class="form-control" name="user_id" value="{{ setParameter($employ, 'user_id') }}">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label class="form-label" for="first_name">First Name&nbsp;<span
+                                                        <label class="form-label" for="first_name">{{ __('First Name') }}&nbsp;<span
                                                                 class="req">*</span></label>
                                                     </div>
                                                     <div class="col-md-8">
@@ -65,7 +65,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for="" class="form-label">Middle Name</label>
+                                                        <label for="" class="form-label">{{ __('Middle Name') }}</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control"
@@ -77,7 +77,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for="last_name" class="form-label">Last Name&nbsp;<span
+                                                        <label for="last_name" class="form-label">{{ __('Last Name') }}&nbsp;<span
                                                                 class="req">*</span></label>
                                                     </div>
                                                     <div class="col-md-8">
@@ -91,20 +91,20 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for="gender" class="form-label">Gender&nbsp;<span
+                                                        <label for="gender" class="form-label">{{ __('Gender') }}&nbsp;<span
                                                                 class="req">*</span></label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <select name="gender" class="form-control select2">
-                                                            <option value="">Select Gender</option>
+                                                            <option value="">{{ __('Select Gender') }}</option>
                                                             <option value="Male"
-                                                                {{ setParameter($employ, 'gender') == 'Male' ? 'selected' : '' }}>Male
+                                                                {{ setParameter($employ, 'gender') == 'Male' ? 'selected' : '' }}>{{ __('Male') }}
                                                             </option>
                                                             <option value="Female"
-                                                                {{ setParameter($employ, 'gender') == 'Female' ? 'selected' : '' }}>Female
+                                                                {{ setParameter($employ, 'gender') == 'Female' ? 'selected' : '' }}>{{ __('Female') }}
                                                             </option>
                                                             <option value="Other"
-                                                                {{ setParameter($employ, 'gender') == 'Other' ? 'selected' : '' }}>Other
+                                                                {{ setParameter($employ, 'gender') == 'Other' ? 'selected' : '' }}>{{ __('Other') }}
                                                             </option>
                                                         </select>
                                                         <div class="require text-danger gender"></div>
@@ -114,26 +114,25 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for="marital_status" class="form-label">Marital
-                                                            Status&nbsp;<span class="req">*</span></label>
+                                                        <label for="marital_status" class="form-label">{{ __('Marital Status') }}&nbsp;<span class="req">*</span></label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <select name="marital_status" class="form-control select2">
-                                                            <option value="">Select Marital Status</option>
+                                                            <option value="">{{ __('Select Marital Status') }}</option>
                                                             <option value="Unmarried"
                                                                 {{ setParameter($employ,'marital_status') == 'Unmarried' ? 'selected' : '' }}>
-                                                                Unmarried
+                                                                {{ __('Unmarried') }}
                                                             </option>
                                                             <option value="Married"
                                                                 {{ setParameter($employ,'marital_status') == 'Married' ? 'selected' : '' }}>
-                                                                Married</option>
+                                                                {{ __('Married') }}</option>
                                                             <option value="Divorced"
                                                                 {{ setParameter($employ,'marital_status') == 'Divorced' ? 'selected' : '' }}>
-                                                                Divorced
+                                                                {{ __('Divorced') }}
                                                             </option>
                                                             <option value="Widow"
                                                                 {{ setParameter($employ,'marital_status') == 'Widow' ? 'selected' : '' }}>
-                                                                Widow</option>
+                                                                {{ __('Widow') }}</option>
                                                         </select>
                                                         <div class="require text-danger marital_status"></div>
                                                     </div>
@@ -143,8 +142,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for="" class="form-label">Date of Birth(Nepali
-                                                            B.S)</label>
+                                                        <label for="" class="form-label">{{ __('Date of Birth(Nepali B.S)') }}</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control nepaliDatePicker"
@@ -157,8 +155,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for="" class="form-label">Date of Birth(English
-                                                            A.D)&nbsp;<span class="req">*</span></label>
+                                                        <label for="" class="form-label">{{ __('Date of Birth(English A.D)') }}&nbsp;<span class="req">*</span></label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text" class="form-control datetime"
@@ -171,7 +168,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for="" class="form-label">Passport Number</label>
+                                                        <label for="" class="form-label">{{ __('Passport Number') }}</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text" name="passport_number"
@@ -183,7 +180,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for="" class="form-label">Passport Expiry Date</label>
+                                                        <label for="" class="form-label">{{ __('Passport Expiry Date') }}</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text" name="passport_expiry_date"
@@ -196,7 +193,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for="" class="form-label">Height</label>
+                                                        <label for="" class="form-label">{{ __('Height') }}</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <div class="input-group">
@@ -204,7 +201,7 @@
                                                                 value="{{ setParameter($employ, 'height') }}" name="height"
                                                                 placeholder="000">
                                                             <div class="input-group-append">
-                                                                <button type="button" class="btn btn-primary">CM</button>
+                                                                <button type="button" class="btn btn-primary">{{ __('CM') }}</button>
                                                             </div>
                                                         </div>
                                                         <div class="require text-danger height"></div>
@@ -214,7 +211,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for="" class="form-label">Weight</label>
+                                                        <label for="" class="form-label">{{ __('Weight') }}</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <div class="input-group">
@@ -222,7 +219,7 @@
                                                                 value="{{ setParameter($employ,'weight') }}" name="weight"
                                                                 placeholder="000">
                                                             <div class="input-group-append">
-                                                                <button type="button" class="btn btn-primary">KG</button>
+                                                                <button type="button" class="btn btn-primary">{{ __('KG') }}</button>
                                                             </div>
                                                         </div>
                                                         <div class="require text-danger weight"></div>
@@ -236,7 +233,7 @@
                                             <div class="form-group profilePicture" id="profilePicture">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for="">Profile Picture</label>
+                                                        <label for="">{{ __('Profile Picture') }}</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="file" name="profile_picture"
@@ -255,9 +252,8 @@
                                 <div class="card-body mx-auto">
                                     <div class="mx-auto">
                                         <button type="button" onclick="submitForm(event);"
-                                            class="btn btn-primary rounded-0">Next <i
-                                                class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>Contact
-                                            Information</span>
+                                            class="btn btn-primary rounded-0">{{ __('Next') }} <i
+                                                class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Contact Information') }}</span>
                                     </div>
                                 </div>
                             </div>

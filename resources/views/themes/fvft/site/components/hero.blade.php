@@ -5,8 +5,8 @@
         <div class="header-text mb-0">
             <div class="container">
                 <div class="text-center text-white mb-7">
-                    <h1 class="mb-1">Find The Best Job For Your Future</h1>
-                    <p>It is a long established fact that a reader will be distracted by the readable.</p>
+                    <h1 class="mb-1">{{ __('Find The Best Job For Your Future') }}</h1>
+                    <p>{{ __('It is a long established fact that a reader will be distracted by the readable.') }}</p>
                 </div>
                 <form action="{{ route('site.jobs') }}">
                     <div class="row">
@@ -15,13 +15,13 @@
                                 <div class="form row no-gutters ">
                                     <div class="form-group  col-xl-4 col-lg-3 col-md-12 mb-0 bg-white ">
                                         <input type="text" class="form-control input-lg br-tr-md-0 br-br-md-0"
-                                            id="jobSearch" placeholder="Search Jobs" name="search">
+                                            id="jobSearch" placeholder="{{ __('Search Jobs') }}" name="search">
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-12 select2-lg mb-0 bg-white">
                                         {{-- <input type="text" class="form-control input-lg br-md-0" id="text5" placeholder="Select Location"> --}}
                                         <select class="form-control select2-show-search  border-bottom-0"
-                                            data-placeholder="Select Country" id="select-country" name="country">
-                                            <option>All Countries</option>
+                                            data-placeholder="{{ __('All Countries') }}" id="select-country" name="country_id">
+                                            <option value="">{{ __('All Countries') }}</option>
                                             @foreach ($countries as $item)
                                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                                             @endforeach
@@ -29,9 +29,9 @@
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white">
                                         <select class="form-control select2-show-search  border-bottom-0"
-                                            data-placeholder="Select Category" name="job_catagory">
+                                            data-placeholder="{{ __('All Categories') }}" name="job_catagory">
                                             <optgroup label="Categories">
-                                                <option>All Categories</option>
+                                                <option value="">{{ __('All Categories') }}</option>
                                                 @foreach ($job_categories as $item)
                                                     <option value="{{ $item->id }}">{{ $item->functional_area }}
                                                     </option>
@@ -41,7 +41,7 @@
                                     </div>
                                     <div class="col-xl-2 col-lg-3 col-md-12 mb-0">
                                         <button type="submit" href="#" class="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0"><i
-                                                class="fa fa-search mr-1"></i>Search</button>
+                                                class="fa fa-search mr-1"></i>{{ __('Search') }}</button>
                                     </div>
                                 </div>
                             </div>

@@ -12,10 +12,10 @@
 				<div class="header-text mb-0">
 					<div class="container">
 						<div class="text-center text-white">
-							<h1 class="">News</h1>
+							<h1 class="">{{ __('News') }}</h1>
 							<ol class="breadcrumb text-center">
-								<li class="breadcrumb-item"><a href="#">Home</a></li>
-								<li class="breadcrumb-item active text-white" aria-current="page">News</li>
+								<li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
+								<li class="breadcrumb-item active text-white" aria-current="page">{{ __('News') }}</li>
 							</ol>
 						</div>
 					</div>
@@ -34,14 +34,14 @@
 							@foreach ($news as $item)	
 							<div class="col-xl-12 col-lg-12 col-md-12">
 								<div class="card overflow-hidden">
-									<div class="ribbon ribbon-top-left text-warning"><span class="bg-warning">featured</span></div>
+									{{-- <div class="ribbon ribbon-top-left text-warning"><span class="bg-warning">featured</span></div> --}}
 									<div class="row no-gutters blog-list">
 										<div class="col-xl-4 col-lg-12 col-md-12">
 											<div class="item7-card-img">
 												<a href="/news/{{$item->slug}}"></a>
 												<img src="{{asset('/')}}{{$item->feature_img ?? 'images/defaultimage.jpg'}}" alt="img" class="cover-image">
 												<div class="item7-card-text">
-													<span class="badge badge-warning">Jobs</span>
+													{{-- <span class="badge badge-warning">Jobs</span> --}}
 												</div>
 											</div>
 										</div>
@@ -55,7 +55,7 @@
 												<a href="/news/{{$item->slug}}" class="text-dark"><h4 class="font-weight-semibold mb-3">{{ $item->title}}</h4></a>
 												<p class="mb-1">{{  Str::limit($item->short_description,50) }}
 												</p>
-												<a href="/news/{{$item->slug}}" class="btn btn-primary btn-sm mt-4">Read More</a>
+												<a href="/news/{{$item->slug}}" class="btn btn-primary btn-sm mt-4">{{ __('Read More') }}</a>
 											</div>
 										</div>
 									</div>

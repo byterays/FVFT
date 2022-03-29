@@ -13,8 +13,8 @@
 									<div class=" mb-0">
 										<div class="">
 											<div class="p-5 bg-white item2-gl-nav d-flex">
-												<h6 class="mb-0 mt-3">Showing @if($companies->count()>1)<b>1 to {{ $companies->count() }}
-                                                @else {{$companies->count()}} @endif</b> of {{$companies->total()}} Entries</h6>
+												<h6 class="mb-0 mt-3">{{ __('Showing') }} @if($companies->count()>1)<b>{{ __('1') }} {{ __('to') }} {{ __($companies->count()) }}
+                                                @else {{__($companies->count())}} @endif</b> {{ __('of') }} {{__($companies->total())}} {{ __('Entries') }}</h6>
 												<ul class="nav item2-gl-menu mt-1 ml-auto">
 													<li class=""><a href="#tab-11" class="show active" data-toggle="tab" title="List style"><i class="fa fa-list"></i></a></li>
 													{{-- <li><a href="#tab-12" data-toggle="tab" class="" title="Grid"><i class="fa fa-th"></i></a></li> --}}
@@ -67,14 +67,14 @@
 																			<td class="p-1"><span>Web designer, Web developers</span></td>
 																		</tr> --}}
 																		<tr>
-																			<td class="px-0 py-1"><span class="font-weight-semibold">Address</span></td>
+																			<td class="px-0 py-1"><span class="font-weight-semibold">{{ __('Address') }}</span></td>
 																			<td class="p-1"><span>:</span></td>
 																			<td class="p-1"><span> {{@DB::table('cities')->find($item->city_id)->name.","}}{{@DB::table('countries')->find($item->country_id)->name}}</span></td>
 																		</tr>
 																	</tbody>
 																</table>
 																<div class="mt-3">
-																	<a class="btn btn-light" href="/company-view/{{$item->id}}" data-toggle="modal" data-target="#Applynow">Learn More</a>
+																	<a class="btn btn-light" href="/company-view/{{$item->id}}">{{ __('Learn More') }}</a>
 																</div>
 															</div>
 														</div>

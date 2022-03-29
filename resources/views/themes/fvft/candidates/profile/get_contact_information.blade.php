@@ -11,11 +11,11 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">My Profile</h1>
+                    <h1 class="">{{ __('My Profile') }}</h1>
                     <ol class="breadcrumb text-center">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">My Profile</li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Dashboard') }} </a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ __('My Profile') }}</li>
                     </ol>
                 </div>
             </div>
@@ -34,14 +34,14 @@
                         <div class="row">
                             <div class="card mb-2">
                                 <div class="card-body">
-                                    <h3 class="font-weight-bold">{{ strtoupper('Profile') }}</h3>
+                                    <h3 class="font-weight-bold">{{ strtoupper(__('Profile')) }}</h3>
                                     <div id="basicwizard" class="border pt-0">
                                         @include('partial/candidates/tabs')
                                     </div>
                                     @include('partial/candidates/step')
                                 </div>
                             </div>
-                            <h3 class="mt-5 ml-3">Contact Information</h3>
+                            <h3 class="mt-5 ml-3">{{ __('Contact Information') }}</h3>
                             <div class="card mb-2">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -49,7 +49,7 @@
                                             <div class="form-group">
                                                 <input type="hidden" class="form-control" name="user_id"
                                                     value="{{ setParameter($employ, 'user_id') }}">
-                                                <label for="">Mobile Number&nbsp;<span
+                                                <label for="">{{ __('Mobile Number') }}&nbsp;<span
                                                         class="req">*</span></label>
                                                 <div class="d-inline-flex">
                                                     <input type="text" name="mobile_number1"
@@ -63,21 +63,21 @@
                                                 <div class="require text-danger mobile_number2"></div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="" class="form-label">Email ID</label>
+                                                <label for="" class="form-label">{{ __('Email ID') }}</label>
                                                 <input type="email" class="form-control" name="email"
                                                     value="{{ setParameter($employ->user, 'email') }}"
                                                     placeholder="Enter Email ID" readonly>
                                                 <div class="require text-danger email"></div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="" class="form-label">Address</label>
+                                                <label for="" class="form-label">{{ __('Address') }}</label>
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <select name="state_id" class="form-control select2-show-search"
                                                             id="states" data-placeholder="Select State"
                                                             onchange="patchGetDistricts(this)"
                                                             value="{{ setParameter($employ, 'state_id') }}">
-                                                            <option value="">Select State</option>
+                                                            <option value="">{{ __('Select State') }}</option>
                                                             @foreach ($states as $state)
                                                                 <option value="{{ $state->id }}"
                                                                     {{ $state->id == setParameter($employ, 'state_id') ? 'selected' : '' }}>
@@ -90,7 +90,7 @@
                                                             id="districts"
                                                             value="{{ setParameter($employ, 'district_id') }}"
                                                             data-placeholder="Select District">
-                                                            <option value="">Select District</option>
+                                                            <option value="">{{ __('Select District') }}</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-6 mt-3">
@@ -123,14 +123,12 @@
                             <div class="card">
                                 <div class="card-body mx-auto">
                                     <div class="mx-auto">
-                                        <span>Personal
-                                            Information</span> &nbsp;&nbsp;&nbsp;<a
+                                        <span>{{ __('Personal Information') }}</span> &nbsp;&nbsp;&nbsp;<a
                                             href="{{ route('candidate.profile.get_personal_information') }}"
-                                            class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i>Back </a>
+                                            class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i>{{ __('Back') }} </a>
                                         <button type="button" onclick="submitForm(event);"
-                                            class="btn btn-primary ml-3 rounded-0">Next <i
-                                                class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>Contact
-                                            Information</span>
+                                            class="btn btn-primary ml-3 rounded-0">{{ __('Next') }} <i
+                                                class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Contact Information') }}</span>
                                     </div>
                                 </div>
                             </div>

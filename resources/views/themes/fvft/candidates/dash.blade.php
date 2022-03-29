@@ -35,10 +35,10 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">My Dashboard</h1>
+                    <h1 class="">{{ __('My Dashboard') }}</h1>
                     <ol class="breadcrumb text-center">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">My Dashboard </a></li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('My Dashboard') }} </a></li>
                     </ol>
                 </div>
             </div>
@@ -53,19 +53,19 @@
                 <div class="col-xl-9 col-lg-12 col-md-12">
                     <div class="card mb-0">
                         <div class="card-body">
-                            <h3 class="card-title">Profile Status</h3>
+                            <h3 class="card-title">{{ __('Profile Status') }}</h3>
                             <div class="row">
                                 <div
                                     class="col-md-{{ $employe->calculateProfileCompletion() < 100 ? '9' : '12' }} my-auto">
                                     <div class="progress progress-lg">
                                         <div class="progress-bar bg-green w-{{ $employe->calculateProfileCompletion() }}"
                                             style="color: #fff !important;">{{ $employe->calculateProfileCompletion() }}%
-                                            Complete</div>
+                                            {{ __('Complete') }}</div>
                                     </div>
                                 </div>
                                 @if ($employe->calculateProfileCompletion() < 100)
                                     <div class="col-md-3 my-auto">
-                                        <a href="#" class="btn btn-md btn-primary">Complete your Profile</a>
+                                        <a href="#" class="btn btn-md btn-primary">{{ __('Complete your Profile') }}</a>
                                     </div>
                                 @endif
                             </div>
@@ -82,7 +82,7 @@
                                                     class="fa-stack fa-lg fa-1x icons shadow-default bg-primary-transparent">
                                                     <i class="icon icon-people text-primary"></i>
                                                 </div>
-                                                <p class="card-text mt-3 mb-3">{{ $a_data['title'] }}</p>
+                                                <p class="card-text mt-3 mb-3">{{ __($a_data['title']) }}</p>
                                                 <p class="h2 text-center text-primary">{{ $a_data['totalcount'] }}</p>
                                             </div>
                                         </div>
@@ -102,7 +102,7 @@
                                                     class="fa-stack fa-lg fa-1x icons shadow-default bg-primary-transparent">
                                                     <i class="{{ $profile_data['icon'] }}"></i>
                                                 </div>
-                                                <p class="card-text mt-3 mb-3">{{ $profile_data['title'] }}</p>
+                                                <p class="card-text mt-3 mb-3">{{ __($profile_data['title']) }}</p>
                                                 <p class="h2 text-center">{{ $profile_data['totalcount'] }}
                                                 </p>
                                             </div>
@@ -117,13 +117,13 @@
                             <div class="card-header">
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <h3 class="card-title" style="width: 100%;">Saved Jobs</h3>
+                                        <h3 class="card-title" style="width: 100%;">{{ __('Saved Jobs') }}</h3>
 
                                     </div>
                                 </div>
                                 <div class="col-md-6 my-auto">
                                     <div class="row float-right">
-                                        <a href="{{ route('candidate.job_search.index', ['type' => 'saved_jobs']) }}">View all</a>
+                                        <a href="{{ route('candidate.job_search.index', ['type' => 'saved_jobs']) }}">{{ __('View all') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -224,68 +224,63 @@
                                                                                     <div class="col-md-3">
                                                                                         @if ($application)
                                                                                             <a href="javascript:void(0);"
-                                                                                                class="btn btn-primary mr-5">Applied</a>
+                                                                                                class="btn btn-primary mr-5">{{ __('Applied') }}</a>
                                                                                         @else
                                                                                             <a href="/apply-job/{{ $item->job->id }}"
                                                                                                 class="btn btn-primary mr-5">
-                                                                                                Apply
-                                                                                                Now</a>
+                                                                                                {{ __('Apply Now') }}</a>
                                                                                         @endif
                                                                                     </div>
                                                                                     <div class="col-md-3">
                                                                                         <a href="javascript:void(0);"
                                                                                             class="saveJobButton ico-font">
-                                                                                            <i class="fa fa-heart"></i> Saved
+                                                                                            <i class="fa fa-heart"></i> {{ __('Saved') }}
                                                                                         </a>
                                                                                     </div>
                                                                                     <div class="col-md-3">
                                                                                         <a href="#" class="ico-font">
                                                                                             <i
-                                                                                                class="fa fa-share-alt"></i>&nbsp;Share
+                                                                                                class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
                                                                                         </a>
                                                                                     </div>
                                                                                     <div class="col-md-3">
                                                                                         <a href="/job/{{ $item->job->id }}"
                                                                                             class="ico-font">
                                                                                             <i
-                                                                                                class="fa fa-eye"></i>&nbsp;View
-                                                                                            Details
+                                                                                                class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                                         </a>
                                                                                     </div>
                                                                                 @elseif(auth()->user()->user_type == 'company')
                                                                                     <div class="col-md-3">
                                                                                         <a href="#" class="ico-font">
                                                                                             <i
-                                                                                                class="fa fa-share-alt"></i>&nbsp;Share
+                                                                                                class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
                                                                                         </a>
                                                                                     </div>
                                                                                     <div class="col-md-3">
                                                                                         <a href="/job/{{ $item->job->id }}"
                                                                                             class="ico-font">
                                                                                             <i
-                                                                                                class="fa fa-eye"></i>&nbsp;View
-                                                                                            Details
+                                                                                                class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                                         </a>
                                                                                     </div>
                                                                                 @endif
                                                                             @else
                                                                                 <div class="col-md-3">
                                                                                     <a href="/apply-job/{{ $item->job->id }}"
-                                                                                        class="btn btn-primary mr-3"> Apply
-                                                                                        Now</a>
+                                                                                        class="btn btn-primary mr-3"> {{ __('Apply Now') }}</a>
                                                                                 </div>
                                                                                 <div class="col-md-3">
                                                                                     <a href="#" class="ico-font">
                                                                                         <i
-                                                                                            class="fa fa-share-alt"></i>&nbsp;Share
+                                                                                            class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
                                                                                     </a>
                                                                                 </div>
                                                                                 <div class="col-md-3">
                                                                                     <a href="/job/{{ $item->job->id }}"
                                                                                         class="ico-font">
                                                                                         <i
-                                                                                            class="fa fa-eye"></i>&nbsp;View
-                                                                                        Details
+                                                                                            class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                                     </a>
                                                                                 </div>
 
@@ -311,12 +306,12 @@
                                     <div class="card-header">
                                         <div class="col-md-6">
                                             <div class="row">
-                                                <h3 class="card-title">Countries</h3>
+                                                <h3 class="card-title">{{ __('Countries') }}</h3>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="row float-right">
-                                                <a href="#" class="float-right">View All</a>
+                                                <a href="#" class="float-right">{{ __('View All') }}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -352,12 +347,12 @@
                                     <div class="card-header">
                                         <div class="col-md-6">
                                             <div class="row">
-                                                <h3 class="card-title text-red">Latest News Update</h3>
+                                                <h3 class="card-title text-red">{{ __('Latest News Update') }}</h3>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="row float-right">
-                                                <a href="{{ route('candidate.news.index') }}" class="float-right">View All</a>
+                                                <a href="{{ route('candidate.news.index') }}" class="float-right">{{ __('View All') }}</a>
                                             </div>
                                         </div>
                                     </div>

@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">My Dashboard</h3>
+        <h3 class="card-title">{{ __('My Dashboard') }}</h3>
     </div>
     <div class="card-body text-center item-user border-bottom">
         <div class="profile-pic">
@@ -13,31 +13,31 @@
     </div>
     <div class="item1-links  mb-0">
         <a href="{{ route('candidate.dashboard') }}" class="@if(Route::currentRouteName()=="candidate.dashboard") active @endif   d-flex  border-bottom">
-            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Dashboard
+            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> {{ __('Dashboard') }}
         </a>
         <a href="{{ route('candidate.profile.index') }}" class="@if(Route::currentRouteName()=="candidate.profile.index") active @endif d-flex border-bottom">
-            <span class="icon1 mr-2"><i class="typcn typcn-edit fs-20"></i></span> Profile
+            <span class="icon1 mr-2"><i class="typcn typcn-edit fs-20"></i></span> {{ __('Profile') }}
         </a>
         <a href="{{ route('candidate.job_search.index',['type' => 'all']) }}" class="@if(Route::currentRouteName()=="candidate.job_search.index") active @endif   d-flex  border-bottom">
-            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Jobs Search
+            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> {{ __('Jobs Search') }}
         </a>
         <a href="{{ route('candidate.job_application.index') }}" class="@if(Route::currentRouteName()=="candidate.job_application.index") active @endif   d-flex  border-bottom">
-            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> My Job Applications
+            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> {{ __('My Job Applications') }}
         </a>
         <a href="{{ route('candidate.company_lists') }}" class="@if(Route::currentRouteName()=="candidate.company_lists") active @endif   d-flex  border-bottom">
-            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Employers
+            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> {{ __('Employers') }}
         </a>
         <a href="{{ route('candidate.news.index') }}" class="@if(Route::currentRouteName()=="candidate.news.index" || Route::currentRouteName()=="candidate.news.detail") active @endif   d-flex  border-bottom">
-            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> News
+            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> {{ __('News') }}
         </a>
         <a href="{{ route('candidate.usefulinfo.index') }}" class="@if(Route::currentRouteName()=="candidate.usefulinfo.index" || Route::currentRouteName()=="candidate.usefulinfo.detail") active @endif   d-flex  border-bottom">
-            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Informations
+            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> {{ __('Informations') }}
         </a>
         <a href="{{ route('candidate.savedjob.saveJobLists') }}" class="@if(Route::currentRouteName()=="candidate.savedjob.saveJobLists") active @endif   d-flex  border-bottom">
-            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Saved Jobs
+            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> {{ __('Saved Jobs') }}
         </a>
         <a href="{{ route('candidate.recommended_job') }}" class="@if(Route::currentRouteName()=="candidate.recommended_job") active @endif   d-flex  border-bottom">
-            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Recommended Jobs
+            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> {{ __('Recommended Jobs') }}
         </a>
         {{-- <a href="/pages/tips" class="d-flex border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-flag-outline fs-20"></i></span> Safety Tips
@@ -46,12 +46,12 @@
             <span class="icon1 mr-2"><i class="typcn typcn-cog-outline fs-20"></i></span> Job Preferences
         </a> --}}
         <a href="{{ route('candidate.account_setting.index') }}" class="@if(Route::currentRouteName()=="candidate.account_setting.index") active @endif  d-flex border-bottom">
-            <span class="icon1 mr-2"><i class="typcn typcn-cog-outline fs-20"></i></span> Settings
+            <span class="icon1 mr-2"><i class="typcn typcn-cog-outline fs-20"></i></span> {{ __('Settings') }}
         </a>
         <form action="{{ route('logout') }}" method="post">
             @csrf
             <button type="submit" class="btn btn-secondary btn-block">
-                <span class="icon1 mr-2" style="background: #ffffff00;color: #f3f6ff;"><i class="typcn typcn-power-outline fs-20"></i></span> Logout
+                <span class="icon1 mr-2" style="background: #ffffff00;color: #f3f6ff;"><i class="typcn typcn-power-outline fs-20"></i></span> {{ __('Logout') }}
             </button>
         </form>
     </div>

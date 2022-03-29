@@ -1,4 +1,5 @@
 @extends('themes.fvft.layouts.master')
+@section('title', $page->title)
 @section('style')
 <!-- jquery ui RangeSlider -->
 <link href="{{asset('themes/fvft/')}}/assets/plugins/jquery-uislider/jquery-ui.css" rel="stylesheet">
@@ -29,7 +30,7 @@
         <div class="container">
             <div class="card">
                 <div class="card-body">
-                    {!! $page->html_content !!}
+                    {!! html_entity_decode($page->html_content) !!}
                 </div>
             </div>
         </div>

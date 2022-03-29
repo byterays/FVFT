@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\ExtendedTranslationServiceProvider;
+
 return [
 
     /*
@@ -181,6 +183,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        // ExtendedTranslationServiceProvider::class, // TODO check custom service provider for case insensitive localization
 
     ],
 

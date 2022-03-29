@@ -3,7 +3,7 @@
 		<section class="sptb bg-white">
 			<div class="container">
 				<div class="section-title center-block text-center">
-					<h1>Top Companies</h1>
+					<h1>{{ __('Top') }} {{ __('Companies') }}</h1>
 					{{-- <p>Mauris ut cursus nunc. Morbi eleifend, ligula at consectetur vehicula</p> --}}
 				</div>
 				<div id="company-carousel" class="owl-carousel owl-carousel-icons4">

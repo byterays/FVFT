@@ -2,7 +2,7 @@
     <section class="sptb">
         <div class="container">
             <div class="section-title center-block text-center">
-                <h1>New Jobs</h1>
+                <h1>{{ __('New') }} {{ __('Jobs') }}</h1>
                 {{-- <p>Mauris ut cursus nunc. Morbi eleifend, ligula at consectetur vehicula</p> --}}
             </div>
             <div class="owl-carousel owl-carousel-icons2">

@@ -35,7 +35,7 @@
                             </li>
                             <li class="dropdown d-none d-xl-inline-block">
                                 <a href="#" class="" data-toggle="dropdown"><span>
-                                        {{ in_array($current_locale, array_keys($available_locales)) ? __('messages.'.$available_locales[$current_locale]) : __('messages.English') }}
+                                        {{ in_array($current_locale, array_keys($available_locales)) ? __($available_locales[$current_locale]) : __('English') }}
                                         <i class="fa fa-caret-down"></i></span> </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                     @if (in_array($current_locale, array_keys($available_locales)))
@@ -88,19 +88,19 @@
                         @guest
                             <li>
                                 <a href="{{ route('candidate.login') }}" class=""><i
-                                        class="fa fa-user mr-1"></i> <span>Register</span></a>
+                                        class="fa fa-user mr-1"></i> <span>{{ __('Register') }}</span></a>
                             </li>
                             <li>
                                 <a href="{{ route('candidate.login') }}" class=""><i
-                                        class="fa fa-sign-in mr-1"></i> <span>Login</span></a>
+                                        class="fa fa-sign-in mr-1"></i> <span>{{ __('Login') }}</span></a>
                             </li>
                             <li>
                                 <a href="{{ route('company.login') }}" class=""><i
-                                        class="fa fa-black-tie mr-1"></i> <span>For Employer</span></a>
+                                        class="fa fa-black-tie mr-1"></i> <span>{{ __('For Employer') }}</span></a>
                             </li>
                             <li>
                                 <a href="{{ route('candidate.login') }}" class=""><i
-                                        class="fa fa-users mr-1"></i> <span>For Employee</span></a>
+                                        class="fa fa-users mr-1"></i> <span>{{ __('For Employee') }}</span></a>
                             </li>
                         @endguest
                         @auth
