@@ -11,6 +11,7 @@ Route::prefix('candidate')->group(function(){
 Route::prefix('company')->group(function(){
     require_once 'api/company.php';
 });
-Route::get("countries",[LocationController::class,'countries']);
-Route::get("states",[LocationController::class,'states']);
-Route::get("cities",[LocationController::class,'cities']);
+
+Route::get("countries", [LocationController::class, 'countries']);
+Route::get("states", [LocationController::class, 'states']);
+Route::get("cities", [LocationController::class, 'cities']);

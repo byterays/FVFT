@@ -60,7 +60,6 @@
 
                                 </div>
                             </li>
-
                             {{-- <li class="dropdown d-none d-xl-inline-block">
                                 <a href="#" class="" data-toggle="dropdown"><span>Currency <i class="fa fa-caret-down"></i></span></a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">

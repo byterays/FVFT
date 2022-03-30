@@ -1,5 +1,4 @@
-
-		<!--Top Companies-->
+<!--Top Companies-->
 		<section class="sptb bg-white">
 			<div class="container">
 				<div class="section-title center-block text-center">
@@ -18,6 +17,11 @@
 				   </div>
 				   @endforeach
 				</div>
+        <div class="row mt-4 ">
+            <div class="col-md-12 text-center">
+            <a href="{{ route('site.jobs') }}" class="btn btn-primary btn-outline-primary ">View All Companies</a></div>
+        </div>
 			</div>
 		</section>
 		<!--/Top Companies-->
+
