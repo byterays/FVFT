@@ -19,7 +19,7 @@ class JobCategoryController extends Controller
     public function categoryListing(Request $request)
     {
         $limit= $request->has("limit") ? $request->limit : 10;
-        $job_categories = JobCategory::where('is_active', 1)->paginate($limit);
+        $job_categories = JobCategory::has('jobs')->where('is_active', 1)->paginate($limit);
 
         $job_categories->setCollection(
             $job_categories->getCollection()->transform(function ($value) {
@@ -28,6 +28,7 @@ class JobCategoryController extends Controller
                     'category' => $value->functional_area,
                     'image_url' => $value->image_url,
                     'sort_order' => $value->sort_order,
+                    'jobsCount' => $value->jobsCount()
                 ];
             })
         );
