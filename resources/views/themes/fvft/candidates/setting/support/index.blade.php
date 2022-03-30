@@ -6,11 +6,11 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">Support</h1>
+                    <h1 class="">{{ __('Support') }}</h1>
                     <ol class="breadcrumb text-center">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">Setting</li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Dashboard') }} </a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ __('Setting') }}</li>
                     </ol>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="card mb-2">
                             <div class="card-body">
-                                <h3 class="font-weight-bold">{{ strtoupper('Settings') }}</h3>
+                                <h3 class="font-weight-bold">{{ strtoupper(__('Settings')) }}</h3>
                                 <div id="basicwizard" class="border pt-0">
                                     @include('partial/candidates/setting_tabs')
                                 </div>
@@ -39,7 +39,7 @@
                                     @foreach ($pages as $page)
                                         <li class=""><a href="#tab{{ $loop->iteration }}"
                                                 class="{{ $loop->first ? 'active' : '' }}"
-                                                data-toggle="tab">{{ strtoupper($page->title) }}</a></li>
+                                                data-toggle="tab">{{ strtoupper(__($page->title)) }}</a></li>
                                     @endforeach
                                 </ul>
                             </div>

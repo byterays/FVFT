@@ -3,7 +3,7 @@
 			<div class="container">
 				<div class="section-title center-block text-center">
 					<h1>{{ __('News') }}</h1>
-				
+					<p>{{ __('Latest News by Free Visa Free Ticket') }}</p>
 				</div>
 				<div id="defaultCarousel" class="owl-carousel Card-owlcarousel owl-carousel-icons">
 					@foreach ($news as $item)	
