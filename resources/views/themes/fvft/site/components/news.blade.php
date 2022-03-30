@@ -1,9 +1,9 @@
-		<!--Blogs-->
+@if(isset($news) AND !blank($news))
 		<section class="sptb bg-white">
 			<div class="container">
 				<div class="section-title center-block text-center">
 					<h1>{{ __('News') }}</h1>
-				
+				  <p>Latest News by Free Visa Free Ticket</p>
 				</div>
 				<div id="defaultCarousel" class="owl-carousel Card-owlcarousel owl-carousel-icons">
 					@foreach ($news as $item)	
@@ -11,7 +11,11 @@
 						<div class="card mb-0">
 							<div class="item7-card-img">
 								<a href="news/{{$item->slug}}"></a>
-								<img src="{{asset('/')}}{{$item->feature_img}}" alt="img" class="cover-image">
+								@if(!blank($item->feature_img))
+                  <img src="{{ asset($item->feature_img) }}" alt="img" class="cover-image">
+                @else
+                   <img src="{{ asset('/uploads/defaultimage.jpg') }}" alt="img" class="cover-image">
+                 @endif
 							</div>
 							<div class="card-body p-4">
 								<div class="item7-card-desc d-flex mb-2">
@@ -35,4 +39,6 @@
 				</div>
 			</div>
 		</section>
-		<!--Blogs-->
+@endif
+
+

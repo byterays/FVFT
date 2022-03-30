@@ -6,11 +6,11 @@ use Illuminate\Http\Response;
 
 trait ApiMethods
 {
-    function sendResponse($result, $message = null, $pagination = null)
+    function sendResponse($result, $message = null, $pagination = null, $success = true)
     {
         // dd($pagination?$pagination:"not found");
         $response = [
-            'success' => true
+            'success' => $success
         ];
         $pagination ? $response = array_merge($response, [
             "meta" => $pagination
