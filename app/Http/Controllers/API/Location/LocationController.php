@@ -16,7 +16,15 @@ class LocationController extends Controller
     public function countries(Request $request)
     {
         $limit= $request->has("limit") ? $request->limit : 10;
-        $countries = Country::where('is_active', 1)->paginate($limit);
+        $query = Country::query();
+        $query->where('is_active', 1);
+
+        if($request->has("search_query")) {
+            $searchTerm = $request->search_query;
+            $query->where('name', 'LIKE', "%{$searchTerm}%");
+        }
+
+        $countries = $query->paginate($limit);
 
         $countries->setCollection(
             $countries->getCollection()->transform(function ($value) {
@@ -37,7 +45,14 @@ class LocationController extends Controller
     public function states(Request $request)
     {
         $limit= $request->has("limit") ? $request->limit : 10;
-        $states = State::paginate($limit);
+        $query = State::query();
+
+        if($request->has("search_query")) {
+            $searchTerm = $request->search_query;
+            $query->where('name', 'LIKE', "%{$searchTerm}%");
+        }
+
+        $states = $query->paginate($limit);
 
         $states->setCollection(
             $states->getCollection()->transform(function ($value) {
@@ -56,7 +71,14 @@ class LocationController extends Controller
     public function cities(Request $request)
     {
         $limit= $request->has("limit") ? $request->limit : 10;
-        $cities = City::paginate($limit);
+        $query = City::query();
+
+        if($request->has("search_query")) {
+            $searchTerm = $request->search_query;
+            $query->where('name', 'LIKE', "%{$searchTerm}%");
+        }
+
+        $cities = $query->paginate($limit);
 
         $cities->setCollection(
             $cities->getCollection()->transform(function ($value) {

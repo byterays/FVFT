@@ -19,8 +19,15 @@ class JobCategoryController extends Controller
     public function categoryListing(Request $request)
     {
         $limit= $request->has("limit") ? $request->limit : 10;
-        $job_categories = JobCategory::has('jobs')->where('is_active', 1)->paginate($limit);
+        $query = JobCategory::query();
+        $query->has('jobs')->where('is_active', 1);
 
+        if($request->has("search_query")) {
+            $searchTerm = $request->search_query;
+            $query->where('functional_area', 'LIKE', "%{$searchTerm}%");
+        }
+
+        $job_categories = $query->paginate($limit);
         $job_categories->setCollection(
             $job_categories->getCollection()->transform(function ($value) {
                 return [
