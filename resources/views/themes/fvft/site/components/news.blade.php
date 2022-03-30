@@ -14,7 +14,7 @@
 								@if(!blank($item->feature_img))
                   <img src="{{ asset($item->feature_img) }}" alt="img" class="cover-image">
                 @else
-                   <img src="{{ asset('/uploads/defaultimage.jpg') }}" alt="img" class="cover-image">
+                   <img src="{{ asset('/images/defaultimage.jpg') }}" alt="img" class="cover-image">
                  @endif
 							</div>
 							<div class="card-body p-4">
