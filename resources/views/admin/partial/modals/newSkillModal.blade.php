@@ -4,7 +4,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="newSkillModalLabel">Add New Skill</h5>
+                <h5 class="modal-title" id="newSkillModalLabel">{{ __('Add New Skill') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -16,7 +16,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="name">Skill Title&nbsp;<span class="req">*</span></label>
+                                    <label for="name">{{ __('Skill Title') }}&nbsp;<span class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="text" name="title" class="form-control">
@@ -28,8 +28,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" id="addNewSkill" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-gray" data-dismiss="modal">{{ __('Close') }}</button>
+                <button type="button" id="addNewSkill" class="btn btn-primary">{{ __('Save') }}</button>
             </div>
         </div>
     </div>

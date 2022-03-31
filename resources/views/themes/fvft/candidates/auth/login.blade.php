@@ -97,15 +97,15 @@
                                     <div class="single-page w-100  p-0">
                                         <div class="wrapper wrapper2">
                                             <div class="p-4 mb-5">
-                                                <h4 class="text-left font-weight-semibold fs-16">Register With</h4>
+                                                <h4 class="text-left font-weight-semibold fs-16">{{ __('Register With') }}</h4>
                                                 <div class="btn-list d-sm-flex">
                                                     <a href="https://www.google.com/gmail/"
                                                         class="btn btn-primary mb-sm-0"><i
-                                                            class="fa fa-google fa-1x mr-2"></i> Google</a>
+                                                            class="fa fa-google fa-1x mr-2"></i> {{ __('Google') }}</a>
                                                     <a href="https://twitter.com/" class="btn btn-secondary mb-sm-0"><i
-                                                            class="fa fa-twitter fa-1x mr-2"></i> Twitter</a>
+                                                            class="fa fa-twitter fa-1x mr-2"></i> {{ __('Twitter') }}</a>
                                                     <a href="https://www.facebook.com/" class="btn btn-info mb-0"><i
-                                                            class="fa fa-facebook fa-1x mr-2"></i> Facebook</a>
+                                                            class="fa fa-facebook fa-1x mr-2"></i> {{ __('Facebook') }}</a>
                                                 </div>
                                             </div>
                                             <hr class="divider">
@@ -119,7 +119,7 @@
 													@error('first_name')
 													<span class="text-danger">{{ $messsage }}</span>
 													@enderror
-                                                    <label>First Name</label>
+                                                    <label>{{ __('First Name') }}</label>
                                                 </div>
 
                                                 <div class="form-group">
@@ -127,7 +127,7 @@
 													@error('middle_name')
 													<span class="text-danger">{{ $message }}</span>
 													@enderror
-                                                    <label>Middle Name</label>
+                                                    <label>{{ __('Middle Name') }}</label>
                                                 </div>
 
                                                 <div class="form-group">
@@ -135,35 +135,35 @@
 													@error('last_name')
 													<span class="text-danger">{{ $message }}</span>
 													@enderror
-                                                    <label>Last Name</label>
+                                                    <label>{{ __('Last Name') }}</label>
                                                 </div>
                                                 <div class="mail">
                                                     <input type="email" name="email">
 													@error('email')
 													<span class="text-danger">{{ $message }}</span>
 													@enderror
-                                                    <label>Email</label>
+                                                    <label>{{ __('Email') }}</label>
                                                 </div>
                                                 <div class="passwd">
                                                     <input type="password" name="password">
 													@error('password')
 													<span class="text-danger">{{ $message }}</span>
 													@enderror
-                                                    <label>Password</label>
+                                                    <label>{{ __('Password') }}</label>
                                                 </div>
                                                 <div class="passwd">
                                                     <input type="password" name="password_confirmation" required
                                                         autocomplete="new-password">
-                                                    <label>Conform Password</label>
+                                                    <label>{{ __('Confirm Password') }}</label>
                                                 </div>
 
                                                 <div class="submit">
                                                     <button type="submit"
-                                                        class="btn btn-primary btn-block">Register</button>
+                                                        class="btn btn-primary btn-block">{{ __('Register') }}</button>
                                                 </div>
-                                                <p class="text-dark mb-0">Already have an account?<a data-toggle="tab"
+                                                <p class="text-dark mb-0">{{ __('Already have an account?') }}<a data-toggle="tab"
                                                         href="#home" role="tab" aria-controls="home"
-                                                        class="text-primary ml-1">Sign In</a></p>
+                                                        class="text-primary ml-1">{{ __('Sign In') }}</a></p>
                                             </form>
                                         </div>
                                     </div>

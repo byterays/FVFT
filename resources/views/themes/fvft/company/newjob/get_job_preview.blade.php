@@ -23,7 +23,7 @@
 @section('data')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Add New Job</h3>
+            <h3 class="card-title">{{ __('Add New Job') }}</h3>
         </div>
     </div>
     @include('partial.job.step')
@@ -102,11 +102,11 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="card-body border-top">
-                                        <h4 class="mb-4 card-title bg-primary text-white p-2">Job Details</h4>
+                                        <h4 class="mb-4 card-title bg-primary text-white p-2">{{ __('Job Details') }}</h4>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Job Title&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Job Title') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     {{ $job->title }}
@@ -116,7 +116,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Required Numbers&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Required Numbers') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     {{ $job->num_of_positions }}
@@ -126,7 +126,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Job Category&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Job Category') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     {{ !empty($job->job_category) || $job->job_category != null ? $job->job_category->functional_area : '' }}
@@ -136,8 +136,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Wokring Hours Per
-                                                        Day&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Working Hours Per Day') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     {{ $job->working_hours }}
@@ -148,8 +147,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Wokring Days Per
-                                                        Week&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Working Days Per Week') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     {{ $job->working_days }}
@@ -160,7 +158,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Job Posted On&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Job Posted On') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     {{ $job->publish_date != null ? date('j M Y', strtotime($job->publish_date)) : '' }}
@@ -170,7 +168,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Apply Before&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Apply Before') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     {{ $job->expiry_date != null ? date('j M Y', strtotime($job->expiry_date)) : '' }}
@@ -180,7 +178,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Contract Period&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Contract Period') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     {{ $job->contract_year }}
@@ -191,7 +189,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="" class="form-label">Job Description&nbsp;:</label>
+                                            <label for="" class="form-label">{{ __('Job Description') }}&nbsp;:</label>
                                             {!! html_entity_decode($job->description_intro) !!}
                                         </div>
                                     </div>
@@ -200,12 +198,11 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="card-body border-top">
-                                        <h4 class="mb-4 card-title bg-primary text-white p-2">Qualification</h4>
+                                        <h4 class="mb-4 card-title bg-primary text-white p-2">{{ __('Qualification') }}</h4>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Minimum
-                                                        Qualification&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Minimum Qualification') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     {{ $job->education_level_id != null && (!empty($job->education_level) || $job->education_level != null)? $job->education_level->title: '' }}
@@ -215,7 +212,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Minimum Experience&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Minimum Experience') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     {{ $job->min_experience }}
@@ -226,7 +223,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Age Requirement&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Age Requirement') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     {{ $job->min_age }}
@@ -250,7 +247,7 @@
                                             @endphp
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Skills&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Skills') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     {!! $skills !!}
@@ -259,19 +256,18 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="" class="form-label">Other Requirements&nbsp;:</label>
+                                            <label for="" class="form-label">{{ __('Other Requirements') }}&nbsp;:</label>
                                             {!! html_entity_decode($job->requirement_intro) !!}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="card-body">
-                                        <h4 class="mb-4 card-title bg-primary text-white p-2">Salary and Facility</h4>
+                                        <h4 class="mb-4 card-title bg-primary text-white p-2">{{ __('Salary and Facility') }}</h4>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Basic
-                                                        Salary&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Basic Salary') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     @php
@@ -289,8 +285,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Average
-                                                        Earning&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Average Earning') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     @php
@@ -306,7 +301,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Accomodation&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Accomodation') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     @php
@@ -320,7 +315,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Food&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Food') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     @php
@@ -334,7 +329,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Annual Vacation&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Annual Vacation') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     @php
@@ -347,7 +342,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="" class="form-label">Over Time&nbsp;:</label>
+                                                    <label for="" class="form-label">{{ __('Over Time') }}&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
                                                     @php
@@ -358,7 +353,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="" class="form-label">Other Benefits&nbsp;:</label>
+                                            <label for="" class="form-label">{{ __('Other Benefits') }}&nbsp;:</label>
                                             {!! html_entity_decode($job->benefit_intro) !!}
                                         </div>
                                     </div>
@@ -368,11 +363,11 @@
                     </div>
                 </div>
                 <div class="mx-auto">
-                    <span>Salary and Facility</span>&nbsp;&nbsp;&nbsp;<a
+                    <span>{{ __('Salary and Facility') }}</span>&nbsp;&nbsp;&nbsp;<a
                         href="{{ route('company.newjob.get_salary_and_facility_form', ['job_id' => request()->job_id]) }}"
-                        class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i> Back</a>
-                    <a href="{{ route('company.newjob.get_approval_form', ['job_id' => request()->job_id]) }}" class="btn btn-primary rounded-0 ml-5">Next <i
-                            class="fa fa-arrow-right"></i></a>&nbsp;&nbsp;&nbsp;<span>Send To Approval</span>
+                        class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i> {{ __('Back') }}</a>
+                    <a href="{{ route('company.newjob.get_approval_form', ['job_id' => request()->job_id]) }}" class="btn btn-primary rounded-0 ml-5">{{ __('Next') }} <i
+                            class="fa fa-arrow-right"></i></a>&nbsp;&nbsp;&nbsp;<span>{{ __('Send To Approval') }}</span>
                 </div>
             </div>
         </div>

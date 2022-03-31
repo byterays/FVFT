@@ -23,7 +23,7 @@
 @section('data')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Add New Job</h3>
+            <h3 class="card-title">{{ __('Add New Job') }}</h3>
         </div>
     </div>
     @include('partial.job.step')
@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="card m-b-20">
                     <div class="card-header">
-                        <h3 class="card-title tempcolor">{{ strtoupper('Salary Facility') }}</h3>
+                        <h3 class="card-title tempcolor">{{ strtoupper(__('Salary Facility')) }}</h3>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
@@ -46,7 +46,7 @@
                                 value="{{ setParameter($job, 'country_id') }}">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="salary" class="form-label">Basic Salary&nbsp;<span
+                                    <label for="salary" class="form-label">{{ __('Basic Salary') }}&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
@@ -76,7 +76,7 @@
                                         <label class="custom-switch-checkbox">
                                             <input type="checkbox" name="hide_salary" class="custom-switch-input" {{ setParameter($job, 'hide_salary') == 1 ? 'checked' : '' }}>
                                             <span class="custom-switch-indicator"></span>
-                                            <span class="custom-switch-description">Hide Salary</span>
+                                            <span class="custom-switch-description">{{ __('Hide Salary') }}</span>
                                         </label>
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="salary" class="form-label">Average Earning&nbsp;<span
+                                    <label for="salary" class="form-label">{{ __('Average Earning') }}&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
@@ -117,14 +117,14 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="accomodation" class="form-label">Accomodation&nbsp;<span
+                                    <label for="accomodation" class="form-label">{{ __('Accomodation') }}&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <select name="accomodation" class="form-control select2">
-                                        <option value="">Select</option>
-                                        <option value="1" {{ setParameter($job, 'accomodation') == 1 ? 'selected' : '' }}>Yes</option>
-                                        <option value="0" {{ setParameter($job, 'accomodation') == 0 ? 'selected' : '' }}>No</option>
+                                        <option value="">{{ __('Select') }}</option>
+                                        <option value="1" {{ setParameter($job, 'accomodation') == 1 ? 'selected' : '' }}>{{ __('Yes') }}</option>
+                                        <option value="0" {{ setParameter($job, 'accomodation') == 0 ? 'selected' : '' }}>{{ __('No') }}</option>
                                     </select>
                                     <div class="require text-danger accomodation"></div>
                                 </div>
@@ -133,14 +133,14 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="food" class="form-label">Food&nbsp;<span
+                                    <label for="food" class="form-label">{{ __('Food') }}&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <select name="food" class="form-control select2">
-                                        <option value="">Select</option>
-                                        <option value="1" {{ setParameter($job, 'food') == 1 ? 'selected' : '' }}>Yes</option>
-                                        <option value="0" {{ setParameter($job, 'food') == 0 ? 'selected' : '' }}>No</option>
+                                        <option value="">{{ __('Select') }}</option>
+                                        <option value="1" {{ setParameter($job, 'food') == 1 ? 'selected' : '' }}>{{ __('Yes') }}</option>
+                                        <option value="0" {{ setParameter($job, 'food') == 0 ? 'selected' : '' }}>{{ __('No') }}</option>
                                     </select>
                                     <div class="require text-danger food"></div>
                                 </div>
@@ -149,14 +149,14 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="annual_vacation" class="form-label">Annual Vacation&nbsp;<span
+                                    <label for="annual_vacation" class="form-label">{{ __('Annual Vacation') }}&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <select name="annual_vacation" class="form-control select2">
-                                        <option value="">Select</option>
-                                        <option value="1" {{ setParameter($job, 'annual_vacation') == 1 ? 'selected' : '' }}>Yes</option>
-                                        <option value="0" {{ setParameter($job, 'annual_vacation') == 0 ? 'selected' : '' }}>No</option>
+                                        <option value="">{{ __('Select') }}</option>
+                                        <option value="1" {{ setParameter($job, 'annual_vacation') == 1 ? 'selected' : '' }}>{{ __('Yes') }}</option>
+                                        <option value="0" {{ setParameter($job, 'annual_vacation') == 0 ? 'selected' : '' }}>{{ __('No') }}</option>
                                     </select>
                                     <div class="require text-danger annual_vacation"></div>
                                 </div>
@@ -165,14 +165,14 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="over_time" class="form-label">Over Time&nbsp;<span
+                                    <label for="over_time" class="form-label">{{ __('Over Time') }}&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <select name="over_time" class="form-control select2">
-                                        <option value="">Select</option>
-                                        <option value="1" {{ setParameter($job, 'over_time') == 1 ? 'selected' : '' }}>Yes</option>
-                                        <option value="0" {{ setParameter($job, 'over_time') == 0 ? 'selected' : '' }}>No</option>
+                                        <option value="">{{ __('Select') }}</option>
+                                        <option value="1" {{ setParameter($job, 'over_time') == 1 ? 'selected' : '' }}>{{ __('Yes') }}</option>
+                                        <option value="0" {{ setParameter($job, 'over_time') == 0 ? 'selected' : '' }}>{{ __('No') }}</option>
                                     </select>
                                     <div class="require text-danger over_time"></div>
                                 </div>
@@ -181,7 +181,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="requirements" class="form-label">Other Benefits</label>
+                                    <label for="requirements" class="form-label">{{ __('Other Benefits') }}</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="hidden" class="form-control" value="{{ setParameter($job, 'benefits') }}" name="other_benefits" id="benefitID">
@@ -194,11 +194,11 @@
                     </div>
                 </div>
                 <div class="mx-auto">
-                    <span>Applicant Qualification</span>&nbsp;&nbsp;&nbsp;<a
+                    <span>{{__('Applicant Qualification')}}</span>&nbsp;&nbsp;&nbsp;<a
                         href="{{ route('company.newjob.get_applicant_form', ['job_id' => request()->job_id]) }}"
-                        class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i> Back</a>
-                    <button type="button" onclick="submitForm(event);" class="btn btn-primary rounded-0 ml-5">Next <i
-                            class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>Preview</span>
+                        class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i> {{ __('Back') }}</a>
+                    <button type="button" onclick="submitForm(event);" class="btn btn-primary rounded-0 ml-5">{{ __('Next') }} <i
+                            class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Preview') }}</span>
                 </div>
             </div>
         </div>

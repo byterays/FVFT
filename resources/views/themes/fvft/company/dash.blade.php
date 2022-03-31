@@ -14,7 +14,7 @@
         <div class="card-header">
             <div class="col-md-6">
                 <div class="row">
-                    <h3 class="card-title">Dashboard</h3>
+                    <h3 class="card-title">{{ __('Dashboard') }}</h3>
                 </div>
             </div>
             <div class="col-md-6">
@@ -34,7 +34,7 @@
                                 <div class="fa-stack fa-lg fa-1x icons shadow-default bg-primary-transparent">
                                     <i class="icon icon-people text-primary"></i>
                                 </div>
-                                <p class="card-text mt-3 mb-3">{{ $j_data['title'] }}</p>
+                                <p class="card-text mt-3 mb-3">{{ __($j_data['title']) }}</p>
                                 <p class="h2 text-center text-primary">{{ $j_data['totalcount'] }}</p>
                             </div>
                         </div>
@@ -53,7 +53,7 @@
                                 <div class="fa-stack fa-lg fa-1x icons shadow-default bg-primary-transparent">
                                     <i class="{{ $profile_data['icon'] }}"></i>
                                 </div>
-                                <p class="card-text mt-3 mb-3">{{ $profile_data['title'] }}</p>
+                                <p class="card-text mt-3 mb-3">{{ __($profile_data['title']) }}</p>
                                 <p class="h2 text-center">{{ $profile_data['totalcount'] }}
                                 </p>
                             </div>
@@ -73,7 +73,7 @@
                                 <div class="fa-stack fa-lg fa-1x icons shadow-default bg-primary-transparent">
                                     <i class="icon icon-people text-primary"></i>
                                 </div>
-                                <p class="card-text mt-3 mb-3">{{ $a_data['title'] }}</p>
+                                <p class="card-text mt-3 mb-3">{{ __($a_data['title']) }}</p>
                                 <p class="h2 text-center text-primary">{{ $a_data['totalcount'] }}</p>
                             </div>
                         </div>

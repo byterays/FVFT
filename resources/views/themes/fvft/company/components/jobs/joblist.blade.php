@@ -1,17 +1,17 @@
 <table class="table table-bordered table-hover mb-0 text-nowrap">
     <thead>
         <tr>
-            <th>SN</th>
-            <th>Job Title</th> 
-            <th>Draft Date</th>
-            <th>Publish Date</th>
-            <th>Expiry Date</th>
-            <th>Applications</th>
-            <th>Status</th>
+            <th>{{ __('SN') }}</th>
+            <th>{{ __('Job Title') }}</th> 
+            <th>{{ __('Draft Date') }}</th>
+            <th>{{ __('Publish Date') }}</th>
+            <th>{{ __('Expiry Date') }}</th>
+            <th>{{ __('Applications') }}</th>
+            <th>{{ __('Status') }}</th>
             {{-- <th>Publish Status</th>
             <th>Active Status</th>
             <th>Expiration</th> --}}
-            <th>Action</th>
+            <th>{{ __('Action') }}</th>
         </tr>
     </thead>
     <tbody>
