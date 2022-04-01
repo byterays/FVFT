@@ -23,7 +23,7 @@
 @section('data')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Add New Job</h3>
+            <h3 class="card-title">{{ __('Add New Job') }}</h3>
         </div>
     </div>
     @include('partial.job.step')
@@ -48,10 +48,9 @@
                        <button onclick="submitForm(event, 'update')" ;
                             class="btn btn-primary rounded-0 ml-5">Update</button>
                     @endif --}}
-                    <button onclick="submitForm(event, 'save_as_draft')" ; class="btn btn-primary rounded-0">Save as
-                        Draft</button>
+                    <button onclick="submitForm(event, 'save_as_draft')" ; class="btn btn-primary rounded-0">{{ __('Save as Draft') }}</button>
                     <button onclick="submitForm(event, 'proceed_to_approval')" ;
-                        class="btn btn-primary rounded-0 ml-5">Proceed To Approval</button>
+                        class="btn btn-primary rounded-0 ml-5">{{ __('Proceed To Approval') }}</button>
                 </div>
             </div>
         </div>

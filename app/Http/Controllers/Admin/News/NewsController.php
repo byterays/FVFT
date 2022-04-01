@@ -36,6 +36,7 @@ class NewsController extends Controller
     public function save(Request $request)
     {
         // dd($request);
+        $destination = 'uploads/news/';
         $fields = [];
         $request->title ? $fields['title'] = $request->title : null;
         $request->body ? $fields['body'] = $request->body : null;
@@ -45,7 +46,12 @@ class NewsController extends Controller
         $request->seo_keywords ? $fields['seo_keywords'] = $request->seo_keywords : null;
         $request->slug ? $fields['slug'] = $request->slug : null;
         $request->is_active ? $fields['is_active'] = $request->is_active == "on" ? 1 : 0 : null;
-
+        if($request->hasFile('feature_img')){
+            $file = $request->file('feature_img');
+            $logoName = time().'.'.$file->getClientOriginalExtension();
+            $fields['feature_img'] = $destination.$logoName;
+            $file->move($destination, $logoName);
+        }
         $news = News::updateOrCreate(['id' => $request->id], $fields);
 
         return $this->view('admin.pages.news.editadd', [

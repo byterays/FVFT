@@ -6,11 +6,11 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">News</h1>
+                    <h1 class="">{{ __('News') }}</h1>
                     <ol class="breadcrumb text-center">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">News</li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Dashboard') }} </a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ __('News') }}</li>
                     </ol>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="card mb-2">
                             <div class="card-body">
-                                <h3 class="font-weight-bold">{{ strtoupper('News') }}</h3>
+                                <h3 class="font-weight-bold">{{ strtoupper(__('News')) }}</h3>
                                 <div id="basicwizard" class="border pt-0">
                                     @include('partial/candidates/news/tabs')
                                 </div>
@@ -42,7 +42,7 @@
                                                     <div class="card">
                                                         <a href="{{ route('candidate.news.detail', $nitem->slug) }}">
                                                             <div class="item7-card-img">
-                                                                <img src="{{ asset('/') }}{{ $nitem->feature_img ?? 'uploads/defaultimage.jpg' }}"
+                                                                <img src="{{ asset('/') }}{{ $nitem->feature_img ?? 'images/defaultimage.jpg' }}"
                                                                     alt="img" class="cover-image">
                                                             </div>
                                                         </a>
@@ -55,7 +55,7 @@
                                                             <span><i
                                                                     class="fa fa-clock-o"></i>&nbsp;{{ parseDate($nitem->created_at) }}</span>
                                                             <a href="{{ route('candidate.news.detail', $nitem->slug) }}"
-                                                                class="float-right text-primary">More&nbsp;<i
+                                                                class="float-right text-primary">{{ __('More') }}&nbsp;<i
                                                                     class="mdi mdi-arrow-down-drop-circle"></i></a>
                                                         </div>
                                                     </div>

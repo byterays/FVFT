@@ -3,10 +3,10 @@
         <div class="header-text mb-0">
             <div class="container">
                 <div class="text-center text-white">
-                    <h1 class="">{{$page["title"]}}</h1>
+                    <h1 class="">{{__($page["title"])}}</h1>
                     <ol class="breadcrumb text-center">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">{{$page["title"]}}</li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{__($page["title"])}}</li>
                     </ol>
                 </div>
             </div>

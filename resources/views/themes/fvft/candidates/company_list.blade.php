@@ -18,11 +18,11 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">Profile</h1>
+                    <h1 class="">{{ __('Profile') }}</h1>
                     <ol class="breadcrumb text-center">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">Profile</li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Dashboard') }} </a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ __('Profile') }}</li>
                     </ol>
                 </div>
             </div>
@@ -87,14 +87,14 @@
                                                             <div class="ml-auto">
                                                                 <a class="btn btn-light mt-3 mt-md-6 mr-4 font-weight-semibold text-dark"
                                                                     href="{{ route('site.companydetail', $company->id) }}"><i
-                                                                        class="fa fa-eye"></i>View Detail</a>
+                                                                        class="fa fa-eye"></i>{{ __('View Detail') }}</a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             @endforeach
                                             @else
-                                            <p>No company to show</p>
+                                            <p>{{ __('No company to show') }}</p>
                                             @endif
                                         </div>
                                     </div>
@@ -131,7 +131,7 @@
                                                     </div>
                                                 @endforeach
                                                 @else
-                                                <p>No company to show</p>
+                                                <p>{{ __('No company to show') }}</p>
                                             @endif
                                         </div>
                                     </div>

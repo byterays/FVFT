@@ -23,8 +23,8 @@ class JobsController extends Controller
                 $jobs->where('title', 'LIKE', '%' . $search . '%');
             });
         }
-        if($request->filled('country') && $request->country != 'All Countries'){
-            $jobs = $jobs->where('country_id', $request->country);
+        if($request->filled('country_id') && $request->country_id != 'All Countries'){
+            $jobs = $jobs->where('country_id', $request->country_id);
         }
         if ($request->filled("job_catagory") && $request->job_catagory != 'All Categories') {
             // foreach ($request->job_category as $item) {
@@ -42,7 +42,7 @@ class JobsController extends Controller
             "jobs" => $jobs,
             "pagination" => $jobs->appends(array(
                 'search' => $request->search,
-                'country' => $request->country,
+                'country_id' => $request->country_id,
                 'job_catagory' => $request->job_catagory,
                 'salary_from' => $request->salary_from,
                 'salary_to' => $request->salary_to,

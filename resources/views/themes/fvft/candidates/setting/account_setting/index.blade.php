@@ -6,11 +6,11 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">Account Setting</h1>
+                    <h1 class="">{{ __('Account Setting') }}</h1>
                     <ol class="breadcrumb text-center">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">Setting</li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Dashboard') }} </a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ __('Setting') }}</li>
                     </ol>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="card mb-2">
                             <div class="card-body">
-                                <h3 class="font-weight-bold">{{ strtoupper('Settings') }}</h3>
+                                <h3 class="font-weight-bold">{{ strtoupper(__('Settings')) }}</h3>
                                 <div id="basicwizard" class="border pt-0">
                                     @include('partial/candidates/setting_tabs')
                                 </div>
@@ -40,7 +40,7 @@
                         <div class="col-md-4">
                             <div class="card mb-2">
                                 <div class="card-header">
-                                    <h3 class="card-title">{{ strtoupper('My Profile') }}</h3>
+                                    <h3 class="card-title">{{ strtoupper(__('My Profile')) }}</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="d-inline-flex justify-content-between">
@@ -54,31 +54,31 @@
                                                 id="firstForm" method="POST">
                                                 @csrf
                                                 <div class="form-group">
-                                                    <label for="">Bio</label>
+                                                    <label for="">{{ __('Bio') }}</label>
                                                     <textarea name="bio" class="form-control" rows="5">{{ setParameter($employ, 'bio') }}</textarea>
                                                     <span class="require bio text-danger"></span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="email">Email Address</label>
+                                                    <label for="email">{{ __('Email Address') }}</label>
                                                     <input type="text" class="form-control" name="email"
                                                         value="{{ setParameter($employ->user, 'email') }}" readonly>
                                                     <span class="require email text-danger"></span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="password">Password</label>
+                                                    <label for="password">{{ __('Password') }}</label>
                                                     <input type="password" class="form-control" name="password"
                                                         placeholder="Enter Password" autocomplete="off">
                                                     <span class="require password text-danger"></span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="password">Website</label>
+                                                    <label for="password">{{ __('Website') }}</label>
                                                     <input type="text" class="form-control" name="website"
                                                         value="{{ setParameter($employ, 'website') }}">
                                                     <span class="require website text-danger"></span>
                                                 </div>
                                                 <div class="form-group">
                                                     <button type="button" onclick="submitForm(event, 'firstForm');"
-                                                        class="btn btn-primary w-100">Save</button>
+                                                        class="btn btn-primary w-100">{{ __('Save') }}</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -89,7 +89,7 @@
                         <div class="col-md-8">
                             <div class="card mb-2">
                                 <div class="card-header">
-                                    <h3 class="card-title">Edit Profile</h3>
+                                    <h3 class="card-title">{{ __('Edit Profile') }}</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -99,14 +99,14 @@
                                                 @csrf
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
-                                                        <label for="first_name">First Name&nbsp;<span
+                                                        <label for="first_name">{{ __('First Name') }}&nbsp;<span
                                                                 class="req">*</span></label>
                                                         <input type="text" class="form-control" name="first_name"
                                                             value="{{ setParameter($employ, 'first_name') }}">
                                                         <span class="require first_name text-danger"></span>
                                                     </div>
                                                     <div class="form-group col-md-6">
-                                                        <label for="last_name">Last Name&nbsp;<span
+                                                        <label for="last_name">{{ __('Last Name') }}&nbsp;<span
                                                                 class="req">*</span></label>
                                                         <input type="text" class="form-control" name="last_name"
                                                             value="{{ setParameter($employ, 'last_name') }}">
@@ -115,31 +115,31 @@
                                                 </div>
                                                 <div class="form-row">
                                                     <div class="form-group col-md-3">
-                                                        <label for="gender">Gender&nbsp;<span
+                                                        <label for="gender">{{ __('Gender') }}&nbsp;<span
                                                                 class="req">*</span></label>
                                                         <select name="gender" class="form-control select2">
-                                                            <option value="">Select Gender</option>
+                                                            <option value="">{{ __('Select Gender') }}</option>
                                                             <option value="Male"
                                                                 {{ setParameter($employ, 'gender') == 'Male' ? 'selected' : '' }}>
-                                                                Male</option>
+                                                                {{ __('Male') }}</option>
                                                             <option value="Female"
                                                                 {{ setParameter($employ, 'gender') == 'Female' ? 'selected' : '' }}>
-                                                                Female</option>
+                                                                {{ __('Female') }}</option>
                                                             <option value="Other"
                                                                 {{ setParameter($employ, 'gender') == 'Other' ? 'selected' : '' }}>
-                                                                Other</option>
+                                                                {{ __('Other') }}</option>
                                                         </select>
                                                         <span class="require gender text-danger"></span>
                                                     </div>
                                                     <div class="form-group col-md-4">
-                                                        <label for="mobile_phone">Mobile Phone&nbsp;<span
+                                                        <label for="mobile_phone">{{ __('Mobile Phone') }}&nbsp;<span
                                                                 class="req">*</span></label>
                                                         <input type="text" class="form-control" name="mobile_phone"
                                                             value="{{ setParameter($employ, 'mobile_phone') }}">
                                                         <span class="require mobile_phone text-danger"></span>
                                                     </div>
                                                     <div class="form-group col-md-5">
-                                                        <label for="email">Email&nbsp;<span
+                                                        <label for="email">{{ __('Email') }}&nbsp;<span
                                                                 class="req">*</span></label>
                                                         <input type="text" class="form-control" name="email"
                                                             value="{{ setParameter($employ->user, 'email') }}" readonly>
@@ -148,13 +148,13 @@
                                                 </div>
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
-                                                        <label for="country">Country</label>
+                                                        <label for="country">{{ __('Country') }}</label>
                                                         <select name="country_id" id="select-country"
                                                             onchange="patchStates(this)"
                                                             value="{{ setParameter($employ, 'country_id') }}"
                                                             class="form-control select2-show-search"
                                                             data-placeholder="Select Country">
-                                                            <option value="">Select Country</option>
+                                                            <option value="">{{ __('Select Country') }}</option>
                                                             @foreach ($countries as $country)
                                                                 <option value="{{ $country->id }}"
                                                                     {{ setParameter($employ, 'country_id') == $country->id ? 'selected' : '' }}>
@@ -164,44 +164,44 @@
                                                         <span class="require country_id text-danger"></span>
                                                     </div>
                                                     <div class="form-group col-md-6">
-                                                        <label for="state">State</label>
+                                                        <label for="state">{{ __('State') }}</label>
                                                         <select name="state_id" id="select-state"
                                                             onchange="patchGetDistricts(this)"
                                                             value="{{ setParameter($employ, 'state_id') }}"
                                                             class="form-control select2-show-search"
                                                             data-placeholder="Select State">
-                                                            <option value="">Select State</option>
+                                                            <option value="">{{ __('Select State') }}</option>
                                                         </select>
                                                         <span class="require state_id text-danger"></span>
                                                     </div>
                                                 </div>
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
-                                                        <label for="district">District</label>
+                                                        <label for="district">{{ __('District') }}</label>
                                                         <select name="district_id" id="districts"
                                                             value="{{ setParameter($employ, 'district_id') }}"
                                                             class="form-control select2-show-search"
                                                             data-placeholder="Select District">
-                                                            <option value="">Select District</option>
+                                                            <option value="">{{ __('Select District') }}</option>
 
                                                         </select>
                                                         <span class="require district_id text-danger"></span>
                                                     </div>
                                                     <div class="form-group col-md-6">
-                                                        <label for="municipality">Municipality</label>
+                                                        <label for="municipality">{{ __('Municipality') }}</label>
                                                         <input type="text" name="municipality" class="form-control"
                                                             value="{{ setParameter($employ, 'municipality') }}">
                                                             <span class="require municipality text-danger"></span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="bio">About Me</label>
+                                                    <label for="bio">{{ __('About Me') }}</label>
                                                     <textarea name="about_me" class="form-control" rows="5"></textarea>
                                                     <span class="require about_me text-danger"></span>
                                                 </div>
                                                 <div class="form-group">
                                                     <button type="button" onclick="submitForm(event, 'settingForm')"
-                                                        class="btn btn-primary float-right w-25">Update</button>
+                                                        class="btn btn-primary float-right w-25">{{ __('Update') }}</button>
                                                 </div>
                                             </form>
                                         </div>

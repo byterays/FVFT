@@ -2,7 +2,7 @@
     <section class="sptb bg-white">
         <div class="container closed" id="container1" style="height: 315px; overflow: hidden;">
             <div class="section-title center-block text-center">
-                <h1>Recent Jobs</h1>
+                <h1>{{ __('Recent Jobs') }}</h1>
                 <p>Mauris ut cursus nunc. Morbi eleifend, ligula at consectetur vehicula</p>
             </div>
             <div class="row">
@@ -23,11 +23,13 @@
                                         </a>
                                         <div class="">
                                             <ul class="mb-0 d-flex">
+                                                @if(!blank(data_get($job, 'company.company_name')))
                                                 <li class="mr-5">
                                                     <a href="#" class="icons">
-                                                        <i class="si si-briefcase text-muted mr-1"></i> IT Hardware &amp; Network Pvt ltd
+                                                        <i class="si si-briefcase text-muted mr-1"></i> {{ data_get($job, 'company.company_name') }}
                                                     </a>
                                                 </li>
+                                                @endif
                                                 @if(!blank(data_get($job, 'country.name')))
                                                     <li class="">
                                                         <a href="#" class="icons"><i class="si si-location-pin text-muted mr-1"></i>
@@ -40,7 +42,7 @@
                                     </div>
                                     <div class="col-md-3 col-auto">
                                         <div class="icons mt-3 mt-sm-0 pb-0">
-                                            <a href="{{ route('viewJob', $job->id) }}" class="btn  btn-primary mt-2 float-md-right"> Apply Now</a>
+                                            <a href="{{ route('viewJob', $job->id) }}" class="btn  btn-primary mt-2 float-md-right"> {{ __('Apply Now') }}</a>
                                         </div>
                                     </div>
                                 </div>
