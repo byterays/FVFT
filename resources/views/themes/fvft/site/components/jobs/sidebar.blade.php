@@ -66,7 +66,7 @@
             </h6>
             <div id="mySlider"></div>
         </div> --}}
-        <div class="card-header border-top">
+        {{-- <div class="card-header border-top">
             <h3 class="card-title">{{ __('Job Type') }}</h3>
         </div>
         <div class="card-body">
@@ -82,7 +82,7 @@
                 @endforeach
                 
             </div>
-        </div>
+        </div> --}}
         
         <div class="card-footer">
             <button  class="btn btn-warning btn-block" type="submit">{{ __('Apply Filter') }}</button>
