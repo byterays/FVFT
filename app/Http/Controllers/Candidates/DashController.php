@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Candidates;
 
 use DB;
 use stdClass;
+use Carbon\Carbon;
+use App\Models\News;
 use App\Models\User;
 use App\Models\Company;
+use App\Models\Country;
 use App\Models\Employe;
 use App\Models\SavedJob;
 use App\Models\Training;
@@ -15,13 +18,11 @@ use App\Traits\Site\ThemeMethods;
 use Illuminate\Support\Collection;
 use App\Models\EmployJobPreference;
 use App\Http\Controllers\Controller;
-use App\Models\Country;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\Site\CandidateMethods;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
-use App\Models\News;
 
 class DashController extends Controller
 {
@@ -569,6 +570,32 @@ class DashController extends Controller
                     $fields['language_level'] = $request->get('language_level')[$key];
                     DB::table('employes_languages')->insert($fields);
                 }
+            }
+        }
+    }
+
+
+    public function follow_company(Request $request)
+    {
+        if($request->ajax()){
+            try{
+                DB::beginTransaction();
+                $employ = Employe::where('user_id', auth()->id())->first();
+                $input['employ_id'] = $request->employ_id;
+                $input['company_id'] = $request->company_id;
+                $input['followed_time'] = Carbon::now();
+    
+                if(count($employ->followings->where('company_id', $request->company_id)) == 0){
+                    $employ->followings()->updateOrCreate($input);
+                    DB::commit();
+                    return response()->json(['msg'=>"Followed successfully", 'alreadyFollowed' => false]);
+                } else {
+                    return response()->json(['msg'=>"Already followed", "alreadyFollowed"=>true]);
+                }
+                
+            } catch(\Exception $e){
+                DB::rollBack();
+                return response()->json(['db_error'=>$e->getMessage()]);
             }
         }
     }

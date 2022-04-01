@@ -23,7 +23,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/safty-tips', [DashController::class, 'safty-tips'])->name('candidate.safty-tips');
     Route::get('settings', [DashController::class, 'settings'])->name('candidate.settings');
     Route::get('job-preferences', [DashController::class, 'job_preferences'])->name('candidate.job-preferences');
-
+    Route::post('/follow-company/', [DashController::class, "follow_company"])->name("candidate.follow_company");
     // Save Profile
     Route::post('/profile', [DashController::class, 'saveProfile'])->name('candidate.save-profile');
     Route::post('/job-preferences', [DashController::class, 'saveJobPreferences'])->name('candidate.save-job-preferences');

@@ -201,4 +201,10 @@ class Employe extends Model
         return $jobs;
     }
 
+
+    public function followings()
+    {
+        return $this->hasMany(CompanyFollower::class, "employ_id", "id");
+    }
+
 }

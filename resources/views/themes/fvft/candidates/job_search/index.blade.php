@@ -287,5 +287,27 @@
                 },
             });
         }
+
+        function follow_company(company_id, employ_id){
+            $.ajax({
+                type: "POST",
+                url: "{{ route('candidate.follow_company') }}",
+                data: {'company_id': company_id, 'employ_id': employ_id},
+                beforeSend: function(){
+                    $("#follow").text('Wait Submitting...')
+                }, 
+                success: function(data){
+                    if(data.db_error){
+                        toastr.warning(data.db_error)
+                    } else if(data.alreadyFollowed==true){
+                        toastr.info(data.msg);
+                        $("#follow").text('Following');
+                    } else if(data.alreadyFollowed == false){
+                        toastr.success(data.msg);
+                        $("#follow").text('Following');
+                    }
+                },
+            });
+        }
     </script>
 @endsection
