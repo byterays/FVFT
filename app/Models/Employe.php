@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\DateService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -205,6 +206,12 @@ class Employe extends Model
     public function followings()
     {
         return $this->hasMany(CompanyFollower::class, "employ_id", "id");
+    }
+
+
+    public function calculateAgeFromDateOfBirth()
+    {
+        return (new DateService)->calculateAgeFromDateOfBirth($this->dob);
     }
 
 }

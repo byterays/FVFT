@@ -108,7 +108,9 @@
 
                                     <th>Image</th>
                                     <th>Title</th>
+                                    <th>Category</th>
                                     <th>Company</th>
+                                    <th>Country</th>
                                     <th>Featured</th>
                                     <th>Status</th>
                                     {{-- <th>Job Status</th>
@@ -122,7 +124,16 @@
 
                                         <td><img src="/{{ $job->feature_image_url }}" alt="" srcset="" width="50px"></td>
                                         <td>{{ $job->title }}</td>
-                                        <td>{{ DB::table('companies')->find($job->company_id)->company_name ?? '' }}</td>
+                                        <td>
+                                            {{ !($job->job_category != null && $job->job_category->functional_area != null) ?: $job->job_category->functional_area }}
+                                        </td>
+                                        <td>
+                                            {{-- {{ DB::table('companies')->find($job->company_id)->company_name ?? '' }} --}}
+                                            {{ !($job->company != null && $job->company->company_name != null) ?: $job->company->company_name }}
+                                        </td>
+                                        <td>
+                                            {{ !($job->country != null && $job->country->name != null) ?: $job->country->name }}
+                                        </td>
                                         <td>
                                             <i class="fa fa-{{ $job->is_featured ? 'check-' : '' }}circle-o {{ $job->is_featured ? 'text-success' : 'text-warning' }}"></i>
                                         </td>

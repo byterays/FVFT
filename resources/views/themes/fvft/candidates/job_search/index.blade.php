@@ -70,6 +70,7 @@
                         </div>
                     </div>
                     @include('partial.candidates.job_search.tabs')
+                    @if(!request()->has('is_active') && !request()->is_active == 'about')
                     <div class="row">
                         <div class="mb-lg-0">
                             <div class="">
@@ -250,6 +251,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

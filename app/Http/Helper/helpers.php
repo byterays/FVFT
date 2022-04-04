@@ -89,3 +89,9 @@ if(!function_exists('parseDate')){
         return Carbon::parse($date)->diffForHumans();
     }
 }
+
+if(!function_exists('getFormattedDate')){
+    function getFormattedDate($date, $format){
+        return !($date != null) ?: date($format, strtotime($date));
+    }
+}

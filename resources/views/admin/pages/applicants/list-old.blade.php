@@ -40,19 +40,16 @@ if (session()->get('delete')) {
                         {{-- <a type="button" class="btn btn-primary" href="/admin/applicants/new"><i class="fe fe-plus mr-2"></i>Add New</a> --}}
                     </div>
                 </div>
+                {{-- {{ dd($applicants) }} --}}
                 <div class="card-body">
                     <div class="table-responsive border-top">
                         <table class="table table-bordered table-hover mb-0 text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>SN</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Applied On</th>
+                                    {{-- <th>#id</th> --}}
+                                    <th>Applicant</th>
                                     <th>Job Title</th>
-                                    <th>Company Name</th>
-                                    <th>Country</th>
+                                    <th>Applied At</th>
                                     <th>Status</th>
                                     <th>Interview Status</th>
                                     <th>Action</th>
@@ -60,27 +57,26 @@ if (session()->get('delete')) {
                             </thead>
                             <tbody>
                                 @foreach ($applicants as $item)
+                                    @php
+                                        $candidate = DB::table('employes')
+                                            ->where('id', $item->employ_id)
+                                            ->first();
+                                        $job = DB::table('jobs')
+                                            ->where('id', $item->job_id)
+                                            ->first();
+                                        $applied_company = '';
+                                    @endphp
                                     <tr>
-                                        <td>{{ $sn++ }}</td>
-                                        <td>{{ !($item->employe != null && $item->employe->full_name != null) ?: $item->employe->full_name }}
+                                        <td>{{ $candidate->first_name . ' ' . $candidate->middle_name . ' ' . $candidate->last_name }}
                                         </td>
-                                        <td>{{ !($item->employe != null && $item->employe->user != null && $item->employe->user->email != null) ?: $item->employe->user->email }}</td>
+                                        <td>{{ $job->title }}</td>
+                                        <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                                         <td>
-                                            {{ !($item->employe != null && $item->employe->mobile_phone != null) ?: $item->employe->mobile_phone }}
-                                        </td>
-                                        <td>{{ getFormattedDate($item->created_at, 'M j, Y') }}</td>
-                                        <td>{{ !($item->job != null && $item->job->title != null) ?: $item->job->title }}</td>
-                                        <td>{{ !($item->job != null && $item->job->company != null && $item->job->company->company_name != null) ?: $item->job->company->company_name }}</td>
-                                        <td>{{ !($item->employe != null && $item->employe->country != null && $item->employe->country->name != null) ?: $item->employe->country->name }}</td>
-                                        <td>
-                                            @php
-                                            $statuses = ['pending' => 'Unscreened', 'shortlisted' => 'Shortlisted', 'selectedForInterview' => 'Selected for Interview', 'interviewed' => 'Interviewed', 'accepted' => 'Selected', 'rejected' => 'Rejected', 'redlisted' => 'Red List'];
-                                            $status_indicator_items = ['pending' => 'warning', 'shortlisted' => 'pink', 'selectedForInterview' => 'orange', 'interviewed' => 'orange', 'accepted' => 'green', 'rejected' => 'red', 'redlisted' => 'danger'];
+                                            <?php
+                                            $status_indicator_items = ['pending' => 'warning', 'accepted' => 'success', 'rejected' => 'danger', 'shortlisted' => 'success', 'selectedForInterview' => 'success', 'interviewed' => 'success', 'redlisted' => 'danger'];
                                             $status_indicator = $status_indicator_items[$item->status];
-                                            $status_name = $statuses[$item->status];
-                                            @endphp
-                                            
-                                            <span class="label bg-{{ $status_indicator }}">{{ $status_name }}</span>
+                                            ?>
+                                            <span class="label label-{{ $status_indicator }}">{{ $item->status }}</span>
                                         </td>
                                         <td>
                                             @php

@@ -22,9 +22,12 @@ class ApplicantController extends Controller
         // $applicants = JobApplication::whereHas('job', function($q){
         //     return $q->with('company');
         // })->paginate(10);
+        $applicants = JobApplication::with(['employe:id,user_id,first_name,middle_name,last_name,mobile_phone,country_id','employe.user:id,email','employe.country:id,name','job.company:id,company_name'])->paginate(10);
+        $sn = ($applicants->perPage() * ($applicants->currentPage() - 1)) + 1;
         return $this->view('admin.pages.applicants.list',[
-            // 'applicants'=>$applicants
-            'applicants'=>JobApplication::paginate(10)
+            'applicants'=>$applicants,
+            'sn' => $sn
+            // 'applicants'=>JobApplication::paginate(10)
         ]);
     }
     public function new(){
