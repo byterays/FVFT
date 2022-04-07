@@ -10,7 +10,7 @@ $pages= DB::table("pages")->limit(5)->get();
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-3 col-md-12">
-								<h6>Job Categories</h6>
+								<h6>{{ __('Job') }} {{ __('Categories') }}</h6>
 								<hr class="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto">
 								<ul class="list-unstyled mb-0">
 									@foreach ($footer_cats as $item)
@@ -19,7 +19,7 @@ $pages= DB::table("pages")->limit(5)->get();
 								</ul>
 							</div>
 							<div class="col-lg-3 col-md-12">
-								<h6>Job Sifts</h6>
+								<h6>{{ __('Job Shifts') }}</h6>
 								<hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto">
 								<ul class="list-unstyled mb-0">
 									@foreach ($job_shifts as $item)
@@ -27,9 +27,8 @@ $pages= DB::table("pages")->limit(5)->get();
 									@endforeach
 								</ul>
 							</div>
-							
 							<div class="col-lg-3 col-md-12">
-								<h6>Pages</h6>
+								<h6>{{ __('Pages') }}</h6>
 								<hr class="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto">
 								<ul class="list-unstyled mb-0">
 									@foreach ($pages as $item)
@@ -38,12 +37,12 @@ $pages= DB::table("pages")->limit(5)->get();
 								</ul>
 							</div>
 							<div class="col-lg-3 col-md-12">
-								<h6 class="mb-2">Subscribe</h6>
+								<h6 class="mb-2">{{ __('Subscribe') }}</h6>
 								<hr class="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto">
 								<div class="input-group w-100">
-									<input type="text" class="form-control " placeholder="Email">
+									<input type="text" class="form-control " placeholder="{{ __('Email') }}">
 									<div class="input-group-append ">
-										<button type="button" class="btn btn-primary "> Subscribe </button>
+										<button type="button" class="btn btn-primary "> {{ __('Subscribe') }} </button>
 									</div>
 								</div>
 							

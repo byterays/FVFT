@@ -82,7 +82,7 @@ Job
                                                     <div class="p-0 m-0 item-card9-img">
                                                         <div class="item-card9-imgs">
                                                             <a href="job/{{ $item->id }}"></a>
-                                                            <img src="{{ asset('/') }}{{ $item->feature_image_url ?? 'uploads/defaultimage.jpg' }}"
+                                                            <img src="{{ asset('/') }}{{ $item->feature_image_url ?? 'images/defaultimage.jpg' }}"
                                                                 alt="img" class="h-100">
                                                         </div>
                                                     </div>

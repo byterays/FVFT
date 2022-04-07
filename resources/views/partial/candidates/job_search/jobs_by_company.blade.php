@@ -8,7 +8,7 @@
                     <div class="card card-aside">
                         <div class="card-body" style="padding: 1rem 1rem;">
                             <div class="card-item d-flex">
-                                <img src="{{ asset('/') }}{{ $company->company_logo ?? 'uploads/defaultimage.jpg' }}"
+                                <img src="{{ asset('/') }}{{ $company->company_logo ?? 'images/defaultimage.jpg' }}"
                                     alt="img" class="w-8 h-8">
                                 <div class="ml-5 my-auto">
                                     <h6 class="font-weight-bold">
@@ -32,7 +32,7 @@
         <div class="card mb-0">
             <div class="card-header">
                 <div class="d-flex mx-auto">
-                    <img src="{{ asset('/') }}{{ $data->company_logo ?? 'uploads/defaultimage.jpg' }}" alt=""
+                    <img src="{{ asset('/') }}{{ $data->company_logo ?? 'images/defaultimage.jpg' }}" alt=""
                         class="w-8 h-8">
                     <h5 class="card-title my-auto ml-5">Jobs From {{ $data->company_name }}</h5>
                 </div>

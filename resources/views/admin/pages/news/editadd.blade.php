@@ -11,8 +11,8 @@
 @endsection
 @section('main')
     {{-- @dd($news?$news); --}}
-    <div class="news-header">
-        <h4 class="news-title">{{ $action }} News</h4>
+    <div class="page-header">
+        <h4 class="page-title">{{ $action }} News</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Modules</a></li>
             <li class="breadcrumb-item" aria-current="news"><a href="/admin/news/">News</a></li>
@@ -46,6 +46,10 @@
                                     <label class="form-label">Body</label>
                                     <div id="editor" style="min-height: 20rem;">
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Upload Logo</label>
+                                    <input type="file" class="dropify" name="feature_img" data-default-file="{{ isset($news->feature_img) ? asset($news->feature_img) : null }}" data-height="180" data-allowed-file-extensions="jpg png jpeg" data-max-file-size="2M">
                                 </div>
                             </div>
                             <div class="col-md-3 col-lg-3">

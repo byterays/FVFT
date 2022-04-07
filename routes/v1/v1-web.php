@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Admin\Location\LocationAjaxController;
@@ -44,5 +45,5 @@ Route::prefix('ajax')->group(function () {
     Route::post('/countries', [LocationAjaxController::class, 'countries']);
     Route::post('/states', [LocationAjaxController::class, 'states']);
     Route::post('/cities', [LocationAjaxController::class, 'cities']);
-    Route::post('/districts', [LocationAjaxController::class, 'districts']);
+    Route::post('/districts', [LocationAjaxController::class, 'districts'])->name('getAjaxDistricts');
 });

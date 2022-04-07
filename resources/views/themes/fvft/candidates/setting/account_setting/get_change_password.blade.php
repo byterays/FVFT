@@ -6,11 +6,11 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">Account Setting</h1>
+                    <h1 class="">{{ __('Account Setting') }}</h1>
                     <ol class="breadcrumb text-center">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">Setting</li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Dashboard') }} </a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ __('Setting') }}</li>
                     </ol>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="card mb-2">
                             <div class="card-body">
-                                <h3 class="font-weight-bold">{{ strtoupper('Settings') }}</h3>
+                                <h3 class="font-weight-bold">{{ strtoupper(__('Settings')) }}</h3>
                                 <div id="basicwizard" class="border pt-0">
                                     @include('partial/candidates/setting_tabs')
                                 </div>
@@ -39,14 +39,14 @@
                     <div class="row">
                         <div class="card mb-0">
                             <div class="card-header">
-                                <h3 class="card-title">{{ strtoupper('Change Password') }}</h3>
+                                <h3 class="card-title">{{ strtoupper(__('Change Password')) }}</h3>
                             </div>
                             <div class="card-body">
                                 <form action="{{ route('candidate.account_setting.post_change_password') }}" method="POST">
                                     @csrf
                                 
                                 <div class="form-group">
-                                    <label for="old_password">Old Password&nbsp;<span
+                                    <label for="old_password">{{ __('Old Password') }}&nbsp;<span
                                             class="req">*</span></label>
                                     <input type="password" name="old_password" class="form-control" autocomplete="off">
                                     <span class="require password text-danger"></span>
@@ -55,7 +55,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="new_password">New Password&nbsp;<span
+                                    <label for="new_password">{{ __('New Password') }}&nbsp;<span
                                             class="req">*</span></label>
                                     <input type="password" name="password" class="form-control" autocomplete="off">
                                     <span class="require password text-danger"></span>
@@ -64,7 +64,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="confirm_password">Confirm New Password&nbsp;<span
+                                    <label for="confirm_password">{{ __('Confirm New Password') }}&nbsp;<span
                                             class="req">*</span></label>
                                     <input type="password" name="password_confirmation" class="form-control"
                                         autocomplete="off">
@@ -74,7 +74,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary w-100">Confirm</button>
+                                    <button type="submit" class="btn btn-primary w-100">{{ __('Confirm') }}</button>
                                 </div>
                             </form>
                             </div>

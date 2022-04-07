@@ -36,7 +36,7 @@
 
         </div> --}}
         <div class="card-body">
-            <h3 class="font-weight-bold">{{ strtoupper('Job Management') }}</h3>
+            <h3 class="font-weight-bold">{{ strtoupper(__('Job Management')) }}</h3>
             <div id="basicwizard" class="border pt-0">
                 @include('partial/companies/tabs')
             </div>
@@ -53,10 +53,10 @@
                                 <i class="fa fa-search icon"></i>
                                 <input type="hidden" name="type" value="{{ request()->type }}">
                                 <input type="text" name="term" value="{{ request()->term }}" class="form-control"
-                                    placeholder="Search Your Job" aria-label="Search your Job"
+                                    placeholder="{{ __('Search Your Job') }}" aria-label="Search your Job"
                                     aria-describedby="button-addon2">
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-success" type="submit">Search</button>
+                                    <button class="btn btn-outline-success" type="submit">{{ __('Search') }}</button>
                                 </div>
                             </div>
                         </form>
@@ -67,13 +67,13 @@
                 <div class="tabs-menus">
                     <!-- Tabs -->
                     <ul class="nav panel-tabs">
-                        <li class=""><a href="{{ route('company.jobs', ['type' => 'all']) }}" class="{{ !(request()->type == 'all') ?: 'active' }}">All Jobs</a>
+                        <li class=""><a href="{{ route('company.jobs', ['type' => 'all']) }}" class="{{ !(request()->type == 'all') ?: 'active' }}">{{ __('All Jobs') }}</a>
                         </li>
-                        <li><a href="{{ route('company.jobs', ['type' => 'draft_jobs']) }}" class="{{ !(request()->type == 'draft_jobs') ?: 'active' }}">Draft</a></li>
-                        <li><a href="{{ route('company.jobs', ['type' => 'pending_jobs']) }}" class="{{ !(request()->type == 'pending_jobs') ?: 'active' }}">Pending Jobs</a></li>
-                        <li><a href="{{ route('company.jobs', ['type' => 'published_jobs']) }}" class="{{ !(request()->type == 'published_jobs') ?: 'active' }}">Published Jobs</a></li>
-                        <li><a href="{{ route('company.jobs', ['type' => 'expired_jobs']) }}" class="{{ !(request()->type == 'expired_jobs') ?: 'active' }}">Expired Jobs</a></li>
-                        <li><a href="{{ route('company.jobs', ['type' => 'rejected_jobs']) }}" class="{{ !(request()->type == 'rejected_jobs') ?: 'active' }}">Rejected Jobs</a></li>
+                        <li><a href="{{ route('company.jobs', ['type' => 'draft_jobs']) }}" class="{{ !(request()->type == 'draft_jobs') ?: 'active' }}">{{ __('Draft Jobs') }}</a></li>
+                        <li><a href="{{ route('company.jobs', ['type' => 'pending_jobs']) }}" class="{{ !(request()->type == 'pending_jobs') ?: 'active' }}">{{ __('Pending Jobs') }}</a></li>
+                        <li><a href="{{ route('company.jobs', ['type' => 'published_jobs']) }}" class="{{ !(request()->type == 'published_jobs') ?: 'active' }}">{{ __('Published Jobs') }}</a></li>
+                        <li><a href="{{ route('company.jobs', ['type' => 'expired_jobs']) }}" class="{{ !(request()->type == 'expired_jobs') ?: 'active' }}">{{ __('Expired Jobs') }}</a></li>
+                        <li {{ !(app()->getLocale() == 'np') ?: 'class=mt-5' }}><a href="{{ route('company.jobs', ['type' => 'rejected_jobs']) }}" class="{{ !(request()->type == 'rejected_jobs') ?: 'active' }}">{{ __('Rejected Jobs') }}</a></li>
                     </ul>
                 </div>
                 <div class="tab-content">

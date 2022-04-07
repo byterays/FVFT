@@ -16,8 +16,8 @@
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="fa fa-frown-o mr-2" aria-hidden="true"></i>Failed ! To Delete.</div>
     @endif
 @endif
-<div class="news-header">
-    <h4 class="news-title">News</h4>
+<div class="page-header">
+    <h4 class="page-title">News</h4>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Modules</a></li>
         <li class="breadcrumb-item" aria-current="news"><a href="/admin/news/">news</a></li>

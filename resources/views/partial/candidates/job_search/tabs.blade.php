@@ -12,24 +12,23 @@
                     <ul class="nav panel-tabs">
                         <li class=""><a
                                 href="{{ route('candidate.job_search.index', ['type' => 'all']) }}"
-                                class="{{ !(request()->type == 'all') ?: 'active' }}">All Jobs</a></li>
+                                class="{{ !(request()->type == 'all') ?: 'active' }}">{{ __('All Jobs') }}</a></li>
                         <li><a href="{{ route('candidate.job_search.index', ['type' => 'prefered_jobs']) }}"
-                                class="{{ !(request()->type == 'prefered_jobs') ?: 'active' }}">Preferred Jobs</a></li>
+                                class="{{ !(request()->type == 'prefered_jobs') ?: 'active' }}">{{ __('Preferred Jobs') }}</a></li>
                         <li><a href="{{ route('candidate.job_search.index', ['type' => 'featured_jobs']) }}"
-                                class="{{ !(request()->type == 'featured_jobs') ?: 'active' }}">Featured Jobs</a></li>
+                                class="{{ !(request()->type == 'featured_jobs') ?: 'active' }}">{{ __('Featured Jobs') }}</a></li>
                         <li><a href="{{ route('candidate.job_search.index', ['type' => 'new_jobs']) }}"
-                                class="{{ !(request()->type == 'new_jobs') ?: 'active' }}">New Jobs</a></li>
+                                class="{{ !(request()->type == 'new_jobs') ?: 'active' }}">{{ __('New Jobs') }}</a></li>
                         <li><a href="{{ route('candidate.job_search.index', ['type' => 'jobs_by_country']) }}"
-                                class="{{ !(request()->type == 'jobs_by_country') ?: 'active' }}">Jobs By Country</a>
+                                class="{{ !(request()->type == 'jobs_by_country') ?: 'active' }}">{{ __('Jobs By Country') }}</a>
                         </li>
                         <li><a href="{{ route('candidate.job_search.index', ['type' => 'jobs_by_category']) }}"
-                                class="{{ !(request()->type == 'jobs_by_category') ?: 'active' }}">Jobs By
-                                Category</a></li>
+                                class="{{ !(request()->type == 'jobs_by_category') ?: 'active' }}">{{ __('Jobs By Category') }}</a></li>
                         <li><a href="{{ route('candidate.job_search.index', ['type' => 'jobs_by_company']) }}"
-                                class="{{ !(request()->type == 'jobs_by_company') ?: 'active' }}">Jobs By Company</a>
+                                class="{{ !(request()->type == 'jobs_by_company') ?: 'active' }}">{{ __('Jobs By Company') }}</a>
                         </li>
                         <li><a href="{{ route('candidate.job_search.index', ['type' => 'saved_jobs']) }}"
-                                class="{{ !(request()->type == 'saved_jobs') ?: 'active' }}">Saved Jobs</a></li>
+                                class="{{ !(request()->type == 'saved_jobs') ?: 'active' }}">{{ __('Saved Jobs') }}</a></li>
                     </ul>
                 </div>
             </div>
@@ -41,7 +40,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6 my-auto">
-                    <h3 class="card-title">{{ $action }}</h3>
+                    <h3 class="card-title">{{ __($action) }}</h3>
                 </div>
                 <div class="col-md-6 my-auto">
                     <form action="{{ route('candidate.job_search.index', ['type' => request()->type]) }}"
@@ -57,10 +56,10 @@
                                 <input type="hidden" name="category_id" value="{{ request()->category_id }}">
                             @endif
                             <input type="text" name="search" value="{{ request()->search }}" class="form-control"
-                                placeholder="Search Your Job" aria-label="Search your Job"
+                                placeholder="{{ __('Search Your Job') }}" aria-label="Search your Job"
                                 aria-describedby="button-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-success" type="submit">Search</button>
+                                <button class="btn btn-outline-success" type="submit">{{ __('Search') }}</button>
                             </div>
                         </div>
                     </form>
