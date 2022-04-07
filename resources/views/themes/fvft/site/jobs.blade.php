@@ -78,7 +78,7 @@
                                                 $company = DB::table('companies')->find($item->company_id);
                                                 $cntry = App\Models\Country::where('id', $item->country_id)->first();
                                             @endphp
-                                            <div class="card overflow-hidden  shadow-none">
+                                            <div class="card overflow-hidden shadow-none">
                                                 <div class="d-md-flex">
                                                     <div class="p-0 m-0 item-card9-img">
                                                         <div class="item-card9-imgs">
@@ -90,8 +90,7 @@
                                                             @endif
                                                         </div>
                                                     </div>
-                                                    <div
-                                                        class="card overflow-hidden  border-0 box-shadow-0 border-left br-0 mb-0">
+                                                    <div class="card overflow-hidden  border-0 box-shadow-0 border-left br-0 mb-0">
                                                         <div class="card-body pt-0 pt-md-5">
                                                             <div class="item-card9">
                                                                 <a href="/job/{{ $item->id }}" class="text-dark">
@@ -101,10 +100,9 @@
                                                                 </a>
                                                                 <div class="mt-2 mb-2">
                                                                     @isset($company)
-                                                                        <a href="/company-view/{{ $company->id }}"
-                                                                           class="mr-4"><span><i
-                                                                                    class="fa fa-building-o text-muted mr-1"></i>
-                                                                                {{ $company->company_name }}</span></a>
+                                                                        <a href="/company-view/{{ $company->id }}" class="mr-4">
+                                                                            <span><i class="fa fa-building-o text-muted mr-1"></i>{{ $company->company_name }}</span>
+                                                                        </a>
                                                                     @endisset
 
                                                                 </div>
@@ -115,9 +113,7 @@
                                                                                 $country_flag = @DB::table('countries')->find($item->country_id)->iso2;
                                                                             @endphp
                                                                             {{-- <i class="fa fa-map-marker text-muted mr-1"></i> --}}
-                                                                            <img class="mb-1"
-                                                                                 src="{{ asset('https://flagcdn.com/16x12/' . strtolower($country_flag) . '.png') }}"
-                                                                                 alt="">
+                                                                            <img class="mb-1" src="{{ asset('https://flagcdn.com/16x12/' . strtolower($country_flag) . '.png') }}" alt="">
                                                                             {{ @DB::table('countries')->find($item->country_id)->name }}
                                                                         </span>
                                                                     </a>

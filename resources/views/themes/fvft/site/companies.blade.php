@@ -613,4 +613,5 @@
 			</div>
 		</section>
 		@include('themes.fvft.site.components.footer')
+
 @endsection

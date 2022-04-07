@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\API\Candidates;
 
 use App\Http\Controllers\Controller;
+use App\Models\EmployeeEducation;
+use App\Models\EmployeeExperience;
+use App\Models\EmployeeLanguage;
+use App\Models\EmployeeSkill;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Employe;
@@ -43,12 +47,14 @@ class ProfileController extends Controller
     }
 
     private $destination = 'uploads/candidates/profiles/';
-//    private $fullPictureDestination = 'uploads/candidates/full_picture/';
     public function updateProfile(Request $request)
     {
         $user = User::find(Auth::user()->id);
-        $employee = Employe::where('user_id', $user->id)->first();
-
+        $employee = Employe::where('user_id', $user->id)->firstOrFail();
+        if (!$request->page OR blank($request->page)){
+            $responseData = $this->sendResponse([], 'page value mismatch', '', false);
+            return $responseData;
+        }
         if ($request->page == 'personal_information') {
             if ($request->hasFile('profile_picture')) {
                 $prf = $request->file('profile_picture');
@@ -72,13 +78,126 @@ class ProfileController extends Controller
                 'passport_number' => $request->passport_number,
                 'passport_expiry_date' => $request->passport_expiry_date,
             ]);
-
-            $responseData = $this->sendResponse(compact('employee', 'user'), 'success', '');
-            return $responseData;
-        }else{
-            $responseData = $this->sendResponse([], 'page value mismatch', '', false);
-            return $responseData;
         }
+        elseif($request->page == 'contact_information'){
+            $employee->mobile_phone = $request->phone1;
+            $employee->mobile_phone2 = $request->phone2;
+            $employee->country_id = $request->country_id;
+            $employee->state_id = $request->state_id;
+            $employee->district_id = $request->district_id;
+            $employee->municipality = $request->municipality;
+            $employee->city_id = $request->city_id;
+            $employee->ward = $request->ward;
+            $employee->address = $request->address;
+
+            $employee->save();
+        }
+        elseif($request->page == 'qualification'){
+
+            if (isset($request->education_id) AND !blank($request->education_id)){
+                $education_level = json_decode($request->education_id);
+                if (!is_array($education_level)){
+                    die('must be an array');
+                }
+                // remove education level
+                EmployeeEducation::where('employ_id', $employee->id)->delete();
+                foreach ($education_level as $value){
+                    $employee_education = new EmployeeEducation();
+                    $employee_education->employ_id = $employee->id;
+                    $employee_education->educationlevels_id = $value;
+                    $employee_education->save();
+                }
+            }
+
+            if (isset($request->training) AND !blank($request->training)){
+                $trainings = json_decode($request->training);
+                if (!is_array($trainings)){
+                    die('must be an array');
+                }
+                $fields['trainings'] = json_encode($trainings);
+                $employee->update($fields);
+            }
+
+            if (isset($request->skill) AND !blank($request->skill)){
+                EmployeeSkill::where('employ_id', $employee->id)->delete();
+                $skills = json_decode($request->skill);
+                if (!is_array($skills)){
+                    die('must be an array');
+                }
+
+                foreach ($skills as $skill) {
+                    $employee_skill = new EmployeeSkill();
+                    $employee_skill->employ_id = $employee->id;
+                    $employee_skill->skills_id = $skill;
+                    $employee_skill->save();
+                }
+
+            }
+
+            if (isset($request->language) AND !blank($request->language)){
+                EmployeeLanguage::where('employ_id', $employee->id)->delete();
+                $languages = json_decode($request->language, true);
+
+                if (!is_array($languages)){
+                    die('must be an array');
+                }
+                    foreach ($languages as $key => $language) {
+                        if (!blank($language)) {
+                            $employee_language = new EmployeeLanguage();
+                            $employee_language->employ_id = $employee->id;
+                            $employee_language->language_id = $language;
+                            $employee_language->language_level = $key;
+                            $employee_language->save();
+                        }
+                    }
+            }
+        }
+
+        elseif ($request->page == 'experience'){
+            EmployeeExperience::where('employ_id', $employee->id)->delete();
+            $experiences = json_decode($request->experience, true);
+
+            if (!is_array($experiences)){
+                die('must be an array');
+            }
+
+            foreach($experiences as $experience) {
+                $employee_experience = new EmployeeExperience();
+                $employee_experience->employ_id = $employee->id;
+                $employee_experience->experiencelevels_id = $experience['experiencelevels_id'];
+                $employee_experience->country_id = $experience['country_id'];
+                $employee_experience->job_category_id = $experience['job_category_id'];
+                $employee_experience->job_title_id = $experience['job_title_id'];
+                $employee_experience->working_year = $experience['working_year'];
+                $employee_experience->working_month = $experience['working_month'];
+                $employee_experience->save();
+            }
+        }
+
+        $employee = Employe::with([
+            'country',
+            'state',
+            'district',
+            'city',
+            'experience',
+            'experience.country',
+            'experience.job_category',
+            'experience.job',
+            'education_level',
+            'education.educationLevel',
+            'employeeSkills',
+            'employeeSkills.skill',
+            'employeeLanguage',
+            'employeeLanguage.language',
+            'preferredCountry',
+            'preferredCountry.country',
+            'cv',
+            'job_applications',
+            'job_preference'])
+            ->where('user_id', $user->id)->first();
+
+        $responseData = $this->sendResponse(compact('employee', 'user'), 'success', '');
+        return $responseData;
     }
 
     public function save_profile(Request $request)
