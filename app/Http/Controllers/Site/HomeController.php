@@ -30,7 +30,14 @@ class HomeController extends Controller
     }
     public function companies(Request $request)
     {
-        $companies = Company::paginate(10);
+        $companies = Company::with([
+            'country',
+            'country',
+            'state',
+            'city',
+            'industry',
+            'jobs',
+        ])->paginate(10);
         return $this->site_view('site.companies', ["companies" => $companies]);
     }
     public function company($id)
