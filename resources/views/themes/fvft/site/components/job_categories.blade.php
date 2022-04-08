@@ -2,8 +2,8 @@
     <section class="sptb">
         <div class="container">
             <div class="section-title center-block text-center">
-                <h1>Job Industries</h1>
-                <p>Find jobs by industries.</p>
+                <h1>{{ __('Job Industries') }}</h1>
+                <p>{{ __('Find jobs by industries.') }}</p>
             </div>
             <div class="item-all-cat center-block text-center education-categories">
                 <div class="row">
@@ -22,7 +22,7 @@
                     @endforeach
                 </div>
                 <div class="mt-4">
-                    <a href="{{ route('site.jobs') }}" class="btn btn-primary btn-outline-primary">View More</a>
+                    <a href="{{ route('site.jobs') }}" class="btn btn-primary btn-outline-primary">{{ __('View More') }}</a>
                 </div>
             </div>
         </div>

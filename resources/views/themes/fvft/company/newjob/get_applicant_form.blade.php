@@ -23,7 +23,7 @@
 @section('data')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Add New Job</h3>
+            <h3 class="card-title">{{ __('Add New Job') }}</h3>
         </div>
     </div>
     @include('partial.job.step')
@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="card m-b-20">
                     <div class="card-header">
-                        <h3 class="card-title tempcolor">{{ strtoupper('Applicant Qualification') }}</h3>
+                        <h3 class="card-title tempcolor">{{ strtoupper(__('Applicant Qualification')) }}</h3>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
@@ -46,13 +46,12 @@
                                 value="{{ $editRoute }}">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="education_level" class="form-label">Minimum
-                                        Qualification&nbsp;<span class="req">*</span></label>
+                                    <label for="education_level" class="form-label">{{ __('Minimum Qualification') }}&nbsp;<span class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <select name="education_level" class="form-contorl select2-show-search"
                                         data-placeholder="Select Qualification">
-                                        <option value="">Select Qualification</option>
+                                        <option value="">{{ __('Select Qualification') }}</option>
                                         @foreach ($educationlevels as $educationlevel)
                                             <option value="{{ $educationlevel->id }}"
                                                 {{ setParameter($job, 'education_level_id') == $educationlevel->id ? 'selected' : '' }}>
@@ -67,13 +66,13 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="year_of_experience" class="form-label">Year of Experience</label>
+                                    <label for="year_of_experience" class="form-label">{{ __('Year of Experience') }}</label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <select name="min_experience" class="form-control select2">
-                                                <option value="">Min</option>
+                                                <option value="">{{ __('Min') }}</option>
                                                 @for ($i = 0; $i <= 10; $i++)
                                                     <option value="{{ $i }}"
                                                         {{ setParameter($job, 'min_experience') != null && setParameter($job, 'min_experience') == $i ? 'selected' : '' }}>
@@ -83,7 +82,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <select name="max_experience" class="form-control select2">
-                                                <option value="">Max</option>
+                                                <option value="">{{ __('Max') }}</option>
                                                 @for ($i = 1; $i <= 15; $i++)
                                                     <option value="{{ $i }}"
                                                         {{ setParameter($job, 'max_experience') == $i ? 'selected' : '' }}>
@@ -100,13 +99,13 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="age_requirement" class="form-label">Age Requirement</label>
+                                    <label for="age_requirement" class="form-label">{{ __('Age Requirement') }}</label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <select name="min_age" class="form-control select2">
-                                                <option value="">Min</option>
+                                                <option value="">{{ __('Min') }}</option>
                                                 @for ($i = 18; $i <= 25; $i++)
                                                     <option value="{{ $i }}"
                                                         {{ setParameter($job, 'min_age') == $i ? 'selected' : '' }}>
@@ -116,7 +115,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <select name="max_age" class="form-control select2">
-                                                <option value="">Max</option>
+                                                <option value="">{{ __('Max') }}</option>
                                                 @for ($i = 18; $i <= 50; $i++)
                                                     <option value="{{ $i }}"
                                                         {{ setParameter($job, 'max_age') == $i ? 'selected' : '' }}>
@@ -133,7 +132,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="skils" class="form-label">Skills</label>
+                                    <label for="skils" class="form-label">{{ __('Skills') }}</label>
                                 </div>
                                 <div class="col-md-6">
                                     <select name="skills[]" id="skill" class="form-control select2" multiple="multiple">
@@ -147,14 +146,14 @@
                                 </div>
                                 <div class="col-md-2 mt-1">
                                     <span class="cur_sor btn btn-sm btn-primary rounded-0" data-toggle="modal"
-                                        data-target="#newSkillModal">Add New Skill</span>
+                                        data-target="#newSkillModal">{{ __('Add New Skill') }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="requirements" class="form-label">Other Requirements</label>
+                                    <label for="requirements" class="form-label">{{ __('Other Requirements') }}</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="hidden" class="form-control"
@@ -172,17 +171,17 @@
                 </div>
                 <div class="mx-auto">
                     @if (request()->editRoute == 'company.editjob')
-                        <span>Job Details</span>&nbsp;&nbsp;&nbsp;<a
+                        <span>{{ __('Job Details') }}</span>&nbsp;&nbsp;&nbsp;<a
                             href="{{ route('company.editjob', request()->job_id) }}" class="btn btn-primary rounded-0"><i
-                                class="fa fa-arrow-left"></i> Back</a>
+                                class="fa fa-arrow-left"></i> {{ __('Back') }}</a>
                     @else
-                        <span>Job Details</span>&nbsp;&nbsp;&nbsp;<a
+                        <span>{{ __('Job Details') }}</span>&nbsp;&nbsp;&nbsp;<a
                             href="{{ route('company.newjob.get_job_detail', ['job_id' => request()->job_id]) }}"
-                            class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i> Back</a>
+                            class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i> {{ __('Back') }}</a>
                     @endif
 
-                    <button type="button" onclick="submitForm(event);" class="btn btn-primary rounded-0 ml-5">Next <i
-                            class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>Salary and Facility</span>
+                    <button type="button" onclick="submitForm(event);" class="btn btn-primary rounded-0 ml-5">{{ __('Next') }} <i
+                            class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Salary and Facility') }}</span>
                 </div>
             </div>
         </div>

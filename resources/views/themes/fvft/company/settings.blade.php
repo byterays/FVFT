@@ -11,7 +11,7 @@
 @section('data')
     <div class="card dropify-image-avatar">
         <div class="card-header ">
-            <h3 class="card-title">Account Settings</h3>
+            <h3 class="card-title">{{ __('Account Settings') }}</h3>
         </div>
         <form action="{{ route('company.saveSettings') }}" method="POST">
             @csrf
@@ -19,14 +19,14 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="form-label text-dark">Email</label>
+                            <label class="form-label text-dark">{{ __('Email') }}</label>
                             <input type="text" class="form-control text-dark" placeholder="Email" name="email"
                                 value="{{ isset($user->email) ? $user->email : '' }}" readonly>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="form-label text-dark">New Password</label>
+                            <label class="form-label text-dark">{{ __('New Password') }}</label>
                             <input type="password" class="form-control text-dark" placeholder="Enter Password"
                                 value="{{ old('password') }}" name="password" autocomplete="off">
                             @error('password')
@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="form-label text-dark">Confirm Password</label>
+                            <label class="form-label text-dark">{{ __('Confirm Password') }}</label>
                             <input type="password" class="form-control text-dark" placeholder="Re-type Password"
                                 value="{{ old('confirm-password') }}" name="confirm-password" autocomplete="off">
                             @error('confirm-password')
@@ -47,7 +47,7 @@
 
                 </div>
                 <div class="float-right mb-4 mb-lg-4">
-                    <button class="btn btn-primary w-150" type="submit">Save</button>
+                    <button class="btn btn-primary w-150" type="submit">{{ __('Save') }}</button>
                 </div>
             </div>
         </form>

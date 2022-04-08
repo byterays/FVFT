@@ -21,10 +21,10 @@
     <div class="bg-white border-bottom">
         <div class="container">
             <div class="page-header">
-                <h4 class="page-title">Jobs list </h4>
+                <h4 class="page-title">{{ __('Jobs List') }} </h4>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Jobs list</li>
+                    <li class="breadcrumb-item"><a href="/">{{ __('Home') }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ __('Jobs List') }}</li>
                 </ol>
             </div>
         </div>
@@ -44,12 +44,12 @@
                                 <div class=" mb-0">
                                     <div class="">
                                         <div class="p-5 bg-white item2-gl-nav d-flex">
-                                            <h6 class="mb-0 mt-3">Showing @if ($jobs->count() > 1)
-                                                    <b>1 to {{ $jobs->count() }}
+                                            <h6 class="mb-0 mt-3">{{ __('Showing') }} @if ($jobs->count() > 1)
+                                                    <b>{{ __('1') }} {{ __('to') }} {{ __($jobs->count()) }}
                                                         @else
-                                                            {{ $jobs->count() }}
+                                                            {{ __($jobs->count()) }}
                                                         @endif
-                                                    </b> of {{ $jobs->total() }} Entries</h6>
+                                                    </b> {{ __('of') }} {{ __($jobs->total()) }} {{ __('Entries') }}</h6>
                                             <ul class="nav item2-gl-menu mt-1 ml-auto">
                                                 <li class=""><a href="#tab-11" class="active show"
                                                                 data-toggle="tab" title="List style"><i
@@ -86,7 +86,7 @@
                                                             @if($item->feature_image_url)
                                                                 <img src="{{ asset($item->feature_image_url) }}" alt="img" class="h-100">
                                                             @else
-                                                                <img src="{{ asset('uploads/defaultimage.jpg') }}" alt="img" class="h-100">
+                                                                <img src="{{ asset('images/defaultimage.jpg') }}" alt="img" class="h-100">
                                                             @endif
                                                         </div>
                                                     </div>
@@ -161,57 +161,54 @@
                                                                             <div class="col-md-3">
                                                                                 @if ($application)
                                                                                     <a href="javascript:void(0);"
-                                                                                       class="btn btn-primary mr-5">Applied</a>
+                                                                                       class="btn btn-primary mr-5">{{ __('Applied') }}</a>
                                                                                 @else
                                                                                     <a href="/apply-job/{{ $item->id }}"
-                                                                                       class="btn btn-primary mr-5"> Apply
-                                                                                        Now</a>
+                                                                                       class="btn btn-primary mr-5"> {{ __('ApplyNow') }}</a>
                                                                                 @endif
                                                                             </div>
                                                                             <div class="col-md-3">
                                                                                 @if ($savedJob->exists())
                                                                                     <a href="javascript:void(0);"
                                                                                        class="saveJobButton ico-font">
-                                                                                        <i class="fa fa-heart"></i> Saved
+                                                                                        <i class="fa fa-heart"></i> {{ __('Saved') }}
                                                                                     </a>
                                                                                 @else
                                                                                     <a href="javascript:void(0);"
                                                                                        onclick="savejob({{ $item->id }})"
                                                                                        class="saveJobButton ico-font">
-                                                                                        <i class="fa fa-heart-o"></i> Save Job
+                                                                                        <i class="fa fa-heart-o"></i> {{ __('Save Job') }}
                                                                                     </a>
                                                                                 @endif
                                                                             </div>
                                                                             <div class="col-md-3">
                                                                                 <a href="#" class="ico-font">
-                                                                                    <i class="fa fa-share-alt"></i>&nbsp;Share
+                                                                                    <i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
                                                                                 </a>
                                                                             </div>
                                                                             <div class="col-md-3">
                                                                                 <a href="/job/{{ $item->id }}"
                                                                                    class="ico-font">
-                                                                                    <i class="fa fa-eye"></i>&nbsp;View
-                                                                                    Details
+                                                                                    <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                                 </a>
                                                                             </div>
                                                                         @elseif(auth()->user()->user_type == 'company')
                                                                             <div class="col-md-3">
                                                                                 <a href="#" class="ico-font">
-                                                                                    <i class="fa fa-share-alt"></i>&nbsp;Share
+                                                                                    <i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
                                                                                 </a>
                                                                             </div>
                                                                             <div class="col-md-3">
                                                                                 <a href="/job/{{ $item->id }}"
                                                                                    class="ico-font">
-                                                                                    <i class="fa fa-eye"></i>&nbsp;View
-                                                                                    Details
+                                                                                    <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                                 </a>
                                                                             </div>
                                                                         @endif
                                                                     @else
                                                                         <div class="col-md-3">
                                                                             <a href="/apply-job/{{ $item->id }}"
-                                                                               class="btn btn-primary mr-3"> Apply Now</a>
+                                                                               class="btn btn-primary mr-3"> {{ __('Apply Now') }}</a>
                                                                         </div>
                                                                         {{-- <div class="col-md-3">
                                                                             <a href="javascript:void(0);"
@@ -222,14 +219,13 @@
                                                                         </div> --}}
                                                                         <div class="col-md-3">
                                                                             <a href="#" class="ico-font">
-                                                                                <i class="fa fa-share-alt"></i>&nbsp;Share
+                                                                                <i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
                                                                             </a>
                                                                         </div>
                                                                         <div class="col-md-3">
                                                                             <a href="/job/{{ $item->id }}"
                                                                                class="ico-font">
-                                                                                <i class="fa fa-eye"></i>&nbsp;View
-                                                                                Details
+                                                                                <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                             </a>
                                                                         </div>
 
@@ -256,7 +252,7 @@
                                                         <div class="item-card9-img border-bottom">
                                                             <div class="item-card9-imgs">
                                                                 <a href="{{ route('viewJob', $item->id) }}"></a>
-                                                                <img src="{{ asset('/') }}{{ $item->feature_image_url ?? 'uploads/defaultimage.jpg' }}"
+                                                                <img src="{{ asset('/') }}{{ $item->feature_image_url ?? 'images/defaultimage.jpg' }}"
                                                                      alt="img" class="h-100">
                                                             </div>
                                                         </div>
@@ -341,67 +337,63 @@
                                                                                 @if ($savedJob->exists())
                                                                                     <a href="javascript:void(0);"
                                                                                        class="saveJobButton ico-grid-font">
-                                                                                        <i class="fa fa-heart"></i> Saved
+                                                                                        <i class="fa fa-heart"></i> {{ __('Saved') }}
                                                                                     </a>
                                                                                 @else
                                                                                     <a href="javascript:void(0);"
                                                                                        onclick="savejob({{ $item->id }})"
                                                                                        class="saveJobButton ico-grid-font">
-                                                                                        <i class="fa fa-heart-o"></i> Save Job
+                                                                                        <i class="fa fa-heart-o"></i> {{ __('Save Job') }}
                                                                                     </a>
                                                                                 @endif
                                                                             </div>
                                                                             <div class="col-md-6">
                                                                                 <a href="#" class="ico-grid-font">
-                                                                                    <i class="fa fa-share-alt"></i>&nbsp;Share
+                                                                                    <i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
                                                                                 </a>
                                                                             </div>
                                                                             <div class="col-md-6 mt-3">
                                                                                 @if ($application)
                                                                                     <a href="javascript:void(0);"
-                                                                                       class="btn btn-primary mr-5">Applied</a>
+                                                                                       class="btn btn-primary mr-5">{{ __('Applied') }}</a>
                                                                                 @else
                                                                                     <a href="/apply-job/{{ $item->id }}"
-                                                                                       class="btn btn-primary mr-5"> Apply
-                                                                                        Now</a>
+                                                                                       class="btn btn-primary mr-5"> {{ __('Apply Now') }}</a>
                                                                                 @endif
                                                                             </div>
                                                                             <div class="col-md-6 mt-3">
                                                                                 <a href="/job/{{ $item->id }}"
                                                                                    class="ico-grid-font">
-                                                                                    <i class="fa fa-eye"></i>&nbsp;View
-                                                                                    Details
+                                                                                    <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                                 </a>
                                                                             </div>
                                                                         @elseif(auth()->user()->user_type == 'company')
                                                                             <div class="col-md-6">
                                                                                 <a href="#" class="ico-grid-font">
-                                                                                    <i class="fa fa-share-alt"></i>&nbsp;Share
+                                                                                    <i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
                                                                                 </a>
                                                                             </div>
                                                                             <div class="col-md-6">
                                                                                 <a href="/job/{{ $item->id }}"
                                                                                    class="ico-grid-font">
-                                                                                    <i class="fa fa-eye"></i>&nbsp;View
-                                                                                    Details
+                                                                                    <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                                 </a>
                                                                             </div>
                                                                         @endif
                                                                     @else
                                                                         <div class="col-md-6">
                                                                             <a href="#" class="ico-grid-font">
-                                                                                <i class="fa fa-share-alt"></i>&nbsp;Share
+                                                                                <i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
                                                                             </a>
                                                                         </div>
                                                                         <div class="col-md-6">
                                                                             <a href="/apply-job/{{ $item->id }}"
-                                                                               class="btn btn-primary mr-3"> Apply Now</a>
+                                                                               class="btn btn-primary mr-3"> {{ __('Apply Now') }}</a>
                                                                         </div>
                                                                         <div class="col-md-6 mt-3">
                                                                             <a href="/job/{{ $item->id }}"
                                                                                class="ico-grid-font">
-                                                                                <i class="fa fa-eye"></i>&nbsp;View
-                                                                                Details
+                                                                                <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                             </a>
                                                                         </div>
 

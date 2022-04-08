@@ -43,11 +43,11 @@ $flag = $country->exists() ? $country->first()->emojiU : DB::table('countries')-
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-6">
-                        <img src="{{ asset($company->company_logo != null ? $company->company_logo : 'uploads/defaultimage.jpg' ) }}" class="img-fluid" alt="">
+                        <img src="{{ asset($company->company_logo != null ? $company->company_logo : 'images/defaultimage.jpg' ) }}" class="img-fluid" alt="">
                     </div>
                     <div class="col-md-6 justify-content-between">
                         {{-- <img src="{{ asset('https://ipdata.co/flags/np.png') }}" class="img-fluid" alt=""> --}}
-                        <img src="{{ $country->exists() ? 'https://ipdata.co/flags/'.strtolower($country->first()->iso2).'.png' : asset('uploads/defaultimage.jpg') }}" style="height: 100%; width: 100%;" class="img-fluid" alt="">
+                        <img src="{{ $country->exists() ? 'https://ipdata.co/flags/'.strtolower($country->first()->iso2).'.png' : asset('images/defaultimage.jpg') }}" style="height: 100%; width: 100%;" class="img-fluid" alt="">
                     </div>
                 </div>
             </div>

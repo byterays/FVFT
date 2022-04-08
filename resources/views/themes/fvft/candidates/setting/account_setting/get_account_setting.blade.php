@@ -6,11 +6,11 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">Account Setting</h1>
+                    <h1 class="">{{ __('Account Setting') }}</h1>
                     <ol class="breadcrumb text-center">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">Setting</li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Dashboard') }} </a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ __('Setting') }}</li>
                     </ol>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="card mb-2">
                             <div class="card-body">
-                                <h3 class="font-weight-bold">{{ strtoupper('Settings') }}</h3>
+                                <h3 class="font-weight-bold">{{ strtoupper(__('Settings')) }}</h3>
                                 <div id="basicwizard" class="border pt-0">
                                     @include('partial/candidates/setting_tabs')
                                 </div>
@@ -39,18 +39,18 @@
                     <div class="row">
                         <div class="card mb-0">
                             <div class="card-header">
-                                <h3 class="card-title">{{ strtoupper('Deactivate My Account') }}</h3>
+                                <h3 class="card-title">{{ strtoupper(__('Deactivate My Account')) }}</h3>
                             </div>
                             <div class="card-body">
-                                <h6>Fill your password to deactivate your account.</h6>
+                                <h6>{{ __('Fill your password to deactivate your account.') }}</h6>
                                 <div class="w-100">
                                     <p style="background-color: #f3a19c;" class="p-1 w-100"><i
-                                            class="fa fa-warning text-danger"></i> You can reactivate whenever you want</p>
+                                            class="fa fa-warning text-danger"></i> {{ __('You can reactivate whenever you want') }}</p>
                                 </div>
                                 <form action="{{ route('candidate.account_setting.post_account_setting') }}" method="POST" id="activateForm">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="password">Password&nbsp;<span class="req">*</span></label>
+                                        <label for="password">{{ __('Password') }}&nbsp;<span class="req">*</span></label>
                                         <input type="password" class="form-control" name="password" id="Password"
                                             autocomplete="off">
                                         @error('password')
@@ -61,21 +61,21 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <button type="reset" class="btn btn-gray w-75">Cancel</button>
+                                                <button type="reset" class="btn btn-gray w-75">{{ __('Cancel') }}</button>
                                             </div>
                                             <div class="col-md-4">
                                                 <button type="button" data-toggle="modal" data-target="#activateModal"
                                                     data-savetype="Deactivated" data-msg="deactivate"
                                                     data-id="{{ Auth::user()->id }}"
                                                     data-action="{{ route('candidate.account_setting.post_account_setting') }}"
-                                                    class="btn btn-warning w-75">Deactivate Account</button>
+                                                    class="btn btn-warning w-75">{{ __('Deactivate Account') }}</button>
                                             </div>
                                             <div class="col-md-4">
                                                 <button type="button" data-toggle="modal" data-target="#activateModal"
                                                     data-msg="delete" data-savetype="Deleted"
                                                     data-id="{{ Auth::user()->id }}"
                                                     data-action="{{ route('candidate.account_setting.post_account_setting') }}"
-                                                    class="btn btn-secondary w-75">Delete Account</button>
+                                                    class="btn btn-secondary w-75">{{ __('Delete Account') }}</button>
                                             </div>
                                         </div>
                                     </div>

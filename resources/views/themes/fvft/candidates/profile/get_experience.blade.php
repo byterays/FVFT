@@ -11,11 +11,11 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">My Profile</h1>
+                    <h1 class="">{{ __('My Profile') }}</h1>
                     <ol class="breadcrumb text-center">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">My Profile</li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Dashboard') }} </a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ __('My Profile') }}</li>
                     </ol>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                                     @include('partial/candidates/step')
                                 </div>
                             </div>
-                            <h3 class="mt-5 ml-3">Experience</h3>
+                            <h3 class="mt-5 ml-3">{{ __('Experience') }}</h3>
                             <div class="card mb-2">
                                 <div class="row">
                                     <div class="col-md-8">
@@ -51,22 +51,22 @@
                                             @if (json_decode($employ->experiences, true) != null)
                                                 @foreach (json_decode($employ->experiences, true) as $key => $employ_experience)
                                                     <div class="form-group">
-                                                        <label for="" class="form-label">Experience</label>
+                                                        <label for="" class="form-label">{{ __('Experience') }}</label>
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <label for="">Country</label>
+                                                                <label for="">{{ __('Country') }}</label>
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <select name="country_id[]"
                                                                     class="form-control select2-show-search"
                                                                     data-placeholder="Select Country">
-                                                                    <option value="">Select Country</option>
+                                                                    <option value="">{{ __('Select Country') }}</option>
                                                                     @foreach ($countries as $country)
-                                                                        <option value="{{ $country->id }}"
-                                                                            {{ $country->id == $employ_experience['country_id'] ? 'selected' : '' }}>
-                                                                            {{ $country->name }}</option>
+                                                                        <option value="{{ $country->id }}" {{ $country->id == $employ_experience['country_id'] ? 'selected' : '' }}>
+                                                                            {{ $country->name }}
+                                                                        </option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -75,13 +75,13 @@
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <label for="">Job Category</label>
+                                                                <label for="">{{ __('Job Category') }}</label>
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <select name="job_category_id[]"
                                                                     class="form-control select2-show-search"
                                                                     data-placeholder="Select Job Category" id="">
-                                                                    <option value="">Select Job Category</option>
+                                                                    <option value="">{{ __('Select Job Category') }}</option>
                                                                     @foreach ($job_categories as $job_category)
                                                                         <option value="{{ $job_category->id }}"
                                                                             {{ $job_category->id == $employ_experience['job_category_id'] ? 'selected' : '' }}>
@@ -94,13 +94,13 @@
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <label for="">Job Title</label>
+                                                                <label for="">{{ __('Job Title') }}</label>
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <select name="job_title[]"
                                                                     class="form-control select2-show-search" id=""
                                                                     data-placeholder="Select Job Title">
-                                                                    <option value="">Select Job Title</option>
+                                                                    <option value="">{{ __('Select Job Title') }}</option>
                                                                     @foreach ($jobs as $job)
                                                                         <option value="{{ $job->id }}"
                                                                             {{ $job->id == $employ_experience['job_title_id'] ? 'selected' : '' }}>
@@ -113,13 +113,12 @@
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <label for="">Working
-                                                                    Duration</label>
+                                                                <label for="">{{ __('Working Duration') }}</label>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <select name="working_year[]" class="form-control select2"
                                                                     id="">
-                                                                    <option value="">Year</option>
+                                                                    <option value="">{{ __('Year') }}</option>
                                                                     <?php
                                                                     $dyear = $employ_experience['working_year'];
                                                                     $year = date('Y');
@@ -135,7 +134,7 @@
                                                             <div class="col-md-4">
                                                                 <select name="working_month[]" class="form-control select2"
                                                                     id="">
-                                                                    <option value="">Month</option>
+                                                                    <option value="">{{ __('Month') }}</option>
                                                                     <?php
                                                                     $dmonth = $employ_experience['working_month'];
                                                                     ?>
@@ -161,7 +160,7 @@
 
                                             </div>
                                             <div class="form-group">
-                                                <span class="cur_sor" id="addExperience">Add Experience <i
+                                                <span class="cur_sor" id="addExperience">{{ __('Add Experience') }} <i
                                                         class="fa fa-plus"></i></span>
                                             </div>
                                         </div>
@@ -171,13 +170,12 @@
                             <div class="card">
                                 <div class="card-body mx-auto">
                                     <div class="mx-auto">
-                                        <span>Contact
-                                            Information</span> &nbsp;&nbsp;&nbsp;<a
-                                            href="{{ route('candidate.profile.get_contact_information') }}"
-                                            class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i>Back </a>
+                                        <span>{{ __('Qualification') }}</span> &nbsp;&nbsp;&nbsp;<a
+                                            href="{{ route('candidate.profile.get_qualification') }}"
+                                            class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i>{{ __('Back') }} </a>
                                         <button type="button" onclick="submitForm(event);"
-                                            class="btn btn-primary ml-3 rounded-0">Next <i
-                                                class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>Preview
+                                            class="btn btn-primary ml-3 rounded-0">{{ __('Next') }} <i
+                                                class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Preview') }}
                                         </span>
                                     </div>
                                 </div>
@@ -200,18 +198,18 @@
                 let html = `<div id="eRow_` + ecount +
                     `">
                     <div class="form-group">
-    <label for="" class="form-label">Experience <span class="float-right cur_sor p-1 btn-danger" onclick="removeRow('eRow_` +
-                    ecount + `')">Remove</span></label>
+    <label for="" class="form-label">{{ __('Experience') }} <span class="float-right cur_sor p-1 btn-danger" onclick="removeRow('eRow_` +
+                    ecount + `')">{{ __('Remove') }}</span></label>
     
 </div>
 <div class="form-group">
     <div class="row">
         <div class="col-md-4">
-            <label for="">Country</label>
+            <label for="">{{ __('Country') }}</label>
         </div>
         <div class="col-md-8">
             <select name="country_id[]" class="form-control select2-show-search" data-placeholder="Select Country" id="">
-                <option value="">Select Country</option>
+                <option value="">{{ __('Select Country') }}</option>
                 @foreach ($countries as $country)
                     <option value="{{ $country->id }}">{{ $country->name }}</option>
                 @endforeach
@@ -222,12 +220,12 @@
 <div class="form-group">
     <div class="row">
         <div class="col-md-4">
-            <label for="">Job Category</label>
+            <label for="">{{ __('Job Category') }}</label>
         </div>
         <div class="col-md-8">
             <select name="job_category_id[]" class="form-control select2-show-search"
                 data-placeholder="Select Job Category" id="">
-                <option value="">Select Job Category</option>
+                <option value="">{{ __('Select Job Category') }}</option>
                 @foreach ($job_categories as $job_category)
                     <option value="{{ $job_category->id }}">
                         {{ $job_category->functional_area }}</option>
@@ -239,12 +237,12 @@
 <div class="form-group">
     <div class="row">
         <div class="col-md-4">
-            <label for="">Job Title</label>
+            <label for="">{{ __('Job Title') }}</label>
         </div>
         <div class="col-md-8">
             <select name="job_title[]" class="form-control select2-show-search" data-placeholder="Select Job Title"
                 id="">
-                <option value="">Select Job Title</option>
+                <option value="">{{ __('Select Job Title') }}</option>
                 @foreach ($jobs as $job)
                     <option value="{{ $job->id }}">{{ $job->title }}</option>
                 @endforeach
@@ -255,11 +253,11 @@
 <div class="form-group">
     <div class="row">
         <div class="col-md-4">
-            <label for="">Working Duration</label>
+            <label for="">{{ __('Working Duration') }}</label>
         </div>
         <div class="col-md-4">
             <select name="working_year[]" class="form-control select2" id="">
-                <option value="">Year</option>
+                <option value="">{{ __('Year') }}</option>
                 <?php
                 $dyear = old('year');
                 $year = date('Y');
@@ -274,7 +272,7 @@
         </div>
         <div class="col-md-4">
             <select name="working_month[]" class="form-control select2" id="">
-                <option value="">Month</option>
+                <option value="">{{ __('Month') }}</option>
                 <?php
                 $dmonth = old('month');
                 ?>
@@ -325,6 +323,7 @@
                     } else if (response.errors) {
                         var error_html = "";
                         $.each(response.errors, function(key, value) {
+                            toastr.error(value);
                             error_html = '<div>' + value + '</div>';
                             $('.' + key).css('display', 'block').html(error_html);
                         });

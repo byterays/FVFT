@@ -36,7 +36,7 @@
                                 @foreach ($abouts as $about)
                                     <tr>
                                         <td>
-                                            <img style="height:50px; width:50px;" src="{{ asset($about->feature_image != null ? $about->feature_image : 'uploads/defaultimage.jpg') }}" alt="">
+                                            <img style="height:50px; width:50px;" src="{{ asset($about->feature_image != null ? $about->feature_image : 'images/defaultimage.jpg') }}" alt="">
                                         </td>
                                         <td>{{ $about->title }}</td>
                                         <td><textarea name="" id="" cols="5" rows="5" style="width: 100%;">{!! html_entity_decode($about->html_content) !!}</textarea></td>

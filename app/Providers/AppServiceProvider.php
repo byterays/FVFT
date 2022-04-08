@@ -25,5 +25,10 @@ class AppServiceProvider extends ServiceProvider
     {
         global $this_action;
         $this_action = '';
+
+        view()->composer('themes.fvft.site.components.topmenu', function ($view) {
+            $view->with('current_locale', app()->getLocale());
+            $view->with('available_locales', config('app.available_locales'));
+        });
     }
 }

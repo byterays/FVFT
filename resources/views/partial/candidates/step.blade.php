@@ -19,36 +19,36 @@ $_6th = $RouteName == $route.'get_save';
         <div class="step-icon-wrap">
             <div class="step-icon">1</div>
         </div>
-        <h4 class="step-title">{{ strtoupper('Personal Information') }}</h4>
+        <h4 class="step-title">{{ strtoupper(__('Personal Information')) }}</h4>
     </div>
     <div class="step {{ $_2nd ? 'active' : '' }} {{ $_3rd || $_4th || $_5th || $_6th ? 'completed' : '' }}">
         <div class="step-icon-wrap">
             <div class="step-icon">2</div>
         </div>
-        <h4 class="step-title">{{ strtoupper('Contact Information') }}</h4>
+        <h4 class="step-title">{{ strtoupper(__('Contact Information')) }}</h4>
     </div>
     <div class="step {{ $_3rd ? 'active' : '' }} {{ $_4th || $_5th || $_6th ? 'completed' : '' }}">
         <div class="step-icon-wrap">
             <div class="step-icon">3</div>
         </div>
-        <h4 class="step-title">{{ strtoupper('Qualification') }}</h4>
+        <h4 class="step-title">{{ strtoupper(__('Qualification')) }}</h4>
     </div>
     <div class="step {{ $_4th ? 'active' : '' }} {{ $_5th || $_6th ? 'completed' : '' }}">
         <div class="step-icon-wrap">
             <div class="step-icon">4</div>
         </div>
-        <h4 class="step-title">{{ strtoupper('Experience') }}</h4>
+        <h4 class="step-title">{{ strtoupper(__('Experience')) }}</h4>
     </div>
     <div class="step {{ $_5th ? 'active' : '' }} {{ $_6th ? 'completed' : '' }}">
         <div class="step-icon-wrap">
             <div class="step-icon">5</div>
         </div>
-        <h4 class="step-title">{{ strtoupper('Preview') }}</h4>
+        <h4 class="step-title">{{ strtoupper(__('Preview')) }}</h4>
     </div>
     <div class="step {{ $_6th ? 'active' : '' }}">
         <div class="step-icon-wrap">
             <div class="step-icon">6</div>
         </div>
-        <h4 class="step-title">{{ strtoupper('Save') }}</h4>
+        <h4 class="step-title">{{ strtoupper(__('Save')) }}</h4>
     </div>
 </div>

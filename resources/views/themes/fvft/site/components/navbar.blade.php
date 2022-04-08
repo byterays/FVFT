@@ -51,7 +51,10 @@
                     </li>
                 </ul>
             </li>
+        @else
+            <li class="mt-0 pt-0 pb-5 mt-lg-0 create-resume-btn">
+                <span><a class="btn btn-info ad-post mt-1" href="{{ route('company.login') }}"><i class="fa fa-users"></i> {{ __('For Employer') }}</a></span>
+            </li>
         @endauth
-
     </ul>
 </nav>

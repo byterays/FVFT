@@ -3,7 +3,7 @@
 @section('applicants', 'active')
 @section('content')
     <div class="card-header">
-        <h3 class="card-title">Applicant List</h3>
+        <h3 class="card-title">{{ __('Applicant List') }}</h3>
     </div>
     <div class="card-body">
         <div class="row">
@@ -11,11 +11,11 @@
                 <form action="{{ route('company.applicant.index') }}" method="GET">
                     <div class="d-inline-flex">
                         <div class="form-group">
-                            <input type="text" name="job_title" value="{{ request()->job_title }}" class="form-control" placeholder="Search By Job Title">
+                            <input type="text" name="job_title" value="{{ request()->job_title }}" class="form-control" placeholder="{{ __('Search By Job Title') }}">
                         </div>
                         <div class="form-group">
                             <select name="category_id" class="form-control ml-2">
-                                <option value="">Select Category</option>
+                                <option value="">{{ __('Select Category') }}</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}"
                                         {{ request()->category_id == $category->id ? 'selected' : '' }}>
@@ -24,7 +24,7 @@
                             </select>
                         </div>
                         <div class="ml-3">
-                            <button type="submit" class="btn btn-primary rounded-0">Search</button>
+                            <button type="submit" class="btn btn-primary rounded-0">{{ __('Search') }}</button>
                         </div>
                     </div>
                 </form>
@@ -33,12 +33,12 @@
         <table class="table table-bordered table-hover mb-0 text-nowrap">
             <thead>
                 <tr>
-                    <th>Employe Name</th>
-                    <th>Job Title</th>
-                    <th>Applied At</th>
-                    <th>Status</th>
-                    <th>Interview Status</th>
-                    <th>Action</th>
+                    <th>{{ __('Employe Name') }}</th>
+                    <th>{{ __('Job Title') }}</th>
+                    <th>{{ __('Applied At') }}</th>
+                    <th>{{ __('Status') }}</th>
+                    <th>{{ __('Interview Status') }}</th>
+                    <th>{{ __('Action') }}</th>
                 </tr>
             </thead>
             <tbody>

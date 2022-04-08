@@ -11,10 +11,10 @@
     <div class="card">
         <div class="card-body">
             <div class="input-group">
-                <input type="text" class="form-control br-tl-3 br-bl-3 text-dark" placeholder="Search" name="search" value="{{Request::get('search')}}">
+                <input type="text" class="form-control br-tl-3 br-bl-3 text-dark" placeholder="{{ __('Search') }}" name="search" value="{{Request::get('search')}}">
                 <div class="input-group-append ">
                     <button type="submit" class="btn btn-primary br-tr-3 br-br-3">
-                        Search
+                        {{ __('Search') }}
                     </button>
                 </div>
             </div>
@@ -22,11 +22,11 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <h2 class="card-title" >Country</h2>
+            <h2 class="card-title" >{{ __('Country') }}</h2>
         </div>
         <div class="card-body">
             <select data-placeholder="Choose a Country" class="form-control select2-show-search custom-select " name="country_id">
-                <option >Choose Country</option>
+                <option value="All Countries">{{ __('Choose Country') }}</option>
                 @foreach ($countries as $item)  
                     <option value="{{ $item->id }}" @if(Request::has("country_id")) @if(@Request::get('country_id')==$item->id) selected @endif @else @if(@$job_preference->country_id == $item->id) selected @endif @endif>{{ $item->name }}</option>
                 @endforeach
@@ -36,7 +36,7 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Categories</h3>
+            <h3 class="card-title">{{ __('Categories') }}</h3>
         </div>
         <div class="card-body">
             <div class="" id="container">
@@ -53,7 +53,7 @@
 
             </div>
         </div>
-        <div class="card-header border-top">
+        {{-- <div class="card-header border-top">
             <h3 class="card-title">Salary Range</h3>
         </div>
         <div class="card-body">
@@ -65,9 +65,9 @@
 
             </h6>
             <div id="mySlider"></div>
-        </div>
-        <div class="card-header border-top">
-            <h3 class="card-title">Job Type</h3>
+        </div> --}}
+        {{-- <div class="card-header border-top">
+            <h3 class="card-title">{{ __('Job Type') }}</h3>
         </div>
         <div class="card-body">
             <div class="filter-product-checkboxs">
@@ -82,10 +82,10 @@
                 @endforeach
                 
             </div>
-        </div>
+        </div> --}}
         
         <div class="card-footer">
-            <button  class="btn btn-warning btn-block" type="submit">Apply Filter</button>
+            <button  class="btn btn-warning btn-block" type="submit">{{ __('Apply Filter') }}</button>
         </div>
     </div>
 </form>

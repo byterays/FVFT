@@ -8,22 +8,22 @@ $jt_count = 0;
         @csrf
         <div class="row">
             <div class="col-md-6">
-                <h3 class="card-title">{{ strtoupper('Job Category') }}</h3>
+                <h3 class="card-title">{{ strtoupper(__('Job Category')) }}</h3>
             </div>
             <div class="col-md-6 my-auto">
                 <div class="form-group">
                     <label class="custom-switch">
                         <input type="checkbox" name="job_notify" class="custom-switch-input" {{ setParameter($employe, 'job_notify') ? 'checked' : '' }}>
                         <span class="custom-switch-indicator"></span> 
-                        <span class="custom-switch-description">Notify me for job</span>
+                        <span class="custom-switch-description">{{ __('Notify me for job') }}</span>
                     </label>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <input type="text" value="All Job Category" placeholder="All Job Category" name="all_category"
+            <input type="text" value="All Job Category" placeholder="{{ __('All Job Category') }}" name="all_category"
                 class="form-control" readonly>
-            <div class="font-weight-normal mt-2 ml-3">Or Select your preferred job category
+            <div class="font-weight-normal mt-2 ml-3">{{ __('Or Select your preferred job category') }}
             </div>
         </div>
         @foreach ($employe->job_preferences->whereNotNull('job_category_id') as $key => $job_preference)
@@ -31,12 +31,12 @@ $jt_count = 0;
                 <div class="row mt-2" id="catRow_{{ $jc_count }}">
                     <div class="col-md-2">
                         <span class="cur_sor my-auto" onclick="addCategoryRow()"><i
-                                class="fa fa-plus"></i>Add</span>
+                                class="fa fa-plus"></i>{{ __('Add') }}</span>
                     </div>
                     <div class="col-md-8">
                         <select name="categories[]" data-placeholder="Select Job Category"
                             class="form-control select2-show-search">
-                            <option value="">Select Job Category</option>
+                            <option value="">{{ __('Select Job Category') }}</option>
                             @foreach ($job_categories as $job_category)
                                 <option value="{{ $job_category->id }}"
                                     {{ !($job_category->id == $job_preference->job_category_id) ?: 'selected' }}>
@@ -52,7 +52,7 @@ $jt_count = 0;
                     <div class="col-md-8">
                         <select name="categories[]" data-placeholder="Select Job Category"
                             class="form-control select2-show-search">
-                            <option value="">Select Job Category</option>
+                            <option value="">{{ __('Select Job Category') }}</option>
                             @foreach ($job_categories as $job_category)
                                 <option value="{{ $job_category->id }}"
                                     {{ !($job_category->id == $job_preference->job_category_id) ?: 'selected' }}>
@@ -62,7 +62,7 @@ $jt_count = 0;
                     </div>
                     <div class="col-md-2 my-auto">
                         <button type="button" class="btn btn-sm btn-danger"
-                            onclick="removeRow('catRow_{{ $jc_count }}')">Remove</button>
+                            onclick="removeRow('catRow_{{ $jc_count }}')">{{ __('Remove') }}</button>
                     </div>
                 </div>
             @endif
@@ -76,18 +76,18 @@ $jt_count = 0;
 
         </div>
         <hr>
-        <h3 class="card-title">{{ strtoupper('Job Title') }}</h3>
+        <h3 class="card-title">{{ strtoupper(__('Job Title')) }}</h3>
         <div class="form-group">
             <input type="text" value="All Job Title" placeholder="All Job Title" name="all_job_title"
                 class="form-control" readonly>
-            <div class="font-weight-normal mt-2 ml-3">Or Add your preferred job title
+            <div class="font-weight-normal mt-2 ml-3">{{ __('Or Add your preferred job title') }}
             </div>
         </div>
         @foreach ($employe->job_preferences->whereNotNull('job_title') as $k => $job_preference)
             @if ($loop->first)
                 <div class="row" id="jobRow_{{ $jt_count }}">
                     <div class="col-md-2">
-                        <span onclick="addJobRow();" class="cur_sor my-auto"><i class="fa fa-plus"></i>Add</span>
+                        <span onclick="addJobRow();" class="cur_sor my-auto"><i class="fa fa-plus"></i>{{ __('Add') }}</span>
                     </div>
                     <div class="col-md-8">
                         <input type="text" class="form-control" value="{{ $job_preference->job_title }}"
@@ -106,7 +106,7 @@ $jt_count = 0;
                     </div>
                     <div class="col-md-2 my-auto">
                         <button type="button" class="btn btn-sm btn-danger"
-                            onclick="removeRow('jobRow_{{ $jt_count }}')">Remove</button>
+                            onclick="removeRow('jobRow_{{ $jt_count }}')">{{ __('Remove') }}</button>
                     </div>
                 </div>
             @endif
@@ -119,11 +119,11 @@ $jt_count = 0;
 
         </div>
         <hr>
-        <h3 class="card-title">{{ strtoupper('Country') }}</h3>
+        <h3 class="card-title">{{ strtoupper(__('Country')) }}</h3>
         <div class="form-group">
             <input type="text" value="All Country" placeholder="All Country" name="all_country" class="form-control"
                 readonly>
-            <div class="font-weight-normal mt-2 ml-3">Or Select your preferred country
+            <div class="font-weight-normal mt-2 ml-3">{{ __('Or Select your preferred country') }}
             </div>
         </div>
         @foreach ($employe->job_preferences->whereNotNull('country_id') as $a => $job_preference)
@@ -131,12 +131,12 @@ $jt_count = 0;
                 <div class="row" id="countryRow_{{ $c_count }}">
                     <div class="col-md-2">
                         <span class="cur_sor my-auto" onclick="addCountryRow();"><i
-                                class="fa fa-plus"></i>Add</span>
+                                class="fa fa-plus"></i>{{ __('Add') }}</span>
                     </div>
                     <div class="col-md-8">
                         <select name="countries[]" data-placeholder="Select Country"
                             class="form-control select2-show-search">
-                            <option value="">Select Country</option>
+                            <option value="">{{ __('Select Country') }}</option>
                             @foreach ($countries as $country)
                                 <option value="{{ $country->id }}"
                                     {{ !($country->id == $job_preference->country_id) ?: 'selected' }}>
@@ -155,7 +155,7 @@ $jt_count = 0;
                     <div class="col-md-8">
                         <select name="countries[]" data-placeholder="Select Country"
                             class="form-control select2-show-search">
-                            <option value="">Select Country</option>
+                            <option value="">{{ __('Select Country') }}</option>
                             @foreach ($countries as $country)
                                 <option value="{{ $country->id }}"
                                     {{ !($country->id == $job_preference->country_id) ?: 'selected' }}>
@@ -167,7 +167,7 @@ $jt_count = 0;
                     </div>
                     <div class="col-md-2">
                         <button type="button" class="btn btn-sm btn-danger"
-                            onclick="removeRow('countryRow_{{ $c_count }}')">Remove</button>
+                            onclick="removeRow('countryRow_{{ $c_count }}')">{{ __('Remove') }}</button>
                     </div>
                 </div>
             @endif
@@ -181,8 +181,7 @@ $jt_count = 0;
         </div>
 
         <div class="form-group mt-3">
-            <button type="button" id="updateButton" onclick="submitForm(event);" class="btn btn-primary">Update Job
-                Preference</button>
+            <button type="button" id="updateButton" onclick="submitForm(event);" class="btn btn-primary">{{ __('Update Job Preference') }}</button>
         </div>
     </form>
 </div>

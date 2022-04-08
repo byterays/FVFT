@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\News\NewsController;
 use App\Http\Controllers\Admin\Industry\IndustryController;
 use App\Http\Controllers\Admin\Training\TrainingController;
 use App\Http\Controllers\Admin\SantiController;
+use App\Http\Controllers\Admin\UsefulInformationController;
 
 Route::get('login', function () {
     return view('admin.auth.login');
@@ -86,6 +87,15 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::get('edit/{id}', [NewsController::class, 'edit'])->name('admin.news.edit');
         Route::get('delete/{id}', [NewsController::class, 'delete'])->name('admin.news.delete');
         Route::post('save', [NewsController::class, 'save']);
+    });
+
+    // Useful Information
+    Route::prefix('useful-info/')->group(function () {
+        Route::get('', [UsefulInformationController::class, 'index'])->name('admin.usefulinfo.index');
+        Route::get('create', [UsefulInformationController::class, 'create'])->name('admin.usefulinfo.create');
+        Route::get('edit/{id}', [UsefulInformationController::class, 'edit'])->name('admin.usefulinfo.edit');
+        Route::delete('delete/{id}', [UsefulInformationController::class, 'delete'])->name('admin.usefulinfo.delete');
+        Route::post('save', [UsefulInformationController::class, 'save'])->name('admin.usefulinfo.save');
     });
 
     // Industry Crud

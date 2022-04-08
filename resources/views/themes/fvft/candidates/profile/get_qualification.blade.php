@@ -11,11 +11,11 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">My Profile</h1>
+                    <h1 class="">{{ __('My Profile') }}</h1>
                     <ol class="breadcrumb text-center">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">My Profile</li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Dashboard') }} </a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ __('My Profile') }}</li>
                     </ol>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                                     @include('partial/candidates/step')
                                 </div>
                             </div>
-                            <h3 class="mt-5 ml-3">Qualification</h3>
+                            <h3 class="mt-5 ml-3">{{ __('Qualification') }}</h3>
                             <div class="card mb-2">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -49,10 +49,10 @@
                                             <input type="hidden" class="form-control" name="user_id"
                                                 value="{{ setParameter($employ, 'user_id') }}">
                                             <div class="form-group">
-                                                <label for="">Education Level&nbsp;<span
+                                                <label for="">{{ __('Education Level') }}&nbsp;<span
                                                         class="req">*</span></label>
                                                 <select name="education_level_id" class="form-control select2-flag-search">
-                                                    <option value="">Select Level</option>
+                                                    <option value="">{{ __('Select Level') }}</option>
                                                     @foreach ($educationLevels as $educationLevel)
                                                         <option value="{{ $educationLevel->id }}"
                                                             {{ $educationLevel->id == setParameter($employ,'education_level_id') ? 'selected' : '' }}>
@@ -62,12 +62,12 @@
                                                 <div class="require text-danger education_level_id"></div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="">Training</label>
+                                                <label for="">{{ __('Training') }}</label>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <select name="training[]" class="form-control select2 training"
                                                             multiple="multiple" id="training">
-                                                            <option value="">Select Training</option>
+                                                            <option value="">{{ __('Select Training') }}</option>
                                                             @if (json_decode($employ->trainings) != null)
                                                                 @foreach ($trainings as $training)
                                                                     <option value="{{ $training->id }}"
@@ -83,8 +83,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <span class="cur_sor" data-toggle="modal"
-                                                            data-target="#newTrainingModal">Add
-                                                            Training <span><i class="fa fa-plus"></i></span></span>
+                                                            data-target="#newTrainingModal">{{ __('Add Training') }} <span><i class="fa fa-plus"></i></span></span>
                                                     </div>
                                                 </div>
 
@@ -92,12 +91,12 @@
 
 
                                             <div class="form-group">
-                                                <label for="">Skill</label>
+                                                <label for="">{{ __('Skill') }}</label>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <select name="skill[]" class="form-control select2"
                                                             multiple="multiple" id="skill">
-                                                            <option value="">Select Skill</option>
+                                                            <option value="">{{ __('Select Skill') }}</option>
                                                             @if (json_decode($employ->skills) != null)
                                                                 @foreach ($skills as $skill)
                                                                     <option value="{{ $skill->id }}"
@@ -113,19 +112,19 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <span class="cur_sor" data-toggle="modal"
-                                                            data-target="#newSkillModal">Add Skill
+                                                            data-target="#newSkillModal">{{ __('Add Skill') }}
                                                             <span><i class="fa fa-plus"></i></span></span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <div class="form-label">Language</div>
+                                                <div class="form-label">{{ __('Language') }}</div>
                                                 @if (json_decode($employ->languages, true) != null)
                                                     @foreach (json_decode($employ->languages, true) as $key => $employ_language)
                                                         <div class="row {{ !$loop->first ? 'mt-2' : '' }}">
                                                             <div class="col-md-6">
                                                                 <select name="language[]" class="form-control select2">
-                                                                    <option value="">Select Language</option>
+                                                                    <option value="">{{ __('Select Language') }}</option>
                                                                     @foreach ($languages as $language)
                                                                         <option value="{{ $language->id }}"
                                                                             {{ $language->id == $employ_language['language_id'] ? 'selected' : '' }}>
@@ -136,7 +135,7 @@
                                                             <div class="col-md-6">
                                                                 <select name="language_level[]"
                                                                     class="form-control select2">
-                                                                    <option value="">Select Level</option>
+                                                                    <option value="">{{ __('Select Level') }}</option>
                                                                     <option value="Very Good"
                                                                         {{ $employ_language['language_level'] == 'Very Good' ? 'selected' : '' }}>
                                                                         Very Good</option>
@@ -162,8 +161,7 @@
                                                 </div>
                                                 <div class="form-group mt-5">
 
-                                                    <a href="javascript:void()" class="btn btn-link" id="addLanguage">Add
-                                                        Language <i class="fa fa-plus"></i></a>
+                                                    <a href="javascript:void()" class="btn btn-link" id="addLanguage">{{ __('Add Language') }} <i class="fa fa-plus"></i></a>
 
                                                 </div>
                                             </div>
@@ -174,13 +172,12 @@
                             <div class="card">
                                 <div class="card-body mx-auto">
                                     <div class="mx-auto">
-                                        <span>Contact
-                                            Information</span> &nbsp;&nbsp;&nbsp;<a
+                                        <span>{{ __('Contact Information') }}</span> &nbsp;&nbsp;&nbsp;<a
                                             href="{{ route('candidate.profile.get_contact_information') }}"
-                                            class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i>Back </a>
+                                            class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i>{{ __('Back') }} </a>
                                         <button type="button" onclick="submitForm(event);"
-                                            class="btn btn-primary ml-3 rounded-0">Next <i
-                                                class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>Experience
+                                            class="btn btn-primary ml-3 rounded-0">{{ __('Next') }} <i
+                                                class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Experience') }}
                                             </span>
                                     </div>
                                 </div>
@@ -316,7 +313,7 @@
             let language_html = `<div class="row mt-5" id="languageRow_` + count + `">
                                 <div class="col-md-6">
                                     <select name="language[]" class="form-control select2" id="lang_` + count + `">
-                                        <option value="">Select Language</option>
+                                        <option value="">{{ __('Select Language') }}</option>
                                         @foreach ($languages as $language)
                                             <option value="{{ $language->id }}">{{ $language->lang }}</option>
                                         @endforeach
@@ -324,7 +321,7 @@
                                 </div>
                                 <div class="col-md-5">
                                     <select name="language_level[]" class="form-control select2">
-                                        <option value="">Select Level</option>
+                                        <option value="">{{ __('Select Level') }}</option>
                                         <option value="Very Good">Very Good</option>
                                         <option value="Good">Good</option>
                                         <option value="Fair">Fair</option>

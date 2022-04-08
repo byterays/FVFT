@@ -18,11 +18,11 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">Saved Jobs</h1>
+                    <h1 class="">{{ __('Saved Jobs') }}</h1>
                     <ol class="breadcrumb text-center">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Dashboard </a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">Saved Jobs</li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Dashboard') }} </a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ __('Saved Jobs') }}</li>
                     </ol>
                 </div>
             </div>
@@ -37,17 +37,17 @@
                 <div class="col-xl-9 col-lg-12 col-md-12">
                     <div class="card mb-0">
                         <div class="card-header">
-                            <h3 class="card-title">Saved Jobs</h3>
+                            <h3 class="card-title">{{ __('Saved Jobs') }}</h3>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered table-hover mb-0 text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th>Job Position</th>
-                                        <th>Company</th>
-                                        <th>Apply Before</th>
-                                        <th>Detail</th>
-                                        <th>Action</th>
+                                        <th>{{ __('Job Position') }}</th>
+                                        <th>{{ __('Company') }}</th>
+                                        <th>{{ __('Apply Before') }}</th>
+                                        <th>{{ __('Detail') }}</th>
+                                        <th>{{ __('Action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -73,12 +73,11 @@
 
                                             </td>
                                             <td>
-                                                <a href="{{ route('viewJob', $item->id) }}" class="">View
-                                                    Details</a>
+                                                <a href="{{ route('viewJob', $item->id) }}" class="">{{ __('View Details') }}</a>
                                             </td>
                                             <td>
                                                 <button class="btn btn-danger btn-sm text-white" data-toggle="modal"
-                                                    data-id="{{ $item->id }}" data-target="#deleteModal">Remove</button>
+                                                    data-id="{{ $item->id }}" data-target="#deleteModal">{{ __('Remove') }}</button>
 
                                                 {{-- <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip"
                                                     data-original-title="Delete"
@@ -88,7 +87,7 @@
                                         </tr>
                                     @endforeach
                                     @else
-                                    <p>No Saved Jobs</p>
+                                    <p>{{ __('No Saved Jobs') }}</p>
                                     @endif
                                 </tbody>
                             </table>
@@ -109,21 +108,21 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white font-weight-bold">
-                    <h5 class="modal-title" id="deleteModalLabel">Delete Saved Job</h5>
+                    <h5 class="modal-title" id="deleteModalLabel">{{ __('Delete Saved Job') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure, you want to delete this saved job?</p>
+                    <p>{{ __('Are you sure, you want to delete this saved job?') }}</p>
                     <form action="#" method="POSt" id="deleteForm">
                         @csrf
                         @method('DELETE')
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="deleteJob">Delete</button>
+                    <button type="button" class="btn btn-gray" data-dismiss="modal">{{ __('Close') }}</button>
+                    <button type="button" class="btn btn-secondary" id="deleteJob">{{ __('Delete') }}</button>
                 </div>
             </div>
         </div>

@@ -23,7 +23,7 @@
 @section('data')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Add New Job</h3>
+            <h3 class="card-title">{{ __('Add New Job') }}</h3>
         </div>
     </div>
     @include('partial.job.step')
@@ -35,13 +35,13 @@
             <div class="row">
                 <div class="card m-b-20">
                     <div class="card-header">
-                        <h3 class="card-title tempcolor">{{ strtoupper('Job Details') }}</h3>
+                        <h3 class="card-title tempcolor">{{ strtoupper(__('Job Details')) }}</h3>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="title" class="form-label">Job Title&nbsp;<span
+                                    <label for="title" class="form-label">{{ __('Job Title') }}&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
@@ -60,7 +60,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="company" class="form-label">Company Name&nbsp;<span
+                                    <label for="company" class="form-label">{{ __('Company Name') }}&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
@@ -75,25 +75,25 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="no_of_employee" class="form-label">No of Employee&nbsp;<span
+                                    <label for="no_of_employee" class="form-label">{{ __('No of Employee') }}&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <label for="male_employee" class="form-label">Male</label>
+                                            <label for="male_employee" class="form-label">{{ __('Male') }}</label>
                                             <input type="number" min="1" value="{{ setParameter($job, 'no_of_male') }}"
                                                 oninput="preventNegativeNo($(this));" class="form-control"
                                                 name="male_employee" placeholder="Enter number">
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="female_employee" class="form-label">Female</label>
+                                            <label for="female_employee" class="form-label">{{ __('Female') }}</label>
                                             <input type="number" min="1" value="{{ setParameter($job, 'no_of_female') }}"
                                                 oninput="preventNegativeNo($(this));" class="form-control"
                                                 name="female_employee" placeholder="Enter number">
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="any_employee" class="form-label">Any</label>
+                                            <label for="any_employee" class="form-label">{{ __('Any') }}</label>
                                             <input type="number" min="1" value="{{ setParameter($job, 'any_gender') }}"
                                                 oninput="preventNegativeNo($(this));" class="form-control"
                                                 name="any_employee" placeholder="Enter number">
@@ -108,13 +108,13 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="job_category" class="form-label">Job Category&nbsp;<span
+                                    <label for="job_category" class="form-label">{{ __('Job Category') }}&nbsp;<span
                                             class="req"></span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <select name="category_id" class="form-control select2-show-search"
                                         data-placeholder="Select Job Category">
-                                        <option value="">Select Job Category</option>
+                                        <option value="">{{ __('Select Job Category') }}</option>
                                         @foreach ($job_categories as $category)
                                             <option value="{{ $category->id }}"
                                                 {{ setParameter($job, 'job_categories_id') == $category->id ? 'selected' : '' }}>
@@ -129,7 +129,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="working_hours" class="form-label">Working Hours Per Day&nbsp;<span
+                                    <label for="working_hours" class="form-label">{{ __('Working Hours Per Day') }}&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
@@ -138,7 +138,7 @@
                                             class="form-control" name="working_hours" placeholder="eg, 8"
                                             oninput="preventNegativeNo($(this));">
                                         <div class="input-group-append">
-                                            <button type="button" class="btn btn-primary">In Hour(/hr)</button>
+                                            <button type="button" class="btn btn-primary">{{ __('In Hour(/hr)') }}</button>
                                         </div>
                                     </div>
                                     <div class="require text-danger working_hours"></div>
@@ -148,7 +148,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="working_days" class="form-label">Working Days Per Week&nbsp;<span
+                                    <label for="working_days" class="form-label">{{ __('Working Days Per Week') }}&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
@@ -157,7 +157,7 @@
                                             class="form-control" name="working_days" placeholder="eg, 5"
                                             oninput="preventNegativeNo($(this));">
                                         <div class="input-group-append">
-                                            <button type="button" class="btn btn-primary">Days</button>
+                                            <button type="button" class="btn btn-primary">{{ __('Days') }}</button>
                                         </div>
                                     </div>
                                     <div class="require text-danger working_days"></div>
@@ -168,7 +168,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="deadline" class="form-label">Apply Before</label>
+                                    <label for="deadline" class="form-label">{{ __('Apply Before') }}</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="text" name="deadline"
@@ -181,7 +181,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label class="form-label">Country&nbsp;<span class="req">*</span></label>
+                                    <label class="form-label">{{ __('Country') }}&nbsp;<span class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <select name="country" id="select-country" class="form-control select2-show-search"
@@ -203,7 +203,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label class="form-label">States&nbsp;<span class="req">*</span></label>
+                                    <label class="form-label">{{ __('States') }}&nbsp;<span class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <select name="state" id="select-state" class="form-control select2-show-search"
@@ -218,7 +218,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label class="form-label">Cities&nbsp;<span
+                                    <label class="form-label">{{ __('Cities') }}&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
@@ -256,14 +256,14 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="contract" class="form-label">Contract Period&nbsp;<span
+                                    <label for="contract" class="form-label">{{ __('Contract Period') }}&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <select name="contract_year" class="form-control select2">
-                                                <option value="">Select Year</option>
+                                                <option value="">{{ __('Select Year') }}</option>
                                                 @for ($i = 1; $i <= 10; $i++)
                                                     <option value="{{ $i }}"
                                                         {{ setParameter($job, 'contract_year') == $i ? 'selected' : '' }}>
@@ -273,7 +273,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <select name="contract_month" class="form-control select2">
-                                                <option value="">Select Month</option>
+                                                <option value="">{{ __('Select Month') }}</option>
                                                 @for ($i = 1; $i <= 12; $i++)
                                                     <option value="{{ $i }}"
                                                         {{ setParameter($job, 'contract_month') == $i ? 'selected' : '' }}>
@@ -293,7 +293,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="job_description" class="form-label">Job Description</label>
+                                    <label for="job_description" class="form-label">{{ __('Job Description') }}</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="hidden" class="form-control"
@@ -309,7 +309,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="" class="form-label">Upload Featured Image</label>
+                                    <label for="" class="form-label">{{ __('Upload Featured Image') }}</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="file" class="form-control dropify" name="feature_image"
@@ -322,8 +322,8 @@
                     </div>
                 </div>
                 <div class="mx-auto">
-                    <button type="button" onclick="submitForm(event);" class="btn btn-primary rounded-0">Next <i
-                            class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>Applicant Qualification</span>
+                    <button type="button" onclick="submitForm(event);" class="btn btn-primary rounded-0">{{ __('Next') }} <i
+                            class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Applicant Qualification') }}</span>
                 </div>
             </div>
         </div>
