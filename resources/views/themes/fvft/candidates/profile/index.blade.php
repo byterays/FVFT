@@ -36,7 +36,7 @@
                         <div class="card mb-2">
                             <div class="card-body">
                                 <div class="d-inline-flex justify-content-between">
-                                    <img src="{{ asset($employ->avatar ?? 'uploads/default.jpg') }}" style="width: 100px;"
+                                    <img src="{{ asset($employ->avatar ?? 'uploads/defaultimage.jpg') }}" style="width: 100px;"
                                         alt="">
                                     <h3 class="mt-6 ml-5 text-center">{{ $employ->full_name }}</h3>
                                 </div>
@@ -248,7 +248,7 @@
                                                     <div class="col-md-8">
                                                         {{ $eexperience['working_year'] }}
                                                         {{ $eexperience['working_month'] }}
-                                                        
+
                                                     </div>
                                                 </div>
                                             </div>

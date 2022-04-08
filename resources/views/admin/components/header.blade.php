@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="d-flex">
             <a class="header-brand" href="/admin/">
-                <img src="{{asset('/uploads/site/fvft_logo.jpeg')}}" class="header-brand-img" alt="Jobslist logo">
+                <img src="{{asset('/uploads/site/logo.png')}}" class="header-brand-img" alt="Jobslist logo">
             </a>
             <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-toggle="sidebar" href="#"></a>
             <div class="header-navicon">

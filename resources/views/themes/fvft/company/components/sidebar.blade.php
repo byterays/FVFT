@@ -10,7 +10,7 @@
                 @if(!blank($company->company_logo))
                     <img src="{{ asset($company->company_logo) }}" class="brround" alt="user">
                     @else
-                    <img src="{{ asset('/uploads/site/fvft_logo.jpeg') }}" class="logo" alt="user" >
+                    <img src="{{ asset('/uploads/site/logo-min.png') }}" class="logo" alt="user" >
                 @endif
             </div>
             <a href="#" class="text-dark"><h4 class="mt-3 mb-0 font-weight-bold">{{ $company->company_name}}</h4></a>
