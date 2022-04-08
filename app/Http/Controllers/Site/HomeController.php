@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\Industry;
 use App\Models\Job;
 use App\Models\JobCategory;
 use App\Models\News;
@@ -19,13 +20,13 @@ class HomeController extends Controller
     {
         $news = News::where('is_active', 1)->orderBy('id', 'desc')->limit(10)->get();
         $companies = Company::where('is_active', 1)->orderBy('id', 'desc')->limit(10)->get();
-        $home_job_categories = JobCategory::limit(12)->get();
+        $industries = Industry::limit(12)->get();
         $latest_jobs = Job::where('is_active', 1)
             ->with(['company', 'country', 'job_category'])
             ->orderBy('id', 'desc')->limit(10)->get();
 
         return $this->site_view('site.home',
-            compact('news', 'companies', 'latest_jobs', 'home_job_categories')
+            compact('news', 'companies', 'latest_jobs', 'industries')
         );
     }
     public function companies(Request $request)
