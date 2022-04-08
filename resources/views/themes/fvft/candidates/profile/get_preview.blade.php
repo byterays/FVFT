@@ -45,7 +45,7 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <div class="d-inline-flex">
-                                        <img src="{{ asset($employ->avatar ?? 'uploads/default.jpg') }}"
+                                        <img src="{{ asset($employ->avatar ?? 'uploads/defaultimage.jpg') }}"
                                             style="width: 100px;" alt="">
                                         <h3 class="mt-6 ml-5 text-center">{{ $employ->full_name }}</h3>
                                     </div>
@@ -289,7 +289,7 @@
                                         href="{{ route('candidate.profile.get_experience') }}"
                                         class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i>{{ __('Back') }} </a>
                                     <a href="{{ route('candidate.profile.get_save') }}" class="btn btn-primary ml-3 rounded-0">{{ __('Save') }}</a>
-                                        
+
                                 </div>
                             </div>
                         </div>

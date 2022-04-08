@@ -111,7 +111,7 @@
                                             @foreach ($applications as $application)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ setParameter($application->job, 'title') }}</td>
+                                                    <td><a href="/job/{{ setParameter($application->job, 'id') }}">{{ setParameter($application->job, 'title') }}</a></td>
                                                     <td>{{ setParameter($application->job->company, 'company_name') }}</td>
                                                     <td>{{ setParameter($application->job->country, 'name') }}</td>
                                                     <td>{{ date('Y-m-d', strtotime($application->created_at)) }}</td>

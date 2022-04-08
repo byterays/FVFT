@@ -45,7 +45,7 @@
                                 <div class="card-body">
                                     <div class="d-inline-flex justify-content-between">
                                         <img class="avatar cover-image avatar-lg brround"
-                                            src="{{ asset($employ->avatar ?? 'uploads/default.jpg') }}" alt="">
+                                            src="{{ asset($employ->avatar ?? 'uploads/defaultimage.jpg') }}" alt="">
                                         <h3 class="my-auto ml-5 text-center">{{ $employ->full_name }}</h3>
                                     </div>
                                     <div class="row mt-5">
