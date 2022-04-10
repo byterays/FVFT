@@ -7,7 +7,7 @@
                         <h3>{{ strtoupper(__('Picture')) }}</h3>
                     </div>
                     <div class="col-md-6">
-                        <a href="{{ $viewRoute }}" class="btn btn-success mr-auto">{{ __('View Profile') }}</a>
+                        <a href="{{ $viewRoute }}" class="btn btn-primary mr-auto float-right">{{ __('View Profile') }}</a>
                     </div>
                 @else
                 <h3 class="card-title">{{ strtoupper(__('Picture')) }}</h3>
@@ -383,6 +383,6 @@
         </div>
     </div>
     <div class="mx-auto mb-2">
-        <button type="button" class="btn btn-success text-center" onclick="submitForm(event);">{{ __('Submit') }}</button>
+        <button type="button" class="btn btn-primary float-right text-center" onclick="submitForm(event);">{{ __('Submit') }}</button>
     </div>
 </div>

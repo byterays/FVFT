@@ -224,6 +224,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="col-md-6">
             <div class="row">
@@ -382,7 +383,7 @@
             const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
             ];
-            // User Chart Data 
+            // User Chart Data
             let Dates = new Array();
             let monthName = new Array();
             let UserCount = new Array();

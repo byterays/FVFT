@@ -67,11 +67,11 @@
                                             ->where('id', $employ_experience['job_category_id']);
                                         $country_name = DB::table('countries')
                                             ->where('id', $employ_experience['country_id']);
-                                        
+
                                         $job_title = $job->exists() ? $job->first()->title : '';
                                         $country_title = $country_name->exists() ? $country_name->first()->name : '';
                                         $job_category_title = $job_category->exists() ? $job_category->first()->functional_area : '';
-                                        
+
                                         // $job_title = DB::table('jobs')
                                         //     ->where('id', $employ_experience['job_title_id'])
                                         //     ->first()->title;
@@ -150,7 +150,7 @@
                     <div class="col-md-4">
                         <div class="image">
                             @php
-                                $avatar = $employ->avatar != null ? $employ->avatar : 'uploads/default.jpg';
+                                $avatar = $employ->avatar != null ? $employ->avatar : 'uploads/defaultimage.jpg';
                             @endphp
                             <img src="{{ asset($avatar) }}" style="object-fit: cover" alt="">
                         </div>

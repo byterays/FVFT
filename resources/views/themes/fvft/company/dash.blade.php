@@ -19,7 +19,7 @@
             </div>
             <div class="col-md-6">
                 <div class="row mx-auto">
-                    <h3 class="card-title">{{ $company->company_name }}</h3>
+                    <h3 class="card-title">{{ $company->company_name ?? '' }}</h3>
                 </div>
             </div>
         </div>

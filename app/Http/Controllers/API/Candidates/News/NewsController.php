@@ -45,7 +45,7 @@ class NewsController extends Controller
         }
         $posted_by = [
             "name" => "FreeVisFreeTicket",
-            "profile_url" => "/uploads/site/fvft_logo.jpeg"
+            "profile_url" => "/uploads/site/logo.png"
         ];
         return [
             "id" => (int)$news->id,
