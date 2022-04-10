@@ -45,11 +45,11 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">{{ __('My Jobs') }}</h1>
+                    <h1 class="">{{ __('Job Search') }}</h1>
                     <ol class="breadcrumb text-center">
                         <li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
                         <li class="breadcrumb-item"><a href="#">{{ __('Dashboard') }} </a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">{{ __('Setting') }}</li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ __('Job Search') }}</li>
                     </ol>
                 </div>
             </div>

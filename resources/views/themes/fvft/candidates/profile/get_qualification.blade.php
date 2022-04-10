@@ -51,7 +51,7 @@
                                             <div class="form-group">
                                                 <label for="">{{ __('Education Level') }}&nbsp;<span
                                                         class="req">*</span></label>
-                                                <select name="education_level_id" class="form-control select2-flag-search">
+                                                <select name="education_level_id" class="form-control select2-show-search">
                                                     <option value="">{{ __('Select Level') }}</option>
                                                     @foreach ($educationLevels as $educationLevel)
                                                         <option value="{{ $educationLevel->id }}"

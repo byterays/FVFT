@@ -113,6 +113,7 @@
                                     <th>Country</th>
                                     <th>Featured</th>
                                     <th>Status</th>
+                                    <th>Created Date</th>
                                     {{-- <th>Job Status</th>
                                     <th>Publish Status</th> --}}
                                     <th>Action</th>
@@ -149,6 +150,7 @@
                                                 {{ $job->status }}
                                             </span>
                                         </td>
+                                        <td>{{ getFormattedDate($job->created_at, 'M j, Y') }}</td>
                                         {{-- <td>
                                             @php
                                                 // $job_status = $job->status == 'Published' || $job->status == 'Approved' ? 'success' : ($job->status == 'Expired' ? 'danger' : 'warning');

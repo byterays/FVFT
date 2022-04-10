@@ -48,6 +48,9 @@
         <a href="{{ route('candidate.account_setting.index') }}" class="@if(Route::currentRouteName()=="candidate.account_setting.index") active @endif  d-flex border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-cog-outline fs-20"></i></span> {{ __('Settings') }}
         </a>
+        <a href="{{ route('candidate.support.support') }}" class="@if(Route::currentRouteName()=="candidate.support.support") active @endif  d-flex border-bottom">
+            <span class="icon1 mr-2"><i class="typcn typcn-cog-outline fs-20"></i></span> {{ __('Support') }}
+        </a>
         <form action="{{ route('logout') }}" method="post">
             @csrf
             <button type="submit" class="btn btn-secondary btn-block">

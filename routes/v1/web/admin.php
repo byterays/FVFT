@@ -19,6 +19,8 @@ use App\Http\Controllers\Admin\News\NewsController;
 use App\Http\Controllers\Admin\Industry\IndustryController;
 use App\Http\Controllers\Admin\Training\TrainingController;
 use App\Http\Controllers\Admin\SantiController;
+use App\Http\Controllers\Admin\SupportCategoryController;
+use App\Http\Controllers\Admin\SupportController;
 use App\Http\Controllers\Admin\UsefulInformationController;
 
 Route::get('login', function () {
@@ -108,6 +110,28 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::match(['put', 'patch'], 'update/{id}', [IndustryController::class, "update"])->name("update");
         Route::delete('delete/{id}', [IndustryController::class, "delete"])->name("delete");
         Route::post('update-status', [IndustryController::class, "updateStatus"])->name("updateStatus");
+    });
+
+    // SupportCategory Crud
+    
+    Route::group(['prefix' => 'support-category/', 'as' => 'admin.support_category.'], function(){
+        Route::get('', [SupportCategoryController::class, "index"])->name("index");
+        Route::get('create', [SupportCategoryController::class, "create"])->name("create");
+        Route::post('store', [SupportCategoryController::class, "store"])->name("store");
+        Route::get("edit/{id}", [SupportCategoryController::class, "edit"])->name("edit");
+        Route::match(['put', 'patch'], 'update/{id}', [SupportCategoryController::class, "update"])->name("update");
+        Route::delete('delete/{id}', [SupportCategoryController::class, "delete"])->name("delete");
+    });
+
+    // Support Crud
+    
+    Route::group(['prefix' => 'support/', 'as' => 'admin.support.'], function(){
+        Route::get('', [SupportController::class, "index"])->name("index");
+        Route::get('create', [SupportController::class, "create"])->name("create");
+        Route::post('store', [SupportController::class, "store"])->name("store");
+        Route::get("edit/{id}", [SupportController::class, "edit"])->name("edit");
+        Route::match(['put', 'patch'], 'update/{id}', [SupportController::class, "update"])->name("update");
+        Route::delete('delete/{id}', [SupportController::class, "delete"])->name("delete");
     });
 
 

@@ -92,7 +92,7 @@
                                                         <div class="form-group">
                                                             <label class="form-label">Job Category</label>
                                                             <div class="form-group ">
-                                                                <select class="form-control select2-flag-search"
+                                                                <select class="form-control select2-show-search"
                                                                     name="category" data-placeholder="Select Category">
                                                                     @foreach ($job_categories as $category)
                                                                         <option value="{{ $category->id }}"
@@ -122,7 +122,7 @@
                                                         <div class="form-group">
                                                             <label class="form-label ">Status</label>
                                                             <div class="form-group">
-                                                                <select class="form-control select2-flag-search"
+                                                                <select class="form-control select2-show-search"
                                                                     name="interview_status"
                                                                     data-placeholder="Select Interview Status">
                                                                     <option value="notstarted"

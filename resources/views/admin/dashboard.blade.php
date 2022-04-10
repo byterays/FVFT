@@ -105,6 +105,27 @@
         @endforeach
     </div>
     <div class="row">
+        <div class="col-xl-6 col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="chart-wrapper">
+                        <canvas id="user-applicant" class="chart-dropshadow h-280"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="chart-wrapper" style="max-height: 310px !important;">
+                        <div id="chart-monthly" class="chart-dropshadow h-280"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="card">
                 <div class="card-header">
@@ -259,7 +280,7 @@
                             <div class="row col-md-12">
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <h3 class="card-title">Recently  Registered Employers</h3>
+                                        <h3 class="card-title">Recently Registered Employers</h3>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -286,9 +307,10 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $recent_registered_employer->company_name }}
                                             </td>
-                                            <td>{{ ($recent_registered_employer->country != null && $recent_registered_employer->country->name != null) ? $recent_registered_employer->country->name : '' }}
+                                            <td>{{ $recent_registered_employer->country != null && $recent_registered_employer->country->name != null? $recent_registered_employer->country->name: '' }}
                                             </td>
-                                            <td>{{ getFormattedDate($recent_registered_employer->created_at, 'd/m/Y') }}</td>
+                                            <td>{{ getFormattedDate($recent_registered_employer->created_at, 'd/m/Y') }}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -346,4 +368,179 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <!-- CHARTJS CHART -->
+    <script src="{{ asset('/themes/fvft/') }}/assets/plugins/chart/Chart.bundle.js"></script>
+    <script src="{{ asset('/themes/fvft/') }}/assets/plugins/chart/utils.js"></script>
+    <!-- c3.js Charts Plugin -->
+    <script src="{{ asset('/themes/fvft/') }}/assets/plugins/charts-c3/d3.v5.min.js"></script>
+    <script src="{{ asset('/themes/fvft/') }}/assets/plugins/charts-c3/c3-chart.js"></script>
+    <script>
+        $(function(e) {
+            'use strict'
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            ];
+            // User Chart Data 
+            let Dates = new Array();
+            let monthName = new Array();
+            let UserCount = new Array();
+            var userDatas = '<?php echo json_encode($userChartData); ?>';
+            userDatas = JSON.parse(userDatas);
+            $.each(userDatas, function(key, value) {
+                let date = new Date(key);
+                monthName.push(monthNames[date.getMonth()]);
+                Dates.push(key);
+                UserCount.push(value);
+            });
+            // Applicant Chart Data
+            let Aplicantcount = new Array();
+            let ApplicantMonthName = new Array();
+            let ApplicantDate = new Array();
+            var applicantDatas = '<?php echo json_encode($applicantChartData); ?>';
+            applicantDatas = JSON.parse(applicantDatas);
+            $.each(applicantDatas, function(key, value) {
+                let date = new Date(key);
+                ApplicantMonthName.push(monthNames[date.getMonth()]);
+                ApplicantDate.push(key);
+                Aplicantcount.push(value);
+            });
+            /* chartjs (#user-applicant) */
+
+            var ctx = $('#user-applicant');
+            ctx.height(310);
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: monthNames,
+                    type: 'line',
+                    datasets: [{
+                        label: "Users",
+                        data: UserCount,
+                        backgroundColor: 'rgb(22, 80, 226,0.1)',
+                        borderColor: 'rgb(22, 80, 226) ',
+                        borderWidth: 3,
+                        pointStyle: 'circle',
+                        pointRadius: 0,
+                        pointBorderColor: 'transparent',
+                        pointBackgroundColor: 'rgb(22, 80, 226)',
+                    }, {
+                        label: "Applicants",
+                        data: Aplicantcount,
+                        backgroundColor: 'transparent',
+                        borderColor: 'rgb(110, 81, 236)',
+                        borderWidth: 3,
+                        pointStyle: 'circle',
+                        pointRadius: 0,
+                        pointBorderColor: 'transparent',
+                        pointBackgroundColor: 'rgb(110, 81, 236)',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    tooltips: {
+                        mode: 'index',
+                        titleFontSize: 12,
+                        titleFontColor: '#000',
+                        bodyFontColor: '#000',
+                        backgroundColor: '#fff',
+                        cornerRadius: 3,
+                        intersect: false,
+                    },
+                    legend: {
+                        display: true,
+                        labels: {
+                            usePointStyle: false,
+                        },
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                fontColor: "#605e7e",
+                            },
+                            display: true,
+                            gridLines: {
+                                display: true,
+                                color: 'rgba(96, 94, 126, 0.1)',
+                                drawBorder: false
+                            },
+                            scaleLabel: {
+                                display: false,
+                                labelString: 'Month',
+                                fontColor: 'transparent'
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                fontColor: "#605e7e",
+                            },
+                            display: true,
+                            gridLines: {
+                                display: true,
+                                color: 'rgba(96, 94, 126, 0.1)',
+                                drawBorder: false
+                            },
+                            scaleLabel: {
+                                display: false,
+                                labelString: 'sales',
+                                fontColor: 'transparent'
+                            }
+                        }]
+                    },
+                    title: {
+                        display: false,
+                        text: 'Normal Legend'
+                    }
+                }
+            });
+            /* chartjs (#user-applicant) closed */
+
+        });
+
+
+        $(document).ready(function() {
+            // C3 ChartJS
+            var registeredUser = '<?php echo json_encode($registeredUserChartData) ?>';
+            registeredUser = Object.values(JSON.parse(registeredUser));
+            registeredUser.unshift('data1');
+            var chart = c3.generate({
+                bindto: '#chart-monthly', // id of chart wrapper
+                data: {
+                    columns: [
+                        // each columns data
+                        registeredUser
+                    ],
+                    type: 'bar', // default type of chart
+                    colors: {
+                        data1: '#0a8b79 '
+                    },
+                    names: {
+                        // name of each serie
+                        'data1': 'Total Registered Users'
+                    }
+                },
+                axis: {
+                    x: {
+                        type: 'category',
+                        // name of each category
+                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
+                            'Nov', 'Dec'
+                        ]
+                    },
+                },
+                bar: {
+                    width: 30
+                },
+                legend: {
+                    show: true, //hide legend
+                },
+                padding: {
+                    bottom: 0,
+                    top: 0
+                },
+            });
+        });
+    </script>
 @endsection

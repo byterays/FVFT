@@ -93,7 +93,7 @@
                                 @php
                                     $statuses = ['started' => 'Started', 'notstarted' => 'Not Started', 'fail' => 'Fail', 'pass' => 'Pass'];
                                 @endphp
-                                <select name="interview_status" class="form-control select2-flag-search">
+                                <select name="interview_status" class="form-control select2-show-search">
                                     <option value="">Select Interview Status</option>
                                     @foreach ($statuses as $key => $value)
                                         <option value="{{ $key }}"

@@ -11,6 +11,7 @@ use App\Traits\Admin\AdminMethods;
 use App\Http\Controllers\Controller;
 use App\Models\Employe;
 use App\Models\Job;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 
 class DashboardController extends Controller
@@ -66,7 +67,10 @@ class DashboardController extends Controller
             "recent_applicants" => JobApplication::where('status', 'pending')->latest()->take(3)->with(['job:id,title', 'employe:id,first_name,middle_name,last_name'])->get(),
             "recent_published_jobs" => Job::where('status', 'Published')->latest()->take(3)->with(['company:id,company_name'])->get(),
             "recent_registered_employers" => Company::latest()->take(3)->with(['country:id,name'])->get(),
-            "recent_registered_users" => Employe::orderBy('id', 'desc')->take(3)->get()
+            "recent_registered_users" => Employe::orderBy('id', 'desc')->take(3)->get(),
+            "userChartData" => $this->__getUserMonthlyChartData(),
+            "applicantChartData" => $this->__getMonthlyApplicantChartData(),
+            "registeredUserChartData" => $this->__getUserMonthlyChartData()
         ]);
     }
 
@@ -191,6 +195,51 @@ class DashboardController extends Controller
             ],
         ];
     }
+
+    private function __getUserMonthlyChartData()
+    {
+        $users = User::where('user_type', 'candidate')->select('id', 'created_at')
+        ->get()
+        ->groupBy(function($date){
+            return Carbon::parse($date->created_at)->format('m');
+        });
+        $userMonthCount = [];
+        $userArr = [];
+        foreach($users as $key => $value){
+            $userMonthCount[(int)$key] = count($value);
+        }
+        for($i = 1; $i <= 12; $i++){
+            if(!empty($userMonthCount[$i])){
+                $userArr[$i] = $userMonthCount[$i];
+            } else {
+                $userArr[$i] = 0;
+            }
+        }
+        return $userArr;
+    }
+
+    private function __getMonthlyApplicantChartData()
+    {
+        $applicants = JobApplication::select('id', 'created_at')
+        ->get()
+        ->groupBy(function($date){
+            return Carbon::parse($date->created_at)->format('m');
+        });
+        $applicantMonthCount = [];
+        $applicantArr = [];
+        foreach($applicants as $key => $value){
+            $applicantMonthCount[(int)$key] = count($value);
+        }
+        for($i = 1; $i <= 12; $i++){
+            if(!empty($applicantMonthCount[$i])){
+                $applicantArr[$i] = $applicantMonthCount[$i];
+            } else {
+                $applicantArr[$i] = 0;
+            }
+        }
+        return $applicantArr;
+    }
+
 
     public function storeDistrict()
     {

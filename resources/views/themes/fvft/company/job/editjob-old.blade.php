@@ -81,7 +81,7 @@
                     <div class="form-group">
                         <label class="form-label">Country</label>
 
-                        <select name="country_id" id="select-country" class="form-control select2-flag-search"
+                        <select name="country_id" id="select-country" class="form-control select2-show-search"
                             value="{{ isset($job->country_id) ? $job->country_id : '' }}" onchange="patchStates(this)">
                             @foreach ($countries as $item)
                                 <option value="{{ $item->id }}"
@@ -95,7 +95,7 @@
                     <div class="form-group">
                         <label class="form-label">States</label>
 
-                        <select name="state_id" id="select-state" class="form-control select2-flag-search"
+                        <select name="state_id" id="select-state" class="form-control select2-show-search"
                             value="{{ isset($job->state_id) ? $job->state_id : '' }}" onchange="patchCities(this)">
                         </select>
                         <div class="require text-danger state_id"></div>
@@ -103,7 +103,7 @@
                     <div class="form-group">
                         <label class="form-label">Cities</label>
 
-                        <select name="city_id" id="select-city" class="form-control select2-flag-search">
+                        <select name="city_id" id="select-city" class="form-control select2-show-search">
                         </select>
                         <div class="require text-danger city_id"></div>
                     </div>
@@ -126,7 +126,7 @@
                     <div class="form-group">
                         <label class="form-label">Job Category</label>
                         <div class="form-group">
-                            <select class="form-control select2-flag-search" name="job_category"
+                            <select class="form-control select2-show-search" name="job_category"
                                 data-placeholder="Select Category">
                                 <option value="">Select Job Category</option>
                                 @foreach ($job_categories as $category)
@@ -141,7 +141,7 @@
                     <div class="form-group">
                         <label class="form-label">Job Sift</label>
                         <div class="form-group">
-                            <select class="form-control select2-flag-search" name="job_shift"
+                            <select class="form-control select2-show-search" name="job_shift"
                                 data-placeholder="Select Job Shift">
                                 <option value="">Select Job Shift</option>
                                 @foreach ($job_shifts as $shift)
@@ -157,7 +157,7 @@
                     <div class="form-group">
                         <label class="form-label">Education Level</label>
                         <div class="form-group">
-                            <select class="form-control select2-flag-search" name="education_level"
+                            <select class="form-control select2-show-search" name="education_level"
                                 data-placeholder="Select Education Level">
                                 <option value="">Select Education Level</option>
                                 @foreach ($education_levels as $educationlevel)
@@ -172,7 +172,7 @@
                     <div class="form-group">
                         <label class="form-label">Experience</label>
                         <div class="form-group">
-                            <select class="form-control select2-flag-search" name="experience_level"
+                            <select class="form-control select2-show-search" name="experience_level"
                                 data-placeholder="Select Experience">
                                 <option value="">Select Experience</option>
                                 @foreach ($experience_levels as $experience)
