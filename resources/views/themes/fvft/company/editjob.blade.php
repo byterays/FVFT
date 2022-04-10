@@ -108,7 +108,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Job Category</label>
                                     <div class="form-group">
-                                        <select class="form-control select2-flag-search" name="category"
+                                        <select class="form-control select2-show-search" name="category"
                                             data-placeholder="Select Category">
                                             @foreach ($job_categories as $category)
                                                 <option value="{{ $category->id }}">{{ $category->functional_area }}
@@ -120,7 +120,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Job Sift</label>
                                     <div class="form-group">
-                                        <select class="form-control select2-flag-search" name="job_shift"
+                                        <select class="form-control select2-show-search" name="job_shift"
                                             data-placeholder="Select Contry">
                                             @foreach ($job_shifts as $shift)
                                                 <option value="{{ $shift->id }}">{{ $shift->job_shift }}</option>
@@ -132,7 +132,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Education Level</label>
                                     <div class="form-group">
-                                        <select class="form-control select2-flag-search" name="educationlevel"
+                                        <select class="form-control select2-show-search" name="educationlevel"
                                             data-placeholder="Select Contry">
                                             @foreach ($educationlevels as $educationlevel)
                                                 <option value="{{ $educationlevel->id }}">{{ $educationlevel->title }}
@@ -144,7 +144,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Experience</label>
                                     <div class="form-group">
-                                        <select class="form-control select2-flag-search" name="experiencelevel"
+                                        <select class="form-control select2-show-search" name="experiencelevel"
                                             data-placeholder="Select Contry">
                                             @foreach ($experiencelevels as $experience)
                                                 <option value="{{ $experience->id }}">{{ $experience->title }}</option>

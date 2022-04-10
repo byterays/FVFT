@@ -10,6 +10,7 @@ use App\Http\Controllers\Candidates\NewsController;
 use App\Http\Controllers\Candidates\ProfileController;
 use App\Http\Controllers\Candidates\SettingController;
 use App\Http\Controllers\Candidates\SupportController;
+use App\Http\Controllers\Candidates\Support\SupportController as CandidateSupportController;
 use App\Http\Controllers\Candidates\UsefulInformationController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +24,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/safty-tips', [DashController::class, 'safty-tips'])->name('candidate.safty-tips');
     Route::get('settings', [DashController::class, 'settings'])->name('candidate.settings');
     Route::get('job-preferences', [DashController::class, 'job_preferences'])->name('candidate.job-preferences');
-
+    Route::post('/follow-company/', [DashController::class, "follow_company"])->name("candidate.follow_company");
     // Save Profile
     Route::post('/profile', [DashController::class, 'saveProfile'])->name('candidate.save-profile');
     Route::post('/job-preferences', [DashController::class, 'saveJobPreferences'])->name('candidate.save-job-preferences');
@@ -83,6 +84,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['prefix' => 'support/', 'as' => 'candidate.support.'], function () {
         Route::get('index', [SupportController::class, 'get_support'])->name('index');
+        Route::get('', [CandidateSupportController::class, 'index'])->name('support');
+        Route::get('support-questions/{slug}', [CandidateSupportController::class, 'get_support_questions'])->name('get_supports');
+        Route::get('support-answer/{slug}', [CandidateSupportController::class, 'get_question_answer'])->name('get_support_answer');
     });
 
     Route::group(['prefix' => 'job-search/', 'as' => 'candidate.job_search.'], function () {

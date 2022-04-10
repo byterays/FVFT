@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\DateService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -199,6 +200,18 @@ class Employe extends Model
             ])->where('job_categories_id', $category->job_category_id)->orWhere('country_id', $category->country_id)->limit($limit)->get();
         }
         return $jobs;
+    }
+
+
+    public function followings()
+    {
+        return $this->hasMany(CompanyFollower::class, "employ_id", "id");
+    }
+
+
+    public function calculateAgeFromDateOfBirth()
+    {
+        return (new DateService)->calculateAgeFromDateOfBirth($this->dob);
     }
 
 }

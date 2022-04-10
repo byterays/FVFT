@@ -125,7 +125,7 @@
             //     gender_array.push(value);
             // });
             **/
-            var genderDatas = '<?php echo json_encode($genderDatas); ?>';
+                
             var gender_array = Object.entries(JSON.parse(genderDatas)['genders']);
             var chart = c3.generate({
                 bindto: '#chart-donut4', // id of chart wrapper

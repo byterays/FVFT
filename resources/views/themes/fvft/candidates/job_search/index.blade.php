@@ -45,11 +45,11 @@
             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
-                    <h1 class="">{{ __('My Jobs') }}</h1>
+                    <h1 class="">{{ __('Job Search') }}</h1>
                     <ol class="breadcrumb text-center">
                         <li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
                         <li class="breadcrumb-item"><a href="#">{{ __('Dashboard') }} </a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">{{ __('Setting') }}</li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">{{ __('Job Search') }}</li>
                     </ol>
                 </div>
             </div>
@@ -70,6 +70,7 @@
                         </div>
                     </div>
                     @include('partial.candidates.job_search.tabs')
+                    @if(!request()->has('is_active') && !request()->is_active == 'about')
                     <div class="row">
                         <div class="mb-lg-0">
                             <div class="">
@@ -250,6 +251,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -284,6 +286,28 @@
                 },
                 complete: function() {
                     $(".saveJobButton").attr('disabled', false);
+                },
+            });
+        }
+
+        function follow_company(company_id, employ_id){
+            $.ajax({
+                type: "POST",
+                url: "{{ route('candidate.follow_company') }}",
+                data: {'company_id': company_id, 'employ_id': employ_id},
+                beforeSend: function(){
+                    $("#follow").text('Wait Submitting...')
+                }, 
+                success: function(data){
+                    if(data.db_error){
+                        toastr.warning(data.db_error)
+                    } else if(data.alreadyFollowed==true){
+                        toastr.info(data.msg);
+                        $("#follow").text('Following');
+                    } else if(data.alreadyFollowed == false){
+                        toastr.success(data.msg);
+                        $("#follow").text('Following');
+                    }
                 },
             });
         }

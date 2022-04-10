@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Industry</label>
                                     <div class="form-group">
-                                        <select class="form-control select2-flag-search" data-placeholder="Select Industry"
+                                        <select class="form-control select2-show-search" data-placeholder="Select Industry"
                                             name="industry_id">
                                             @foreach ($industries as $industry)
                                                 <option value="{{ $industry->id }}"
@@ -63,7 +63,7 @@
                                                     {{ $industry->title }}</option>
                                             @endforeach
                                         </select>
-                                        {{-- <select class="form-control select2-flag-search" data-placeholder="Select Industry"
+                                        {{-- <select class="form-control select2-show-search" data-placeholder="Select Industry"
                                             name="industry_id"
                                             value="{{ isset($company->industry_id) ? $company->industry_id : '' }}">
                                             @foreach ($industries as $industry)

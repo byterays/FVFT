@@ -63,4 +63,9 @@ class Company extends Model
         return $this->job_applications->employe();
     }
 
+    public function followers()
+    {
+        return $this->hasMany(CompanyFollower::class, "company_id", "id");
+    }
+
 }

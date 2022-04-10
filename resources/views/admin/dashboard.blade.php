@@ -1,127 +1,547 @@
 @extends('admin.layouts.master')
 @section('main')
+    <style>
+        .gray-round {
+            background-color: rgb(166 181 217);
+        }
+
+        .img-custom-icon {
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            border-radius: 50%;
+
+        }
+
+    </style>
     <div class="page-header">
         <h4 class="page-title">Dashboard</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item active"><a href="/admin">Dashboard</a></li>
         </ol>
     </div>
-
     <div class="row">
-        @foreach ($totals as $item)
-            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
-                <div class="card overflow-hidden">
-                    <div class="card-header">
-                        <h3 class="card-title">{{ $item["title"] }}</h3>
-                        <div class="card-options"> <a class="btn btn-sm btn-primary" href="{{ env('APP_URL').$item["links"] }}">View</a> </div>
+        @foreach ($first_datas as $f_data)
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                <a href="{{ $f_data['link'] }}">
+                    <div class="card">
+                        <div class="card-body p-4 text-center feature">
+                            <div class="fa-stack fa-lg fa-1x icons shadow-default bg-primary-transparent">
+                                <i class="{{ $f_data['icon'] }} text-primary"></i>
+                            </div>
+                            <p class="card-text mt-3 mb-3">{{ __($f_data['title']) }}</p>
+                            <p class="h2 text-center text-primary">{{ $f_data['totalcount'] }}</p>
+                        </div>
                     </div>
-                    <div class="card-body ">
-                        <h5 class="">Total {{ $item["title"]}}</h5>
-                        <h2 class="text-dark  mt-0 ">{{ $item["total"] }}</h2>
-                        <div class="progress progress-sm mt-0 mb-2">
-                            <div class="progress-bar bg-primary w-75" role="progressbar"></div>
+                </a>
+            </div>
+        @endforeach
+    </div>
+    <div class="row">
+        @foreach ($second_datas as $s_data)
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                <a href="{{ $s_data['link'] }}">
+                    <div class="card bg-blue">
+                        <div class="card-body p-4 text-center feature">
+                            <div class="fa-stack fa-lg fa-1x icons shadow-default gray-round">
+                                <i class="{{ $s_data['icon'] }}"></i>
+                            </div>
+                            <p class="card-text mt-3 mb-3">{{ __($s_data['title']) }}</p>
+                            <p class="h2 text-center">{{ $s_data['totalcount'] }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        @endforeach
+    </div>
+    <div class="row">
+        @foreach ($job_datas as $job_data)
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                <a href="{{ $job_data['link'] }}">
+                    <div class="card">
+                        <div class="card-body p-4 text-center feature">
+                            <div class="fa-stack fa-lg fa-1x icons shadow-default bg-primary-transparent">
+                                <i class="{{ $job_data['icon'] }}"></i>
+                            </div>
+                            <p class="card-text mt-3 mb-3">{{ __($job_data['title']) }}</p>
+                            <p class="h2 text-center">{{ $job_data['totalcount'] }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        @endforeach
+    </div>
+    <div class="row">
+        @foreach ($application_datas as $application_data)
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <div class=" {{ $loop->iteration % 2 == 0 ? 'ml-auto' : '' }}">
+                    <div class="card card-aside">
+                        <div class="card-body" style="padding: 1rem 1rem;">
+                            <div class="col-md-6">
+                                <a href="{{ $application_data['link'] }}">
+                                    <div class="card-item d-flex mx-auto my-auto">
+                                        <div class="img-custom-icon bg-pink">
+                                            <img src="{{ asset('themes/fvft/assets/images/svg/' . $application_data['img']) }}"
+                                                alt="img" class="w-8 h-8">
+                                        </div>
+                                        <div class="my-auto ml-5">
+                                            <h6 class="font-weight-bold">
+                                                {{ $application_data['title'] }}
+                                            </h6>
+                                        </div>
+                                        <div class="my-auto ml-5">
+                                            <h6 class="font-weight-bold">
+                                                {{ $application_data['totalcount'] }}
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
-
-
-
     <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+        <div class="col-xl-6 col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="chart-wrapper">
+                        <canvas id="user-applicant" class="chart-dropshadow h-280"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="chart-wrapper" style="max-height: 310px !important;">
+                        <div id="chart-monthly" class="chart-dropshadow h-280"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">Companies</div>
+                    <div class="row col-md-12">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <h3 class="card-title">New Job Requests</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row float-right">
+                                <a href="{{ route('admin.jobs-list') }}" class="text-primary">View All</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="ibox teams mb-30 bg-boxshadow">
-                        <!-- Ibox Content -->
-                        <div class="ibox-content teams">
-                            <!-- Members -->
-                            <div class="avatar-list avatar-list-stacked">
-                                @foreach ($companies as $item)
-                                    <span class="avatar brround cover-image cover-image" data-image-src="{{asset($item->company_logo)}}" style="background: url(&quot;{{asset('themes/fvft/')}}/assets/images/users/female/12.jpg&quot;) center center;"></span>
-                                @endforeach
+                <div class="table-responsive">
+                    <table class="table card-table table-vcenter text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>SN</th>
+                                <th>Job Title</th>
+                                <th>Country</th>
+                                <th>Company</th>
+                                <th>Applied On</th>
+                                <th>View</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($job_requests as $job_request)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $job_request->title }}</td>
+                                    <td>{{ !($job_request->country != null && $job_request->country->name != null) ?: $job_request->country->name }}
+                                    </td>
+                                    <td>{{ !($job_request->company != null && $job_request->company->company_name != null) ?:$job_request->company->company_name }}
+                                    </td>
+                                    <td>{{ getFormattedDate($job_request->created_at, 'M j, Y') }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.job.view', $job_request->id) }}"><i
+                                                class="fa fa-eye text-green"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- table-responsive -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row col-md-12">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <h3 class="card-title">Recent Applicants</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row float-right">
+                                        <a href="{{ route('admin.applicants.list') }}" class="text-primary">View
+                                            All</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table card-table table-vcenter text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>SN</th>
+                                        <th>Name</th>
+                                        <th>Job Title</th>
+                                        <th>Applied Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($recent_applicants as $recent_applicant)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ !($recent_applicant->employe != null && $recent_applicant->employe->full_name != null) ?:$recent_applicant->employe->full_name }}
+                                            </td>
+                                            <td>{{ !($recent_applicant->job != null && $recent_applicant->job->title != null) ?: $recent_applicant->job->title }}
+                                            </td>
+                                            <td>{{ getFormattedDate($recent_applicant->created_at, 'd/m/Y') }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                                <span class="avatar brround cover-image cover-image">{{ $totals[0]["total"]-10 >0?"+".$totals[0]["total"]-10:"" }}</span>
-                            </div>
-                            <!-- Team Board Details -->
-                            <div class="teams-board-details mt-3">
-                                <h4 class="font-weight-semibold">About Companies Team</h4>
-                                <p>Companies are looking for employees.</p>
-                            </div>
-                            <!-- Progress Details -->
-                            <span class="font-weight-semibold">Status of current JobSeekers:</span>
-                            <div class="progress-details-teams mt-2 mb-4">
-                                <div class="stat-percent mb-2">{{ round((($totals[2]["total"]-$totals[3]["total"])/$totals[1]["total"])*100,2) }}%</div>
-                                <div class="progress progress-sm ">
-                                    <div class="progress-bar bg-primary w-{{ round((($totals[2]["total"]-$totals[3]["total"])/$totals[1]["total"])*100)}}" role="progressbar"></div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row col-md-12">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <h3 class="card-title">Recently Published Jobs</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row float-right">
+                                        <a href="{{ route('admin.jobs-list') }}" class="text-primary">View All</a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row mt-2">
-                                <div class="col-4">
-                                    <div class="teams-rank text-muted">Jobs</div>
-                                    <span>{{$totals[1]["total"]}}</span>
-                                </div>
-                                <div class="col-4">
-                                    <div class="teams-rank text-muted">Candidates</div>
-                                    <span>{{$totals[2]["total"]}}</span>
-                                </div>
-                                <div class="col-4">
-                                    <div class="teams-rank text-muted"> Application</div>
-                                    <span>{{$totals[3]["total"]}}</span>
-                                </div>
-                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table card-table table-vcenter text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>SN</th>
+                                        <th>Job Title</th>
+                                        <th>Company</th>
+                                        <th>Posted Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($recent_published_jobs as $recent_published_job)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $recent_published_job->title }}</td>
+                                            <td>{{ !($recent_published_job->company != null && $recent_published_job->company->company_name != null) ?:$recent_published_job->company->company_name }}
+                                            </td>
+                                            <td>{{ getFormattedDate($recent_published_job->created_at, 'd/m/Y') }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        @foreach ($latest_jobs as $item)
-            @php
-                $job_shift=\DB::table('job_shifts')->find($item->job_shift_id);
-                $company=\DB::table('companies')->find($item->company_id);
-            @endphp
-            <div class="col-xl-4 col-lg-6 col-md-12">
-                <div class="item">
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div class="card">
-                        <div class="arrow-ribbon bg-info">{{$job_shift?$job_shift->job_shift:""}}</div>
-                        <div class="item-card7-img">
-                            <div class="item-card7-imgs">
-                                <a href="/job/{{$item->id}}"></a>
-                                @if(!blank($item->feature_image_url))
-                                    <img src="{{asset($item->feature_image_url)}}" alt="img" class="cover-image">
-                                @else
-                                    <img src="/uploads/defaultimage.jpg" alt="img" class="cover-image">
-                                @endif
-                            </div>
-                            <div class="item-card7-overlaytext">
-                                <a href="/admin/jobs" class="text-white"> Jobs</a>
-                                <h4 class="font-weight-semibold mb-0">Rs.{{$item->salary_from ?? '-'}} / Rs.{{$item->salary_to ?? '-'}}</h4>
+                        <div class="card-header">
+                            <div class="row col-md-12">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <h3 class="card-title">Recently Registered Employers</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row float-right">
+                                        <a href="{{ route('admin.companies.list') }}" class="text-primary">View
+                                            All</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <div class="item-card7-desc">
-                                <a href="/admin/jobs-detail/{{$item->id}}" class="text-dark"><h4 class="font-weight-semibold">{{$item->title}}</h4></a>
-                            </div>
-                            <div class="item-card7-text">
-                                <ul class="icon-card mb-0">
-                                    <li class=""><a href="#" class="icons"><i class="si si-location-pin text-muted mr-1"></i>
-                                            {{\DB::table('cities')->find($item->city_id)->name ?? ''}},{{\DB::table('countries')->find($item->country_id)->name ?? ''}}
-                                        </a>
-                                    </li>
-                                    <li><a href="#" class="icons"><i class="si si-event text-muted mr-1"></i> {{$item->updated_at ?? ''}}</a></li>
-                                    <li class="mb-0"><a href="#" class="icons"><i class="si si-user text-muted mr-1"></i>{{$company->company_name ?? ''}}</a></li>
-                                    <li class="mb-0"><a href="#" class="icons"><i class="si si-phone text-muted mr-1"></i> {{$company->company_phone ?? ''}}</a></li>
-                                </ul>
-                            </div>
+                        <div class="table-responsive">
+                            <table class="table card-table table-vcenter text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>SN</th>
+                                        <th>Name</th>
+                                        <th>Country</th>
+                                        <th>Registered Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($recent_registered_employers as $recent_registered_employer)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $recent_registered_employer->company_name }}
+                                            </td>
+                                            <td>{{ $recent_registered_employer->country != null && $recent_registered_employer->country->name != null? $recent_registered_employer->country->name: '' }}
+                                            </td>
+                                            <td>{{ getFormattedDate($recent_registered_employer->created_at, 'd/m/Y') }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-        @endforeach
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row col-md-12">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <h3 class="card-title">Recently Registered Users</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row float-right">
+                                        <a href="{{ route('admin.jobs-list') }}" class="text-primary">View All</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table card-table table-vcenter text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>SN</th>
+                                        <th>Name</th>
+                                        <th>Gender</th>
+                                        <th>Age</th>
+                                        <th>Registered Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($recent_registered_users as $recent_registered_user)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $recent_registered_user->full_name }}</td>
+                                            <td>{{ $recent_registered_user->gender }}
+                                            <td>{{ $recent_registered_user->calculateAgeFromDateOfBirth() }}
+                                            </td>
+                                            <td>{{ getFormattedDate($recent_registered_user->created_at, 'd/m/Y') }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+@endsection
+@section('script')
+    <!-- CHARTJS CHART -->
+    <script src="{{ asset('/themes/fvft/') }}/assets/plugins/chart/Chart.bundle.js"></script>
+    <script src="{{ asset('/themes/fvft/') }}/assets/plugins/chart/utils.js"></script>
+    <!-- c3.js Charts Plugin -->
+    <script src="{{ asset('/themes/fvft/') }}/assets/plugins/charts-c3/d3.v5.min.js"></script>
+    <script src="{{ asset('/themes/fvft/') }}/assets/plugins/charts-c3/c3-chart.js"></script>
+    <script>
+        $(function(e) {
+            'use strict'
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            ];
+            // User Chart Data
+            let Dates = new Array();
+            let monthName = new Array();
+            let UserCount = new Array();
+            var userDatas = '<?php echo json_encode($userChartData); ?>';
+            userDatas = JSON.parse(userDatas);
+            $.each(userDatas, function(key, value) {
+                let date = new Date(key);
+                monthName.push(monthNames[date.getMonth()]);
+                Dates.push(key);
+                UserCount.push(value);
+            });
+            // Applicant Chart Data
+            let Aplicantcount = new Array();
+            let ApplicantMonthName = new Array();
+            let ApplicantDate = new Array();
+            var applicantDatas = '<?php echo json_encode($applicantChartData); ?>';
+            applicantDatas = JSON.parse(applicantDatas);
+            $.each(applicantDatas, function(key, value) {
+                let date = new Date(key);
+                ApplicantMonthName.push(monthNames[date.getMonth()]);
+                ApplicantDate.push(key);
+                Aplicantcount.push(value);
+            });
+            /* chartjs (#user-applicant) */
+
+            var ctx = $('#user-applicant');
+            ctx.height(310);
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: monthNames,
+                    type: 'line',
+                    datasets: [{
+                        label: "Users",
+                        data: UserCount,
+                        backgroundColor: 'rgb(22, 80, 226,0.1)',
+                        borderColor: 'rgb(22, 80, 226) ',
+                        borderWidth: 3,
+                        pointStyle: 'circle',
+                        pointRadius: 0,
+                        pointBorderColor: 'transparent',
+                        pointBackgroundColor: 'rgb(22, 80, 226)',
+                    }, {
+                        label: "Applicants",
+                        data: Aplicantcount,
+                        backgroundColor: 'transparent',
+                        borderColor: 'rgb(110, 81, 236)',
+                        borderWidth: 3,
+                        pointStyle: 'circle',
+                        pointRadius: 0,
+                        pointBorderColor: 'transparent',
+                        pointBackgroundColor: 'rgb(110, 81, 236)',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    tooltips: {
+                        mode: 'index',
+                        titleFontSize: 12,
+                        titleFontColor: '#000',
+                        bodyFontColor: '#000',
+                        backgroundColor: '#fff',
+                        cornerRadius: 3,
+                        intersect: false,
+                    },
+                    legend: {
+                        display: true,
+                        labels: {
+                            usePointStyle: false,
+                        },
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                fontColor: "#605e7e",
+                            },
+                            display: true,
+                            gridLines: {
+                                display: true,
+                                color: 'rgba(96, 94, 126, 0.1)',
+                                drawBorder: false
+                            },
+                            scaleLabel: {
+                                display: false,
+                                labelString: 'Month',
+                                fontColor: 'transparent'
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                fontColor: "#605e7e",
+                            },
+                            display: true,
+                            gridLines: {
+                                display: true,
+                                color: 'rgba(96, 94, 126, 0.1)',
+                                drawBorder: false
+                            },
+                            scaleLabel: {
+                                display: false,
+                                labelString: 'sales',
+                                fontColor: 'transparent'
+                            }
+                        }]
+                    },
+                    title: {
+                        display: false,
+                        text: 'Normal Legend'
+                    }
+                }
+            });
+            /* chartjs (#user-applicant) closed */
+
+        });
+
+
+        $(document).ready(function() {
+            // C3 ChartJS
+            var registeredUser = '<?php echo json_encode($registeredUserChartData) ?>';
+            registeredUser = Object.values(JSON.parse(registeredUser));
+            registeredUser.unshift('data1');
+            var chart = c3.generate({
+                bindto: '#chart-monthly', // id of chart wrapper
+                data: {
+                    columns: [
+                        // each columns data
+                        registeredUser
+                    ],
+                    type: 'bar', // default type of chart
+                    colors: {
+                        data1: '#0a8b79 '
+                    },
+                    names: {
+                        // name of each serie
+                        'data1': 'Total Registered Users'
+                    }
+                },
+                axis: {
+                    x: {
+                        type: 'category',
+                        // name of each category
+                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
+                            'Nov', 'Dec'
+                        ]
+                    },
+                },
+                bar: {
+                    width: 30
+                },
+                legend: {
+                    show: true, //hide legend
+                },
+                padding: {
+                    bottom: 0,
+                    top: 0
+                },
+            });
+        });
+    </script>
 @endsection

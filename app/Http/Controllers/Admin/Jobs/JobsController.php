@@ -26,7 +26,7 @@ class JobsController extends Controller
         // if($request->action=="delete"){
 
         // }
-        $jobs = DB::table('jobs')->where('status', '<>','Draft');
+        $jobs = Job::where('status', '<>','Draft');
         if ($request->filled('country_id')) {
             $jobs = $jobs->where('country_id', $request->country_id);
         }
@@ -50,7 +50,7 @@ class JobsController extends Controller
                 $jobs = $jobs->where('is_expired', 1);
             }
         }
-        $jobs = $jobs->paginate(10)->setPath('');
+        $jobs = $jobs->with(['country:id,name','company:id,company_name','job_category:id,functional_area'])->paginate(10)->setPath('');
         return $this->view('admin.pages.jobs.jobs_list', [
             'jobs' => $jobs,
             // 'jobs' => $jobs->paginate(10)->setPath(''),

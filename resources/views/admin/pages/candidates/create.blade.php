@@ -253,7 +253,7 @@
                             <label for="" class="form-label">Address</label>
                             <div class="row">
                                 <div class="col-6">
-                                    <select name="state_id" class="form-control select2-flag-search" id="states"
+                                    <select name="state_id" class="form-control select2-show-search" id="states"
                                         onchange="patchGetDistricts(this)">
                                         <option value="">Select State</option>
                                         @foreach ($states as $state)
@@ -262,7 +262,7 @@
                                     </select>
                                 </div>
                                 <div class="col-6">
-                                    <select name="district_id" class="form-control select2-flag-search" id="districts">
+                                    <select name="district_id" class="form-control select2-show-search" id="districts">
                                         <option value="">District</option>
                                     </select>
                                 </div>
@@ -353,7 +353,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Country</label>
-                                            <select name="country_id[]" class="form-control select2-flag-search" id="">
+                                            <select name="country_id[]" class="form-control select2-show-search" id="">
                                                 <option value="">Select Country</option>
                                                 @foreach ($countries as $country)
                                                     <option value="{{ $country->id }}">{{ $country->name }}</option>
@@ -364,7 +364,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Job Category</label>
-                                            <select name="job_category_id[]" class="form-control select2-flag-search" id="">
+                                            <select name="job_category_id[]" class="form-control select2-show-search" id="">
                                                 <option value="">Select Job Category</option>
                                                 @foreach ($job_categories as $job_category)
                                                     <option value="{{ $job_category->id }}">
@@ -376,7 +376,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Job Title</label>
-                                            <select name="job_title[]" class="form-control select2-flag-search" id="">
+                                            <select name="job_title[]" class="form-control select2-show-search" id="">
                                                 <option value="">Select Job Title</option>
                                                 @foreach ($jobs as $job)
                                                     <option value="{{ $job->id }}">{{ $job->title }}</option>
@@ -446,7 +446,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="">Education Level&nbsp;<span class="req">*</span></label>
-                            <select name="education_level_id" class="form-control select2-flag-search">
+                            <select name="education_level_id" class="form-control select2-show-search">
                                 <option value="">Select Level</option>
                                 @foreach ($educationLevels as $educationLevel)
                                     <option value="{{ $educationLevel->id }}">{{ $educationLevel->title }}</option>
@@ -459,7 +459,7 @@
                             <label for="">Training</label>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <select name="training[]" class="form-control select2-flag-search training" multiple="multiple"
+                                    <select name="training[]" class="form-control select2-show-search training" multiple="multiple"
                                         id="training">
                                         <option value="">Select Training</option>
                                         @foreach ($trainings as $training)
@@ -480,7 +480,7 @@
                             <label for="">Skill</label>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <select name="skill[]" class="form-control select2-flag-search" multiple="multiple" id="skill">
+                                    <select name="skill[]" class="form-control select2-show-search" multiple="multiple" id="skill">
                                         <option value="">Select Skill</option>
                                         @foreach ($skills as $skill)
                                             <option value="{{ $skill->id }}">{{ $skill->title }}</option>
@@ -576,7 +576,7 @@
         function select2()
         {
             $(".select2").select2();
-            $(".select2-flag-search").select2();
+            $(".select2-show-search").select2();
         }
         $(document).ready(function() {
             // getDistricts($("#select-state").val());
@@ -689,7 +689,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Country</label>
-                                            <select name="country_id[]" class="form-control select2-flag-search">
+                                            <select name="country_id[]" class="form-control select2-show-search">
                                                 <option value="">Select Country</option>
                                                 @foreach ($countries as $country)
                                                     <option value="{{ $country->id }}">{{ $country->name }}</option>
@@ -700,7 +700,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Job Category</label>
-                                            <select name="job_category_id[]" class="form-control select2-flag-search" id="">
+                                            <select name="job_category_id[]" class="form-control select2-show-search" id="">
                                                 <option value="">Select Job Category</option>
                                                 @foreach ($job_categories as $job_category)
                                                     <option value="{{ $job_category->id }}">
@@ -712,7 +712,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Job Title</label>
-                                            <select name="job_title[]" class="form-control select2-flag-search" id="">
+                                            <select name="job_title[]" class="form-control select2-show-search" id="">
                                                 <option value="">Select Job Title</option>
                                                 @foreach ($jobs as $job)
                                                     <option value="{{ $job->id }}">{{ $job->title }}</option>

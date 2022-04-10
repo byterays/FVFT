@@ -108,7 +108,7 @@
                                                 class="req"></span></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <select name="category_id" class="form-control select2-flag-search">
+                                        <select name="category_id" class="form-control select2-show-search">
                                             <option value="">Select Job Category</option>
                                             @foreach ($job_categories as $category)
                                                 <option value="{{ $category->id }}"
@@ -181,7 +181,7 @@
                                                 class="req">*</span></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <select name="country" id="select-country" class="form-control select2-flag-search"
+                                        <select name="country" id="select-country" class="form-control select2-show-search"
                                             value="{{ isset($job->country_id) ? $job->country_id : '' }}"
                                             onchange="patchStates(this)">
                                             @foreach ($countries as $item)
@@ -204,7 +204,7 @@
                                                 class="req">*</span></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <select name="state" id="select-state" class="form-control select2-flag-search"
+                                        <select name="state" id="select-state" class="form-control select2-show-search"
                                             value="{{ isset($job->state_id) ? $job->state_id : '' }}"
                                             onchange="patchCities(this)">
                                         </select>
@@ -219,7 +219,7 @@
                                                 class="req">*</span></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <select name="city_id" id="select-city" class="form-control select2-flag-search"
+                                        <select name="city_id" id="select-city" class="form-control select2-show-search"
                                             value="{{ isset($job->city_id) ? $job->city_id : '' }}">
                                         </select>
                                         <div class="require text-danger city_id"></div>
@@ -494,7 +494,7 @@
                                             Qualification&nbsp;<span class="req">*</span></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <select name="education_level" class="form-contorl select2-flag-search">
+                                        <select name="education_level" class="form-contorl select2-show-search">
                                             <option value="">Select Qualification</option>
                                             @foreach ($educationlevels as $educationlevel)
                                                 <option value="{{ $educationlevel->id }}"

@@ -32,7 +32,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Company</label>
                                     <div class="form-group">
-                                        <select class="form-control select2-flag-search" data-placeholder="Select Company"
+                                        <select class="form-control select2-show-search" data-placeholder="Select Company"
                                             name="company_id">
                                             @foreach ($companies as $company)
                                                 <option value="{{ $company->id }}">{{ $company->company_name }}</option>
@@ -91,7 +91,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Country</label>
                                    
-                                    <select name="country" id="select-country" class="form-control select2-flag-search"
+                                    <select name="country" id="select-country" class="form-control select2-show-search"
                                         value="{{ isset($job->country_id) ? $job->country_id : '' }}"
                                         onchange="patchStates(this)">
                                         @foreach ($countries as $item)
@@ -106,7 +106,7 @@
                                 <div class="form-group">
                                     <label class="form-label">States</label>
                                     
-                                    <select name="state" id="select-state" class="form-control select2-flag-search"
+                                    <select name="state" id="select-state" class="form-control select2-show-search"
                                         value="{{ isset($job->state_id) ? $job->state_id : '' }}"
                                         onchange="patchCities(this)">
                                     </select>
@@ -115,7 +115,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Cities</label>
                                    
-                                    <select name="city_id" id="select-city" class="form-control select2-flag-search"
+                                    <select name="city_id" id="select-city" class="form-control select2-show-search"
                                         value="{{ isset($job->city_id) ? $job->city_id : '' }}">
                                     </select>
                                     <div class="require text-danger city_id"></div>
@@ -137,7 +137,7 @@
                                     @php
                                         $statuses = ['Approved' => 'Approved', 'Not Approved' => 'Not Approved'];
                                     @endphp
-                                    <select name="job_status" class="form-control select2-flag-search">
+                                    <select name="job_status" class="form-control select2-show-search">
                                         <option value="">Select Status</option>
                                         @foreach ($statuses as $key => $value)
                                             <option value="{{ $key }}">{{ $value }}
@@ -148,7 +148,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Job Category</label>
                                     <div class="form-group">
-                                        <select class="form-control select2-flag-search" name="category"
+                                        <select class="form-control select2-show-search" name="category"
                                             data-placeholder="Select Category">
                                             @foreach ($job_categories as $category)
                                                 <option value="{{ $category->id }}">{{ $category->functional_area }}
@@ -161,7 +161,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Job Sift</label>
                                     <div class="form-group">
-                                        <select class="form-control select2-flag-search" name="job_shift"
+                                        <select class="form-control select2-show-search" name="job_shift"
                                             data-placeholder="Select Contry">
                                             @foreach ($job_shifts as $shift)
                                                 <option value="{{ $shift->id }}">{{ $shift->job_shift }}</option>
@@ -174,7 +174,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Education Level</label>
                                     <div class="form-group">
-                                        <select class="form-control select2-flag-search" name="educationlevel"
+                                        <select class="form-control select2-show-search" name="educationlevel"
                                             data-placeholder="Select Contry">
                                             @foreach ($educationlevels as $educationlevel)
                                                 <option value="{{ $educationlevel->id }}">{{ $educationlevel->title }}
@@ -187,7 +187,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Experience</label>
                                     <div class="form-group">
-                                        <select class="form-control select2-flag-search" name="experiencelevel"
+                                        <select class="form-control select2-show-search" name="experiencelevel"
                                             data-placeholder="Select Contry">
                                             @foreach ($experiencelevels as $experience)
                                                 <option value="{{ $experience->id }}">{{ $experience->title }}

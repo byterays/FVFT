@@ -15,7 +15,7 @@
             font-size: 1rem;
         }
 
-        .profileRow .feature .icons {
+        /* .profileRow .feature .icons {
             font-size: 2em;
             position: relative;
             display: inline-block;
@@ -25,8 +25,10 @@
             vertical-align: middle;
             border-radius: 50%;
             border: 1px solid rgba(255, 255, 255, 0.1);
+        } */
+        .gray-round {
+            background-color: rgb(166 181 217);
         }
-
     </style>
 @endsection
 @section('content')
@@ -99,7 +101,7 @@
                                         <div class="card bg-blue profileRow">
                                             <div class="card-body p-4 text-center feature">
                                                 <div
-                                                    class="fa-stack fa-lg fa-1x icons shadow-default bg-primary-transparent">
+                                                    class="fa-stack fa-lg fa-1x icons shadow-default gray-round">
                                                     <i class="{{ $profile_data['icon'] }}"></i>
                                                 </div>
                                                 <p class="card-text mt-3 mb-3">{{ __($profile_data['title']) }}</p>
