@@ -12,7 +12,7 @@
 									<div class="row">
 										<div class="col-lg-6 col-md-12">
 											<div class="wideget-user-desc d-sm-flex">
-												<div class="wideget-user-img mr-5 noborder"><img class="w-125 noborder" src="{{asset("/")}}{{$company->company_logo}}"> </div>
+												<div class="wideget-user-img mr-5 noborder"><img class="w-125 noborder" src="{{asset("/")}}{{$company->company_logo ?? 'images/defaultimage.jpg'}}"> </div>
 												<div class="user-wrap wideget-user-info"> <a href="#" class="text-dark"><h4 class="font-weight-semibold mb-2">{{$company->company_name}}</h4></a>
 													<h6 class="text-muted mb-1"><span class="text-dark">Member Since : </span>{{ \Carbon\Carbon::parse($company->created_at)->diffForHumans() }}</h6>
 													{{-- <div class="wideget-user-rating"> <a href="#"><i class="fa fa-star text-warning"></i></a> <a href="#"><i class="fa fa-star text-warning"></i></a> <a href="#"><i class="fa fa-star text-warning"></i></a> <a href="#"><i class="fa fa-star text-warning"></i></a> <a href="#"><i class="fa fa-star-o text-warning mr-1"></i></a> <span>5 (3876 Reviews)</span> </div> --}}
@@ -48,10 +48,10 @@
 												<h3 class="card-title mb-4 font-weight-bold">Employer Details</h3>
 											</div>
 											<ul class="usertab-list mb-0">
-												<li><a href="#" class="text-dark"><span class="font-weight-semibold w100">Location :</span> {{@DB::table('cities')->find($company->city_id)->name.","}} {{@DB::table('countries')->find($company->country_id)->name}}</a></li>
+												<p><a href="#" class="text-dark"><span class="font-weight-semibold w100">Location :&nbsp;</span> {{@DB::table('cities')->find($company->city_id)->name ? @DB::table('cities')->find($company->city_id)->name." ," : '' }} {{@DB::table('countries')->find($company->country_id)->name}}</a></p>
 												{{-- <li><a href="#" class="text-dark"><span class="font-weight-semibold w100">Website :</span> {{ $company->website}}</a></li> --}}
-												<li><a href="#" class="text-dark"><span class="font-weight-semibold w100">Email :</span>{{ $company->company_email}}</a></li>
-												<li><a href="#" class="text-dark"><span class="font-weight-semibold w100">Phone :</span>{{ $company->company_phone}} </a></li>
+												<p><a href="#" class="text-dark"><span class="font-weight-semibold w100">Email :&nbsp;</span>{{ $company->company_email}}</a></p>
+												<p><a href="#" class="text-dark"><span class="font-weight-semibold w100">Phone :&nbsp;</span>{{ $company->company_phone}} </a></p>
 											</ul>
 											<div class="row profie-img">
 												<div class="col-md-12">
@@ -102,18 +102,18 @@
 																						<div class="mt-2 mb-2">
 																							<a href="/company-view/{{$company->id}}" class="mr-4"><span><i class="fa fa-building-o text-muted mr-1"></i> {{ $company->company_name}}</span></a>
 																							<a class="mr-4"><span><i class="fa fa-map-marker text-muted mr-1"></i>{{@DB::table('cities')->find($item->city_id)->name.","}} {{@DB::table('countries')->find($item->country_id)->name}} </span></a>
-																							<a class="mr-4"><span><i class="fa fa fa-usd text-muted mr-1"></i> {{ $item->salary_from}} - {{ $item->salary_to}}</span></a>
-																							<a  class="mr-4"><span><i class="fa fa-clock-o text-muted mr-1"></i> {{@DB::table('job_shifts')->find($item->job_shift_id)->job_shift}}</span></a>
+																							{{-- <a class="mr-4"><span><i class="fa fa fa-usd text-muted mr-1"></i> {{ $item->salary_from}} - {{ $item->salary_to}}</span></a> --}}
+																							{{-- <a  class="mr-4"><span><i class="fa fa-clock-o text-muted mr-1"></i> {{@DB::table('job_shifts')->find($item->job_shift_id)->job_shift}}</span></a> --}}
 																							<a  class="mr-4"><span><i class="fa fa-briefcase text-muted mr-1"></i> {{ \Carbon\Carbon::parse($item->expiry_date)->diffForHumans() }} Exp</span></a>
 																						</div>
-																						<p class="mb-0 leading-tight">{{  Str::limit($item->description,50) }} </p>
+																						<p class="mb-0 leading-tight">{!! html_entity_decode(Str::limit($item->description_intro,50)) !!} </p>
 																					</div>
 																				</div>
 																				<div class="card-footer pt-3 pb-3">
 																					<div class="item-card9-footer d-sm-flex">
 																						<div class="d-flex align-items-center mb-3 mb-md-0 mt-auto posted">
 																							<div>
-																								<a href="profile.html" class="text-muted fs-12 mb-1">Posted by </a><span class="ml-0 fs-13"> {{ $company->company_name}}</span>
+																								<a href="/" class="text-muted fs-12 mb-1">Posted by </a><span class="ml-0 fs-13"> {{ $company->company_name}}</span>
 																								<small class="d-block text-default">{{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</small>
 																							</div>
 																						</div>
