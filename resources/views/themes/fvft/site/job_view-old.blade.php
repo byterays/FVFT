@@ -58,8 +58,8 @@
 													</div>
 													<div class="icons">
 														@auth
-														    @if(auth()->user()->user_type == 'candidate')																	  	 
-																@php 
+														    @if(auth()->user()->user_type == 'candidate')
+																@php
 																	$application = \DB::table('job_applications')->where('job_id',$job->id)->where('employ_id', $employ->id)->first();
 																@endphp
 																@if($application)
@@ -72,7 +72,7 @@
 														@else
 															<a href="/apply-job/{{$job->id}}" class="btn btn-info icons"> Apply Now</a>
 														@endauth
-														
+
 													</div>
 												</div>
 											</div>
@@ -84,7 +84,7 @@
 								<h4 class="mb-4 card-title">Job Description</h4>
 								<div class="mb-4">
 									<p>{!! html_entity_decode($job->description_intro) !!}</p>
-					
+
 								</div>
 								<h4 class="mb-4 card-title">Job Details</h4>
 								<div class="row">
@@ -145,8 +145,8 @@
 							<div class="card-footer bg-light-50">
 								<div class="icons">
 									@auth
-										@if(auth()->user()->user_type == 'candidate')																	  	 
-											@php 
+										@if(auth()->user()->user_type == 'candidate')
+											@php
 												$application = \DB::table('job_applications')->where('job_id',$job->id)->where('employ_id', $employ->id)->first();
 												@endphp
 												@if($application)
@@ -166,7 +166,7 @@
 							</div>
 						</div>
 						<!--Jobs Description-->
-					
+
 					</div>
 
 					<!--Right Side Content-->
@@ -180,7 +180,7 @@
 							</div>
 							<div class="card-body  item-user">
 								<div class="profile-pic mb-0">
-									<img src="{{asset("/")}}{{$company_contact_persons->avatar != null ? $company_contact_persons->avatar : 'uploads/default.jpg'}}" class="brround avatar-xxl" alt="user">
+									<img src="{{asset("/")}}{{$company_contact_persons->avatar != null ? $company_contact_persons->avatar : 'uploads/defaultimage.jpg'}}" class="brround avatar-xxl" alt="user">
 									<div class="">
 										<a href="userprofile.html" class="text-dark"><h4 class="mt-3 mb-1 font-weight-semibold">{{ $company_contact_persons->name}}</h4></a>
 										<span class="text-gray">{{ $company_contact_persons->position}} of {{$company->company_name}}</span>
@@ -212,7 +212,7 @@
 							</div>
 						</div>
                         @endif
-						
+
 						<div class="card">
 							<div class="card-header">
 								<h3 class="card-title">Shares</h3>
@@ -227,7 +227,7 @@
 								</div>
 							</div>
 						</div>
-				
+
 					</div>
 					<!--/Right Side Content-->
 				</div>

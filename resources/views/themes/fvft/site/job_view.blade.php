@@ -7,12 +7,12 @@
 @section('main')
     @include('themes.fvft.site.components.header')
     @php
-    $country = App\Models\Country::where('id', $job->country_id);
-    if ($country->exists()) {
-        $country = $country->first();
-    } else {
-        $country = null;
-    }
+        $country = App\Models\Country::where('id', $job->country_id);
+        if ($country->exists()) {
+            $country = $country->first();
+        } else {
+            $country = null;
+        }
     @endphp
     <style>
         .hr hr {
@@ -33,32 +33,33 @@
                                     <div class="profile-pic mb-0">
                                         <div class="d-md-flex">
                                             <img src="{{ asset('/') }}{{ $job->feature_image_url != null ? $job->feature_image_url : 'images/defaultimage.jpg' }}"
-                                                class="w-20 h-20" alt="user">
+                                                 class="w-20 h-20" alt="user">
                                             <div class="ml-4">
                                                 <a href="/job/{{ $job->id }}" class="text-dark">
-                                                    <h4 class="mt-3 mb-1 fs-20 font-weight-bold">{{ $job->title }}</h4>
+                                                    <h4 class="mt-3 mb-1 fs-20 font-weight-bold">{{ $job->title ?? 'Not-Available' }}</h4>
                                                 </a>
                                                 <div class="">
                                                     <ul class="mb-0 d-flex">
-                                                        <li class="mr-3"><a href="#" class="icons"><i
-                                                                    class="fa fa-building-o text-muted mr-1"></i>
-                                                                {{ isset($company) ? $company->company_name : '' }}</a>
+                                                        <li class="mr-3">
+                                                            <a href="#" class="icons">
+                                                                <i class="fa fa-building-o text-muted mr-1"></i>
+                                                                {{ $company->company_name ?? 'Not-Available' }}
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                     <ul class="mb-0 mt-2 d-flex">
                                                         <li class="mr-3">
                                                             <a href="#" class="icons">
-                                                                <img src="{{ asset($country != null ? 'https://flagcdn.com/16x12/' . strtolower($country->iso2) . '.png' : '') }}"
-                                                                    class="mb-1" alt="">
-                                                                {{ $country != null ? $country->name : '' }}
+                                                                <img src="{{ asset($country != null ? 'https://flagcdn.com/16x12/' . strtolower($country->iso2) . '.png' : '') }}" class="mb-1" alt="">
+                                                                {{ $country->name ?? 'Not-Available' }}
                                                             </a>
                                                         </li>
                                                         <li class="mr-3">
                                                             <a href="#" class="icons">
                                                                 Basic Salary: <span class="blue">
-                                                                    {{ $country->currency }}&nbsp;{{ $job->country_salary }}&nbsp;&nbsp;
-                                                                    @if ($country->currency != 'NPR')
-                                                                        NPR: {{ $job->nepali_salary }}
+                                                                    {{ $country->currency ?? 'Not-Available' }}&nbsp;{{ $job->country_salary ?? 'Not-Available' }}&nbsp;&nbsp;
+                                                                    @if (isset($country->currency) AND $country->currency != 'NPR')
+                                                                        NPR: {{ $job->nepali_salary ?? 'Not-Available' }}
                                                                     @endif
                                                                 </span>
                                                             </a>
@@ -94,72 +95,48 @@
 
                                                                 <div class="col-md-3">
                                                                     @if ($application)
-                                                                        <a href="javascript:void(0);"
-                                                                            class="btn btn-primary mr-5">Applied</a>
+                                                                        <a href="javascript:void(0);" class="btn btn-primary mr-5 btn-block">Applied</a>
                                                                     @else
-                                                                        <a href="/apply-job/{{ $job->id }}"
-                                                                            class="btn btn-primary mr-5"> Apply
-                                                                            Now</a>
+                                                                        <a href="/apply-job/{{ $job->id }}" class="btn btn-primary mr-5 btn-block"> Apply Now</a>
                                                                     @endif
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     @if ($savedJob->exists())
-                                                                        <a href="javascript:void(0);"
-                                                                            class="saveJobButton ico-grid-font">
+                                                                        <a href="javascript:void(0);" class="saveJobButton ico-grid-font btn btn-warning btn-block">
                                                                             <i class="fa fa-heart"></i> Saved
                                                                         </a>
                                                                     @else
                                                                         <a href="javascript:void(0);"
-                                                                            onclick="savejob({{ $job->id }})"
-                                                                            class="saveJobButton ico-grid-font">
+                                                                           onclick="savejob({{ $job->id }})"
+                                                                           class="saveJobButton ico-grid-font btn btn-warning btn-block">
                                                                             <i class="fa fa-heart-o"></i> Save Job
                                                                         </a>
                                                                     @endif
                                                                 </div>
                                                                 <div class="col-md-3">
-                                                                    <a href="#" class="ico-grid-font">
+                                                                    <a href="#" class="ico-grid-font btn btn-warning btn-block">
                                                                         <i class="fa fa-share-alt"></i>&nbsp;Share
-                                                                    </a>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <a href="/job/{{ $job->id }}" class="ico-grid-font">
-                                                                        <i class="fa fa-eye"></i>&nbsp;View
-                                                                        Details
                                                                     </a>
                                                                 </div>
                                                             @elseif(auth()->user()->user_type == 'company')
                                                                 <div class="col-md-3">
-                                                                    <a href="#" class="ico-grid-font">
+                                                                    <a href="#" class="ico-grid-font btn btn-warning btn-block">
                                                                         <i class="fa fa-share-alt"></i>&nbsp;Share
-                                                                    </a>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <a href="/job/{{ $job->id }}" class="ico-grid-font">
-                                                                        <i class="fa fa-eye"></i>&nbsp;View
-                                                                        Details
                                                                     </a>
                                                                 </div>
                                                             @endif
                                                         @else
                                                             <div class="col-md-3">
                                                                 <a href="/apply-job/{{ $job->id }}"
-                                                                    class="btn btn-primary mr-3"> Apply Now</a>
+                                                                   class="btn btn-block btn-primary mr-3"> Apply Now</a>
                                                             </div>
 
                                                             <div class="col-md-3">
-                                                                <a href="#" class="ico-grid-font">
+                                                                <a href="#" class="btn btn-warning btn-block">
                                                                     <i class="fa fa-share-alt"></i>&nbsp;Share
                                                                 </a>
                                                             </div>
-                                                            <div class="col-md-3">
-                                                                <a href="/job/{{ $job->id }}" class="ico-grid-font">
-                                                                    <i class="fa fa-eye"></i>&nbsp;View
-                                                                    Details
-                                                                </a>
-                                                            </div>
-
                                                         @endauth
-
                                                     </div>
 
                                                 </div>
@@ -315,18 +292,18 @@
                                                             ->pluck('title')
                                                             ->toArray()
                                                         : '';
-                                            
+
                                                 // $skills = '<span class="badge badge-success">' . implode('</span> <span class="badge badge-success">', $skills) . '</span>'; //working code(converted to function)
 												$skills = $skills != null ? wrapInTag($skills, 'span', 'class="badge badge-success"', ' ') : '';
-                                                
+
                                             @endphp
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <label for="" class="form-label">Skills&nbsp;:</label>
                                                 </div>
                                                 <div class="col-md-8">
-													{!! $skills !!}
-                                                    
+                                                    {!! $skills !!}
+
                                                 </div>
                                             </div>
                                         </div>
@@ -367,7 +344,7 @@
                                                 <div class="col-md-8">
                                                     @php
                                                         $country = App\Models\Country::where('id', $job->country_id)->first() ?? null;
-                    
+
                                                     @endphp
                                                     {{ $job->country_id != null && $country != null && $job->earning_country_salary != null? 'Per Month ' . $country->currency . ' ' . $job->earning_country_salary: '' }}
                                                     {{ $job->country_id != null && $country != null && $job->earning_nepali_salary != null? '- '.$country->currency . ' ' . $job->earning_nepali_salary: '' }}
@@ -383,7 +360,7 @@
                                                 <div class="col-md-8">
                                                     @php
                                                         $accomodation = $job->accomodation == 1 ? 'Yes' : 'No';
-                                                        
+
                                                     @endphp
                                                     {{ $accomodation == 'Yes' ? $accomodation . ' (As Per Company Rule)' : $accomodation }}
                                                 </div>
@@ -397,7 +374,7 @@
                                                 <div class="col-md-8">
                                                     @php
                                                         $food = $job->food == 1 ? 'Yes' : 'No';
-                                                        
+
                                                     @endphp
                                                     {{ $food == 'Yes' ? $food . ' (As Per Company Rule)' : $food }}
                                                 </div>
@@ -542,7 +519,7 @@
                                         @endphp
                                         @if ($application)
                                             <a href="javascript:void(0);" class="btn btn-danger icons mt-1 mb-1">Applied</a>
-                                            
+
                                         @else
                                             <a href="/apply-job/{{ $job->id }}" class="btn btn-info icons"> Apply Now</a>
                                         @endif
@@ -597,6 +574,7 @@
                     } else {
                         toastr.success(response.msg);
                     }
+                    window.location.reload()
                 },
                 complete: function() {
                     $(".saveJobButton").attr('disabled', false);
