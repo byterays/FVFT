@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\Pages\PageController;
 use App\Http\Controllers\Admin\Applicants\ApplicantController;
 use App\Http\Controllers\Admin\News\NewsController;
 use App\Http\Controllers\Admin\Industry\IndustryController;
+use App\Http\Controllers\Admin\JobcategoryController;
 use App\Http\Controllers\Admin\Training\TrainingController;
 use App\Http\Controllers\Admin\SantiController;
 use App\Http\Controllers\Admin\SupportCategoryController;
@@ -110,6 +111,17 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::match(['put', 'patch'], 'update/{id}', [IndustryController::class, "update"])->name("update");
         Route::delete('delete/{id}', [IndustryController::class, "delete"])->name("delete");
         Route::post('update-status', [IndustryController::class, "updateStatus"])->name("updateStatus");
+    });
+
+    // Job Category Crud
+    
+    Route::group(['prefix' => 'job_category/', 'as' => 'admin.job_category.'], function(){
+        Route::get('', [JobcategoryController::class, "index"])->name("index");
+        Route::get('create', [JobcategoryController::class, "create"])->name("create");
+        Route::post('store', [JobcategoryController::class, "store"])->name("store");
+        Route::get("edit/{id}", [JobcategoryController::class, "edit"])->name("edit");
+        Route::match(['put', 'patch'], 'update/{id}', [JobcategoryController::class, "update"])->name("update");
+        // Route::delete('delete/{id}', [JobcategoryController::class, "delete"])->name("delete");
     });
 
     // SupportCategory Crud
