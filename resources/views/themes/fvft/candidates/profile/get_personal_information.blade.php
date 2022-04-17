@@ -330,6 +330,7 @@
                     } else if (response.errors) {
                         var error_html = "";
                         $.each(response.errors, function(key, value) {
+                            toastr.error(value);
                             error_html = '<div>' + value + '</div>';
                             $('.' + key).css('display', 'block').html(error_html);
                         });

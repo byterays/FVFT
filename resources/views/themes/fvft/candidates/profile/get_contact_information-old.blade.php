@@ -73,23 +73,19 @@
                                                 <label for="" class="form-label">{{ __('Address') }}</label>
                                                 <div class="row">
                                                     <div class="col-6">
-                                                        <select name="country_id" class="form-control select2-show-search" data-placeholder="Select Country" onchange="patchStates(this)" value="{{ setParameter($employ, 'country_id') }}" id="select-country">
-                                                            <option value="">{{ __('Select Country') }}</option>
-                                                            @foreach ($countries as $country)
-                                                                <option value="{{ $country->id }}"
-                                                                    {{ $country->id == setParameter($employ, 'country_id') ? 'selected' : '' }}>
-                                                                    {{ $country->name }}</option>
+                                                        <select name="state_id" class="form-control select2-show-search"
+                                                            id="states" data-placeholder="Select State"
+                                                            onchange="patchGetDistricts(this)"
+                                                            value="{{ setParameter($employ, 'state_id') }}">
+                                                            <option value="">{{ __('Select State') }}</option>
+                                                            @foreach ($states as $state)
+                                                                <option value="{{ $state->id }}"
+                                                                    {{ $state->id == setParameter($employ, 'state_id') ? 'selected' : '' }}>
+                                                                    {{ $state->name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-6">
-                                                        <select name="state_id" class="form-control select2-show-search"
-                                                            id="states" data-placeholder="Select State"
-                                                            onchange="patchDistricts(this)"
-                                                            value="{{ setParameter($employ, 'state_id') }}">
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-6 mt-3">
                                                         <select name="district_id" class="form-control select2-show-search"
                                                             id="districts"
                                                             value="{{ setParameter($employ, 'district_id') }}"
@@ -144,9 +140,51 @@
     </section>
 @endsection
 @section('script')
-    <script src="{{ env('APP_URL') }}js/contact.js"></script>
+    {{-- <script src="{{ env('APP_URL') }}js/location.js"></script> --}}
 
     <script>
+        $(document).ready(function() {
+            var district_id = {{ isset($employ->district_id) ? $employ->district_id : 'null' }};
+            $.ajax({
+                url: '{{ route('getAjaxDistricts') }}',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    state_id: $("#states").val()
+                },
+                success: function(data) {
+                    $.each(data, function(key, value) {
+                        $option = $('<option></option>').val(value.id).html(value.name);
+                        if (value.id == district_id) $option = $option.attr('selected',
+                        'selected');
+                        $("#districts").append($option);
+                    });
+                    // return true;
+                }
+            });
+        });
+
+        function patchGetDistricts(state)
+        {
+            $.ajax({
+                url: '{{ route('getAjaxDistricts') }}',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    state_id: $(state).val()
+                },
+                success: function(data) {
+                    $("#districts").empty();
+                    // $option = '<option value="">Select District</option>';
+                    // $("#districts").append($option);
+                    $.each(data, function(key, value) {
+                        $option = $('<option></option>').val(value.id).html(value.name);
+                        $("#districts").append($option);
+                    });
+                    // return true;
+                }
+            });
+        }
 
         function submitForm(e) {
             e.preventDefault();
@@ -183,7 +221,6 @@
     </script>
     <script>
         const _token = $('meta[name="csrf-token"]')[0].content;
-        const country_id = {{ isset($employ->country_id) ? $employ->country_id : '154' }}
         const state_id = {{ isset($employ->state_id) ? $employ->state_id : '3871' }};
         // const city_id = {{ isset($employ->city_id) ? $employ->city_id : 'null' }};
         const district_id = {{ isset($employ->district_id) ? $employ->district_id : 'null' }};
