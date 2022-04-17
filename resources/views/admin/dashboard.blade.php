@@ -78,7 +78,7 @@
                 <div class=" {{ $loop->iteration % 2 == 0 ? 'ml-auto' : '' }}">
                     <div class="card card-aside">
                         <div class="card-body" style="padding: 1rem 1rem;">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <a href="{{ $application_data['link'] }}">
                                     <div class="card-item d-flex mx-auto my-auto">
                                         <div class="img-custom-icon bg-pink">

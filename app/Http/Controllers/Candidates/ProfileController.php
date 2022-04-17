@@ -44,7 +44,19 @@ class ProfileController extends Controller
 
     public function profile()
     {
-        $employ = Employe::where('user_id', Auth::user()->id)->with(['user:id,email', 'country:id,name', 'state:id,name', 'city:id,name', 'education_level:id,title', 'employeeSkills.skill:id,title', 'employeeLanguage.language:id,lang', 'experience.country:id,name', 'experience.job_category:id,functional_area', 'experience.job:id,title'])->first();
+        $employ = Employe::where('user_id', Auth::user()->id)
+            ->with([
+                'user:id,email',
+                'country:id,name',
+                'state:id,name',
+                'city:id,name',
+                'education_level:id,title',
+                'employeeSkills.skill:id,title',
+                'employeeLanguage.language:id,lang',
+                'experience.country:id,name',
+                'experience.job_category:id,functional_area',
+                'experience.job:id,title'
+            ])->first();
         return $this->client_view('candidates.profile.index', [
             'employ' => $employ,
         ]);
@@ -134,10 +146,12 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'mobile_number1' => ['required'],
             'email' => ['required', 'unique:users,email,' . $employe->user_id],
+            'country_id' => ['required'],
             'state_id' => ['required'],
             'district_id' => ['required'],
         ], [
             'mobile_number1.required' => 'The mobile number field is required',
+            'country_id.required' => 'Country is required',
             'state_id.required' => 'State is required',
             'district_id.required' => 'District is required',
         ]);
@@ -148,6 +162,7 @@ class ProfileController extends Controller
             try {
                 DB::beginTransaction();
                 $employe->update([
+                    'country_id' => $request->country_id,
                     'state_id' => $request->state_id,
                     'district_id' => $request->district_id,
                     'mobile_phone' => $request->mobile_number1,

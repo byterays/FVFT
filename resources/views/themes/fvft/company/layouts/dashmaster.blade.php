@@ -43,7 +43,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/location.js') }}"></script>
+    {{-- <script src="{{ asset('js/location.js') }}"></script> --}}
     <script src="{{ asset('themes/fvft/') }}/assets/plugins/fileuploads/js/dropify.js"></script>
     <script>
 		$(document).ready(function(){

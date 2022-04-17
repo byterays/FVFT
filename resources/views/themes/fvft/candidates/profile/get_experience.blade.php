@@ -200,7 +200,7 @@
                     <div class="form-group">
     <label for="" class="form-label">{{ __('Experience') }} <span class="float-right cur_sor p-1 btn-danger" onclick="removeRow('eRow_` +
                     ecount + `')">{{ __('Remove') }}</span></label>
-    
+
 </div>
 <div class="form-group">
     <div class="row">

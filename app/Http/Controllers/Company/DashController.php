@@ -457,7 +457,7 @@ class DashController extends Controller
                 ],
                 'colors' => [
                     'male' => '#4801FF',
-                    'female' => '#ec296b',
+                    'female' => '#3495eb',
                     'other' => '#ec296b',
                 ],
                 'names' => [
@@ -475,8 +475,8 @@ class DashController extends Controller
                 ],
                 'colors' => [
                     'below20' => '#4801FF',
-                    '20-30' => '#ec296b',
-                    '31-40' => '#ec296b',
+                    '20-30' => '#3495eb',
+                    '31-40' => '#ed3b47',
                     'above40' => '#ec296b',
                 ],
                 'names' => [

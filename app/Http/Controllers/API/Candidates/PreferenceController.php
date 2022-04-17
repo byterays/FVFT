@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\API\Candidates;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use  App\Models\EmployesCountry;
-use  App\Models\EmployesJobCategory;
 use App\Models\Employe;
+use App\Models\EmployesCountry;
+use App\Models\EmployesJobCategory;
 use App\Traits\Api\ApiMethods;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class PreferenceController extends Controller
@@ -30,8 +30,8 @@ class PreferenceController extends Controller
             } else {
                 return $this->sendError('No job category preference found', 200);
             }
-        } catch (\Throwable $th) {
-            return  $this->sendError("Error fetching preference. ");
+        } catch (\Throwable$th) {
+            return $this->sendError("Error fetching preference. ");
         }
     }
     public function add_employes_job_category(Request $request)
@@ -46,8 +46,8 @@ class PreferenceController extends Controller
                     'exists:countries,id',
                     Rule::unique('employes_job_categories', 'job_category_id')->where(function ($query) use ($employ) {
                         return $query->where('employ_id', $employ->id);
-                    })
-                ]
+                    }),
+                ],
             ]);
             $old = EmployesJobCategory::where('employ_id', $employ->id)
                 ->orderBy('order_by', 'desc')
@@ -59,8 +59,8 @@ class PreferenceController extends Controller
             $employes_job_category->order_by = $old ? $old->order_by + 1 : 1;
             $employes_job_category->save();
             return $this->sendResponse($this->process_employees_job_category($employes_job_category), 'Job category preference added successfully');
-        } catch (\Throwable $th) {
-            return  $this->sendError("Unable to add preference.", 200);
+        } catch (\Throwable$th) {
+            return $this->sendError("Unable to add preference.", 200);
         }
     }
     // update_employes_job_category
@@ -88,8 +88,8 @@ class PreferenceController extends Controller
             } else {
                 return $this->sendError('No job category preference found', 200);
             }
-        } catch (\Throwable $th) {
-            return  $this->sendError("Unable to update preference.", 200);
+        } catch (\Throwable$th) {
+            return $this->sendError("Unable to update preference.", 200);
         }
     }
     // delete_employes_job_category
@@ -106,20 +106,20 @@ class PreferenceController extends Controller
                     'exists:employes_job_categories,id',
                     Rule::exists('employes_job_categories', 'id')->where(function ($query) use ($employ) {
                         return $query->where('employ_id', $employ->id);
-                    })
-                ]
+                    }),
+                ],
             ]);
             $employes_job_category = EmployesJobCategory::where('employ_id', $employ->id)
                 ->where("id", $id)
                 ->first();
 
             $employes_job_category->delete();
-            return  $this->sendResponse(
+            return $this->sendResponse(
                 [],
                 "Preference deleted successfully."
             );
-        } catch (\Throwable $th) {
-            return  $this->sendError("Unable to delete preference.");
+        } catch (\Throwable$th) {
+            return $this->sendError("Unable to delete preference.");
         }
     }
     // Get employes country
@@ -139,8 +139,8 @@ class PreferenceController extends Controller
             } else {
                 return $this->sendError('No country preference found', 200);
             }
-        } catch (\Throwable $th) {
-            return  $this->sendError("Error fetching preference. ");
+        } catch (\Throwable$th) {
+            return $this->sendError("Error fetching preference. ");
         }
     }
     public function add_employes_country(Request $request)
@@ -158,18 +158,18 @@ class PreferenceController extends Controller
                     'exists:countries,id',
                     Rule::unique('employes_country', 'country_id')->where(function ($query) use ($employ) {
                         return $query->where('employ_id', $employ->id);
-                    })
-                ]
+                    }),
+                ],
             ]);
 
             $employes_country = new EmployesCountry;
             $employes_country->employ_id = $employ->id;
             $employes_country->country_id = $request->country_id;
-            $employes_country->order_by = $old ? (int)$old->order_by + 1 : 1;
+            $employes_country->order_by = $old ? (int) $old->order_by + 1 : 1;
             $employes_country->save();
             return $this->sendResponse($this->process_employees_country($employes_country), 'Country preference added successfully');
-        } catch (\Throwable $th) {
-            return  $this->sendError("Unable to add preference." . $th->getMessage(), 200);
+        } catch (\Throwable$th) {
+            return $this->sendError("Unable to add preference." . $th->getMessage(), 200);
         }
     }
     public function update_employes_country(Request $request)
@@ -198,8 +198,8 @@ class PreferenceController extends Controller
             } else {
                 return $this->sendError('No country preference found', 200);
             }
-        } catch (\Throwable $th) {
-            return  $this->sendError("Unable to update preference.", 200);
+        } catch (\Throwable$th) {
+            return $this->sendError("Unable to update preference.", 200);
         }
     }
     public function delete_employes_country($id)
@@ -216,20 +216,20 @@ class PreferenceController extends Controller
                     'integer',
                     Rule::exists('employes_country', 'id')->where(function ($query) use ($employ) {
                         return $query->where('employ_id', $employ->id);
-                    })
-                ]
+                    }),
+                ],
             ]);
             $employes_country = EmployesCountry::where('employ_id', $employ->id)
                 ->where("id", $id)
                 ->first();
 
             $employes_country->delete();
-            return  $this->sendResponse(
+            return $this->sendResponse(
                 [],
                 "Preference deleted successfully."
             );
-        } catch (\Throwable $th) {
-            return  $this->sendError("Unable to delete preference.", 200);
+        } catch (\Throwable$th) {
+            return $this->sendError("Unable to delete preference.", 200);
         }
     }
     public function process($employes_country, $employes_job_category)
@@ -254,19 +254,19 @@ class PreferenceController extends Controller
     public function process_employees_country($employes_country)
     {
         return [
-            "id" => (int)$employes_country->id,
+            "id" => (int) $employes_country->id,
             // "employ_id" => $employes_country->employ_id,
-            "country_id" => (int)$employes_country->country_id,
-            "order_by" => (int)$employes_country->order_by,
+            "country_id" => (int) $employes_country->country_id,
+            "order_by" => (int) $employes_country->order_by,
         ];
     }
     public function process_employees_job_category($employes_job_category)
     {
         return [
-            "id" => (int)$employes_job_category->id,
+            "id" => (int) $employes_job_category->id,
             // "employ_id" => $employes_job_category->employ_id,
-            "job_category_id" => (int)$employes_job_category->job_category_id,
-            "order_by" => (int)$employes_job_category->order_by,
+            "job_category_id" => (int) $employes_job_category->job_category_id,
+            "order_by" => (int) $employes_job_category->order_by,
         ];
     }
 }
