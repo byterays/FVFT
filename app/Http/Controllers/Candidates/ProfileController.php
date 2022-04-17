@@ -44,7 +44,19 @@ class ProfileController extends Controller
 
     public function profile()
     {
-        $employ = Employe::where('user_id', Auth::user()->id)->with(['user:id,email', 'country:id,name', 'state:id,name', 'city:id,name', 'education_level:id,title', 'employeeSkills.skill:id,title', 'employeeLanguage.language:id,lang', 'experience.country:id,name', 'experience.job_category:id,functional_area', 'experience.job:id,title'])->first();
+        $employ = Employe::where('user_id', Auth::user()->id)
+            ->with([
+                'user:id,email',
+                'country:id,name',
+                'state:id,name',
+                'city:id,name',
+                'education_level:id,title',
+                'employeeSkills.skill:id,title',
+                'employeeLanguage.language:id,lang',
+                'experience.country:id,name',
+                'experience.job_category:id,functional_area',
+                'experience.job:id,title'
+            ])->first();
         return $this->client_view('candidates.profile.index', [
             'employ' => $employ,
         ]);
