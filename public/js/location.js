@@ -1,5 +1,4 @@
 const loadStates = (country_id) => {
-    console.log('I am here');
     fetch(appurl + "ajax/states", {
         method: "POST",
         headers: {
@@ -13,11 +12,9 @@ const loadStates = (country_id) => {
     })
         .then((res) => res.json())
         .then((json) => {
-            // console.log(json);
             states = json;
             $("#select-state").empty();
             json.forEach((state) => {
-                // console.log(state);
                 let selection = "";
                 if (state_id == state.id) {
                     selection = "selected";
@@ -51,7 +48,6 @@ const loadCities = async (state_id) => {
                 if (city_id == city.id) {
                     selection = "selected";
                 }
-                // console.log(state);
                 $("#select-city").append(
                     `<option value="${city.id}" ${selection}>${city.name}</option>`
                 );
@@ -89,7 +85,6 @@ const loadDistricts = async (state_id) => {
 
 
 const getDistricts = (state_id) => {
-    console.log(state_id);
     fetch(appurl + "ajax/districts", {
         method: "POST",
         headers: {
@@ -103,7 +98,6 @@ const getDistricts = (state_id) => {
     })
         .then((res) => res.json())
         .then((json) => {
-            // console.log(json);
             districts = json;
             $("#districts").empty();
             json.forEach((district) => {
