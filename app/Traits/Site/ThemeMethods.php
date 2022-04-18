@@ -12,7 +12,7 @@ trait ThemeMethods{
         $theme="fvft";
         $primary_menu = MenuItem::where(["menu_id"=>1,"parent_id"=>0])->get();
         $countries = Country::where('is_active', 1)->get();
-        $job_categories = JobCategory::get();
+        $job_categories = JobCategory::has('jobs')->get();
         $job_industries = Industry::get();
 
         return view("themes.".$theme.".".$path,array_merge($obj,[
