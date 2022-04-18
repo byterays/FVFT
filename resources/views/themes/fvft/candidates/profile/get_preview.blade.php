@@ -43,26 +43,15 @@
                         <h3 class="mt-5 ml-3">{{ __('Preview') }}</h3>
                         <div class="card mb-2">
                             <div class="card-body">
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between mb-2">
                                     <div class="d-inline-flex">
                                         <img src="{{ asset($employ->avatar ?? 'uploads/defaultimage.jpg') }}"
                                             style="width: 100px;" alt="">
                                         <h3 class="mt-6 ml-5 text-center">{{ $employ->full_name }}</h3>
                                     </div>
-                                    <div class="widgets-cards">
-                                        <div class="d-flex">
-                                            <div class="widgets-cards-icons">
-                                                <div class="wrp icon-circle bg-success">
-                                                    <span
-                                                        class="text-white" style="padding: 8px 5px 5px 8px;">{{ $employ->calculateProfileCompletion() }}
-                                                        %</span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <p class="mt-3 white">{{ __('Profile Completeness') }}</p>
-                                    </div>
                                 </div>
+                                @include('themes.fvft.candidates.components.profile.profile-completion', ['employee'=>$employe])
+
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
