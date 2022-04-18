@@ -180,7 +180,7 @@ class Employe extends Model
         $total = $total + 4;
         $completed = ($completed / $total) * 100;
         // dd($completed);
-        return round($completed, 2);
+        return round($completed, 0);
     }
 
 

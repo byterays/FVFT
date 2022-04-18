@@ -156,35 +156,35 @@
                                                                             <div class="col-md-3">
                                                                                 @if ($savedJob->exists())
                                                                                     <a href="javascript:void(0);"
-                                                                                       class="saveJobButton ico-font btn btn-warning btn-block">
+                                                                                       class="saveJobButton btn btn-warning btn-block">
                                                                                         <i class="fa fa-heart"></i> {{ __('Saved') }}
                                                                                     </a>
                                                                                 @else
                                                                                     <a href="javascript:void(0);"
                                                                                        onclick="savejob({{ $item->id }})"
-                                                                                       class="saveJobButton ico-font btn btn-block btn-warning">
+                                                                                       class="saveJobButton btn btn-block btn-warning">
                                                                                         <i class="fa fa-heart-o"></i> {{ __('Save Job') }}
                                                                                     </a>
                                                                                 @endif
                                                                             </div>
                                                                             <div class="col-md-3">
-                                                                                <a href="/job/{{ $item->id }}" class="ico-font btn btn-warning btn-block">
+                                                                                <a href="/job/{{ $item->id }}" class="btn btn-warning btn-block">
                                                                                     <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                                 </a>
                                                                             </div>
                                                                             <div class="col-md-3">
-                                                                                <a href="#" class="ico-font btn btn-warning btn-block">
+                                                                                <a href="#" class="btn btn-warning btn-block">
                                                                                     <i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
                                                                                 </a>
                                                                             </div>
                                                                         @elseif(auth()->user()->user_type == 'company')
                                                                             <div class="col-md-3">
-                                                                                <a href="/job/{{ $item->id }}" class="ico-font btn btn-warning btn-block">
+                                                                                <a href="/job/{{ $item->id }}" class="btn btn-warning btn-block">
                                                                                     <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                                 </a>
                                                                             </div>
                                                                             <div class="col-md-3">
-                                                                                <a href="#" class="ico-font btn btn-warning btn-block">
+                                                                                <a href="#" class="btn btn-warning btn-block">
                                                                                     <i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
                                                                                 </a>
                                                                             </div>
@@ -197,18 +197,18 @@
                                                                         {{-- <div class="col-md-3">
                                                                             <a href="javascript:void(0);"
                                                                                 onclick="savejob({{ $item->id }})"
-                                                                                class="saveJobButton ico-font">
+                                                                                class="saveJobButton">
                                                                                 <i class="fa fa-heart-o"></i> Save Job
                                                                             </a>
                                                                         </div> --}}
                                                                         <div class="col-md-3">
                                                                             <a href="/job/{{ $item->id }}"
-                                                                               class="ico-font btn btn-warning btn-block">
+                                                                               class="btn btn-warning btn-block">
                                                                                 <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                             </a>
                                                                         </div>
                                                                         <div class="col-md-3">
-                                                                            <a href="#" class="ico-font btn btn-warning btn-block">
+                                                                            <a href="#" class="btn btn-warning btn-block">
                                                                                 <i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
                                                                             </a>
                                                                         </div>

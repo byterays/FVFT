@@ -127,25 +127,25 @@ class DashController extends Controller
                     'title' => 'My Profile',
                     'link' => route('candidate.profile.index'),
                     'totalcount' => '',
-                    'icon' => 'fa fa-user-circle-o',
+                    'icon' => '/uploads/site/svgs/jobs/businessman-white.svg',
                 ],
                 [
                     'title' => 'My CV',
                     'link' => '#',
                     'totalcount' => '',
-                    'icon' => 'fa fa-file-word-o',
+                    'icon' => '/uploads/site/svgs/post-it.svg',
                 ],
                 [
-                    'title' => 'New Message',
+                    'title' => 'Message',
                     'link' => '#',
                     'totalcount' => 2,
-                    'icon' => 'icon icon-people',
+                    'icon' => '/uploads/site/svgs/mail.svg',
                 ],
                 [
-                    'title' => 'New Notification',
+                    'title' => 'Notification',
                     'link' => '#',
                     'totalcount' => 2,
-                    'icon' => 'fa fa-bell-o',
+                    'icon' => '/uploads/site/svgs/megaphone.svg',
                 ],
             ],
         ];
@@ -294,7 +294,7 @@ class DashController extends Controller
                     return redirect()->route('candidate.dashboard')->with(notifyMsg('warning', 'You have already applied for this job'));
                 }
             } else {
-                return redirect()->route('candidate.profile')->with(notifyMsg('warning', 'You are not eligible to apply for job. Please Complete your profile first.x'));
+                return redirect()->route('candidate.profile.get_personal_information')->with(notifyMsg('warning', 'You are not eligible to apply for job. Please Complete your profile first.x'));
             }
 
         }
@@ -584,7 +584,7 @@ class DashController extends Controller
                 $input['employ_id'] = $request->employ_id;
                 $input['company_id'] = $request->company_id;
                 $input['followed_time'] = Carbon::now();
-    
+
                 if(count($employ->followings->where('company_id', $request->company_id)) == 0){
                     $employ->followings()->updateOrCreate($input);
                     DB::commit();
@@ -592,7 +592,7 @@ class DashController extends Controller
                 } else {
                     return response()->json(['msg'=>"Already followed", "alreadyFollowed"=>true]);
                 }
-                
+
             } catch(\Exception $e){
                 DB::rollBack();
                 return response()->json(['db_error'=>$e->getMessage()]);
