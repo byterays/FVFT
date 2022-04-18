@@ -162,6 +162,9 @@
     }
     $(function() {
         var mainInput = document.getElementsByClassName("nepaliDatePicker");
+        if(!mainInput.length){
+            return;
+        }
         mainInput.nepaliDatePicker({
             language: "english",
             onChange: function() {

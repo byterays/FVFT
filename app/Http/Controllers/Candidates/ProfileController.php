@@ -148,7 +148,7 @@ class ProfileController extends Controller
             'email' => ['required', 'unique:users,email,' . $employe->user_id],
             'country_id' => ['required'],
             'state_id' => ['required'],
-            'district_id' => ['required'],
+//            'district_id' => ['required'],
         ], [
             'mobile_number1.required' => 'The mobile number field is required',
             'country_id.required' => 'Country is required',

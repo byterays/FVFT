@@ -9,8 +9,8 @@
 
     </style>
     <section>
-        <div class="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg"
-            style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
+        <div class="bannerimg cover-image bg-background3" data-image-src="/uploads/site/banner.png"
+            style="background: url(/uploads/site/banner.png) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
                     <h1 class="">{{ __('My Profile') }}</h1>
