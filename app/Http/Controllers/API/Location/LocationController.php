@@ -9,6 +9,7 @@ use App\Models\State;
 use Illuminate\Http\Request;
 use App\Traits\Api\ApiMethods;
 use DB;
+
 class LocationController extends Controller
 {
     use ApiMethods;
@@ -35,6 +36,7 @@ class LocationController extends Controller
                     'flag' => $value->flag,
                     'state' => $value->states,
                     'cities' => $value->cities,
+                    'districts' => $value->districts,
                 ];
             })
         );
