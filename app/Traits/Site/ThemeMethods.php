@@ -11,7 +11,7 @@ trait ThemeMethods{
     public function site_view($path,$obj=[]){
         $theme="fvft";
         $primary_menu = MenuItem::where(["menu_id"=>1,"parent_id"=>0])->get();
-        $countries = Country::get();
+        $countries = Country::where('is_active', 1)->get();
         $job_categories = JobCategory::get();
         $job_industries = Industry::get();
 
