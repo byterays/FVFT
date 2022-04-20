@@ -141,12 +141,12 @@ class ProfileController extends Controller
                 if (!is_array($languages)){
                     die('must be an array');
                 }
-                    foreach ($languages as $key => $language) {
-                        if (!blank($language)) {
+                    foreach ($languages as $language_id => $level) {
+                        if (!blank($language_id)) {
                             $employee_language = new EmployeeLanguage();
                             $employee_language->employ_id = $employee->id;
-                            $employee_language->language_id = $language;
-                            $employee_language->language_level = $key;
+                            $employee_language->language_id = $language_id;
+                            $employee_language->language_level = $level;
                             $employee_language->save();
                         }
                     }
@@ -234,7 +234,7 @@ class ProfileController extends Controller
                 }
             }
 
-            return $this->get_profile("Profile Update Succesful !");
+            return $this->get_profile("Profile Updated Successfully.");
         }catch (\Exception $e){
             $responseData = $this->sendResponse([], $e->getMessage(), '', false);
             return $responseData;
