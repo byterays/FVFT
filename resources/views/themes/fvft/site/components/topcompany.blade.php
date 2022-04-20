@@ -19,7 +19,7 @@
         <div class="row mt-4 ">
             <div class="col-md-12 text-center">
                 <a href="{{ route('site.companies') }}"
-                    class="btn btn-primary btn-outline-primary ">{{ __('View All Companies') }}</a>
+                    class="btn btn-primary btn-outline-primary ">{{ __('View More') }}</a>
             </div>
         </div>
     </div>

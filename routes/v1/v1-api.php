@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\ApiMethodsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Location\LocationController;
 Route::prefix('admin')->group(function(){
@@ -15,3 +16,4 @@ Route::prefix('company')->group(function(){
 Route::get("countries", [LocationController::class, 'countries']);
 Route::get("states", [LocationController::class, 'states']);
 Route::get("cities", [LocationController::class, 'cities']);
+Route::get("metaData", [ApiMethodsController::class, 'metData']);
