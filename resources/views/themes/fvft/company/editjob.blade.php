@@ -1,6 +1,6 @@
 @extends('themes.fvft.company.layouts.dashmaster')
 @section('css')
-    <link href="{{ asset('/') }}themes/fvft/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset('themes/fvft/assets/plugins/fileuploads/css/dropify.css') }}" rel="stylesheet" type="text/css">
 @endsection
 @section('content')
     <div class="row">
@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Country</label>
-                                    
+
                                     <select name="country_id" id="select-country" class="form-control select2"
                                         value="{{ isset($job->country_id) ? $job->country_id : '' }}"
                                         onchange="patchStates(this)">
@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">States</label>
-                                   
+
                                     <select name="state_id" id="select-state" class="form-control select2"
                                         value="{{ isset($job->state_id) ? $job->state_id : '' }}"
                                         onchange="patchCities(this)">
@@ -88,7 +88,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Cities</label>
-                                    
+
                                     <select name="city_id" id="select-city" class="form-control select2"
                                         value="{{ isset($job->city_id) ? $job->city_id : '' }}">
                                     </select>

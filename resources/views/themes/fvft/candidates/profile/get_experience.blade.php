@@ -77,7 +77,7 @@
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <label for="">{{ __('Job Category') }}</label>
+                                                                <label for="">{{ __('Industry Type') }}</label>
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <select name="job_category_id[]"

@@ -6,7 +6,7 @@
             <div class="container">
                 <div class="text-center text-white mb-7">
                     <h1 class="mb-1">{{ __('Find The Best Job For Your Future') }}</h1>
-                    <p>{{ __('It is a long established fact that a reader will be distracted by the readable.') }}</p>
+                    <p>{{ __('Your dream job can be found in your preferred country. Before applying for the job, you must register and fill out your profile.') }}</p>
                 </div>
                 <form action="{{ route('site.jobs') }}">
                     <div class="row">
