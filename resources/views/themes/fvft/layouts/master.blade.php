@@ -59,7 +59,9 @@
 </head>
 
 <body class="main-body">
-@yield('main')
+<div id="app">
+    @yield('main')
+</div>
 <!-- Back to top -->
 <a href="#top" id="back-to-top"><i class="fa fa-arrow-up"></i></a>
 

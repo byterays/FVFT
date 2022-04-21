@@ -390,7 +390,7 @@
                                             <div class="require text-danger earning_country_salary"></div>
                                             <div class="require text-danger earning_nepali_salary"></div>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
