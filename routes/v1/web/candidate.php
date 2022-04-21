@@ -57,6 +57,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('post-qualification', [ProfileController::class, 'post_qualification'])->name('post_qualification');
         Route::get('get-experience', [ProfileController::class, 'get_experience'])->name('get_experience');
         Route::post('post-experience', [ProfileController::class, 'post_experience'])->name('post_experience');
+        Route::get('get-preferred-jobs', [ProfileController::class, 'get_preferred_jobs'])->name('get_preferred_jobs');
+        Route::post('post-preferred-jobs', [ProfileController::class, 'post_preferred_jobs'])->name('post_preferred_jobs');
         Route::get('get-preview', [ProfileController::class, 'get_preview'])->name('get_preview');
         Route::get('get-save', [ProfileController::class, 'get_save'])->name('get_save');
         Route::get('get-cv', [ProfileController::class, 'get_cv'])->name('get_cv');
@@ -79,7 +81,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['prefix' => 'job-setting/', 'as' => 'candidate.job_setting.'], function () {
         Route::get('index', [JobSettingController::class, "get_job_preference"])->name("index");
+        Route::get('alert', [JobSettingController::class, "get_job_alert"])->name("get_job_alert");
         Route::post('post-job-preference', [JobSettingController::class, "post_job_preference"])->name("post_job_preference");
+        Route::post('update-job-notification', [JobSettingController::class, 'updateJobNotification'])->name('updateJobNotification');
     });
 
     Route::group(['prefix' => 'support/', 'as' => 'candidate.support.'], function () {

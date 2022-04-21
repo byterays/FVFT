@@ -108,6 +108,7 @@ class ProfileController extends Controller
                     'first_name' => $request->first_name,
                     'middle_name' => $request->middle_name,
                     'last_name' => $request->last_name,
+                    'dob_in_bs' => $request->nepali_dob,
                     'dob' => $request->english_dob,
                     'gender' => $request->gender,
                     'marital_status' => $request->marital_status,
@@ -295,9 +296,67 @@ class ProfileController extends Controller
             $employe->update($fields);
             $this->__updateExperience($employe->id, $request);
             DB::commit();
-            $redirectTo = route('candidate.profile.get_preview');
+            $redirectTo = route('candidate.profile.get_preferred_jobs');
+            // $redirectTo = route('candidate.profile.get_preview');
             return response()->json(['redirectRoute' => $redirectTo]);
         } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['db_error' => $e->getMessage()]);
+        }
+    }
+
+    public function get_preferred_jobs()
+    {
+        $employ = $this->employe();
+        return $this->client_view('candidates.profile.get_preferred_jobs',[
+            'employ' => $employ
+        ]);
+    }
+
+    public function post_preferred_jobs(Request $request)
+    {
+        try{
+            DB::beginTransaction();
+            if(in_array(!null, $request->categories) || in_array(!null, $request->countries) || in_array(!null, $request->job_title)){
+                $preferences = EmployJobPreference::where('employ_id', $this->employe()->id);
+                if($preferences->exists()){
+                    $preferences->delete();
+                }
+                
+                $this->employe()->update([
+                    'job_notify' => $request->has('job_notify') ? 1 : 0,
+                ]);
+               
+
+                foreach($request->categories as $key => $category){
+                    if($category != null){
+                        EmployJobPreference::create([
+                            'employ_id' => $this->employe()->id,
+                            'job_category_id' => $category,
+                        ]);
+                    }
+                }
+                foreach($request->countries as $key => $country){
+                    if($country != null){
+                        EmployJobPreference::create([
+                            'country_id' => $country,
+                            'employ_id' => $this->employe()->id,
+                        ]);
+                    }
+                }
+                foreach($request->job_title as $key => $job_title){
+                    if($job_title != null){
+                        EmployJobPreference::create([
+                            'job_title' => $job_title,
+                            'employ_id' => $this->employe()->id,
+                        ]);
+                    }
+                }
+            }
+           
+            DB::commit();
+            return response()->json(['msg' => 'Job Preference updated successfully', 'redirectRoute' => route('candidate.profile.get_preview')]);
+        } catch(\Exception $e){
             DB::rollBack();
             return response()->json(['db_error' => $e->getMessage()]);
         }

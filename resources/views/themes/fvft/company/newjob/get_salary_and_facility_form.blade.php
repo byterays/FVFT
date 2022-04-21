@@ -55,6 +55,7 @@
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <input type="text" name="country_salary" value="{{ setParameter($job, 'country_salary') }}" class="form-control">
+                                                    <div class="require text-danger country_salary"></div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="" class="form-label countrylabel">{{ isset($currency) ? $currency : 'NPR' }}</label>
@@ -63,14 +64,13 @@
                                             <div class="row mt-3">
                                                 <div class="col-md-8">
                                                     <input type="text" name="nepali_salary" value="{{ setParameter($job, 'nepali_salary') }}" class="form-control">
+                                                    <div class="require text-danger nepali_salary"></div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="" class="form-label">NPR</label>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="require text-danger country_salary"></div>
-                                        <div class="require text-danger nepali_salary"></div>
                                     </div>
                                     <div class="form-group mt-2">
                                         <label class="custom-switch-checkbox">
@@ -85,8 +85,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="salary" class="form-label">{{ __('Average Earning') }}&nbsp;<span
-                                            class="req">*</span></label>
+                                    <label for="salary" class="form-label">{{ __('Average Earning') }}</label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="row">

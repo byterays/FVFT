@@ -75,7 +75,8 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="no_of_employee" class="form-label">{{ __('No of Employee') }}&nbsp;<span
+                                    <label for="no_of_employee"
+                                        class="form-label">{{ __('No of Employee') }}&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
@@ -87,7 +88,8 @@
                                                 name="male_employee" placeholder="Enter number">
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="female_employee" class="form-label">{{ __('Female') }}</label>
+                                            <label for="female_employee"
+                                                class="form-label">{{ __('Female') }}</label>
                                             <input type="number" min="1" value="{{ setParameter($job, 'no_of_female') }}"
                                                 oninput="preventNegativeNo($(this));" class="form-control"
                                                 name="female_employee" placeholder="Enter number">
@@ -129,7 +131,8 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="working_hours" class="form-label">{{ __('Working Hours Per Day') }}&nbsp;<span
+                                    <label for="working_hours"
+                                        class="form-label">{{ __('Working Hours Per Day') }}&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
@@ -138,7 +141,8 @@
                                             class="form-control" name="working_hours" placeholder="eg, 8"
                                             oninput="preventNegativeNo($(this));">
                                         <div class="input-group-append">
-                                            <button type="button" class="btn btn-primary">{{ __('In Hour(/hr)') }}</button>
+                                            <button type="button"
+                                                class="btn btn-primary">{{ __('In Hour(/hr)') }}</button>
                                         </div>
                                     </div>
                                     <div class="require text-danger working_hours"></div>
@@ -148,7 +152,8 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="working_days" class="form-label">{{ __('Working Days Per Week') }}&nbsp;<span
+                                    <label for="working_days"
+                                        class="form-label">{{ __('Working Days Per Week') }}&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
@@ -181,7 +186,8 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label class="form-label">{{ __('Country') }}&nbsp;<span class="req">*</span></label>
+                                    <label class="form-label">{{ __('Country') }}&nbsp;<span
+                                            class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <select name="country" id="select-country" class="form-control select2-show-search"
@@ -203,7 +209,8 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label class="form-label">{{ __('States') }}&nbsp;<span class="req">*</span></label>
+                                    <label class="form-label">{{ __('States') }}&nbsp;<span
+                                            class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <select name="state" id="select-state" class="form-control select2-show-search"
@@ -293,7 +300,8 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="job_description" class="form-label">{{ __('Job Description') }}</label>
+                                    <label for="job_description"
+                                        class="form-label">{{ __('Job Description') }}</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="hidden" class="form-control"
@@ -322,7 +330,8 @@
                     </div>
                 </div>
                 <div class="mx-auto">
-                    <button type="button" onclick="submitForm(event);" class="btn btn-primary rounded-0">{{ __('Next') }} <i
+                    <button type="button" onclick="submitForm(event);"
+                        class="btn btn-primary rounded-0">{{ __('Next') }} <i
                             class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Applicant Qualification') }}</span>
                 </div>
             </div>
@@ -330,6 +339,7 @@
     </form>
 @endsection
 @section('script')
+    <script src="{{ asset('js/location.js') }}"></script>
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
     <script>

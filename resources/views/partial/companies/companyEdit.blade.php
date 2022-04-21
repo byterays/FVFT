@@ -123,7 +123,7 @@
                                     class="req">*</span></label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control datetime" value="{{ $company->operating_since }}"
+                            <input type="text" class="form-control opsince" value="{{ $company->operating_since }}"
                                 name="operating_since" readonly id="">
                             <div class="require text-danger operating_since"></div>
                         </div>
@@ -238,7 +238,7 @@
                         <div class="col-md-4">
                             <label for="phn">{{ __('Company Phone Number') }}</label>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <select name="dial_code" class="form-control select2">
                                 <option value="">{{ __('ISO') }}</option>
                                 @foreach ($countries as $country)
@@ -248,7 +248,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <input type="text" name="mobile_phone1" class="form-control"
                                 placeholder="Enter Phone Number1" value="{{ $company->mobile_phone1 }}">
                             <input type="text" name="mobile_phone2" class="form-control mt-3"
@@ -302,14 +302,14 @@
             <div class="card-body">
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="">{{ __('Full Name') }}&nbsp;<span class="req">*</span></label>
                         </div>
                         @php
                             $hasContactPerson = !empty($company->company_contact_person);
 
                         @endphp
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <select name="person_designation" class="form-control select2">
                                 <option value="Mr"
                                     {{ $hasContactPerson && $company->company_contact_person->person_designation == 'Mr' ? 'selected' : '' }}>
@@ -332,10 +332,10 @@
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="">{{ __('Designation') }}&nbsp;<span class="req">*</span></label>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             <input type="text" name="contact_person_designation"
                                 value="{{ $hasContactPerson ? $company->company_contact_person->position : '' }}" class="form-control"
                                 placeholder="Enter Designation, eg, HR, Manager">
@@ -344,10 +344,10 @@
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="">{{ __('Mobile Number') }}</label>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <select name="dialcode" class="form-control select2">
                                 <option value="">{{ __('ISO') }}</option>
                                 @foreach ($countries as $country)
@@ -369,10 +369,10 @@
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="">{{ __('Email') }}</label>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             <input type="email" class="form-control"
                                 value="{{ $hasContactPerson ? $company->company_contact_person->email : '' }}" name="contact_person_email"
                                 placeholder="Enter Email">

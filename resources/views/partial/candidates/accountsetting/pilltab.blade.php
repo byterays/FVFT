@@ -15,7 +15,7 @@ $_deleteAccount = $RouteName == $route.'account_setting.get_account_setting';
     <div class="tabs-menu ">
         <!-- Tabs -->
         <ul class="nav panel-tabs">
-            <li class=""><a href="{{ route('candidate.account_setting.index') }}" class="{{ !$_editProfile ?: 'active' }}">{{ strtoupper(__('Edit Profile')) }}</a></li>
+            {{-- <li class=""><a href="{{ route('candidate.account_setting.index') }}" class="{{ !$_editProfile ?: 'active' }}">{{ strtoupper(__('Edit Profile')) }}</a></li> --}}
             <li><a href="{{ route('candidate.account_setting.get_change_password') }}" class="{{ !$_changePassword ?: 'active' }}">{{ strtoupper(__('Change Password')) }}</a></li>
             <li><a href="{{ route('candidate.account_setting.get_account_setting') }}" class="{{ !$_deleteAccount ?: 'active' }}">{{ strtoupper(__('Deactivate My Account')) }}</a></li>
         </ul>

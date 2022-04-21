@@ -29,6 +29,12 @@ class JobSettingController extends Controller
         
     }
 
+    public function get_job_alert()
+    {
+        return $this->client_view($this->page."get_job_alert");
+        
+    }
+
     public function post_job_preference(Request $request)
     {
         // $validator = Validator::make($request->all(),[
@@ -83,5 +89,25 @@ class JobSettingController extends Controller
         }
     }
 
+
+    public function updateJobNotification(Request $request)
+    {
+        if($request->notify == 'job_notify'){
+            $this->employe()->update([
+                'job_notify' => $request->name == 1 ? 0 : 1,
+            ]);
+            $job_notify = $this->employe()->refresh()->job_notify;
+            $msg = $job_notify == 1 ? 'Job notification for preferred job enabled' : 'Job notification for preferred job disabled';
+            return response()->json(['msg' => $msg, 'value' => $job_notify]);
+        } 
+        if($request->notify == 'all_job_notify'){
+            $this->employe()->update([
+                'all_job_notify' => $request->name == 1 ? 0 : 1,
+            ]);
+            $all_job_notify = $this->employe()->all_job_notify;
+            $msg = $all_job_notify == 1 ? 'All job notification enabled' : 'All job notification disabled';
+            return response()->json(['msg' => $msg, 'value' => $all_job_notify]);
+        }
+    }
     
 }

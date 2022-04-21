@@ -258,8 +258,9 @@
                                                             <label for="" class="form-label">{{ __('Working Duration') }}&nbsp;:</label>
                                                         </div>
                                                         <div class="col-md-8">
-                                                            {{ $eexperience['working_year'] }}
-                                                            {{ $eexperience['working_month'] }}
+                                                            {{-- {{ $eexperience['working_year'] }}
+                                                            {{ $eexperience['working_month'] }} --}}
+                                                            {{ $eexperience['working_year'] != null ? $eexperience['working_year'] . getYearForm($eexperience['working_year']) : '' }} {{ $eexperience['working_month'] != null ? '& '. $eexperience['working_month'] . getMonthForm($eexperience['working_month']) : '' }}
 
                                                         </div>
                                                     </div>
@@ -275,7 +276,7 @@
                             <div class="card-body mx-auto">
                                 <div class="mx-auto">
                                     <span>{{ __('Experience') }}</span> &nbsp;&nbsp;&nbsp;<a
-                                        href="{{ route('candidate.profile.get_experience') }}"
+                                        href="{{ route('candidate.profile.get_preferred_jobs') }}"
                                         class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i>{{ __('Back') }} </a>
                                     <a href="{{ route('candidate.profile.get_save') }}" class="btn btn-primary ml-3 rounded-0">{{ __('Save') }}</a>
 

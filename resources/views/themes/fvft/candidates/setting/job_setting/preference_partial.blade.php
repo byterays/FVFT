@@ -96,12 +96,12 @@ $jt_count = 0;
                     </div>
                 </div>
             @else
-                <div class="row" id="jobRow_{{ $jt_count }}">
+                <div class="row mt-2" id="jobRow_{{ $jt_count }}">
                     <div class="col-md-2">
 
                     </div>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" name="job_title[]" placeholder="Enter Job Title">
+                        <input type="text" class="form-control" name="job_title[]" value="{{ $job_preference->job_title }}" placeholder="Enter Job Title">
 
                     </div>
                     <div class="col-md-2 my-auto">
@@ -148,7 +148,7 @@ $jt_count = 0;
                     </div>
                 </div>
             @else
-                <div class="row" id="countryRow_{{ $c_count }}">
+                <div class="row mt-2" id="countryRow_{{ $c_count }}">
                     <div class="col-md-2">
 
                     </div>

@@ -45,7 +45,7 @@
         {{-- <a href="/candidate/job-preferences" class="@if(Route::currentRouteName()=="candidate.job-preferences") active @endif  d-flex border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-cog-outline fs-20"></i></span> Job Preferences
         </a> --}}
-        <a href="{{ route('candidate.account_setting.index') }}" class="@if(Route::currentRouteName()=="candidate.account_setting.index") active @endif  d-flex border-bottom">
+        <a href="{{ route('candidate.account_setting.get_change_password') }}" class="@if(Route::currentRouteName()=="candidate.account_setting.get_change_password") active @endif  d-flex border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-cog-outline fs-20"></i></span> {{ __('Settings') }}
         </a>
         <a href="{{ route('candidate.support.support') }}" class="@if(Route::currentRouteName()=="candidate.support.support") active @endif  d-flex border-bottom">
