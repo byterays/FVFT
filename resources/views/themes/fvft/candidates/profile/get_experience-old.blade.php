@@ -51,8 +51,7 @@
                                             @if (json_decode($employ->experiences, true) != null)
                                                 @foreach (json_decode($employ->experiences, true) as $key => $employ_experience)
                                                     <div class="form-group">
-                                                        <label for=""
-                                                            class="form-label">{{ __('Experience') }}</label>
+                                                        <label for="" class="form-label">{{ __('Experience') }}</label>
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="row">
@@ -65,8 +64,7 @@
                                                                     data-placeholder="Select Country">
                                                                     <option value="">{{ __('Select Country') }}</option>
                                                                     @foreach ($countries as $country)
-                                                                        <option value="{{ $country->id }}"
-                                                                            {{ $country->id == $employ_experience['country_id'] ? 'selected' : '' }}>
+                                                                        <option value="{{ $country->id }}" {{ $country->id == $employ_experience['country_id'] ? 'selected' : '' }}>
                                                                             {{ $country->name }}
                                                                         </option>
                                                                     @endforeach
@@ -77,14 +75,13 @@
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <label for="">{{ __('Industry Type') }}</label>
+                                                                <label for="">{{ __('Job Category') }}</label>
                                                             </div>
                                                             <div class="col-md-8">
                                                                 <select name="job_category_id[]"
                                                                     class="form-control select2-show-search"
                                                                     data-placeholder="Select Job Category" id="">
-                                                                    <option value="">{{ __('Select Job Category') }}
-                                                                    </option>
+                                                                    <option value="">{{ __('Select Job Category') }}</option>
                                                                     @foreach ($job_categories as $job_category)
                                                                         <option value="{{ $job_category->id }}"
                                                                             {{ $job_category->id == $employ_experience['job_category_id'] ? 'selected' : '' }}>
@@ -103,8 +100,7 @@
                                                                 <select name="job_title[]"
                                                                     class="form-control select2-show-search" id=""
                                                                     data-placeholder="Select Job Title">
-                                                                    <option value="">{{ __('Select Job Title') }}
-                                                                    </option>
+                                                                    <option value="">{{ __('Select Job Title') }}</option>
                                                                     @foreach ($jobs as $job)
                                                                         <option value="{{ $job->id }}"
                                                                             {{ $job->id == $employ_experience['job_title_id'] ? 'selected' : '' }}>
@@ -123,20 +119,33 @@
                                                                 <select name="working_year[]" class="form-control select2"
                                                                     id="">
                                                                     <option value="">{{ __('Year') }}</option>
-                                                                    @for ($i = 0; $i <= 10; $i++)
-                                                                        <option value="{{ $i }}" {{ $i == $employ_experience['working_year'] ? 'selected' : '' }}>
-                                                                            {{ $i }}</option>
-                                                                    @endfor
+                                                                    <?php
+                                                                    $dyear = $employ_experience['working_year'];
+                                                                    $year = date('Y');
+                                                                    $min = $year - 250;
+                                                                    $max = $year;
+                                                                    for ($i = $max; $i >= $min; $i--) {
+                                                                        $selected = $dyear == $i ? 'selected' : '';
+                                                                        echo "<option value='$i' $selected>$i</option>";
+                                                                    }
+                                                                    ?>
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <select name="working_month[]" class="form-control select2"
                                                                     id="">
                                                                     <option value="">{{ __('Month') }}</option>
-                                                                    @for ($i = 0; $i <= 12; $i++)
-                                                                        <option value="{{ $i }}" {{ $i == $employ_experience['working_month'] ? 'selected': '' }}>
-                                                                            {{ $i }}</option>
-                                                                    @endfor
+                                                                    <?php
+                                                                    $dmonth = $employ_experience['working_month'];
+                                                                    ?>
+                                                                    <?php for( $m = 1; $m <= 12; ++$m ) {
+                                                                    $month_label = date('F', mktime(0, 0, 0, $m, 1));
+                                                                    $selected_month = $dmonth == $month_label ? 'selected' : '';
+                                                                    ?>
+                                                                    <option value="<?php echo $month_label; ?>" <?php echo $selected_month; ?>>
+                                                                        <?php echo $month_label; ?>
+                                                                    </option>
+                                                                    <?php } ?>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -151,8 +160,7 @@
 
                                             </div>
                                             <div class="form-group">
-                                                <span class="cur_sor"
-                                                    id="addExperience">{{ __('Add Experience') }} <i
+                                                <span class="cur_sor" id="addExperience">{{ __('Add Experience') }} <i
                                                         class="fa fa-plus"></i></span>
                                             </div>
                                         </div>
@@ -164,11 +172,10 @@
                                     <div class="mx-auto">
                                         <span>{{ __('Qualification') }}</span> &nbsp;&nbsp;&nbsp;<a
                                             href="{{ route('candidate.profile.get_qualification') }}"
-                                            class="btn btn-primary rounded-0"><i
-                                                class="fa fa-arrow-left"></i>{{ __('Back') }} </a>
+                                            class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i>{{ __('Back') }} </a>
                                         <button type="button" onclick="submitForm(event);"
                                             class="btn btn-primary ml-3 rounded-0">{{ __('Next') }} <i
-                                                class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Preferred Jobs') }}
+                                                class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Preview') }}
                                         </span>
                                     </div>
                                 </div>
@@ -251,19 +258,32 @@
         <div class="col-md-4">
             <select name="working_year[]" class="form-control select2" id="">
                 <option value="">{{ __('Year') }}</option>
-                @for ($i = 0; $i <= 10; $i++)
-                    <option value="{{ $i }}">
-                        {{ $i }}</option>
-                @endfor
+                <?php
+                $dyear = old('year');
+                $year = date('Y');
+                $min = $year - 250;
+                $max = $year;
+                for ($i = $max; $i >= $min; $i--) {
+                    $selected = $dyear == $i ? 'selected' : '';
+                    echo "<option value='$i' $selected>$i</option>";
+                }
+                ?>
             </select>
         </div>
         <div class="col-md-4">
             <select name="working_month[]" class="form-control select2" id="">
                 <option value="">{{ __('Month') }}</option>
-                @for ($i = 0; $i <= 12; $i++)
-                    <option value="{{ $i }}">
-                        {{ $i }}</option>
-                @endfor
+                <?php
+                $dmonth = old('month');
+                ?>
+                <?php for( $m = 1; $m <= 12; ++$m ) {
+    $month_label = date('F', mktime(0, 0, 0, $m, 1));
+    $selected_month = $dmonth == $month_label ? 'selected' : '';
+    ?>
+                <option value="<?php echo $month_label; ?>" <?php echo $selected_month; ?>>
+                    <?php echo $month_label; ?>
+                </option>
+                <?php } ?>
             </select>
         </div>
     </div>

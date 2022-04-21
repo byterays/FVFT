@@ -62,7 +62,7 @@
                     @php
                         $job_status = ['Draft' => 'primary', 'Pending' => 'warning', 'Active' => 'success', 'Approved' => 'success', 'Not Approved' => 'warning', 'Published' => 'success', 'Unpublished' => 'warning', 'Expired' => 'danger', 'Rejected' => 'danger'];
                     @endphp
-                    <span class="label label-{{ $job_status[$job->status] }}">
+                    <span class="label label-{{ $job->status != null ? $job_status[$job->status] : '' }}">
                         {{ $job->status }}
                     </span>
                 </td>

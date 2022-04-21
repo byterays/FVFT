@@ -132,7 +132,7 @@
                                             class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i>{{ __('Back') }} </a>
                                         <button type="button" onclick="submitForm(event);"
                                             class="btn btn-primary ml-3 rounded-0">{{ __('Next') }} <i
-                                                class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Contact Information') }}</span>
+                                                class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Qualification') }}</span>
                                     </div>
                                 </div>
                             </div>

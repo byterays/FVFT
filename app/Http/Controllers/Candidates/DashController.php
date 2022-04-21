@@ -284,7 +284,7 @@ class DashController extends Controller
             $employ = Employe::where('user_id', auth()->user()->id)->first();
             // $employ = \DB::table('employes')->where('user_id', auth()->user()->id)->first();
             $is_exist = \DB::table("job_applications")->where('job_id', $id)->where('employ_id', $employ->id)->first();
-            if ($employ->calculateProfileCompletion() > 80) {
+            if ($employ->calculateProfileCompletion() > 50) {
                 if (!$is_exist) {
                     \DB::table("job_applications")->insert([
                         "job_id" => $id,
@@ -294,7 +294,7 @@ class DashController extends Controller
                     return redirect()->route('candidate.dashboard')->with(notifyMsg('warning', 'You have already applied for this job'));
                 }
             } else {
-                return redirect()->route('candidate.profile.get_personal_information')->with(notifyMsg('warning', 'You are not eligible to apply for job. Please Complete your profile first.x'));
+                return redirect()->route('candidate.profile.get_personal_information')->with(notifyMsg('warning', 'You are not eligible to apply for job. Please Complete your profile first'));
             }
 
         }

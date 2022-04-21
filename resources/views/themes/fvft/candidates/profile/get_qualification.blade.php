@@ -51,8 +51,8 @@
                                             <div class="form-group">
                                                 <label for="">{{ __('Education Level') }}&nbsp;<span
                                                         class="req">*</span></label>
-                                                <select name="education_level_id" class="form-control select2-show-search">
-                                                    <option value="">{{ __('Select Level') }}</option>
+                                                <select name="education_level_id" class="form-control select2-show-search" data-placeholder="Select Education Level">
+                                                    <option value="">{{ __('Select Education Level') }}</option>
                                                     @foreach ($educationLevels as $educationLevel)
                                                         <option value="{{ $educationLevel->id }}"
                                                             {{ $educationLevel->id == setParameter($employ,'education_level_id') ? 'selected' : '' }}>
@@ -123,7 +123,7 @@
                                                     @foreach (json_decode($employ->languages, true) as $key => $employ_language)
                                                         <div class="row {{ !$loop->first ? 'mt-2' : '' }}">
                                                             <div class="col-md-6">
-                                                                <select name="language[]" class="form-control select2">
+                                                                <select name="language[]" class="form-control select2-show-search" data-placeholder="Select Language">
                                                                     <option value="">{{ __('Select Language') }}</option>
                                                                     @foreach ($languages as $language)
                                                                         <option value="{{ $language->id }}"
@@ -134,7 +134,7 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <select name="language_level[]"
-                                                                    class="form-control select2">
+                                                                    class="form-control select2-show-search" data-placeholder="Select Level">
                                                                     <option value="">{{ __('Select Level') }}</option>
                                                                     <option value="Very Good"
                                                                         {{ $employ_language['language_level'] == 'Very Good' ? 'selected' : '' }}>
@@ -193,6 +193,10 @@
 @endsection
 @section('script')
     <script>
+        function initializeSelect2()
+        {
+            $(".select2-show-search").select2();
+        }
         $(document).ready(function() {
             $("#newTrainingModal").on('hidden.bs.modal', function() {
                 $(this).find('form')[0].reset();
@@ -312,7 +316,7 @@
         $("#addLanguage").on('click', () => {
             let language_html = `<div class="row mt-5" id="languageRow_` + count + `">
                                 <div class="col-md-6">
-                                    <select name="language[]" class="form-control select2" id="lang_` + count + `">
+                                    <select name="language[]" class="form-control select2-show-search" id="lang_` + count + `">
                                         <option value="">{{ __('Select Language') }}</option>
                                         @foreach ($languages as $language)
                                             <option value="{{ $language->id }}">{{ $language->lang }}</option>
@@ -320,7 +324,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-5">
-                                    <select name="language_level[]" class="form-control select2">
+                                    <select name="language_level[]" class="form-control select2-show-search">
                                         <option value="">{{ __('Select Level') }}</option>
                                         <option value="Very Good">Very Good</option>
                                         <option value="Good">Good</option>
@@ -333,6 +337,7 @@
                         </div>
                             </div>`;
             $("#appendLanguageDiv").append(language_html);
+            initializeSelect2();
             count++;
         });
         // End Language Section

@@ -7,7 +7,7 @@
                 {{$profile_completion}}%
             </div>
         </div>
-        <small class="text-warning">Profile completion status must be more than <strong>80%</strong> to be able to apply for job.</small>
+        <small class="text-warning">Profile completion status must be more than <strong>50%</strong> to be able to apply for job.</small>
         @if ((int) $profile_completion < 100)
             <a href="{{ route('candidate.profile.get_personal_information') }}" class="float-right btn btn-link">{{ __('Complete your Profile') }}</a>
         @endif

@@ -57,19 +57,32 @@
         <div class="col-md-4">
             <select name="working_year[]" class="form-control select2" id="">
                 <option value="">Year</option>
-                @for ($i = 0; $i <= 10; $i++)
-                    <option value="{{ $i }}">
-                        {{ $i }}</option>
-                @endfor
+                <?php
+                $dyear = old('year');
+                $year = date('Y');
+                $min = $year - 250;
+                $max = $year;
+                for ($i = $max; $i >= $min; $i--) {
+                    $selected = $dyear == $i ? 'selected' : '';
+                    echo "<option value='$i' $selected>$i</option>";
+                }
+                ?>
             </select>
         </div>
         <div class="col-md-4">
             <select name="working_month[]" class="form-control select2" id="">
                 <option value="">Month</option>
-                @for ($i = 0; $i <= 12; $i++)
-                    <option value="{{ $i }}">
-                        {{ $i }}</option>
-                @endfor
+                <?php
+                $dmonth = old('month');
+                ?>
+                <?php for( $m = 1; $m <= 12; ++$m ) {
+    $month_label = date('F', mktime(0, 0, 0, $m, 1));
+    $selected_month = $dmonth == $month_label ? 'selected' : '';
+    ?>
+                <option value="<?php echo $month_label; ?>" <?php echo $selected_month; ?>>
+                    <?php echo $month_label; ?>
+                </option>
+                <?php } ?>
             </select>
         </div>
     </div>

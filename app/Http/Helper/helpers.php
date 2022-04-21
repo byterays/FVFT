@@ -95,3 +95,15 @@ if(!function_exists('getFormattedDate')){
         return !($date != null) ?: date($format, strtotime($date));
     }
 }
+
+if(!function_exists('getYearForm')){
+    function getYearForm($year){
+        return $year > 1 ? 'years' : 'year';
+    }
+}
+
+if(!function_exists('getMonthForm')){
+    function getMonthForm($month){
+        return $month > 1 ? 'months' : 'month';
+    }
+}

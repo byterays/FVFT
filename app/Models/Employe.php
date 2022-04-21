@@ -55,7 +55,8 @@ class Employe extends Model
         'city_street',
         'bio',
         'website',
-        'job_notify'
+        'job_notify',
+        'all_job_notify'
     ];
 
 

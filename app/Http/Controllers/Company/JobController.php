@@ -110,7 +110,7 @@ class JobController extends Controller
                 $oldStatus = $job->status;
                 $oldDraftStatus = $job->draft_status;
                 $this->__saveOrUpdateJob($job, $request, $oldImage, $oldPicture);
-                $job->status = $request->status != null ? $request->status : $oldStatus;
+                $job->status = $request->status != null ? $request->status : ($oldStatus == null ? 'Draft' : $oldStatus);
                 if($request->status == 'Published'){
                     $job->publish_status = date('Y-m-d H:i:s');
                 }

@@ -29,7 +29,8 @@
             margin-bottom: 10px;
             /* margin-left: 300px; */
         }
-        .otherP{
+
+        .otherP {
             margin-left: 317px;
         }
 
@@ -103,31 +104,35 @@
                 <p class="otherP">Height : {{ $employ->height ? $employ->height . ' CM' : '' }}</p>
             </div>
         </div>
-        <div class="row d-flex mt-3">
-            <div class="column">
-                <h2 class="pI">Experience</h2>
+        @if ($employ->experiences != null && !empty($employ->experiences))
+            <div class="row d-flex mt-3">
+                <div class="column">
+                    <h2 class="pI">Experience</h2>
+                </div>
+                <div class="column1">
+                    @if (json_decode($employ->experiences != null))
+                        @foreach (json_decode($employ->experiences, true) as $employ_experience)
+                            <?php
+                            $job = DB::table('jobs')->where('id', $employ_experience['job_title_id']);
+                            $job_category = DB::table('job_categories')->where('id', $employ_experience['job_category_id']);
+                            $country_name = DB::table('countries')->where('id', $employ_experience['country_id']);
+                            
+                            $job_title = $job->exists() ? $job->first()->title : '';
+                            $country_title = $country_name->exists() ? $country_name->first()->name : '';
+                            $job_category_title = $job_category->exists() ? $job_category->first()->functional_area : '';
+                            
+                            ?>
+                            <p class="otherP">{{ $loop->iteration }}.&nbsp;<span>{{ $job_title }},
+                                    {{ $employ_experience['working_year'] }}
+                                    {{ $employ_experience['working_year'] > 1 ? 'Years' : 'Year' }}
+                                    {{ $employ_experience['working_month'] }}
+                                    {{ $employ_experience['working_month'] > 1 ? 'Months' : 'Month' }},
+                                    {{ $job_category_title }}, {{ $country_title }}</span></p>
+                        @endforeach
+                    @endif
+                </div>
             </div>
-            <div class="column1">
-                @foreach (json_decode($employ->experiences, true) as $employ_experience)
-                    <?php
-                    $job = DB::table('jobs')->where('id', $employ_experience['job_title_id']);
-                    $job_category = DB::table('job_categories')->where('id', $employ_experience['job_category_id']);
-                    $country_name = DB::table('countries')->where('id', $employ_experience['country_id']);
-                    
-                    $job_title = $job->exists() ? $job->first()->title : '';
-                    $country_title = $country_name->exists() ? $country_name->first()->name : '';
-                    $job_category_title = $job_category->exists() ? $job_category->first()->functional_area : '';
-                    
-                    ?>
-                    <p class="otherP">{{ $loop->iteration }}.&nbsp;<span>{{ $job_title }},
-                            {{ $employ_experience['working_year'] }}
-                            {{ $employ_experience['working_year'] > 1 ? 'Years' : 'Year' }}
-                            {{ $employ_experience['working_month'] }}
-                            {{ $employ_experience['working_month'] > 1 ? 'Months' : 'Month' }},
-                            {{ $job_category_title }}, {{ $country_title }}</span></p>
-                @endforeach
-            </div>
-        </div>
+        @endif
         <div class="row d-flex mt-3">
             <div class="column">
                 <h2 class="pI">Education</h2>

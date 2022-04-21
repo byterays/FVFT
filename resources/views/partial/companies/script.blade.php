@@ -14,6 +14,13 @@
             autoclose: true,
             todayHighlight: true,
         });
+
+        $(".opsince").datepicker({
+            format: "yyyy",
+            viewMode: "years",
+            minViewMode: "years",
+            autoclose: true,
+        });
     });
 
     let body = "";
