@@ -25,6 +25,42 @@
         </div>
     </div>
     <div class="mt-5">
+        <div class="item-all-cat">
+            <div class="row category-type">
+                @foreach ($profile_datas as $profile_data)
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="item-all-card text-dark text-center card">
+                            <a href="{{ $profile_data['link'] }}"></a>
+                            <div class="iteam-all-icon1">
+                                <img src="{{ asset($profile_data['icon']) }}" class="imag-service" alt="">
+                                <i class="{{ $profile_data['icon'] }}"></i>
+                            </div>
+                            <div class="item-all-text mt-3">
+                                <h5 class="mb-0 text-body">{{ __($profile_data['title']) }}
+                                    <span class="notification-badge badge badge-warning">{{ $profile_data['totalcount'] ?? 0 }}</span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="row row-cards">
+            @foreach ($application_datas as $a_data)
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                    <a href="{{ $a_data['link'] }}">
+                        <div class="card">
+                            <div class="card-body p-4 text-center feature">
+                                <p class="h2 text-center text-primary">{{ $a_data['totalcount'] ?? 0 }}</p>
+                                <p class="card-text mt-3 mb-3">{{ __($a_data['title']) }}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endforeach
+        </div>
+    </div>
+    <div class="mt-5">
         <div class="row row-cards">
             @foreach ($job_datas as $j_data)
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
@@ -36,26 +72,6 @@
                                 </div>
                                 <p class="card-text mt-3 mb-3">{{ __($j_data['title']) }}</p>
                                 <p class="h2 text-center text-primary">{{ $j_data['totalcount'] }}</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            @endforeach
-        </div>
-    </div>
-    <div class="mt-5">
-        <div class="row row-cards">
-            @foreach ($profile_datas as $profile_data)
-                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                    <a href="{{ $profile_data['link'] }}">
-                        <div class="card bg-blue profileRow">
-                            <div class="card-body p-4 text-center feature">
-                                <div class="fa-stack fa-lg fa-1x icons shadow-default bg-primary-transparent">
-                                    <i class="{{ $profile_data['icon'] }}"></i>
-                                </div>
-                                <p class="card-text mt-3 mb-3">{{ __($profile_data['title']) }}</p>
-                                <p class="h2 text-center">{{ $profile_data['totalcount'] }}
-                                </p>
                             </div>
                         </div>
                     </a>
