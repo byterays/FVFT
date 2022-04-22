@@ -142,7 +142,8 @@ class JobsListController extends Controller
         }
 
         $employee = Auth::guard('api')->user()->load('employee')->employee;
-        if($employee){
+
+        if($employee AND $employee->calculateProfileCompletion() >= 50){
             try {
 
                 if (JobApplication::where('employ_id', $employee->id)->where('job_id', $request->job_id)->exists()){
@@ -161,7 +162,7 @@ class JobsListController extends Controller
                 return $this->sendResponse('', $exception->getMessage(), '', false);
             }
         }else{
-            return $this->sendResponse('', 'Employee not found', '', false);
+            return $this->sendResponse('', 'Not eligible to apply.', '', false);
         }
 
     }
