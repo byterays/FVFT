@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\API\Candidates\Jobs;
 
+use App\Enum\JobApplicationInterviewStatus;
+use App\Enum\JobApplicationStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\Company;
 use App\Models\Country;
 use App\Models\Employe;
+use App\Models\JobApplication;
 use App\Models\JobCategory;
 use App\Models\SavedJob;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,6 +18,7 @@ use App\Models\Job;
 use App\Traits\Api\ApiMethods;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class JobsListController extends Controller
 {
@@ -125,6 +129,41 @@ class JobsListController extends Controller
         }
 
         return $this->sendResponse(compact('saved_jobs'),"success");
+    }
+
+    public function applyJob(Request $request)
+    {
+        $validator = Validator::make($request->all(),  [
+            'job_id' => 'required|int',
+        ]);
+
+        if($validator->fails()){
+            return $this->sendResponse('', 'The given data was invalid', '', true);
+        }
+
+        $employee = Auth::guard('api')->user()->load('employee')->employee;
+        if($employee){
+            try {
+
+                if (JobApplication::where('employ_id', $employee->id)->where('job_id', $request->job_id)->exists()){
+                    return $this->sendResponse('', 'Already applied for this job.', '', true);
+                }
+
+                $job_application = new JobApplication();
+                $job_application->employ_id = $employee->id;
+                $job_application->job_id = $request->job_id;
+                $job_application->status = JobApplicationStatus::PENDING;
+                $job_application->interview_status = JobApplicationInterviewStatus::NOT_STARTED;
+                $job_application->save();
+
+                return $this->sendResponse('', 'Successfully Applied for job.', '');
+            }catch (\Exception $exception){
+                return $this->sendResponse('', $exception->getMessage(), '', false);
+            }
+        }else{
+            return $this->sendResponse('', 'Employee not found', '', false);
+        }
+
     }
 
 //    public function listing(Request $request){

@@ -24,7 +24,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('job-application-list', [JobApplicationController::class, 'list']);
     Route::post('change-password', [ProfileController::class, 'change_password']);
 
-
     // CV Upload
     Route::post('/cv', [CvController::class, 'upload'])->name('candidate.cv.upload');
     // Fetch CV
@@ -49,6 +48,8 @@ Route::middleware('auth:api')->group(function () {
 Route::get('job/home', [JobsListController::class, 'getHome']);
 Route::get('job-list', [JobsListController::class, 'jobListing']);
 Route::get('job-categories', [JobCategoryController::class, 'categoryListing']);
+
+Route::post('job/apply', [JobsListController::class, 'applyJob']);
 
 Route::get('news-categories', [NewsCategoryController::class, 'list']);
 Route::get('news', [NewsController::class, 'list']);
