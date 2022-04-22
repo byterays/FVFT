@@ -96,6 +96,9 @@
                                 <option value="Non Profit"
                                     {{ $company->ownership == 'Non Profit' ? 'selected' : '' }}>{{ __('Non Profit') }}
                                 </option>
+                                <option value="Recruitment Agency"
+                                    {{ $company->ownership == 'Recruitment Agency' ? 'selected' : '' }}>{{ __('Recruitment Agency') }}
+                                </option>
                             </select>
                             <div class="require text-danger ownership"></div>
                         </div>
@@ -108,8 +111,16 @@
                                     class="req">*</span></label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" name="no_of_employee" value="{{ $company->no_of_employee }}"
-                                class="form-control" placeholder="eg, 1-50, 51-200">
+                            {{-- <input type="text" name="no_of_employee" value="{{ $company->no_of_employee }}"
+                                class="form-control" placeholder="eg, 1-50, 51-200"> --}}
+                            <select name="no_of_employee" class="form-control select2">
+                                <option value="">No of Employee</option>
+                                <option value="1-500" {{ $company->no_of_employee == '1-500' ? 'selected' : '' }}>1-500</option>
+                                <option value="501-2500" {{ $company->no_of_employee == '501-2500' ? 'selected' : '' }}>501-2500</option>
+                                <option value="2501-5000" {{ $company->no_of_employee == '2501-5000' ? 'selected' : '' }}>2501-5000</option>
+                                <option value="5001-10000" {{ $company->no_of_employee == '5001-10000' ? 'selected' : '' }}>5001-10000</option>
+                                <option value="Above 10001" {{ $company->no_of_employee == 'Above 10001' ? 'selected' : '' }}>Above 10001</option>
+                            </select>
                             <div class="require text-danger no_of_employee"></div>
                         </div>
                     </div>

@@ -12,13 +12,21 @@
 @section('data')
     <div class="card mb-0">
         <div class="card-header">
+            {{-- <div class="row w-100">
+                <div class="col-md-6">
+                    <h3 class="card-title">Dashboard</h3>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="card-title float-right">NtJobs</h3>
+                </div>
+            </div> --}}
             <div class="col-md-6">
                 <div class="row">
                     <h3 class="card-title">{{ __('Dashboard') }}</h3>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="row mx-auto">
+                <div class="row float-right">
                     <h3 class="card-title">{{ $company->company_name ?? '' }}</h3>
                 </div>
             </div>
@@ -37,7 +45,8 @@
                             </div>
                             <div class="item-all-text mt-3">
                                 <h5 class="mb-0 text-body">{{ __($profile_data['title']) }}
-                                    <span class="notification-badge badge badge-warning">{{ $profile_data['totalcount'] ?? 0 }}</span>
+                                    <span
+                                        class="notification-badge badge badge-warning">{{ $profile_data['totalcount'] ?? 0 }}</span>
                                 </h5>
                             </div>
                         </div>

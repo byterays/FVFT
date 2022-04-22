@@ -96,13 +96,13 @@ class DashController extends Controller
                     'title' => 'Post New Job',
                     'link' => route('company.newjob.get_job_detail'),
                     'totalcount' => '',
-                    'icon' => '/uploads/site/svgs/jobs/upload.svg',
+                    'icon' => '/uploads/site/svgs/jobs/upload-white.svg',
                 ],
                 [
                     'title' => 'Search Applicants',
                     'link' => '#',
                     'totalcount' => '',
-                    'icon' => '/uploads/site/svgs/jobs/user.svg',
+                    'icon' => '/uploads/site/svgs/jobs/user-white.svg',
                 ],
                 [
                     'title' => 'New Message',
