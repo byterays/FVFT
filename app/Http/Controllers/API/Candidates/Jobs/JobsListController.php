@@ -167,6 +167,27 @@ class JobsListController extends Controller
 
     }
 
+    public function listAppliedJob(Request $request)
+    {
+        $employee = Auth::guard('api')->user()->load('employee')->employee;
+
+        if($employee){
+
+            $query = JobApplication::query();
+            $query->where('employ_id', $employee->id)->with('job');
+
+            if($request->has('status') AND !blank($request->status)){
+                $query->where('status', $request->status);
+            }
+
+            $application_list = $query->get();
+
+            return $this->sendResponse(compact('application_list'), 'success', '');
+        }
+
+        return $this->sendResponse('', 'Employee not found.', '', false);
+    }
+
 //    public function listing(Request $request){
 //        // dd($request);
 //        $limit= $request->has("limit")?$request->limit:10;

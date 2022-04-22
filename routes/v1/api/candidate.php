@@ -50,6 +50,7 @@ Route::get('job-list', [JobsListController::class, 'jobListing']);
 Route::get('job-categories', [JobCategoryController::class, 'categoryListing']);
 
 Route::post('job/apply', [JobsListController::class, 'applyJob']);
+Route::get('job/apply/list', [JobsListController::class, 'listAppliedJob']);
 
 Route::get('news-categories', [NewsCategoryController::class, 'list']);
 Route::get('news', [NewsController::class, 'list']);
