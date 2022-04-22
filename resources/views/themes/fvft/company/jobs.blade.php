@@ -56,7 +56,7 @@
                                     placeholder="{{ __('Search Your Job') }}" aria-label="Search your Job"
                                     aria-describedby="button-addon2">
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-success" type="submit">{{ __('Search') }}</button>
+                                    <button class="btn btn-outline-primary btn-rounded-0" type="submit">{{ __('Search') }}</button>
                                 </div>
                             </div>
                         </form>
