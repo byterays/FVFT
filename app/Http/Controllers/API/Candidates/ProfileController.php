@@ -51,10 +51,11 @@ class ProfileController extends Controller
     {
         $user = User::find(Auth::user()->id);
         $employee = Employe::where('user_id', $user->id)->firstOrFail();
+
         if (!$request->page OR blank($request->page)){
-            $responseData = $this->sendResponse([], 'page value mismatch', '', false);
-            return $responseData;
+            return $this->sendResponse([], 'page value mismatch', '', false);
         }
+
         if ($request->page == 'personal_information') {
             if ($request->hasFile('profile_picture')) {
                 $prf = $request->file('profile_picture');
@@ -89,7 +90,6 @@ class ProfileController extends Controller
             $employee->city_id = $request->city_id;
             $employee->ward = $request->ward;
             $employee->address = $request->address;
-
             $employee->save();
         }
         elseif($request->page == 'qualification'){
@@ -97,7 +97,7 @@ class ProfileController extends Controller
             if (isset($request->education_id) AND !blank($request->education_id)){
                 $education_level = json_decode($request->education_id);
                 if (!is_array($education_level)){
-                    die('must be an array');
+                    return $this->sendResponse('', 'education id must be an array', '', false);
                 }
                 // remove education level
                 EmployeeEducation::where('employ_id', $employee->id)->delete();
@@ -111,9 +111,11 @@ class ProfileController extends Controller
 
             if (isset($request->training) AND !blank($request->training)){
                 $trainings = json_decode($request->training);
+
                 if (!is_array($trainings)){
-                    die('must be an array');
+                    return $this->sendResponse('', 'training id must be an array', '', false);
                 }
+
                 $fields['trainings'] = json_encode($trainings);
                 $employee->update($fields);
             }
@@ -121,8 +123,9 @@ class ProfileController extends Controller
             if (isset($request->skill) AND !blank($request->skill)){
                 EmployeeSkill::where('employ_id', $employee->id)->delete();
                 $skills = json_decode($request->skill);
+
                 if (!is_array($skills)){
-                    die('must be an array');
+                    return $this->sendResponse('', 'skill id must be an array', '', false);
                 }
 
                 foreach ($skills as $skill) {
@@ -139,17 +142,18 @@ class ProfileController extends Controller
                 $languages = json_decode($request->language, true);
 
                 if (!is_array($languages)){
-                    die('must be an array');
+                    return $this->sendResponse('', 'language id must be an array', '', false);
                 }
-                    foreach ($languages as $language_id => $level) {
-                        if (!blank($language_id)) {
-                            $employee_language = new EmployeeLanguage();
-                            $employee_language->employ_id = $employee->id;
-                            $employee_language->language_id = $language_id;
-                            $employee_language->language_level = $level;
-                            $employee_language->save();
-                        }
+
+                foreach ($languages as $language_id => $level) {
+                    if (!blank($language_id)) {
+                        $employee_language = new EmployeeLanguage();
+                        $employee_language->employ_id = $employee->id;
+                        $employee_language->language_id = $level['language_id'];
+                        $employee_language->language_level = $level['level'];
+                        $employee_language->save();
                     }
+                }
             }
         }
 
@@ -158,7 +162,7 @@ class ProfileController extends Controller
             $experiences = json_decode($request->experience, true);
 
             if (!is_array($experiences)){
-                die('must be an array');
+                return $this->sendResponse('', 'experience id must be an array', '', false);
             }
 
             foreach($experiences as $experience) {
