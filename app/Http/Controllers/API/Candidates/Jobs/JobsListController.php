@@ -180,7 +180,17 @@ class JobsListController extends Controller
                 $query->where('status', $request->status);
             }
 
-            $application_list = $query->get();
+            $applications = $query->get()->groupBy('status');
+
+            $application_list = [
+                JobApplicationStatus::PENDING => $applications[JobApplicationStatus::PENDING] ?? null,
+                JobApplicationStatus::SHORT_LISTED => $applications[JobApplicationStatus::SHORT_LISTED] ?? null,
+                JobApplicationStatus::SELECTED_FOR_INTERVIEW => $applications[JobApplicationStatus::SELECTED_FOR_INTERVIEW] ?? null,
+                JobApplicationStatus::INTERVIEWED => $applications[JobApplicationStatus::INTERVIEWED] ?? null,
+                JobApplicationStatus::ACCEPTED => $applications[JobApplicationStatus::ACCEPTED] ?? null,
+                JobApplicationStatus::REJECTED => $applications[JobApplicationStatus::REJECTED] ?? null,
+                JobApplicationStatus::RED_LISTED => $applications[JobApplicationStatus::RED_LISTED] ?? null,
+            ];
 
             return $this->sendResponse(compact('application_list'), 'success', '');
         }
