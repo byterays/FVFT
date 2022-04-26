@@ -170,8 +170,10 @@ class ProfileController extends Controller
                 $employee_experience->employ_id = $employee->id;
                 $employee_experience->experiencelevels_id = $experience['experiencelevels_id'];
                 $employee_experience->country_id = $experience['country_id'];
-                $employee_experience->job_category_id = $experience['job_category_id'];
-                $employee_experience->job_title_id = $experience['job_title_id'];
+//                $employee_experience->job_category_id = $experience['job_category_id'];
+//                $employee_experience->job_title_id = $experience['job_title_id'];
+                $employee_experience->job_category_id = $experience['industry_id'];
+                $employee_experience->job_title_id = $experience['job_category_id'];
                 $employee_experience->working_year = $experience['working_year'];
                 $employee_experience->working_month = $experience['working_month'];
                 $employee_experience->save();
