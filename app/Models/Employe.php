@@ -215,4 +215,9 @@ class Employe extends Model
         return (new DateService)->calculateAgeFromDateOfBirth($this->dob);
     }
 
+    public function trainings()
+    {
+        return $this->hasMany(EmployeeTraining::class, 'employee_id');
+    }
+
 }

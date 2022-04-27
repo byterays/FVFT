@@ -142,7 +142,8 @@ class JobsListController extends Controller
         }
 
         $employee = Auth::guard('api')->user()->load('employee')->employee;
-        if($employee){
+
+        if($employee AND $employee->calculateProfileCompletion() >= 50){
             try {
 
                 if (JobApplication::where('employ_id', $employee->id)->where('job_id', $request->job_id)->exists()){
@@ -161,9 +162,50 @@ class JobsListController extends Controller
                 return $this->sendResponse('', $exception->getMessage(), '', false);
             }
         }else{
-            return $this->sendResponse('', 'Employee not found', '', false);
+            return $this->sendResponse('', 'Not eligible to apply.', '', false);
         }
 
+    }
+
+    public function listAppliedJob(Request $request)
+    {
+        $employee = Auth::guard('api')->user()->load('employee')->employee;
+
+        if($employee){
+
+            $query = JobApplication::query();
+//            $query->where('employ_id', $employee->id)->with('job');
+            $query->where('employ_id', $employee->id)->with(
+                [
+                    'job.company', 'job.company.country', 'job.company.state', 'job.company.city',
+                    'job.country',
+                    'job.education_level',
+                    'job.jobExperience',
+                    'job.job_category',
+                    'job.jobShift'
+                ]
+            );
+
+            if($request->has('status') AND !blank($request->status)){
+                $query->where('status', $request->status);
+            }
+
+            $applications = $query->get()->groupBy('status');
+
+            $application_list = [
+                JobApplicationStatus::PENDING => $applications[JobApplicationStatus::PENDING] ?? null,
+                JobApplicationStatus::SHORT_LISTED => $applications[JobApplicationStatus::SHORT_LISTED] ?? null,
+                JobApplicationStatus::SELECTED_FOR_INTERVIEW => $applications[JobApplicationStatus::SELECTED_FOR_INTERVIEW] ?? null,
+                JobApplicationStatus::INTERVIEWED => $applications[JobApplicationStatus::INTERVIEWED] ?? null,
+                JobApplicationStatus::ACCEPTED => $applications[JobApplicationStatus::ACCEPTED] ?? null,
+                JobApplicationStatus::REJECTED => $applications[JobApplicationStatus::REJECTED] ?? null,
+                JobApplicationStatus::RED_LISTED => $applications[JobApplicationStatus::RED_LISTED] ?? null,
+            ];
+
+            return $this->sendResponse(compact('application_list'), 'success', '');
+        }
+
+        return $this->sendResponse('', 'Employee not found.', '', false);
     }
 
 //    public function listing(Request $request){

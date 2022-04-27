@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="progress">
             <?php $profile_completion = $employee->calculateProfileCompletion(); ?>
-            <div class="progress-bar" role="progressbar" style="width: {{$profile_completion}}%;"
+            <div class="progress-bar" role="progressbar" style="width: {{$profile_completion}}%; font-size: 12px;"
                  aria-valuenow="{{$profile_completion}}" aria-valuemin="0" aria-valuemax="100">
                 {{$profile_completion}}%
             </div>

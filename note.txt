@@ -1,0 +1,2 @@
+remove trainings column from employee table
+rename job_title_id to industry_id

@@ -7,6 +7,7 @@ use App\Models\EmployeeEducation;
 use App\Models\EmployeeExperience;
 use App\Models\EmployeeLanguage;
 use App\Models\EmployeeSkill;
+use App\Models\EmployeeTraining;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Employe;
@@ -29,7 +30,7 @@ class ProfileController extends Controller
             'experience',
             'experience.country',
             'experience.job_category',
-            'experience.job',
+            'experience.industry',
             'education',
             'education.educationLevel',
             'employeeSkills',
@@ -40,7 +41,9 @@ class ProfileController extends Controller
             'preferredCountry.country',
             'cv',
             'job_applications',
-            'job_preference'])
+            'job_preference',
+            'trainings.training'
+        ])
             ->where('user_id', $user->id)->first();
         $responseData = $this->sendResponse(compact('employee', 'user'), 'success', '');
         return $responseData;
@@ -116,8 +119,15 @@ class ProfileController extends Controller
                     return $this->sendResponse('', 'training id must be an array', '', false);
                 }
 
-                $fields['trainings'] = json_encode($trainings);
-                $employee->update($fields);
+                EmployeeTraining::where('employee_id', $employee->id)->delete();
+                foreach ($trainings as $training) {
+                    $employee_training = new EmployeeTraining();
+                    $employee_training->employee_id = $employee->id;
+                    $employee_training->training_id = $training;
+                    $employee_training->save();
+                }
+//                $fields['trainings'] = json_encode($trainings);
+//                $employee->update($fields);
             }
 
             if (isset($request->skill) AND !blank($request->skill)){
@@ -156,22 +166,23 @@ class ProfileController extends Controller
                 }
             }
         }
-
         elseif ($request->page == 'experience'){
+
             EmployeeExperience::where('employ_id', $employee->id)->delete();
             $experiences = json_decode($request->experience, true);
 
             if (!is_array($experiences)){
                 return $this->sendResponse('', 'experience id must be an array', '', false);
             }
-
             foreach($experiences as $experience) {
                 $employee_experience = new EmployeeExperience();
                 $employee_experience->employ_id = $employee->id;
                 $employee_experience->experiencelevels_id = $experience['experiencelevels_id'];
                 $employee_experience->country_id = $experience['country_id'];
+//                $employee_experience->job_category_id = $experience['job_category_id'];
+//                $employee_experience->job_title_id = $experience['job_title_id'];
                 $employee_experience->job_category_id = $experience['job_category_id'];
-                $employee_experience->job_title_id = $experience['job_title_id'];
+                $employee_experience->industry_id = $experience['industry_id'];
                 $employee_experience->working_year = $experience['working_year'];
                 $employee_experience->working_month = $experience['working_month'];
                 $employee_experience->save();
@@ -186,7 +197,7 @@ class ProfileController extends Controller
             'experience',
             'experience.country',
             'experience.job_category',
-            'experience.job',
+            'experience.industry',
             'education_level',
             'education.educationLevel',
             'employeeSkills',
@@ -197,7 +208,9 @@ class ProfileController extends Controller
             'preferredCountry.country',
             'cv',
             'job_applications',
-            'job_preference'])
+            'job_preference',
+            'trainings.training'
+        ])
             ->where('user_id', $user->id)->first();
 
         $responseData = $this->sendResponse(compact('employee', 'user'), 'success', '');
