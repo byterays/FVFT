@@ -174,7 +174,17 @@ class JobsListController extends Controller
         if($employee){
 
             $query = JobApplication::query();
-            $query->where('employ_id', $employee->id)->with('job');
+//            $query->where('employ_id', $employee->id)->with('job');
+            $query->where('employ_id', $employee->id)->with(
+                [
+                    'job.company', 'job.company.country', 'job.company.state', 'job.company.city',
+                    'job.country',
+                    'job.education_level',
+                    'job.jobExperience',
+                    'job.job_category',
+                    'job.jobShift'
+                ]
+            );
 
             if($request->has('status') AND !blank($request->status)){
                 $query->where('status', $request->status);

@@ -51,42 +51,42 @@ class DashController extends Controller
                 [
                     'title' => 'Total Jobs',
                     'link' => $this->__route('all'),
-                    'totalcount' => $this->company()->jobs->count(),
+                    'totalcount' => ($this->company()) ? $this->company()->jobs->count() : '',
                     'image' => 'mail.svg',
                     'bg-color' => 'bg-blue',
                 ],
                 [
                     'title' => 'Drafted Jobs',
                     'link' => $this->__route('draft_jobs'),
-                    'totalcount' => $this->company()->jobs->where('status', 'Draft')->count(),
+                    'totalcount' => ($this->company()) ? $this->company()->jobs->where('status', 'Draft')->count() : '',
                     'image' => 'megaphone.svg',
                     'bg-color' => 'bg-gray',
                 ],
                 [
                     'title' => 'Pending Jobs',
                     'link' => $this->__route('pending_jobs'),
-                    'totalcount' => $this->company()->jobs->where('status', 'Pending')->count(),
+                    'totalcount' => ($this->company()) ? $this->company()->jobs->where('status', 'Pending')->count() : '',
                     'image' => 'blogging.svg',
                     'bg-color' => 'bg-pink',
                 ],
                 [
                     'title' => 'Published Jobs',
                     'link' => $this->__route('published_jobs'),
-                    'totalcount' => $this->company()->jobs->where('status', 'Published')->count(),
+                    'totalcount' => ($this->company()) ? $this->company()->jobs->where('status', 'Published')->count() : '',
                     'image' => 'picture.svg',
                     'bg-color' => 'bg-orange',
                 ],
                 [
                     'title' => 'Expired Jobs',
                     'link' => $this->__route('expired_jobs'),
-                    'totalcount' => $this->company()->jobs->where('status', 'Expired')->count(),
+                    'totalcount' => ($this->company()) ? $this->company()->jobs->where('status', 'Expired')->count() : '',
                     'image' => 'picture.svg',
                     'bg-color' => 'bg-green',
                 ],
                 [
                     'title' => 'Rejected Jobs',
                     'link' => $this->__route('rejected_jobs'),
-                    'totalcount' => $this->company()->jobs->where('status', 'Rejected')->count(),
+                    'totalcount' => ($this->company()) ? $this->company()->jobs->where('status', 'Rejected')->count() : '',
                     'image' => 'box-closed.svg',
                     'bg-color' => 'bg-red',
                 ],
@@ -121,42 +121,42 @@ class DashController extends Controller
                 [
                     'title' => 'All Applications',
                     'link' => route('company.applicant.index'),
-                    'totalcount' => $this->company()->job_applications->count(),
+                    'totalcount' => ($this->company()) ? $this->company()->job_applications->count() : '',
                     'image' => 'mail.svg',
                     'bg-color' => 'bg-blue',
                 ],
                 [
                     'title' => 'Unscreened Applications',
                     'link' => route('company.applicant.index'),
-                    'totalcount' => $this->company()->job_applications->where('status', 'pending')->count(),
+                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', 'pending')->count() : '',
                     'image' => 'megaphone.svg',
                     'bg-color' => 'bg-gray',
                 ],
                 [
                     'title' => 'Shortlisted Applications',
                     'link' => route('company.applicant.index'),
-                    'totalcount' => $this->company()->job_applications->where('status', 'shortlisted')->count(),
+                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', 'shortlisted')->count() : '',
                     'image' => 'blogging.svg',
                     'bg-color' => 'bg-pink',
                 ],
                 [
                     'title' => 'Interviewed Applications',
                     'link' => route('company.applicant.index'),
-                    'totalcount' => $this->company()->job_applications->where('status', 'selectedForInterview')->count(),
+                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', 'selectedForInterview')->count() : '',
                     'image' => 'picture.svg',
                     'bg-color' => 'bg-orange',
                 ],
                 [
                     'title' => 'Selected Applications',
                     'link' => route('company.applicant.index'),
-                    'totalcount' => $this->company()->job_applications->where('status', 'accepted')->count(),
+                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', 'accepted')->count() : '',
                     'image' => 'picture.svg',
                     'bg-color' => 'bg-green',
                 ],
                 [
                     'title' => 'Rejected Applications',
                     'link' => route('company.applicant.index'),
-                    'totalcount' => $this->company()->job_applications->where('status', 'rejected')->count(),
+                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', 'rejected')->count() : '',
                     'image' => 'box-closed.svg',
                     'bg-color' => 'bg-red',
                 ],
@@ -438,8 +438,10 @@ class DashController extends Controller
     {
         $company = Company::where('user_id', auth()->user()->id)->with(['job_applications.employe'])->first();
         $employe_ids = [];
-        foreach ($company->job_applications as $job_application) {
-            $employe_ids[] = $job_application->employe->id;
+        if($company) {
+            foreach ($company->job_applications as $job_application) {
+                $employe_ids[] = $job_application->employe->id;
+            }
         }
         $male_count = Employe::whereIn('id', $employe_ids)->where('gender', 'Male')->count();
         $female_count = Employe::whereIn('id', $employe_ids)->where('gender', 'Female')->count();
