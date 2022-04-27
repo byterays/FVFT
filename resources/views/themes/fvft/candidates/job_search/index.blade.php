@@ -185,7 +185,7 @@
                                                                                         </a>
                                                                                     @else
                                                                                         <a href="javascript:void(0);"
-                                                                                            onclick="savejob({{ $item->id }})"
+                                                                                            onclick="savejob({{ $item->id }}, $(this))"
                                                                                             class="saveJobButton ico-font">
                                                                                             <i class="fa fa-heart-o"></i> {{ __('Save Job') }}
                                                                                         </a>
@@ -261,7 +261,7 @@
 @section('script')
     <script src="{{ env('APP_URL') }}js/location.js"></script>
     <script>
-        function savejob(job_id) {
+        function savejob(job_id, this_button) {
             var url = "{{ route('candidate.savedjob.saveJob') }}";
             $.ajax({
                 url: url,
@@ -281,6 +281,7 @@
                     } else if (response.redirectRoute) {
                         location.href = response.redirectRoute
                     } else {
+                        $(this_button).removeAttr('onclick').html('<i class="fa fa-heart"></i> Saved');
                         toastr.success(response.msg);
                     }
                 },
@@ -290,23 +291,23 @@
             });
         }
 
-        function follow_company(company_id, employ_id){
+        function follow_company(company_id, employ_id, follow_button){
             $.ajax({
                 type: "POST",
                 url: "{{ route('candidate.follow_company') }}",
                 data: {'company_id': company_id, 'employ_id': employ_id},
                 beforeSend: function(){
-                    $("#follow").text('Wait Submitting...')
+                    $(follow_button).text('Wait Submitting...')
                 }, 
                 success: function(data){
                     if(data.db_error){
                         toastr.warning(data.db_error)
                     } else if(data.alreadyFollowed==true){
                         toastr.info(data.msg);
-                        $("#follow").text('Following');
+                        $(follow_button).text('Following');
                     } else if(data.alreadyFollowed == false){
                         toastr.success(data.msg);
-                        $("#follow").text('Following');
+                        $(follow_button).text('Following');
                     }
                 },
             });

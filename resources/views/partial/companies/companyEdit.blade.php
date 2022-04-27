@@ -250,7 +250,7 @@
                             <label for="phn">{{ __('Company Phone Number') }}</label>
                         </div>
                         <div class="col-md-3">
-                            <select name="dial_code" class="form-control select2">
+                            <select name="dial_code" class="form-control select2-show-search" data-placeholder="ISO">
                                 <option value="">{{ __('ISO') }}</option>
                                 @foreach ($countries as $country)
                                     <option value="{{ $country->phonecode }}"
@@ -359,7 +359,7 @@
                             <label for="">{{ __('Mobile Number') }}</label>
                         </div>
                         <div class="col-md-3">
-                            <select name="dialcode" class="form-control select2">
+                            <select name="dialcode" class="form-control select2-show-search" data-placeholder="ISO">
                                 <option value="">{{ __('ISO') }}</option>
                                 @foreach ($countries as $country)
                                 @php

@@ -263,16 +263,16 @@
                                 <div class="col-md-4">
                                     <label for="phn">Company Phone Number</label>
                                 </div>
-                                <div class="col-md-2">
-                                    <select name="dial_code" class="form-control select2">
-                                        <option value="">ISO</option>
+                                <div class="col-md-3">
+                                    <select name="dial_code" class="form-control select2-show-search" data-placeholder="ISO">
+                                        <option value="">{{ __('ISO') }}</option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->phonecode }}">
                                                 {{ $country->phonecode }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <input type="text" name="mobile_phone1" class="form-control"
                                         placeholder="Enter Phone Number1">
                                     <input type="text" name="mobile_phone2" class="form-control mt-3"
@@ -360,11 +360,11 @@
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label for="">Mobile Number</label>
                                 </div>
-                                <div class="col-md-2">
-                                    <select name="dialcode" class="form-control select2">
+                                <div class="col-md-3">
+                                    <select name="dialcode" class="form-control select2-show-search" data-placeholder="ISO">
                                         <option value="">ISO</option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->phonecode }}">
@@ -461,8 +461,6 @@
             $("#body_id")[0].value = body;
             $("#html_content_intro")[0].value = escapeHtml($('.ql-editor').html());
         });
-        // // console.log($("#body_id")[0].value);
-        // console.log(JSON.parse($("#body_id")[0].value));
         if ($("#body_id")[0].value != '') {
             quill.setContents(JSON.parse($("#body_id")[0].value))
         }
@@ -474,8 +472,6 @@
             $("#company_service_id")[0].value = company_services;
             $("#html_content_service")[0].value = escapeHtml($('.ql-editor').html());
         });
-        // quill1.setContents(JSON.parse($("#body_id")[0].value))
-        console.log($("#company_service_id")[0].value)
         if ($("#company_service_id")[0].value != '') {
             quill1.setContents(JSON.parse($("#company_service_id")[0].value))
         }

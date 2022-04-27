@@ -100,7 +100,7 @@ class DashController extends Controller
                 ],
                 [
                     'title' => 'Search Applicants',
-                    'link' => '#',
+                    'link' => route('company.applicant.index'),
                     'totalcount' => '',
                     'icon' => '/uploads/site/svgs/jobs/user-white.svg',
                 ],

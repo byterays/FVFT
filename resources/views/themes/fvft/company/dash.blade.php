@@ -89,25 +89,6 @@
         </div>
     </div>
     <div class="mt-5">
-        <div class="row row-cards">
-            @foreach ($application_datas as $a_data)
-                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                    <a href="{{ $a_data['link'] }}">
-                        <div class="card">
-                            <div class="card-body p-4 text-center feature">
-                                <div class="fa-stack fa-lg fa-1x icons shadow-default bg-primary-transparent">
-                                    <i class="icon icon-people text-primary"></i>
-                                </div>
-                                <p class="card-text mt-3 mb-3">{{ __($a_data['title']) }}</p>
-                                <p class="h2 text-center text-primary">{{ $a_data['totalcount'] }}</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            @endforeach
-        </div>
-    </div>
-    <div class="mt-5">
         <div class="row">
             <div class="col-lg-6 col-md-12">
                 <div class="card">

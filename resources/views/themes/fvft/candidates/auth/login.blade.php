@@ -33,16 +33,16 @@
                         <div class="col-xl-12 col-md-12 col-md-12 register-right">
                             <ul class="nav nav-tabs nav-justified mb-5 p-2 border" id="myTab" role="tablist">
                                 <li cla ss="nav-item">
-                                    <a class="nav-link m-1 active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                    <a class="nav-link m-1 {{ isset($register_route) && $register_route == '' ? 'active' : '' }}" id="home-tab" data-toggle="tab" href="#home" role="tab"
                                         aria-controls="home" aria-selected="true">{{ __('Login') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link m-1" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                    <a class="nav-link m-1 {{ isset($register_route) && $register_route == 'register' ? 'active' : '' }}" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
                                         aria-controls="profile" aria-selected="false">{{ __('Register') }}</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="tab-pane fade {{ isset($register_route) && $register_route == '' ? 'active show' : '' }}" id="home" role="tabpanel" aria-labelledby="home-tab">
                                     <div class="single-page  w-100  p-0">
                                         <div class="wrapper wrapper2">
                                             <div class="p-4 mb-5">
@@ -93,7 +93,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="tab-pane fade {{ isset($register_route) && $register_route == 'register' ? 'active show' : '' }}" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <div class="single-page w-100  p-0">
                                         <div class="wrapper wrapper2">
                                             <div class="p-4 mb-5">

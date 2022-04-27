@@ -82,8 +82,6 @@ const loadDistricts = async (state_id) => {
         });
 };
 
-
-
 const getDistricts = (state_id) => {
     fetch(appurl + "ajax/districts", {
         method: "POST",
@@ -121,10 +119,12 @@ const patchCities = (obj) => {
 };
 const patchDistricts = (obj) => {
     loadDistricts(obj.value);
-}
+};
 const patchGetDistricts = (obj) => {
     getDistricts(obj.value);
-}
+};
 $(document).ready(function () {
-    loadStates($("#select-country").val());
+    if (typeof loadtrue == 'undefined') {
+        loadStates($("#select-country").val());
+    }
 });

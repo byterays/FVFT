@@ -172,7 +172,7 @@ class JobsController extends Controller
             'education_level.required' => 'Education level is required',
             'experiencelevel.required' => 'Experience Level is required',
             'country_salary.required' => 'The Salary field is required',
-            'nepali_salary.required' => 'The Nepali Salary field is required',
+            'nepali_salary.required' => 'The Salary field is required',
         ]);
 
         if($Validator->fails()){
@@ -244,7 +244,7 @@ class JobsController extends Controller
             'education_level.required' => 'Education level is required',
             'experiencelevel.required' => 'Experience Level is required',
             'country_salary.required' => 'The Salary field is required',
-            'nepali_salary.required' => 'The Nepali Salary field is required',
+            'nepali_salary.required' => 'The Salary field is required',
         ]);
 
         if($Validator->fails()){

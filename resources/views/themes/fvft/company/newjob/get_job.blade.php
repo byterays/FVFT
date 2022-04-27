@@ -225,8 +225,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label class="form-label">{{ __('Cities') }}&nbsp;<span
-                                            class="req">*</span></label>
+                                    <label class="form-label">{{ __('Cities') }}</label>
                                 </div>
                                 <div class="col-md-8">
                                     <select name="city_id" id="select-city" class="form-control select2-show-search"
