@@ -1,5 +1,7 @@
 @extends('themes.fvft.layouts.master')
-@section('title')Companies @endsection
+@section('title')
+    Companies
+@endsection
 @section('main')
     @include('themes.fvft.site.components.header')
     <section class="sptb">
@@ -13,10 +15,19 @@
                                 <div class=" mb-0">
                                     <div class="">
                                         <div class="p-5 bg-white item2-gl-nav d-flex">
-                                            <h6 class="mb-0 mt-3">{{ __('Showing') }} @if($companies->count()>1)<b>{{ __('1') }} {{ __('to') }} {{ __($companies->count()) }}
-                                                    @else {{__($companies->count())}} @endif</b> {{ __('of') }} {{__($companies->total())}} {{ __('Entries') }}</h6>
+                                            <h6 class="mb-0 mt-3">{{ __('Showing') }} @if ($companies->count() > 1)
+                                                    <b>{{ __('1') }} {{ __('to') }}
+                                                        {{ __($companies->count()) }}
+                                                    @else
+                                                        {{ __($companies->count()) }}
+                                                @endif
+                                                </b> {{ __('of') }} {{ __($companies->total()) }}
+                                                {{ __('Entries') }}
+                                            </h6>
                                             <ul class="nav item2-gl-menu mt-1 ml-auto">
-                                                <li class=""><a href="#tab-11" class="show active" data-toggle="tab" title="List style"><i class="fa fa-list"></i></a></li>
+                                                <li class=""><a href="#tab-11" class="show active"
+                                                        data-toggle="tab" title="List style"><i
+                                                            class="fa fa-list"></i></a></li>
                                                 {{-- <li><a href="#tab-12" data-toggle="tab" class="" title="Grid"><i class="fa fa-th"></i></a></li> --}}
                                             </ul>
                                             {{-- <div class="d-flex" data-select2-id="select2-data-20-x57y">
@@ -42,18 +53,26 @@
                                                         <div class="d-sm-flex card-body p-3">
                                                             <div class="p-0 m-0 mr-3">
                                                                 <div class="">
-                                                                    <a href="#"></a>
-                                                                    @if(!blank($item->company_logo))
-                                                                        <img src="{{asset($item->company_logo)}}" alt="img" class="w-9 h-9">
+                                                                    <a href="javascript:void(0)"></a>
+                                                                    @if (!blank($item->company_logo) && file_exists($item->company_logo))
+                                                                        <img src="{{ asset($item->company_logo) }}"
+                                                                            alt="img" class="w-9 h-9">
                                                                     @else
-                                                                        <img src="/uploads/defaultimage.jpg" alt="img" class="w-9 h-9">
+                                                                        <img src="/uploads/defaultimage.jpg" alt="img"
+                                                                            class="w-9 h-9">
                                                                     @endif
                                                                 </div>
                                                             </div>
                                                             <div class="item-card9 mt-3 mt-md-5">
-                                                                <a href="/company-view/{{$item->id}}" class="text-dark"><h4 class="font-weight-semibold mt-1">{{$item->company_name}}</h4></a>
+                                                                <a href="/company-view/{{ $item->id }}"
+                                                                    class="text-dark">
+                                                                    <h4 class="font-weight-semibold mt-1">
+                                                                        {{ $item->company_name }}</h4>
+                                                                </a>
                                                                 <div class="rating-stars d-inline-flex">
-                                                                    <input type="number" readonly="readonly" class="rating-value star" name="rating-stars-value" value="4">
+                                                                    <h6 class="font-weight-bold">Followers <span
+                                                                            id="count_{{ $item->id }}">({{ $item->followers->count() }})</span>
+                                                                    </h6>
                                                                     {{-- (245 Reviews) --}}
                                                                 </div>
                                                             </div>
@@ -63,29 +82,51 @@
                                                         </div>
                                                         <div class="card overflow-hidden border-0 box-shadow-0 br-0 mb-0">
                                                             <div class="card-body table-responsive border-top">
-                                                                <table class="table table-borderless w-100 m-0 text-nowrap ">
+                                                                <table
+                                                                    class="table table-borderless w-100 m-0 text-nowrap ">
                                                                     <tbody class="p-0">
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">{{ __('Address') }}</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1">
-                                                                            <span>
-                                                                                {{@DB::table('cities')->find($item->city_id)->name.","}}{{@DB::table('countries')->find($item->country_id)->name}}
-                                                                            </span>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Website</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span><a href="{{ $item->company_website ?? '#' }}">{{ $item->company_website ?? 'Not-Available' }}</a></span></td>
-                                                                    </tr>
+                                                                        <tr>
+                                                                            <td class="px-0 py-1"><span
+                                                                                    class="font-weight-semibold">{{ __('Address') }}</span>
+                                                                            </td>
+                                                                            <td class="p-1"><span>:</span></td>
+                                                                            <td class="p-1">
+                                                                                <span>
+                                                                                    {{ @DB::table('cities')->find($item->city_id)->name . ',' }}{{ @DB::table('countries')->find($item->country_id)->name }}
+                                                                                </span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="px-0 py-1"><span
+                                                                                    class="font-weight-semibold">Website</span>
+                                                                            </td>
+                                                                            <td class="p-1"><span>:</span></td>
+                                                                            <td class="p-1"><span><a
+                                                                                        href="{{ $item->company_website ?? '#' }}">{{ $item->company_website ?? 'Not-Available' }}</a></span>
+                                                                            </td>
+                                                                        </tr>
                                                                     </tbody>
                                                                 </table>
-                                                               <div class="row">
-                                                                   <div class="mt-3 col-md-3">
-                                                                       <a class="btn btn-primary btn-block" href="/company-view/{{$item->id}}">{{ __('Learn More') }}</a>
-                                                                   </div>
-                                                               </div>
+                                                                <div class="row">
+                                                                    <div class="mt-3 col-md-3">
+                                                                        <a class="btn btn-primary btn-block"
+                                                                            href="/company-view/{{ $item->id }}">{{ __('Learn More') }}</a>
+                                                                    </div>
+                                                                    <div class="col-md-6"></div>
+                                                                    <div class="col-md-3 mt-3">
+
+                                                                        @if (Auth::check() && Auth::user()->user_type == 'candidate')
+                                                                            @if (count($employe->followings->where('company_id', $item->id)->all()) > 0)
+                                                                                <a class="btn btn-primary btn-block"
+                                                                                    href="javascript:void(0);">{{ __('Following') }}</a>
+                                                                            @else
+                                                                                <a class="btn btn-primary btn-block"
+                                                                                    onclick="follow_company({{ $item->id }}, {{ $employe->id }}, $(this))"
+                                                                                    href="javascript:void(0);">{{ __('Follow') }}</a>
+                                                                            @endif
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -93,523 +134,6 @@
                                             @endforeach
                                         </div>
                                     </div>
-                                    {{-- <div class="tab-pane" id="tab-12">
-                                        <div class="row">
-                                            <div class="col-lg-6 col-md-12 col-xl-4">
-                                                <div class="card overflow-hidden br-0 overflow-hidden">
-                                                    <div class="d-sm-flex card-body p-3">
-                                                        <div class="p-0 m-0 mr-3">
-                                                            <div class="">
-                                                                <a href="jobs.html"></a>
-                                                                <img src="../assets/images/products/logo/img1.jpg" alt="img" class="w-8 h-8">
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-card9 mt-2">
-                                                            <a href="company-details.html" class="text-dark"><h4 class="font-weight-semibold mt-1">G Technicals Solutions</h4></a>
-                                                            <div class="rating-stars d-inline-flex">
-                                                                <input type="number" readonly="readonly" class="rating-value star" name="rating-stars-value" value="4">
-                                                                <div class="rating-stars-container mr-2">
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                </div> (245 Reviews)
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card overflow-hidden border-0 box-shadow-0 br-0 mb-0">
-                                                        <div class="card-body table-responsive border-top">
-                                                            <table class="table table-borderless w-100 m-0 text-nowrap">
-                                                                <tbody class="p-0">
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Positions</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span>Web designer, Web developers</span></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Address</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span> 2767  Concord Street, Charlotte, NC</span></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <div class="mt-3">
-                                                                <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#Applynow">Apply Now</a>
-                                                                <a class="btn btn-light font-weight-semibold text-dark" href="company-details.html"><i class="fa fa-briefcase"></i> 12 vacancies</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-12 col-xl-4">
-                                                <div class="card overflow-hidden br-0 overflow-hidden">
-                                                    <div class="d-sm-flex card-body p-3">
-                                                        <div class="p-0 m-0 mr-3">
-                                                            <div class="">
-                                                                <a href="jobs.html"></a>
-                                                                <img src="../assets/images/products/logo/img2.jpg" alt="img" class="w-8 h-8">
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-card9 mt-2">
-                                                            <a href="company-details.html" class="text-dark"><h4 class="font-weight-semibold mt-1">Pro.Meet Pvt Ltd</h4></a>
-                                                            <div class="rating-stars d-inline-flex">
-                                                                <input type="number" readonly="readonly" class="rating-value star" name="rating-stars-value" value="3">
-                                                                <div class="rating-stars-container mr-2">
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                </div> (58 Reviews)
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card overflow-hidden border-0 box-shadow-0 br-0 mb-0">
-                                                        <div class="card-body table-responsive border-top">
-                                                            <table class="table table-borderless w-100 m-0 text-nowrap">
-                                                                <tbody class="p-0">
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Positions</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span>Java designer, php developers</span></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Address</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span> 2767  Concord Street, Charlotte, NC</span></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <div class="mt-3">
-                                                                <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#Applynow">Apply Now</a>
-                                                                <a class="btn btn-light font-weight-semibold text-dark" href="company-details.html"><i class="fa fa-briefcase"></i> 6 vacancies</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-12 col-xl-4">
-                                                <div class="card overflow-hidden br-0 overflow-hidden">
-                                                    <div class="d-sm-flex card-body p-3">
-                                                        <div class="p-0 m-0 mr-3">
-                                                            <div class="">
-                                                                <a href="jobs.html"></a>
-                                                                <img src="../assets/images/products/logo/img3.jpg" alt="img" class="w-8 h-8">
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-card9 mt-2">
-                                                            <a href="company-details.html" class="text-dark"><h4 class="font-weight-semibold mt-1">Infratech Pvt Ltd</h4></a>
-                                                            <div class="rating-stars d-inline-flex">
-                                                                <input type="number" readonly="readonly" class="rating-value star" name="rating-stars-value" value="4">
-                                                                <div class="rating-stars-container mr-2">
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                </div> (82 Reviews)
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card overflow-hidden border-0 box-shadow-0 br-0 mb-0">
-                                                        <div class="card-body table-responsive border-top">
-                                                            <table class="table table-borderless w-100 m-0 text-nowrap">
-                                                                <tbody class="p-0">
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Positions</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span>Angular developers</span></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Address</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span> 2767  Concord Street, Charlotte, NC</span></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <div class="mt-3">
-                                                                <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#Applynow">Apply Now</a>
-                                                                <a class="btn btn-light font-weight-semibold text-dark" href="company-details.html"><i class="fa fa-briefcase"></i> 78 vacancies</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-12 col-xl-4">
-                                                <div class="card overflow-hidden br-0 overflow-hidden">
-                                                    <div class="d-sm-flex card-body p-3">
-                                                        <div class="p-0 m-0 mr-3">
-                                                            <div class="">
-                                                                <a href="jobs.html"></a>
-                                                                <img src="../assets/images/products/logo/img4.jpg" alt="img" class="w-8 h-8">
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-card9 mt-2">
-                                                            <a href="company-details.html" class="text-dark"><h4 class="font-weight-semibold mt-1">Bahringer and Wyman</h4></a>
-                                                            <div class="rating-stars d-inline-flex">
-                                                                <input type="number" readonly="readonly" class="rating-value star" name="rating-stars-value" value="5">
-                                                                <div class="rating-stars-container mr-2">
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                </div> (324 Reviews)
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card overflow-hidden border-0 box-shadow-0 br-0 mb-0">
-                                                        <div class="card-body table-responsive border-top">
-                                                            <table class="table table-borderless w-100 m-0 text-nowrap">
-                                                                <tbody class="p-0">
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Positions</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span>Web designer, Ui Designers</span></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Address</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span> 2767  Concord Street, Charlotte, NC</span></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <div class="mt-3">
-                                                                <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#Applynow">Apply Now</a>
-                                                                <a class="btn btn-light font-weight-semibold text-dark" href="company-details.html"><i class="fa fa-briefcase"></i> 64 vacancies</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-12 col-xl-4">
-                                                <div class="card overflow-hidden br-0 overflow-hidden">
-                                                    <div class="d-sm-flex card-body p-3">
-                                                        <div class="p-0 m-0 mr-3">
-                                                            <div class="">
-                                                                <a href="jobs.html"></a>
-                                                                <img src="../assets/images/products/logo/img5.jpg" alt="img" class="w-8 h-8">
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-card9 mt-2">
-                                                            <a href="company-details.html" class="text-dark"><h4 class="font-weight-semibold mt-1">Hardware Solutions</h4></a>
-                                                            <div class="rating-stars d-inline-flex">
-                                                                <input type="number" readonly="readonly" class="rating-value star" name="rating-stars-value" value="4">
-                                                                <div class="rating-stars-container mr-2">
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                </div> (317 Reviews)
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card overflow-hidden border-0 box-shadow-0 br-0 mb-0">
-                                                        <div class="card-body table-responsive border-top">
-                                                            <table class="table table-borderless w-100 m-0 text-nowrap">
-                                                                <tbody class="p-0">
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Positions</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span>Web designer, php developers</span></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Address</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span> 2767  Concord Street, Charlotte, NC</span></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <div class="mt-3">
-                                                                <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#Applynow">Apply Now</a>
-                                                                <a class="btn btn-light font-weight-semibold text-dark" href="company-details.html"><i class="fa fa-briefcase"></i> 32 vacancies</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-12 col-xl-4">
-                                                <div class="card overflow-hidden br-0 overflow-hidden">
-                                                    <div class="d-sm-flex card-body p-3">
-                                                        <div class="p-0 m-0 mr-3">
-                                                            <div class="">
-                                                                <a href="jobs.html"></a>
-                                                                <img src="../assets/images/products/logo/img6.jpg" alt="img" class="w-8 h-8">
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-card9 mt-2">
-                                                            <a href="company-details.html" class="text-dark"><h4 class="font-weight-semibold mt-1">Flowtech Solutions</h4></a>
-                                                            <div class="rating-stars d-inline-flex">
-                                                                <input type="number" readonly="readonly" class="rating-value star" name="rating-stars-value" value="3">
-                                                                <div class="rating-stars-container mr-2">
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                </div> (24 Reviews)
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card overflow-hidden border-0 box-shadow-0 br-0 mb-0">
-                                                        <div class="card-body table-responsive border-top">
-                                                            <table class="table table-borderless w-100 m-0 text-nowrap">
-                                                                <tbody class="p-0">
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Positions</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span>Web designer, Web developers</span></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Address</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span> 2767  Concord Street, Charlotte, NC</span></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <div class="mt-3">
-                                                                <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#Applynow">Apply Now</a>
-                                                                <a class="btn btn-light font-weight-semibold text-dark" href="company-details.html"><i class="fa fa-briefcase"></i> 2 vacancies</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-12 col-xl-4">
-                                                <div class="card overflow-hidden br-0 overflow-hidden">
-                                                    <div class="d-sm-flex card-body p-4">
-                                                        <div class="p-0 m-0 mr-3">
-                                                            <div class="">
-                                                                <a href="jobs.html"></a>
-                                                                <img src="../assets/images/products/logo/logo5.jpg" alt="img" class="w-8 h-8">
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-card9 mt-2">
-                                                            <a href="company-details.html" class="text-dark"><h4 class="font-weight-semibold mt-1">Hardware Private Solutions</h4></a>
-                                                            <div class="rating-stars d-inline-flex">
-                                                                <input type="number" readonly="readonly" class="rating-value star" name="rating-stars-value" value="4">
-                                                                <div class="rating-stars-container mr-2">
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                </div> (75 Reviews)
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card overflow-hidden border-0 box-shadow-0 br-0 mb-0">
-                                                        <div class="card-body table-responsive border-top">
-                                                            <table class="table table-borderless w-100 m-0 text-nowrap">
-                                                                <tbody class="p-0">
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Positions</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span>Ui designer, Ux Designers</span></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Address</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span> 2767  Concord Street, Charlotte, NC</span></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <div class="mt-3">
-                                                                <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#Applynow">Apply Now</a>
-                                                                <a class="btn btn-light font-weight-semibold text-dark" href="company-details.html"><i class="fa fa-briefcase"></i> 25 vacancies</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-12 col-xl-4">
-                                                <div class="card overflow-hidden br-0 overflow-hidden">
-                                                    <div class="d-sm-flex card-body p-4">
-                                                        <div class="p-0 m-0 mr-3">
-                                                            <div class="">
-                                                                <a href="jobs.html"></a>
-                                                                <img src="../assets/images/products/logo/logo2.jpg" alt="img" class="w-8 h-8">
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-card9 mt-2">
-                                                            <a href="company-details.html" class="text-dark"><h4 class="font-weight-semibold mt-1">Wisoky-Dickens</h4></a>
-                                                            <div class="rating-stars d-inline-flex">
-                                                                <input type="number" readonly="readonly" class="rating-value star" name="rating-stars-value" value="4">
-                                                                <div class="rating-stars-container mr-2">
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                </div> (75 Reviews)
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card overflow-hidden border-0 box-shadow-0 br-0 mb-0">
-                                                        <div class="card-body table-responsive border-top">
-                                                            <table class="table table-borderless w-100 m-0 text-nowrap">
-                                                                <tbody class="p-0">
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Positions</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span>Web designer, Web developers</span></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Address</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span> 2767  Concord Street, Charlotte, NC</span></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <div class="mt-3">
-                                                                <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#Applynow">Apply Now</a>
-                                                                <a class="btn btn-light font-weight-semibold text-dark" href="company-details.html"><i class="fa fa-briefcase"></i> 36 vacancies</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-12 col-xl-4">
-                                                <div class="card overflow-hidden br-0 overflow-hidden">
-                                                    <div class="d-sm-flex card-body p-4">
-                                                        <div class="p-0 m-0 mr-3">
-                                                            <div class="">
-                                                                <a href="jobs.html"></a>
-                                                                <img src="../assets/images/products/logo/logo3.jpg" alt="img" class="w-8 h-8">
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-card9 mt-2">
-                                                            <a href="company-details.html" class="text-dark"><h4 class="font-weight-semibold mt-1">Job pvt ltd</h4></a>
-                                                            <div class="rating-stars d-inline-flex">
-                                                                <input type="number" readonly="readonly" class="rating-value star" name="rating-stars-value" value="4">
-                                                                <div class="rating-stars-container mr-2">
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm is--active">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                    <div class="rating-star sm">
-                                                                        <i class="fa fa-star"></i>
-                                                                    </div>
-                                                                </div> (15 Reviews)
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card overflow-hidden border-0 box-shadow-0 br-0 mb-0">
-                                                        <div class="card-body table-responsive border-top">
-                                                            <table class="table table-borderless w-100 m-0 text-nowrap">
-                                                                <tbody class="p-0">
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Positions</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span>Web designer, Web developers</span></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="px-0 py-1"><span class="font-weight-semibold">Address</span></td>
-                                                                        <td class="p-1"><span>:</span></td>
-                                                                        <td class="p-1"><span> 2767  Concord Street, Charlotte, NC</span></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <div class="mt-3">
-                                                                <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#Applynow">Apply Now</a>
-                                                                <a class="btn btn-light font-weight-semibold text-dark" href="company-details.html"><i class="fa fa-briefcase"></i> 26 vacancies</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> --}}
                                 </div>
                             </div>
                             <div class="center-block text-center">
@@ -623,5 +147,34 @@
         </div>
     </section>
     @include('themes.fvft.site.components.footer')
+@endsection
 
+@section('script')
+    <script>
+        function follow_company(company_id, employ_id, follow_button) {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('candidate.follow_company') }}",
+                data: {
+                    'company_id': company_id,
+                    'employ_id': employ_id
+                },
+                beforeSend: function() {
+                    $(follow_button).text('Wait Submitting...')
+                },
+                success: function(data) {
+                    if (data.db_error) {
+                        toastr.warning(data.db_error)
+                    } else if (data.alreadyFollowed == true) {
+                        toastr.info(data.msg);
+                        $(follow_button).text('Following');
+                    } else if (data.alreadyFollowed == false) {
+                        toastr.success(data.msg);
+                        $("#count_" + company_id).text('(' + data.followers + ')');
+                        $(follow_button).text('Following');
+                    }
+                },
+            });
+        }
+    </script>
 @endsection

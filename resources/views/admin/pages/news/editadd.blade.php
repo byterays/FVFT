@@ -70,11 +70,11 @@
                                         placeholder="Slug" value="{{ isset($news->seo_keywords) ? $news->seo_keywords : '' }}"
                                         required>
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label class="form-label">Slug</label>
                                     <input type="text" class="form-control" name="slug" placeholder="Slug"
                                         value="{{ isset($news->slug) ? $news->slug : '' }}" required>
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label class="custom-switch-checkbox">
                                         <input type="checkbox" name="is_active" class="custom-switch-input"

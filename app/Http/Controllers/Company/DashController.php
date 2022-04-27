@@ -96,25 +96,25 @@ class DashController extends Controller
                     'title' => 'Post New Job',
                     'link' => route('company.newjob.get_job_detail'),
                     'totalcount' => '',
-                    'icon' => '',
+                    'icon' => '/uploads/site/svgs/jobs/upload-white.svg',
                 ],
                 [
                     'title' => 'Search Applicants',
-                    'link' => '#',
+                    'link' => route('company.applicant.index'),
                     'totalcount' => '',
-                    'icon' => '',
+                    'icon' => '/uploads/site/svgs/jobs/user-white.svg',
                 ],
                 [
                     'title' => 'New Message',
                     'link' => '#',
                     'totalcount' => 2,
-                    'icon' => 'icon icon-people',
+                    'icon' => '/uploads/site/svgs/mail.svg',
                 ],
                 [
                     'title' => 'New Notification',
                     'link' => '#',
                     'totalcount' => 2,
-                    'icon' => 'fa fa-bell-o',
+                    'icon' => '/uploads/site/svgs/megaphone.svg',
                 ],
             ],
             'application_datas' => [
@@ -296,6 +296,8 @@ class DashController extends Controller
             'company_fb_page' => ['nullable', 'url'],
             'company_logo' => ['nullable', 'image', 'mimes:jpg,png,jpeg'],
             'company_cover' => ['nullable', 'image', 'mimes:jpg,png,jpeg'],
+        ],[
+            'full_name.required' => 'The full name is required',
         ]);
 
         if ($validator->fails()) {
@@ -364,17 +366,31 @@ class DashController extends Controller
 
     private function __updateContactPerson($company_id, $request)
     {
-        $contact_person = CompanyContactPerson::where('company_id', $company_id)->first();
-        $contact_person->name = $request->full_name;
-        $contact_person->email = $request->contact_person_email;
-        $contact_person->phone = $request->contact_person_mobile;
-        $contact_person->position = $request->contact_person_designation;
-        $contact_person->company_id = $company_id;
-        $contact_person->avatar = '';
-        $contact_person->person_designation = $request->person_designation;
-        $contact_person->isocode = '';
-        $contact_person->dialcode = $request->dialcode;
-        $contact_person->save();
+        // $contact_person = CompanyContactPerson::where('company_id', $company_id)->first();
+        // $contact_person->name = $request->full_name;
+        // $contact_person->email = $request->contact_person_email;
+        // $contact_person->phone = $request->contact_person_mobile;
+        // $contact_person->position = $request->contact_person_designation;
+        // $contact_person->company_id = $company_id;
+        // $contact_person->avatar = '';
+        // $contact_person->person_designation = $request->person_designation;
+        // $contact_person->isocode = '';
+        // $contact_person->dialcode = $request->dialcode;
+        // $contact_person->save();
+
+        CompanyContactPerson::updateOrCreate([
+            'company_id' => $company_id
+        ],[
+            'name' => $request->full_name,
+            'email' => $request->contact_person_email,
+            'phone' => $request->contact_person_mobile,
+            'position' => $request->contact_person_designation,
+            'company_id' => $company_id,
+            'avatar' => '',
+            'person_designation' => $request->person_designation,
+            'isocode' => '',
+            'dialcode' => $request->dialcode
+        ]);
     }
 
     public function edit($id)

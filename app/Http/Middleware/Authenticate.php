@@ -20,7 +20,10 @@ class Authenticate extends Middleware
                 return route('admin.login');
             } else if ($url[1] == "company") {
                 return route('company.login');
-            } else {
+            } else if($url[1] == 'candidate'){
+                return url('candidate/login');
+            }
+             else {
                 return route('candidate.login');
             }
         }

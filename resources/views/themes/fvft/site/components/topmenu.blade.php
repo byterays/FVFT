@@ -85,10 +85,10 @@
                     <ul class="custom">
                         @guest
                             <li>
-                                <a href="{{ route('candidate.login') }}" class=""><i class="fa fa-user mr-1"></i> <span>{{ __('Register') }}</span></a>
+                                <a href="{{ route('candidate.login', ['name' => 'register']) }}" class=""><i class="fa fa-user mr-1"></i> <span>{{ __('Register') }}</span></a>
                             </li>
                             <li>
-                                <a href="{{ route('candidate.login') }}" class=""><i class="fa fa-sign-in mr-1"></i> <span>{{ __('Login') }}</span></a>
+                                <a href="{{ route('candidate.login', ['name' => 'login']) }}" class=""><i class="fa fa-sign-in mr-1"></i> <span>{{ __('Login') }}</span></a>
                             </li>
                         @endguest
                         @auth

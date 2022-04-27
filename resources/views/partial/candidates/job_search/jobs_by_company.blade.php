@@ -28,7 +28,7 @@
                                                 <button type="button" class="btn btn-primary">Following</button>
                                             @else
                                                 <button type="button" class="btn btn-primary"
-                                                    onclick="follow_company({{ $company->id }}, {{ $employ->id }})"
+                                                    onclick="follow_company({{ $company->id }}, {{ $employ->id }}, $(this))"
                                                     id="follow">Follow</button>
                                             @endif
                                         @endif
@@ -106,7 +106,7 @@
                                             <button type="button" class="btn btn-primary">Following</button>
                                         @else
                                             <button type="button" class="btn btn-primary"
-                                                onclick="follow_company({{ $company->id }}, {{ $employ->id }})"
+                                                onclick="follow_company({{ $company->id }}, {{ $employ->id }}, $(this))"
                                                 id="follow">Follow</button>
                                         @endif
                                     @endif

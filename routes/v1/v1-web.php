@@ -8,6 +8,7 @@ use App\Http\Controllers\Site\JobsController;
 use App\Http\Controllers\Site\NewsController;
 use App\Http\Controllers\Site\PageController;
 use App\Http\Controllers\Candidates\DashController;
+use App\Http\Controllers\Candidates\AuthController as CanidateAuthController;
 
 
 Route::prefix('admin')->group(function () {
@@ -19,6 +20,7 @@ Route::prefix('candidate')->group(function () {
 Route::prefix('company')->group(function () {
     require_once 'web/company.php';
 });
+Route::get('candidate/{name?}', [CanidateAuthController::class, 'login'])->name('candidate.login');
 // Auth
 Auth::routes();
 // Site Routes

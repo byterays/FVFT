@@ -118,6 +118,7 @@
                     $(".db_error").html(response.db_error);
                     toastr.warning(response.db_error);
                 } else if (response.errors) {
+                    toastr.error(response.errors[Object.keys(response.errors)[0]]);
                     var error_html = "";
                     $.each(response.errors, function(key, value) {
                         error_html = '<div>' + value + '</div>';

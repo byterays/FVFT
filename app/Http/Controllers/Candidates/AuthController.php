@@ -15,9 +15,13 @@ class AuthController extends Controller
     use ThemeMethods;
     use CandidateMethods;
 
-    public function login()
+    public function login($name=null)
     {
-        return $this->client_view('candidates.auth.login');
+        $register_route = '';
+        if($name == 'register'){
+            $register_route = "register";
+        }
+        return $this->client_view('candidates.auth.login', ['register_route' => $register_route]);
     }
     protected function register(Request $request)
     {

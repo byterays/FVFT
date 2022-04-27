@@ -8,6 +8,7 @@ use DB;
 use App\Traits\Admin\AdminMethods;
 use App\Models\News;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
 class NewsController extends Controller
 {
@@ -35,7 +36,7 @@ class NewsController extends Controller
     }
     public function save(Request $request)
     {
-        // dd($request);
+        // dd($request->all());
         $destination = 'uploads/news/';
         $fields = [];
         $request->title ? $fields['title'] = $request->title : null;
@@ -44,7 +45,7 @@ class NewsController extends Controller
         $request->seo_description ? $fields['seo_description'] = $request->seo_description : null;
         $request->html_content ? $fields['html_content'] = $request->html_content : null;
         $request->seo_keywords ? $fields['seo_keywords'] = $request->seo_keywords : null;
-        $request->slug ? $fields['slug'] = $request->slug : null;
+        // $request->slug ? $fields['slug'] = $request->slug : null;
         $request->is_active ? $fields['is_active'] = $request->is_active == "on" ? 1 : 0 : null;
         if($request->hasFile('feature_img')){
             $file = $request->file('feature_img');

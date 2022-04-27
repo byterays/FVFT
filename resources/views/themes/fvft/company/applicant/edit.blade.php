@@ -131,7 +131,7 @@
 
                     </div>
                     <div class="form-group">
-                        <button type="button" onclick="submitForm(event);" class="btn btn-success">Submit</button>
+                        <button type="button" onclick="submitForm(event);" class="btn btn-primary">Submit</button>
                     </div>
 
                 </div>

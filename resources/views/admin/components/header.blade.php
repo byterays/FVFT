@@ -176,7 +176,7 @@
                         {{-- <a class="dropdown-item" href="emailservices.html">
                             <i class="dropdown-icon icon icon-speech"></i> Inbox
                         </a> --}}
-                        <a class="dropdown-item" href="/admin/edit-profile">
+                        <a class="dropdown-item" href="{{ route('admin.user.profile') }}">
                             <i class="dropdown-icon  icon icon-settings"></i> Account Settings
                         </a>
                         <form action="/admin/logout" method="post">

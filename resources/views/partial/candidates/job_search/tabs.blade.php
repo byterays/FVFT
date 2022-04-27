@@ -31,7 +31,7 @@
                                 class="{{ !(request()->type == 'jobs_by_category') ?: 'active' }}">{{ __('Jobs By Category') }}</a>
                         </li>
                         <li><a href="{{ route('candidate.job_search.index', ['type' => 'jobs_by_company']) }}"
-                                class="{{ !(request()->type == 'jobs_by_company') ?: 'active' }}">{{ __('Jobs By Company') }}</a>
+                                class="{{ !(request()->type == 'jobs_by_company') ?: 'active' }}">{{ __('Jobs By Employer') }}</a>
                         </li>
                         <li><a href="{{ route('candidate.job_search.index', ['type' => 'saved_jobs']) }}"
                                 class="{{ !(request()->type == 'saved_jobs') ?: 'active' }}">{{ __('Saved Jobs') }}</a>

@@ -19,6 +19,6 @@ $_jobsetting = $RouteName == $setting_route.'job_setting.get_job_alert';
     </li>
     <li class="nav-item {{ $_jobsetting ? 'active' : '' }}"><a href="{{ route('candidate.job_setting.get_job_alert') }}"
             class="nav-link font-bold">{{ strtoupper(__('Job Alert Setting')) }}</a></li>
-    <li class="nav-item {{ !$_support ?: 'active' }}"><a href="{{ route('candidate.support.index') }}" class="nav-link font-bold">{{ strtoupper(__('Support')) }}</a></li>
+    {{-- <li class="nav-item {{ !$_support ?: 'active' }}"><a href="{{ route('candidate.support.index') }}" class="nav-link font-bold">{{ strtoupper(__('Support')) }}</a></li> --}}
     <li class="nav-item"><a href="#" class="nav-link font-bold"></a></li>
 </ul>

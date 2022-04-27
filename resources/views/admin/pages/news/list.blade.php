@@ -52,12 +52,15 @@
                             <tr>
                                 <td>{{$item->title}}</td>
                                 <td>
+                                    {!! html_entity_decode(str_limit($item->html_content, 100)) !!}
+                                </td>
+                                {{-- <td>
                                     @php 
                                     $description = wordwrap($item->short_description, 28);
                                     $description = explode("\n", $description);
                                     $description = $description[0] . '...';
                                     @endphp
-                                    {{$description}}</td>
+                                    {{$description}}</td> --}}
                                 <td>{{$item->slug}}</td>
                                 <td> @if ($item->is_active)
                                     <i class='fa fa-circle' style='color:green;font-size: 8px; padding:.5rem;'></i>
