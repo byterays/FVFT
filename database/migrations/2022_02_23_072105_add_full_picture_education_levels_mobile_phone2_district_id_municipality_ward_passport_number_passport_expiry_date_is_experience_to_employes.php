@@ -24,7 +24,7 @@ class AddFullPictureEducationLevelsMobilePhone2DistrictIdMunicipalityWardPasspor
             $table->string('passport_number')->nullable();
             $table->string('passport_expiry_date')->nullable();
             $table->tinyInteger('is_experience')->nullable();
-            $table->longText('trainings')->nullable();
+//            $table->longText('trainings')->nullable();
         });
     }
 

@@ -89,7 +89,7 @@
             <div class="ps__rail-y" style="top: 0px; height: 663px; right: 0px;">
                 <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 518px;"></div>
             </div>
-            </aside>
+            {{--</aside>--}}
             <div class="app-content">
                 <div class="side-app">
                     @yield('main')

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddAccountStatusToUsersTable extends Migration
+class CreateEmployeeTrainingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddAccountStatusToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('account_status',['Deactivated', 'Deleted'])->after('email_verified_at')->nullable();
+        Schema::create('employee_trainings', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('employee_id');
+            $table->unsignedBigInteger('training_id');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddAccountStatusToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('employee_trainings');
     }
 }
