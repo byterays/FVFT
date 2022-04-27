@@ -217,7 +217,7 @@ class Employe extends Model
 
     public function trainings()
     {
-        return $this->hasMany(EmployeeTraining::class, 'training_id');
+        return $this->hasMany(EmployeeTraining::class, 'employee_id');
     }
 
 }
