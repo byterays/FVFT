@@ -32,6 +32,10 @@ class NewJobController extends Controller
 
     public function get_job_detail(Request $request)
     {
+        $company = $this->company();
+        if((int) $company->calculateProfileCompletion() < 50){
+            return redirect()->route('company.edit_profile')->with(notifyMsg('error', 'Complete your profile before posting new job'));
+        }
         $job = Job::where('id', $request->job_id)->first();
         return $this->company_view('company.newjob.get_job', [
             'job' => $job,

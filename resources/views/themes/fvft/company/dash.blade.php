@@ -8,6 +8,30 @@
 @section('css')
     <!-- c3.js Charts Plugin -->
     <link href="{{ asset('themes/fvft/') }}/assets/plugins/charts-c3/c3-chart.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('css/progress.css') }}">
+    <style>
+        .progress-lg {
+            height: 1.75rem;
+        }
+
+        .progress-lg .progress-bar {
+            height: 1.75rem;
+        }
+
+        .progress {
+            font-size: 1rem;
+        }
+
+        .gray-round {
+            background-color: rgb(166 181 217);
+        }
+
+        .notification-badge {
+            top: -10px;
+            position: relative;
+        }
+
+    </style>
 @endsection
 @section('data')
     <div class="card mb-0">
@@ -30,6 +54,14 @@
                     <h3 class="card-title">{{ $company->company_name ?? '' }}</h3>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="card mb-0 mt-3">
+        <div class="card-body">
+            <h3 class="card-title">{{ __('Profile Status') }}</h3>
+            @include(
+                'themes.fvft.company.components.profile-completion', ['company' => $company]
+            )
         </div>
     </div>
     <div class="mt-5">

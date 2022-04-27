@@ -7,10 +7,11 @@
                         <h3>{{ strtoupper(__('Picture')) }}</h3>
                     </div>
                     <div class="col-md-6">
-                        <a href="{{ $viewRoute }}" class="btn btn-primary mr-auto float-right">{{ __('View Profile') }}</a>
+                        <a href="{{ $viewRoute }}"
+                            class="btn btn-primary mr-auto float-right">{{ __('View Profile') }}</a>
                     </div>
                 @else
-                <h3 class="card-title">{{ strtoupper(__('Picture')) }}</h3>
+                    <h3 class="card-title">{{ strtoupper(__('Picture')) }}</h3>
                 @endif
 
 
@@ -21,7 +22,7 @@
                         <div class="form-group company_logo" id="company_logo">
                             <label for="">{{ __('Display') }} {{ __('Picture') }}</label>
                             <input type="file" name="company_logo"
-                                data-default-file="{{ ($company->company_logo) ? asset($company->company_logo) : '' }}"
+                                data-default-file="{{ $company->company_logo ? asset($company->company_logo) : '' }}"
                                 class="dropify" data-allowed-file-extensions="png jpg jpeg" data-height="180">
                             <div class="require text-danger profile_picture"></div>
                         </div>
@@ -29,7 +30,8 @@
                     <div class="col-xl-4">
                         <div class="form-group company_logo">
                             <label for="">{{ __('Cover') }} {{ __('Picture') }}</label>
-                            <input type="file" name="company_cover" data-default-file="{{ ($company->company_cover) ? asset($company->company_cover) : '' }}"
+                            <input type="file" name="company_cover"
+                                data-default-file="{{ $company->company_cover ? asset($company->company_cover) : '' }}"
                                 class="dropify" data-height="180" data-allowed-file-extensions="png jpg jpeg">
                             <div class="require text-danger company_cover"></div>
                         </div>
@@ -81,7 +83,8 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-4">
-                            <label for="ownership">{{ __('Ownership') }}&nbsp;<span class="req">*</span></label>
+                            <label for="ownership">{{ __('Ownership') }}&nbsp;<span
+                                    class="req">*</span></label>
                         </div>
                         <div class="col-md-8">
                             <select name="ownership" class="form-control select2">
@@ -91,13 +94,16 @@
                                 <option value="Public" {{ $company->ownership == 'Public' ? 'selected' : '' }}>
                                     {{ __('Public') }}</option>
                                 <option value="Government"
-                                    {{ $company->ownership == 'Government' ? 'selected' : '' }}>{{ __('Government') }}
+                                    {{ $company->ownership == 'Government' ? 'selected' : '' }}>
+                                    {{ __('Government') }}
                                 </option>
                                 <option value="Non Profit"
-                                    {{ $company->ownership == 'Non Profit' ? 'selected' : '' }}>{{ __('Non Profit') }}
+                                    {{ $company->ownership == 'Non Profit' ? 'selected' : '' }}>
+                                    {{ __('Non Profit') }}
                                 </option>
                                 <option value="Recruitment Agency"
-                                    {{ $company->ownership == 'Recruitment Agency' ? 'selected' : '' }}>{{ __('Recruitment Agency') }}
+                                    {{ $company->ownership == 'Recruitment Agency' ? 'selected' : '' }}>
+                                    {{ __('Recruitment Agency') }}
                                 </option>
                             </select>
                             <div class="require text-danger ownership"></div>
@@ -115,11 +121,19 @@
                                 class="form-control" placeholder="eg, 1-50, 51-200"> --}}
                             <select name="no_of_employee" class="form-control select2">
                                 <option value="">No of Employee</option>
-                                <option value="1-500" {{ $company->no_of_employee == '1-500' ? 'selected' : '' }}>1-500</option>
-                                <option value="501-2500" {{ $company->no_of_employee == '501-2500' ? 'selected' : '' }}>501-2500</option>
-                                <option value="2501-5000" {{ $company->no_of_employee == '2501-5000' ? 'selected' : '' }}>2501-5000</option>
-                                <option value="5001-10000" {{ $company->no_of_employee == '5001-10000' ? 'selected' : '' }}>5001-10000</option>
-                                <option value="Above 10001" {{ $company->no_of_employee == 'Above 10001' ? 'selected' : '' }}>Above 10001</option>
+                                <option value="1-500" {{ $company->no_of_employee == '1-500' ? 'selected' : '' }}>
+                                    1-500</option>
+                                <option value="501-2500"
+                                    {{ $company->no_of_employee == '501-2500' ? 'selected' : '' }}>501-2500</option>
+                                <option value="2501-5000"
+                                    {{ $company->no_of_employee == '2501-5000' ? 'selected' : '' }}>2501-5000
+                                </option>
+                                <option value="5001-10000"
+                                    {{ $company->no_of_employee == '5001-10000' ? 'selected' : '' }}>5001-10000
+                                </option>
+                                <option value="Above 10001"
+                                    {{ $company->no_of_employee == 'Above 10001' ? 'selected' : '' }}>Above 10001
+                                </option>
                             </select>
                             <div class="require text-danger no_of_employee"></div>
                         </div>
@@ -318,7 +332,7 @@
                         </div>
                         @php
                             $hasContactPerson = !empty($company->company_contact_person);
-
+                            
                         @endphp
                         <div class="col-md-3">
                             <select name="person_designation" class="form-control select2">
@@ -336,8 +350,9 @@
                         </div>
                         <div class="col-md-6">
                             <input type="text" class="form-control"
-                                value="{{ $hasContactPerson ? $company->company_contact_person->name : '' }}" name="full_name"
-                                placeholder="Enter Full Name">
+                                value="{{ $hasContactPerson ? $company->company_contact_person->name : '' }}"
+                                name="full_name" placeholder="Enter Full Name">
+                            <div class="require text-danger full_name"></div>
                         </div>
                     </div>
                 </div>
@@ -348,8 +363,8 @@
                         </div>
                         <div class="col-md-9">
                             <input type="text" name="contact_person_designation"
-                                value="{{ $hasContactPerson ? $company->company_contact_person->position : '' }}" class="form-control"
-                                placeholder="Enter Designation, eg, HR, Manager">
+                                value="{{ $hasContactPerson ? $company->company_contact_person->position : '' }}"
+                                class="form-control" placeholder="Enter Designation, eg, HR, Manager">
                         </div>
                     </div>
                 </div>
@@ -362,9 +377,9 @@
                             <select name="dialcode" class="form-control select2-show-search" data-placeholder="ISO">
                                 <option value="">{{ __('ISO') }}</option>
                                 @foreach ($countries as $country)
-                                @php
-                                $dialcode = $hasContactPerson ? $company->company_contact_person->dialcode : ''
-                                @endphp
+                                    @php
+                                        $dialcode = $hasContactPerson ? $company->company_contact_person->dialcode : '';
+                                    @endphp
                                     <option value="{{ $country->phonecode }}"
                                         {{ $country->phonecode == $dialcode ? 'selected' : '' }}>
                                         {{ $country->phonecode }}</option>
@@ -385,8 +400,8 @@
                         </div>
                         <div class="col-md-9">
                             <input type="email" class="form-control"
-                                value="{{ $hasContactPerson ? $company->company_contact_person->email : '' }}" name="contact_person_email"
-                                placeholder="Enter Email">
+                                value="{{ $hasContactPerson ? $company->company_contact_person->email : '' }}"
+                                name="contact_person_email" placeholder="Enter Email">
                         </div>
                     </div>
                 </div>
@@ -394,6 +409,7 @@
         </div>
     </div>
     <div class="mx-auto mb-2">
-        <button type="button" class="btn btn-primary float-right text-center" onclick="submitForm(event);">{{ __('Submit') }}</button>
+        <button type="button" class="btn btn-primary float-right text-center"
+            onclick="submitForm(event);">{{ __('Submit') }}</button>
     </div>
 </div>

@@ -20,7 +20,7 @@ Route::prefix('candidate')->group(function () {
 Route::prefix('company')->group(function () {
     require_once 'web/company.php';
 });
-Route::get('candidate/{name}', [CanidateAuthController::class, 'login'])->name('candidate.login');
+Route::get('candidate/{name?}', [CanidateAuthController::class, 'login'])->name('candidate.login');
 // Auth
 Auth::routes();
 // Site Routes

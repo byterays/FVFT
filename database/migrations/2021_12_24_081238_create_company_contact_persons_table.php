@@ -16,9 +16,9 @@ class CreateCompanyContactPersonsTable extends Migration
         Schema::create('company_contact_persons', function (Blueprint $table) {
             $table->bigIncrements('id')->unique('id');
             $table->string('name', 50);
-            $table->string('email', 50);
-            $table->string('phone', 15);
-            $table->string('position', 50);
+            $table->string('email', 50)->nullable();
+            $table->string('phone', 15)->nullable();
+            $table->string('position', 50)->nullable();
             $table->unsignedBigInteger('company_id')->index('company_contact_persons');
             $table->text('avatar');
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();

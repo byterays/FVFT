@@ -60,4 +60,9 @@ class User extends Authenticatable
             return $this->employee()->first();
         };
     }
+
+    public function admin_profile()
+    {
+        return $this->hasOne(AdminProfile::class, 'user_id', 'id');
+    }
 }

@@ -22,7 +22,7 @@
     </div>
     <ul class="side-menu">
         <li class="slide is-expanded">
-            <a class="side-menu__item active" data-toggle="slide" href="#"><i
+            <a class="side-menu__item active" data-toggle="slide" onclick="window.location.href = '{{ route('admin.dashboard') }}'" href="#"><i
                     class="side-menu__icon fa fa-tachometer"></i><span class="side-menu__label">Dashboard</span></a>
         </li>
         <li class="slide">
@@ -35,7 +35,7 @@
                 <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Jobs</span><i
                     class="angle fa fa-angle-right"></i></a>
             <ul class="slide-menu">
-                <li><a class="slide-item" href="/admin/jobs-list">List Jobs</a></li>
+                <li><a class="slide-item" href="/admin/jobs-list">All Jobs</a></li>
                 <li><a class="slide-item" href="{{ route('admin.addNewJob') }}">Add Job</a></li>
             </ul>
         </li>
@@ -145,9 +145,7 @@
                 <span class="side-menu__label">MANAGE</span>
             </span>
         </li>
-        <li class="slide">
-            <a class="side-menu__item" data-toggle="slide" href="#">
-                <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Admin Users</span></a>
+        <li><a class="slide-item" href="{{ route('admin.user.lists') }}">Admin Users</a>
         </li>
         <li class="slide">
             <a class="side-menu__item" data-toggle="slide" href="#">
