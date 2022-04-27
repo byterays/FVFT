@@ -44,9 +44,6 @@ session()->forget('delete');
                                 {{-- <th>#id</th> --}}
                                 <th>Logo</th>
                                 <th>Name</th>
-                                <th>Country</th>
-                                <th>Registered Date</th>
-                                <th>Contact Person</th>
                                 <th>Industry</th>
                                 <th>Email</th>
                                 <th>Phone</th>

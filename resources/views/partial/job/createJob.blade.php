@@ -284,6 +284,7 @@
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <input type="text" name="country_salary" class="form-control">
+                                                <div class="require text-danger country_salary"></div>
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="" class="form-label countrylabel">USD</label>
@@ -292,14 +293,13 @@
                                         <div class="row mt-3">
                                             <div class="col-md-8">
                                                 <input type="text" name="nepali_salary" class="form-control">
+                                                <div class="require text-danger nepali_salary"></div>
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="" class="form-label">NPR</label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="require text-danger country_salary"></div>
-                                    <div class="require text-danger nepali_salary"></div>
                                 </div>
                                 <div class="form-group mt-2">
                                     <label class="custom-switch-checkbox">
@@ -322,6 +322,7 @@
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <input type="text" name="earning_country_salary" class="form-control">
+                                                <div class="require text-danger country_salary"></div>
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="" class="form-label countrylabel">USD</label>
@@ -330,14 +331,13 @@
                                         <div class="row mt-3">
                                             <div class="col-md-8">
                                                 <input type="text" name="earning_nepali_salary" class="form-control">
+                                                <div class="require text-danger nepali_salary"></div>
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="" class="form-label countrylabel">NPR</label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="require text-danger country_salary"></div>
-                                    <div class="require text-danger nepali_salary"></div>
                                 </div>
                             </div>
                         </div>

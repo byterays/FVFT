@@ -73,7 +73,7 @@
 
                                             </td>
                                             <td>
-                                                <a href="{{ route('viewJob', $item->id) }}" class="">{{ __('View Details') }}</a>
+                                                <a href="{{ route('viewJob', $item->job_id) }}" class="">{{ __('View Details') }}</a>
                                             </td>
                                             <td>
                                                 <button class="btn btn-danger btn-sm text-white" data-toggle="modal"

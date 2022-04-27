@@ -38,7 +38,7 @@
             </div>
         @endforeach
     </div>
-    <div class="row">
+    {{-- <div class="row">
         @foreach ($second_datas as $s_data)
             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
                 <a href="{{ $s_data['link'] }}">
@@ -54,7 +54,7 @@
                 </a>
             </div>
         @endforeach
-    </div>
+    </div> --}}
     <div class="row">
         @foreach ($job_datas as $job_data)
             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
@@ -155,21 +155,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($job_requests as $job_request)
+                            @if (count($job_requests) > 0)
+                                @foreach ($job_requests as $job_request)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $job_request->title }}</td>
+                                        <td>{{ !($job_request->country != null && $job_request->country->name != null) ?: $job_request->country->name }}
+                                        </td>
+                                        <td>{{ !($job_request->company != null && $job_request->company->company_name != null) ?:$job_request->company->company_name }}
+                                        </td>
+                                        <td>{{ getFormattedDate($job_request->created_at, 'M j, Y') }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.job.view', $job_request->id) }}"><i
+                                                    class="fa fa-eye text-green"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $job_request->title }}</td>
-                                    <td>{{ !($job_request->country != null && $job_request->country->name != null) ?: $job_request->country->name }}
-                                    </td>
-                                    <td>{{ !($job_request->company != null && $job_request->company->company_name != null) ?:$job_request->company->company_name }}
-                                    </td>
-                                    <td>{{ getFormattedDate($job_request->created_at, 'M j, Y') }}</td>
-                                    <td>
-                                        <a href="{{ route('admin.job.view', $job_request->id) }}"><i
-                                                class="fa fa-eye text-green"></i></a>
-                                    </td>
+                                    <td class="text-center">No Data Found</td>
                                 </tr>
-                            @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -208,16 +214,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($recent_applicants as $recent_applicant)
+                                    @if (count($recent_applicants) > 0)
+                                        @foreach ($recent_applicants as $recent_applicant)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ !($recent_applicant->employe != null && $recent_applicant->employe->full_name != null) ?:$recent_applicant->employe->full_name }}
+                                                </td>
+                                                <td>{{ !($recent_applicant->job != null && $recent_applicant->job->title != null) ?: $recent_applicant->job->title }}
+                                                </td>
+                                                <td>{{ getFormattedDate($recent_applicant->created_at, 'd/m/Y') }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ !($recent_applicant->employe != null && $recent_applicant->employe->full_name != null) ?:$recent_applicant->employe->full_name }}
-                                            </td>
-                                            <td>{{ !($recent_applicant->job != null && $recent_applicant->job->title != null) ?: $recent_applicant->job->title }}
-                                            </td>
-                                            <td>{{ getFormattedDate($recent_applicant->created_at, 'd/m/Y') }}</td>
+                                            <td>No Data Found</td>
                                         </tr>
-                                    @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -255,15 +267,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($recent_published_jobs as $recent_published_job)
+                                    @if (count($recent_published_jobs) > 0)
+                                        @foreach ($recent_published_jobs as $recent_published_job)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $recent_published_job->title }}</td>
+                                                <td>{{ !($recent_published_job->company != null && $recent_published_job->company->company_name != null) ?:$recent_published_job->company->company_name }}
+                                                </td>
+                                                <td>{{ getFormattedDate($recent_published_job->created_at, 'd/m/Y') }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $recent_published_job->title }}</td>
-                                            <td>{{ !($recent_published_job->company != null && $recent_published_job->company->company_name != null) ?:$recent_published_job->company->company_name }}
-                                            </td>
-                                            <td>{{ getFormattedDate($recent_published_job->created_at, 'd/m/Y') }}</td>
+                                            <td>No Data Found</td>
                                         </tr>
-                                    @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -303,17 +322,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($recent_registered_employers as $recent_registered_employer)
+                                    @if (count($recent_registered_employers) > 0)
+                                        @foreach ($recent_registered_employers as $recent_registered_employer)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $recent_registered_employer->company_name }}
+                                                </td>
+                                                <td>{{ $recent_registered_employer->country != null && $recent_registered_employer->country->name != null? $recent_registered_employer->country->name: '' }}
+                                                </td>
+                                                <td>{{ getFormattedDate($recent_registered_employer->created_at, 'd/m/Y') }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $recent_registered_employer->company_name }}
-                                            </td>
-                                            <td>{{ $recent_registered_employer->country != null && $recent_registered_employer->country->name != null? $recent_registered_employer->country->name: '' }}
-                                            </td>
-                                            <td>{{ getFormattedDate($recent_registered_employer->created_at, 'd/m/Y') }}
-                                            </td>
+                                            <td>No Data Found</td>
                                         </tr>
-                                    @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -351,16 +376,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($recent_registered_users as $recent_registered_user)
+                                    @if (count($recent_registered_users) > 0)
+                                        @foreach ($recent_registered_users as $recent_registered_user)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $recent_registered_user->full_name }}</td>
+                                                <td>{{ $recent_registered_user->gender }}
+                                                <td>{{ $recent_registered_user->calculateAgeFromDateOfBirth() }}
+                                                </td>
+                                                <td>{{ getFormattedDate($recent_registered_user->created_at, 'd/m/Y') }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $recent_registered_user->full_name }}</td>
-                                            <td>{{ $recent_registered_user->gender }}
-                                            <td>{{ $recent_registered_user->calculateAgeFromDateOfBirth() }}
-                                            </td>
-                                            <td>{{ getFormattedDate($recent_registered_user->created_at, 'd/m/Y') }}</td>
+                                            <td>No Data Found</td>
                                         </tr>
-                                    @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -503,7 +535,7 @@
 
         $(document).ready(function() {
             // C3 ChartJS
-            var registeredUser = '<?php echo json_encode($registeredUserChartData) ?>';
+            var registeredUser = '<?php echo json_encode($registeredUserChartData); ?>';
             registeredUser = Object.values(JSON.parse(registeredUser));
             registeredUser.unshift('data1');
             var chart = c3.generate({

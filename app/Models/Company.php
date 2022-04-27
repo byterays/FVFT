@@ -68,4 +68,34 @@ class Company extends Model
         return $this->hasMany(CompanyFollower::class, "company_id", "id");
     }
 
+
+    // protected $fillable = [
+    //     'company_name', 'company_logo', 'company_cover', 'company_banner', 'user_id', 'company_phone', 'company_email', 
+    //     'industry_id', 'company_details', 'country_id', 'city_id', 'state_id', 'company_address', 'is_active', 'is_featured',
+    //     'updated_at', 'company_website', 'company_fb_page', 'ownership', 'no_of_employee', 'operating_since', 'company_services',
+    //     'isocode1', 'dialcode1', 'mobile_phone1', 'isocode2', 'dialcode2', 'mobile_phone2', 'html_content_intro', 
+    //     'html_content_service'
+
+    // ];
+
+    public function calculateProfileCompletion()
+    {
+        $completed = 0;
+        $profileElements = ['company_name', 'company_logo', 'company_cover', 'company_phone', 'company_email', 'industry_id', 'company_details', 'operating_since', 'country_id', 'state_id',
+        'company_website', 'company_fb_page', 'company_services'];
+        $total = count($profileElements);
+
+        foreach($profileElements as $element){
+            $completed += empty($this->{$element}) ? 0 : 1;
+        }
+        if($this->company_contact_person()->count() > 0){
+            $completed++;
+        }
+
+        $total = $total + 1;
+        $completed = ($completed / $total) * 100;
+
+        return round($completed, 0);
+    }
+
 }

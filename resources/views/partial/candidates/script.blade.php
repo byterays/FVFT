@@ -1,3 +1,11 @@
+<script>
+    const _token = $('meta[name="csrf-token"]')[0].content;
+    const state_id = {{ isset($employ->state_id) ? $employ->state_id : '3871' }};
+    const city_id = {{ isset($employ->city_id) ? $employ->city_id : 'null' }};
+    const district_id = {{ isset($employ->district_id) ? $employ->district_id : 'null' }};
+    const appurl = "{{ env('APP_URL') }}";
+    const loadtrue = "no";
+</script>
 <script src="{{ env('APP_URL') }}js/location.js"></script>
 <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
 <script>
@@ -9,9 +17,8 @@
             todayHighlight: true,
         });
 
-        var is_experience = $("input[name=is_experience]").val();
+        var is_experience = $("input[name=is_experience]:checked").val();
         var isexp = "{{ $employ->is_experience }}";
-        console.log(isexp);
         if (is_experience == "Yes" && isexp != '') {
             $("#experienceData").removeClass('d-none');
         } else if (is_experience == "No") {
@@ -345,36 +352,24 @@
     var listData = [];
 
     function updateSelectedList(classname) {
-        console.log(classname)
         var listData = classname + 'selectedList';
         listData = [];
         var valuedata = classname + 'selectedValue';
         $("." + classname).each(function() {
             valuedata = $(this).find('option:selected').val();
-            console.log(valuedata);
             if (valuedata != "" && $.inArray(valuedata, listData) == "-1") {
                 listData.push(valuedata);
             }
         });
-        console.log(listData);
     }
 
     function disableSelectedList(class_name) {
         $("." + class_name + ' option').each(function() {
-            console.log(class_name + 'selectedList')
             if ($.inArray(this.value, listData) != "-1") {
-                console.log($(this));
                 $(this).hide();
             } else {
                 $(this).show();
             }
         });
     }
-</script>
-<script>
-    const _token = $('meta[name="csrf-token"]')[0].content;
-    const state_id = {{ isset($employ->state_id) ? $employ->state_id : '3871' }};
-    const city_id = {{ isset($employ->city_id) ? $employ->city_id : 'null' }};
-    const district_id = {{ isset($employ->district_id) ? $employ->district_id : 'null' }};
-    const appurl = "{{ env('APP_URL') }}";
 </script>

@@ -8,6 +8,30 @@
 @section('css')
     <!-- c3.js Charts Plugin -->
     <link href="{{ asset('themes/fvft/') }}/assets/plugins/charts-c3/c3-chart.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('css/progress.css') }}">
+    <style>
+        .progress-lg {
+            height: 1.75rem;
+        }
+
+        .progress-lg .progress-bar {
+            height: 1.75rem;
+        }
+
+        .progress {
+            font-size: 1rem;
+        }
+
+        .gray-round {
+            background-color: rgb(166 181 217);
+        }
+
+        .notification-badge {
+            top: -10px;
+            position: relative;
+        }
+
+    </style>
 @endsection
 @section('data')
     <div class="card mb-0">
@@ -30,6 +54,14 @@
                     <h3 class="card-title">{{ $company->company_name ?? '' }}</h3>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="card mb-0 mt-3">
+        <div class="card-body">
+            <h3 class="card-title">{{ __('Profile Status') }}</h3>
+            @include(
+                'themes.fvft.company.components.profile-completion', ['company' => $company]
+            )
         </div>
     </div>
     <div class="mt-5">
@@ -81,25 +113,6 @@
                                 </div>
                                 <p class="card-text mt-3 mb-3">{{ __($j_data['title']) }}</p>
                                 <p class="h2 text-center text-primary">{{ $j_data['totalcount'] }}</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            @endforeach
-        </div>
-    </div>
-    <div class="mt-5">
-        <div class="row row-cards">
-            @foreach ($application_datas as $a_data)
-                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                    <a href="{{ $a_data['link'] }}">
-                        <div class="card">
-                            <div class="card-body p-4 text-center feature">
-                                <div class="fa-stack fa-lg fa-1x icons shadow-default bg-primary-transparent">
-                                    <i class="icon icon-people text-primary"></i>
-                                </div>
-                                <p class="card-text mt-3 mb-3">{{ __($a_data['title']) }}</p>
-                                <p class="h2 text-center text-primary">{{ $a_data['totalcount'] }}</p>
                             </div>
                         </div>
                     </a>

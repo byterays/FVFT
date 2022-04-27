@@ -182,6 +182,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     // });
 
     Route::group(['prefix' => 'user/', 'as' => 'admin.user.'], function(){
+        Route::get('', [AdminController::class, 'users'])->name('lists');
         Route::get('profile', [AdminController::class, "profile"])->name("profile");
         Route::put('update-profile', [AdminController::class, "updateProfile"])->name("updateProfile");
     });

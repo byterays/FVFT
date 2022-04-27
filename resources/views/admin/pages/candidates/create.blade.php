@@ -168,19 +168,6 @@
                                 <div class="require text-danger marital_status"></div>
                             </div>
                         </div> --}}
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="" class="form-label">Date of Birth(Nepali B.S)</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control nepaliDatePicker" name="nepali_dob" readonly
-                                        placeholder="Enter Birth Date" id="nepali-datepicker">
-                                    <div class="require text-danger nepali_dob"></div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
@@ -191,6 +178,18 @@
                                     <input type="text" class="form-control datetime" name="english_dob" readonly
                                         placeholder="Enter Birth Date">
                                     <div class="require text-danger english_dob"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="" class="form-label">Date of Birth(Nepali B.S)</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control nepaliDatePicker" name="nepali_dob" readonly
+                                        placeholder="Enter Birth Date" id="nepali-datepicker">
+                                    <div class="require text-danger nepali_dob"></div>
                                 </div>
                             </div>
                         </div>
@@ -254,7 +253,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <select name="state_id" class="form-control select2-show-search" id="states"
-                                        onchange="patchGetDistricts(this)">
+                                        onchange="patchGetDistricts(this)" data-placeholder="Select State">
                                         <option value="">Select State</option>
                                         @foreach ($states as $state)
                                             <option value="{{ $state->id }}">{{ $state->name }}</option>
@@ -262,7 +261,7 @@
                                     </select>
                                 </div>
                                 <div class="col-6">
-                                    <select name="district_id" class="form-control select2-show-search" id="districts">
+                                    <select name="district_id" class="form-control select2-show-search" id="districts" data-placeholder="Select District">
                                         <option value="">District</option>
                                     </select>
                                 </div>
@@ -934,10 +933,10 @@
         }
     </script>
     <script>
-        // const _token = $('meta[name="csrf-token"]')[0].content;
-        // const state_id = {{ isset($candidate->state_id) ? $candidate->state_id : '3871' }};
+        const _token = $('meta[name="csrf-token"]')[0].content;
+        const state_id = {{ isset($candidate->state_id) ? $candidate->state_id : '3871' }};
         // const city_id = {{ isset($candidate->city_id) ? $candidate->city_id : 'null' }};
-        // const district_id = {{ isset($candidate->district_id) ? $candidate->district_id : 'null' }};
-        // const appurl = "{{ env('APP_URL') }}";
+        const district_id = {{ isset($candidate->district_id) ? $candidate->district_id : 'null' }};
+        const appurl = "{{ env('APP_URL') }}";
     </script>
 @endsection

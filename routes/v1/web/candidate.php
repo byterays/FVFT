@@ -14,7 +14,6 @@ use App\Http\Controllers\Candidates\Support\SupportController as CandidateSuppor
 use App\Http\Controllers\Candidates\UsefulInformationController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/login', [AuthController::class, 'login'])->name('candidate.login');
 Route::post('/register', [AuthController::class, 'register'])->name('candidate.register');
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashController::class, 'dashboard'])->name('candidate.dashboard');

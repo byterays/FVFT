@@ -16,6 +16,15 @@ class AdminController extends Controller
     use AdminMethods;
     private $page = "admin.user.";
 
+
+    public function users()
+    {
+        $admins = User::where('user_type', 'admin')->whereHas('admin_profile')->with('admin_profile')->paginate(10);
+        return $this->view($this->page.'lists',[
+            'admins' => $admins,
+        ]);
+    }
+
     public function profile()
     {
         $admin = Auth::user();

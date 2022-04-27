@@ -87,19 +87,19 @@ class DashboardController extends Controller
                 [
                     "title" => 'Employers',
                     "totalcount" => Company::where('is_active', 1)->count('id'),
-                    "link" => "",
+                    "link" => route('admin.companies.list'),
                     "icon" => "icon icon-people"
                 ],
                 [
                     "title" => 'Applicants',
                     "totalcount" => JobApplication::count('id'),
-                    "link" => "",
+                    "link" => route('admin.applicants.list'),
                     "icon" => "icon icon-people"
                 ],
                 [
                     "title" => 'Registered User',
                     "totalcount" => User::whereIn('user_type', ['candidate', 'company'])->count('id'),
-                    "link" => "",
+                    "link" => route('admin.candidates.list'),
                     "icon" => "icon icon-people"
                 ],
             ],
@@ -128,25 +128,25 @@ class DashboardController extends Controller
                     "title" => "Approved Jobs",
                     "totalcount" => Job::where('status', 'Approved')->count('id'),
                     "icon" => "icon icon-people",
-                    "link" => ""
+                    "link" => route('admin.jobs-list')
                 ],
                 [
                     "title" => "Pending Jobs",
                     "totalcount" => Job::where('status', 'Pending')->count('id'),
                     "icon" => "icon icon-people",
-                    "link" => ""
+                    "link" => route('admin.jobs-list')
                 ],
                 [
                     "title" => "Active Jobs",
                     "totalcount" => Job::where('status', 'Active')->count('id'),
                     "icon" => "icon icon-people",
-                    "link" => ""
+                    "link" => route('admin.jobs-list')
                 ],
                 [
                     "title" => "Expired Jobs",
                     "totalcount" => Job::where('status', 'Expired')->count('id'),
                     "icon" => "icon icon-people",
-                    "link" => ""
+                    "link" => route('admin.jobs-list')
                 ],
             ],
             "application_row" => [
@@ -154,42 +154,42 @@ class DashboardController extends Controller
                     "title" => "All Applications",
                     "img" => "megaphone.svg",
                     "totalcount" => JobApplication::count(),
-                    "link" => "",
+                    "link" => route('admin.applicants.list'),
                     "background" => "red",
                 ],
                 [
                     "title" => "Unscreened Applications",
                     "img" => "megaphone.svg",
                     "totalcount" => JobApplication::where('status', 'pending')->count(),
-                    "link" => "",
+                    "link" => route('admin.applicants.list'),
                     "background" => "red",
                 ],
                 [
                     "title" => "Shortlisted Applications",
                     "img" => "megaphone.svg",
                     "totalcount" => JobApplication::where('status', 'shortlisted')->count(),
-                    "link" => "",
+                    "link" => route('admin.applicants.list'),
                     "background" => "red",
                 ],
                 [
                     "title" => "Interviewed Applications",
                     "img" => "megaphone.svg",
                     "totalcount" => JobApplication::where('status', 'selectedForInterview')->count(),
-                    "link" => "",
+                    "link" => route('admin.applicants.list'),
                     "background" => "red",
                 ],
                 [
                     "title" => "Selected Applications",
                     "img" => "megaphone.svg",
                     "totalcount" => JobApplication::where('status', 'accepted')->count(),
-                    "link" => "",
+                    "link" => route('admin.applicants.list'),
                     "background" => "red",
                 ],
                 [
                     "title" => "Rejected Applications",
                     "img" => "megaphone.svg",
                     "totalcount" => JobApplication::where('status', 'rejected')->count(),
-                    "link" => "",
+                    "link" => route('admin.applicants.list'),
                     "background" => "red",
                 ],
             ],

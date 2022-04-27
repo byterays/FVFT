@@ -12,6 +12,8 @@ use DB;
 use Illuminate\Http\Request;
 use App\Traits\Site\ThemeMethods;
 use Illuminate\Notifications\DatabaseNotification as Notification;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Employe;
 
 class HomeController extends Controller
 {
@@ -39,13 +41,21 @@ class HomeController extends Controller
             'industry',
             'jobs',
         ])->paginate(10);
-        return $this->site_view('site.companies', ["companies" => $companies]);
+        $employe = "";
+        if(Auth::user()){
+            $employe = Employe::where('user_id', Auth::user()->id)->first();
+        }
+        return $this->site_view('site.companies', ["companies" => $companies,"employe"=>$employe]);
     }
     public function company($id)
     {
         $company = Company::findOrFail($id);
         $company_jobs = Job::where("company_id", $id)->paginate(10);
-        return $this->site_view('site.company-view', ['company' => $company, "company_jobs" => $company_jobs]);
+        $employe = "";
+        if(Auth::user()){
+            $employe = Employe::where('user_id', Auth::user()->id)->first();
+        }
+        return $this->site_view('site.company-view', ['company' => $company, "company_jobs" => $company_jobs,"employe"=>$employe]);
     }
 
 
