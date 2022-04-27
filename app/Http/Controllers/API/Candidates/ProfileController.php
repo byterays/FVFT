@@ -30,7 +30,7 @@ class ProfileController extends Controller
             'experience',
             'experience.country',
             'experience.job_category',
-            'experience.job',
+            'experience.industry',
             'education',
             'education.educationLevel',
             'employeeSkills',
@@ -167,13 +167,13 @@ class ProfileController extends Controller
             }
         }
         elseif ($request->page == 'experience'){
+
             EmployeeExperience::where('employ_id', $employee->id)->delete();
             $experiences = json_decode($request->experience, true);
 
             if (!is_array($experiences)){
                 return $this->sendResponse('', 'experience id must be an array', '', false);
             }
-
             foreach($experiences as $experience) {
                 $employee_experience = new EmployeeExperience();
                 $employee_experience->employ_id = $employee->id;
@@ -197,7 +197,7 @@ class ProfileController extends Controller
             'experience',
             'experience.country',
             'experience.job_category',
-            'experience.job',
+            'experience.industry',
             'education_level',
             'education.educationLevel',
             'employeeSkills',
