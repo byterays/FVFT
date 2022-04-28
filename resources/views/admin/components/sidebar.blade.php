@@ -1,4 +1,3 @@
-{{-- @dd($user["profile"]) --}}
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <aside class="app-sidebar doc-sidebar ps ps--active-y">
     <div class="app-sidebar__user clearfix">
@@ -144,8 +143,6 @@
             <span class="side-menu__item">
                 <span class="side-menu__label">MANAGE</span>
             </span>
-        </li>
-        <li><a class="slide-item" href="{{ route('admin.user.lists') }}">Admin Users</a>
         </li>
         <li class="slide">
             <a class="side-menu__item" data-toggle="slide" href="#">
