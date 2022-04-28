@@ -130,7 +130,7 @@ class DashController extends Controller
                 ],
                 [
                     'title' => 'My CV',
-                    'link' => '#',
+                    'link' => route('candidate.profile.get_cv'),
                     'totalcount' => '',
                     'icon' => '/uploads/site/svgs/post-it.svg',
                 ],

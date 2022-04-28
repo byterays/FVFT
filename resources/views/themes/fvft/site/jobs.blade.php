@@ -202,15 +202,16 @@
                                                                             </a>
                                                                         </div> --}}
                                                                         <div class="col-md-3">
-                                                                            <a href="/job/{{ $item->id }}"
+                                                                            <a href="{{ route('viewJob', $item->id) }}"
                                                                                class="btn btn-warning btn-block">
                                                                                 <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                             </a>
                                                                         </div>
                                                                         <div class="col-md-3">
-                                                                            <a href="#" class="btn btn-warning btn-block">
-                                                                                <i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
-                                                                            </a>
+                                                                            <div class="sharethis-inline-share-buttons" data-url="{{ route('viewJob', $item->id) }}"></div>
+                                                                            {{--<a href="#" data-url="{{ route('viewJob', $item->id) }}" class="btn btn-warning btn-block share-btn">--}}
+                                                                                {{--<i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}--}}
+                                                                            {{--</a>--}}
                                                                         </div>
                                                                     @endauth
 

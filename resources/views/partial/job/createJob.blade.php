@@ -157,7 +157,7 @@
                                 <label class="form-label">Country&nbsp;<span class="req">*</span></label>
                             </div>
                             <div class="col-md-8">
-                                <select name="country" id="select-country" class="form-control"
+                                <select name="country" id="select-country" class="form-control select2-show-search"
                                     value="{{ isset($job->country_id) ? $job->country_id : '' }}"
                                     onchange="patchStates(this)">
                                     @foreach ($countries as $item)
@@ -179,7 +179,7 @@
                                         class="req">*</span></label>
                             </div>
                             <div class="col-md-8">
-                                <select name="state" id="select-state" class="form-control"
+                                <select name="state" id="select-state" class="form-control select2-show-search"
                                     value="{{ isset($job->state_id) ? $job->state_id : '' }}"
                                     onchange="patchCities(this)">
                                 </select>
@@ -221,7 +221,7 @@
                                     <div class="col-md-6">
                                         <select name="contract_month" class="form-control select2">
                                             <option value="">Select Month</option>
-                                            @for ($i = 1; $i <= 12; $i++)
+                                            @for ($i = 0; $i <= 12; $i++)
                                                 <option value="{{ $i }}">{{ $i }}</option>
                                             @endfor
                                         </select>
@@ -345,7 +345,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="accomodation" class="form-label">Accomodation&nbsp;<span
+                                <label for="accomodation" class="form-label">Accommodation&nbsp;<span
                                         class="req">*</span></label>
                             </div>
                             <div class="col-md-8">
