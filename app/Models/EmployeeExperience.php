@@ -27,8 +27,8 @@ class EmployeeExperience extends Model
         return $this->belongsTo(Industry::class, 'industry_id');
     }
 
-//    public function job()
-//    {
-//        return $this->belongsTo(Job::class, 'job_title_id');
-//    }
+   public function job()
+   {
+       return $this->belongsTo(Job::class, 'job_title_id');
+   }
 }
