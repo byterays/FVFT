@@ -20,8 +20,8 @@ class CreateCitiesTable extends Migration
             $table->string('state_code');
             $table->unsignedMediumInteger('country_id')->index('cities_test_ibfk_2');
             $table->char('country_code', 2);
-            $table->decimal('latitude', 10, 8);
-            $table->decimal('longitude', 11, 8);
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
             $table->timestamp('created_at')->default('2014-01-01 06:46:01');
             $table->timestamp('updated_at')->useCurrentOnUpdate()->useCurrent();
         });
