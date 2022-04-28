@@ -15,11 +15,14 @@ use App\Http\Controllers\Admin\Companies\CompanyController;
 use App\Http\Controllers\Admin\Candidates\CandidateController;
 use App\Http\Controllers\Admin\Pages\PageController;
 use App\Http\Controllers\Admin\Applicants\ApplicantController;
+use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\News\NewsController;
 use App\Http\Controllers\Admin\Industry\IndustryController;
 use App\Http\Controllers\Admin\JobcategoryController;
 use App\Http\Controllers\Admin\Training\TrainingController;
 use App\Http\Controllers\Admin\SantiController;
+use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\SupportCategoryController;
 use App\Http\Controllers\Admin\SupportController;
 use App\Http\Controllers\Admin\UsefulInformationController;
@@ -122,6 +125,34 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::get("edit/{id}", [JobcategoryController::class, "edit"])->name("edit");
         Route::match(['put', 'patch'], 'update/{id}', [JobcategoryController::class, "update"])->name("update");
         // Route::delete('delete/{id}', [JobcategoryController::class, "delete"])->name("delete");
+    });
+
+    // Country Crud
+    Route::group(['prefix' => 'country/', 'as' => 'admin.country.'], function(){
+        Route::get('', [CountryController::class, 'index'])->name('index');
+        Route::get('create', [CountryController::class, 'create'])->name('create');
+        Route::get('edit/{id}', [CountryController::class, 'edit'])->name('edit');
+        Route::post('store', [CountryController::class, 'store'])->name('store');
+        Route::delete('delete/{id}', [CountryController::class, 'delete'])->name('delete');
+        Route::post('update-status', [CountryController::class, 'updateStatus'])->name('updateStatus');
+    });
+
+    // State Crud
+    Route::group(['prefix' => 'state/', 'as' => 'admin.state.'], function(){
+        Route::get('', [StateController::class, 'index'])->name('index');
+        Route::get('create', [StateController::class, 'create'])->name('create');
+        Route::get('edit/{id}', [StateController::class, 'edit'])->name('edit');
+        Route::post('store', [StateController::class, 'store'])->name('store');
+        Route::delete('delete/{id}', [StateController::class, 'delete'])->name('delete');
+    });
+
+    // City Crud
+    Route::group(['prefix' => 'city/', 'as' => 'admin.city.'], function(){
+        Route::get('', [CityController::class, 'index'])->name('index');
+        Route::get('create', [CityController::class, 'create'])->name('create');
+        Route::get('edit/{id}', [CityController::class, 'edit'])->name('edit');
+        Route::post('store', [CityController::class, 'store'])->name('store');
+        Route::delete('delete/{id}', [CityController::class, 'delete'])->name('delete');
     });
 
     // SupportCategory Crud

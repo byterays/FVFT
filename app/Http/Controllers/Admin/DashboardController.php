@@ -81,7 +81,7 @@ class DashboardController extends Controller
                 [
                     "title" => 'Countries',
                     "totalcount" => Country::where('is_active', 1)->count('id'),
-                    "link" => "",
+                    "link" => route('admin.country.index'),
                     "icon" => "icon icon-people"
                 ],
                 [
