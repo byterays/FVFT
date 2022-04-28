@@ -69,7 +69,7 @@
                                 @foreach ($profile_datas as $profile_data)
                                     <div class="col-lg-3 col-md-6 col-sm-6">
                                         <div class="item-all-card text-dark text-center card">
-                                            <a href="jobs-list.html"></a>
+                                            <a href="{{ $profile_data['link'] }}"></a>
                                             <div class="iteam-all-icon1">
                                                 <img src="{{ asset($profile_data['icon']) }}" class="imag-service" alt="">
                                                 <i class="{{ $profile_data['icon'] }}"></i>

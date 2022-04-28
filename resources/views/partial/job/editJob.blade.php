@@ -237,7 +237,7 @@
                                     <div class="col-md-6">
                                         <select name="contract_month" class="form-control select2">
                                             <option value="">Select Month</option>
-                                            @for ($i = 1; $i <= 12; $i++)
+                                            @for ($i = 0; $i <= 12; $i++)
                                                 <option value="{{ $i }}"
                                                     {{ $i == $job->contract_month ? 'selected' : '' }}>
                                                     {{ $i }}</option>
@@ -364,7 +364,7 @@
                                     <div class="require text-danger earning_country_salary"></div>
                                     <div class="require text-danger earning_nepali_salary"></div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>

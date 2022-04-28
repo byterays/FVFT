@@ -3,7 +3,7 @@
 @section('content')
     <section>
         <div class="bannerimg cover-image bg-background3" data-image-src="/uploads/site/banner.png"
-            style="background: url(/uploads/site/banner.png) center center;">
+             style="background: url(/uploads/site/banner.png) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
                     <h1 class="">{{ __('My Profile') }}</h1>
@@ -23,14 +23,10 @@
                     @include('themes.fvft.candidates.components.sidebar')
                 </div>
                 <div class="col-xl-9 col-lg-12 col-md-12">
-                    <div class="row">
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h3 class="font-weight-bold">{{ __(strtoupper('Profile')) }}</h3>
-                                <div id="basicwizard" class="border pt-0">
-                                    @include('partial/candidates/tabs')
-                                </div>
-                            </div>
+                    <div class="card mb-0">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ __('My Profile') }}</h3>
+                            @include('partial/candidates/tabs')
                         </div>
                         <h3 class="mt-5 ml-3">{{ __('My Profile') }}</h3>
                         <div class="card mb-2">
@@ -276,6 +272,7 @@
                                         @endif
                                     </div>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
