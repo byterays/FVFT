@@ -63,6 +63,7 @@
 
     </style>
     @yield('style')
+    <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=626a7f190ebd0700197cc4c1&product=sop' async='async'></script>
 </head>
 
 <body class="main-body">
@@ -155,6 +156,7 @@
             }
         }
         $(function() {
+
             var mainInput = document.getElementsByClassName("nepaliDatePicker");
             if (!mainInput.length) {
                 return;
@@ -278,15 +280,15 @@
             case 'info':
             toastr.info("{{ Session::get('message') }}");
             break;
-        
+
             case 'warning':
             toastr.warning("{{ Session::get('message') }}");
             break;
-        
+
             case 'success':
             toastr.success("{{ Session::get('message') }}");
             break;
-        
+
             case 'error':
             toastr.error("{{ Session::get('message') }}");
             break;
