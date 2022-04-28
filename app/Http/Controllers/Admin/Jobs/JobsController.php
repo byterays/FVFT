@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Jobs;
 
 use App\Http\Controllers\Controller;
+use App\Models\Country;
 use App\Models\Job;
 use App\Traits\Admin\AdminMethods;
 use DB;
@@ -19,7 +20,7 @@ class JobsController extends Controller
         $this->educationlevels = \DB::table('educationlevels')->get();
         $this->job_shifts = \DB::table('job_shifts')->get();
         $this->job_categories = \DB::table('job_categories')->get();
-        $this->countries = \DB::table('countries')->get();
+        $this->countries = Country::select('id', 'name')->where('is_active', 1)->get();
     }
     public function index(Request $request)
     {
@@ -59,7 +60,7 @@ class JobsController extends Controller
                 'country_id' => $request->country_id,
                 'category_id' => $request->category_id,
                 'employer_id' => $request->employer_id,
-                
+
             )),
             // 'jobs' => \DB::table('jobs')->paginate(10),
             "companies" => $this->companies,
@@ -181,7 +182,7 @@ class JobsController extends Controller
 
         // ['Draft', 'Pending', 'Active', 'Approved', 'Not Approved', 'Published', 'Unpublished', 'Expired', 'Rejected']
 
-        
+
         if($Validator->passes()){
             try{
                 DB::beginTransaction();
@@ -200,7 +201,7 @@ class JobsController extends Controller
                 // } else if($request->job_status == 'Not Approved') {
                 //     $job->approval_status = 0;
                 //     $job->status = "Not Approved";
-                // } 
+                // }
                 $job->save();
                 DB::commit();
                 return response()->json(['msg' => 'Job created successfully', 'redirectRoute' => route($this->redirectTo)]);
@@ -292,17 +293,17 @@ class JobsController extends Controller
             "job_categories" => $this->job_categories,
             "educationlevels" => $this->educationlevels,
         ]);
-        try {
-            // DB::table('jobs')->delete($request->id);
-            // return redirect()->route('admin.jobs-list',["page"=>$request->from,"dstatus"=>"sucess"]);
-
-        } catch (\Throwable $th) {
-            return redirect()->route('admin.jobs-list', ["page" => $request->from, "dstatus" => "failed"]);
-        }
+//        try {
+//            // DB::table('jobs')->delete($request->id);
+//            // return redirect()->route('admin.jobs-list',["page"=>$request->from,"dstatus"=>"sucess"]);
+//
+//        } catch (\Throwable $th) {
+//            return redirect()->route('admin.jobs-list', ["page" => $request->from, "dstatus" => "failed"]);
+//        }
     }
-    function list() {
-
-    }
+//    function list() {
+//
+//    }
 
     private function __saveOrUpdateJob($job, $request, $oldImage='', $oldPicture='')
     {
@@ -318,7 +319,7 @@ class JobsController extends Controller
         } else {
             $job->feature_image_url = $oldImage;
         }
-        
+
         $job->benefits = $request->other_benefits;
         $job->salary_from = $request->salary_from;
         $job->salary_to = $request->salary_to;
