@@ -32,6 +32,7 @@ class StateController extends Controller
     {
         return $this->view($this->page . 'editadd', [
             'countries' => $this->countries,
+            'action' => 'Create'
         ]);
     }
 
@@ -41,6 +42,7 @@ class StateController extends Controller
         return $this->view($this->page . 'editadd', [
             'state' => $state,
             'countries' => $this->countries,
+            'action' => 'Edit'
         ]);
     }
 

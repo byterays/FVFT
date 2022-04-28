@@ -127,6 +127,7 @@
                 <li><a class="slide-item" href="{{ route('admin.country.index') }}">All Countries</a></li>
                 <li><a class="slide-item" href="{{ route('admin.state.index') }}">All States</a></li>
                 <li><a class="slide-item" href="{{ route('admin.city.index') }}">All Cities</a></li>
+                <li><a class="slide-item" href="{{ route('admin.district.index') }}">All Districts</a></li>
             </ul>
         </li>
         <li class="slide">
@@ -157,8 +158,8 @@
         <li>
             <a class="side-menu__item" href="{{ route('admin.user.lists') }}"><i class="side-menu__icon fa fa-users"></i><span class="side-menu__label"> Admin Users</span></a>
         </li>
-        <li class="slide">
-            <a class="side-menu__item" data-toggle="slide" href="#">
+        <li>
+            <a class="side-menu__item"  href="{{ route('admin.general_setting.index') }}">
                 <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Site Settings</span></a>
         </li>
 

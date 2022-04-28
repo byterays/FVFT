@@ -41,13 +41,15 @@ class JobsController extends Controller
         }
         if($request->filled('job_status')){
             if($request->job_status == 'Pending'){
-                $jobs = $jobs->where('is_active', 0);
+                $jobs = $jobs->where('status', 'Pending');
             } else if($request->job_status == 'Approved'){
-                $jobs = $jobs->where('approval_status', 1);
+                $jobs = $jobs->where('status', 'Approved');
             } else if($request->job_status == 'Published'){
-                $jobs = $jobs->where('publish_status', 1);
+                $jobs = $jobs->where('status', 'Published');
             } else if($request->job_status == 'Expired'){
-                $jobs = $jobs->where('is_expired', 1);
+                $jobs = $jobs->where('status', 'Expired');
+            } else if($request->job_status == 'Active'){
+                $jobs = $jobs->where('status', 'Active');
             }
         }
         $jobs = $jobs->with(['country:id,name','company:id,company_name','job_category:id,functional_area'])->paginate(10)->setPath('');

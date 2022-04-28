@@ -128,25 +128,25 @@ class DashboardController extends Controller
                     "title" => "Approved Jobs",
                     "totalcount" => Job::where('status', 'Approved')->count('id'),
                     "icon" => "icon icon-people",
-                    "link" => route('admin.jobs-list')
+                    "link" => route('admin.jobs-list', ['job_status' => 'Approved'])
                 ],
                 [
                     "title" => "Pending Jobs",
                     "totalcount" => Job::where('status', 'Pending')->count('id'),
                     "icon" => "icon icon-people",
-                    "link" => route('admin.jobs-list')
+                    "link" => route('admin.jobs-list', ['job_status' => 'Pending'])
                 ],
                 [
                     "title" => "Active Jobs",
                     "totalcount" => Job::where('status', 'Active')->count('id'),
                     "icon" => "icon icon-people",
-                    "link" => route('admin.jobs-list')
+                    "link" => route('admin.jobs-list',['job_status' => 'Active'])
                 ],
                 [
                     "title" => "Expired Jobs",
                     "totalcount" => Job::where('status', 'Expired')->count('id'),
                     "icon" => "icon icon-people",
-                    "link" => route('admin.jobs-list')
+                    "link" => route('admin.jobs-list', ['job_status' => 'Expired'])
                 ],
             ],
             "application_row" => [

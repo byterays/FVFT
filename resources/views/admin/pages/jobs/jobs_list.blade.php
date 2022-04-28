@@ -1,6 +1,14 @@
 @extends('admin.layouts.master')
 @section('main')
     <link rel="stylesheet" href="{{ asset('css/datepicker.min.css') }}">
+    <style>
+        .status_pane .tab-menu-heading {
+            padding: 5px;
+            border: none !important;
+            border-bottom: 0;
+        }
+
+    </style>
     @php
     $images = '[';
     $countriesDOM = '[';
@@ -28,6 +36,34 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
+            <div class="card status_pane">
+                <div class="card-header">
+                    <div class="panel panel-primary">
+                        <div class=" tab-menu-heading">
+                            <div class="tabs-menu1 ">
+                                <!-- Tabs -->
+                                <ul class="nav panel-tabs">
+                                    <li class="">
+                                        <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Active']) }}" class="{{ !(request()->job_status=='Active') ?: 'active' }}">Active</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Pending']) }}" class="{{ !(request()->job_status=='Pending') ?: 'active' }}">Pending</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Approved']) }}" class="{{ !(request()->job_status=='Approved') ?: 'active' }}">Approved</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Published']) }}" class="{{ !(request()->job_status=='Published') ?: 'active' }}">Published</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Expired']) }}" class="{{ !(request()->job_status=='Expired') ?: 'active' }}">Expired</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="card">
                 <div class="card-header">
 
@@ -38,7 +74,8 @@
 
                             </div>
                             <div class="col-md-6">
-                                <a href="/admin/jobs-new" class="btn btn-primary float-right"><i class="fe fe-plus mr-2"></i>Add New</a>
+                                <a href="/admin/jobs-new" class="btn btn-primary float-right"><i
+                                        class="fe fe-plus mr-2"></i>Add New</a>
                             </div>
                         </div>
                         <div class="row">
@@ -81,9 +118,9 @@
                             </div>
                             <div class="col-md-4 mb-3">
                                 @php
-                                    $statuses = ['Pending', 'Approved', 'Published', 'Expired'];
+                                    $statuses = ['Active', 'Pending', 'Approved', 'Published', 'Expired'];
                                 @endphp
-                                <select name="job_status" class="form-control">
+                                <select name="job_status" class="form-control d-none">
                                     <option value="">Select Status</option>
                                     @foreach ($statuses as $value)
                                         <option value="{{ $value }}"
@@ -126,7 +163,7 @@
                                         <td><img src="/{{ $job->feature_image_url }}" alt="" srcset="" width="50px"></td>
                                         <td>{{ $job->title }}</td>
                                         <td>
-                                            {{ !($job->job_category != null && $job->job_category->functional_area != null) ?: $job->job_category->functional_area }}
+                                            {{ !($job->job_category != null && $job->job_category->functional_area != null) ?:$job->job_category->functional_area }}
                                         </td>
                                         <td>
                                             {{-- {{ DB::table('companies')->find($job->company_id)->company_name ?? '' }} --}}
@@ -136,7 +173,8 @@
                                             {{ !($job->country != null && $job->country->name != null) ?: $job->country->name }}
                                         </td>
                                         <td>
-                                            <i class="fa fa-{{ $job->is_featured ? 'check-' : '' }}circle-o {{ $job->is_featured ? 'text-success' : 'text-warning' }}"></i>
+                                            <i
+                                                class="fa fa-{{ $job->is_featured ? 'check-' : '' }}circle-o {{ $job->is_featured ? 'text-success' : 'text-warning' }}"></i>
                                         </td>
                                         {{-- <td>
                                             <span

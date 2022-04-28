@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 @section('main')
     <div class="page-header">
-        <h4 class="page-title">Create City</h4>
+        <h4 class="page-title">{{ $action }} City</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Modules</a></li>
             <li class="breadcrumb-item" aria-current="page"><a href="{{ route('admin.city.index') }}">City</a></li>
@@ -25,7 +25,9 @@
                                 <div class="form-group">
                                     <label class="form-label">City Name</label>
                                     <input type="text" class="form-control" name="name" value="{{ isset($city->name) ? $city->name : old('name') }}" placeholder="City Name">
-                                    <div class="require name text-danger"></div>
+                                    @error('name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>   
                                 <div class="form-group">
                                     <label class="form-label">Select Country</label>
@@ -35,14 +37,18 @@
                                         <option value="{{ $country->id }}" {{ isset($city) ? ($country->id == $city->country_id ? 'selected' : '') : (old('country_id') == $country->id ? 'selected' : '') }}>{{ $country->name }}</option>
                                         @endforeach
                                     </select>
-                                    <div class="require country_id text-danger"></div>
+                                    @error('country_id')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>                           
                                 <div class="form-group">
                                     <label class="form-label">Select State</label>
                                     <select name="state_id" class="form-control select2-show-search" data-placeholder="Select State" id="select-state" value="{{ isset($city->state_id) ?? '' }}">
                                         
                                     </select>
-                                    <div class="require state_id text-danger"></div>
+                                    @error('state_id')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>                                                    
                             </div>
                             

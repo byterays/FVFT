@@ -33,6 +33,7 @@ class CityController extends Controller
     {
         return $this->view($this->page.'editadd',[
             'countries' => $this->countries,
+            'action' => 'Create'
         ]);
     }
 
@@ -42,6 +43,7 @@ class CityController extends Controller
         return $this->view($this->page.'editadd', [
             'city' => $city,
             'countries' => $this->countries,
+            'action' => 'Edit'
         ]);
     }
 
