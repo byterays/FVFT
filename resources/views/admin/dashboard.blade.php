@@ -14,12 +14,17 @@
 
         }
 
+        .img-custom-icon>img {
+            padding: 17px;
+
+        }
+
     </style>
-    <div class="page-header">
-        <h4 class="page-title">Dashboard</h4>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item active"><a href="/admin">Dashboard</a></li>
-        </ol>
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="font-weight-bold">Dashboard</h4>
+            <p class="text-default text-muted mt-1"><small>Administrator panel for customizing Application</small></p>
+        </div>
     </div>
     <div class="row">
         @foreach ($first_datas as $f_data)
@@ -74,14 +79,14 @@
     </div>
     <div class="row">
         @foreach ($application_datas as $application_data)
-            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
                 <div class=" {{ $loop->iteration % 2 == 0 ? 'ml-auto' : '' }}">
                     <div class="card card-aside">
                         <div class="card-body" style="padding: 1rem 1rem;">
                             <div class="col-md-12">
                                 <a href="{{ $application_data['link'] }}">
                                     <div class="card-item d-flex mx-auto my-auto">
-                                        <div class="img-custom-icon bg-pink">
+                                        <div class="img-custom-icon bg-primary">
                                             <img src="{{ asset('themes/fvft/assets/images/svg/' . $application_data['img']) }}"
                                                 alt="img" class="w-8 h-8">
                                         </div>
@@ -547,7 +552,7 @@
                     ],
                     type: 'bar', // default type of chart
                     colors: {
-                        data1: '#0a8b79 '
+                        data1: '#1650e2'
                     },
                     names: {
                         // name of each serie
