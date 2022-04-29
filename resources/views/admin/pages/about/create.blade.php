@@ -61,7 +61,7 @@
                     <div class="card-footer text-right">
                         <div class="d-flex">
                             <a href="{{ route('admin.about.index') }}" class="btn btn-link">Cancel</a>
-                            <button type="button" onclick="submitForm(event);" class="btn btn-success ml-auto">Save
+                            <button type="button" onclick="submitForm(event);" class="btn btn-primary ml-auto">Save
                             </button>
                         </div>
                     </div>

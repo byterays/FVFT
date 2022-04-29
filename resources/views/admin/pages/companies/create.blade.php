@@ -393,7 +393,7 @@
                 </div>
             </div>
             <div class="mx-auto mb-2">
-                <button type="button" class="btn btn-success text-center" onclick="submitForm(event);">Submit</button>
+                <button type="button" class="btn btn-primary text-center" onclick="submitForm(event);">Submit</button>
             </div>
         </div>
     </form>

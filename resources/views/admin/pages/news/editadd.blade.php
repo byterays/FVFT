@@ -89,7 +89,7 @@
                     <div class="card-footer text-right">
                         <div class="d-flex">
                             <a href="/admin/news/" class="btn btn-link">Back</a>
-                            <button type="submit" class="btn btn-success ml-auto">Save </button>
+                            <button type="submit" class="btn btn-primary ml-auto">Save </button>
                         </div>
                     </div>
                 </div>
