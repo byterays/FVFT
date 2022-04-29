@@ -25,7 +25,9 @@ class CountryController extends Controller
 
     public function create()
     {
-        return $this->view($this->page.'editadd');
+        return $this->view($this->page.'editadd',[
+            'action' => 'Create'
+        ]);
     }
 
     public function edit($id)
@@ -33,6 +35,7 @@ class CountryController extends Controller
         $country = Country::findOrFail($id);
         return $this->view($this->page.'editadd',[
             'country' => $country,
+            'action' => 'Edit'
         ]);
     }
 

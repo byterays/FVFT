@@ -17,11 +17,13 @@ use App\Http\Controllers\Admin\Pages\PageController;
 use App\Http\Controllers\Admin\Applicants\ApplicantController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\News\NewsController;
 use App\Http\Controllers\Admin\Industry\IndustryController;
 use App\Http\Controllers\Admin\JobcategoryController;
 use App\Http\Controllers\Admin\Training\TrainingController;
 use App\Http\Controllers\Admin\SantiController;
+use App\Http\Controllers\Admin\Site\GeneralSettingController;
 use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\SupportCategoryController;
 use App\Http\Controllers\Admin\SupportController;
@@ -155,6 +157,15 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::delete('delete/{id}', [CityController::class, 'delete'])->name('delete');
     });
 
+    // District Crud
+    Route::group(['prefix' => 'district/', 'as' => 'admin.district.'], function(){
+        Route::get('', [DistrictController::class, 'index'])->name('index');
+        Route::get('create', [DistrictController::class, 'create'])->name('create');
+        Route::get('edit/{id}', [DistrictController::class, 'edit'])->name('edit');
+        Route::post('store', [DistrictController::class, 'store'])->name('store');
+        Route::delete('delete/{id}', [DistrictController::class, 'delete'])->name('delete');
+    });
+
     // SupportCategory Crud
     
     Route::group(['prefix' => 'support-category/', 'as' => 'admin.support_category.'], function(){
@@ -216,6 +227,11 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::get('', [AdminController::class, 'users'])->name('lists');
         Route::get('profile', [AdminController::class, "profile"])->name("profile");
         Route::put('update-profile', [AdminController::class, "updateProfile"])->name("updateProfile");
+    });
+
+    Route::group(['prefix' => 'general-setting/', 'as' => 'admin.general_setting.'], function(){
+        Route::get('', [GeneralSettingController::class, 'index'])->name('index');
+        Route::post('store', [GeneralSettingController::class, 'store'])->name('store');
     });
 
     Route::post('logout', [AuthController::class, 'logout']);

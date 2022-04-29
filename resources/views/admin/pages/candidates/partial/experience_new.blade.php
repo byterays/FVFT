@@ -1,10 +1,10 @@
 <div class="form-group">
-    <label for="" class="form-label">Experience</label>
+    <label for="" class="form-label">{{ __('Experience') }}</label>
 </div>
 <div class="form-group">
     <div class="row">
         <div class="col-md-4">
-            <label for="">Country</label>
+            <label for="">{{ __('Country') }}</label>
         </div>
         <div class="col-md-8">
             <select name="country_id[]" class="form-control select2-show-search" data-placeholder="Select Country" id="">
@@ -19,7 +19,7 @@
 <div class="form-group">
     <div class="row">
         <div class="col-md-4">
-            <label for="">Job Category</label>
+            <label for="">{{ __('Job Category') }}</label>
         </div>
         <div class="col-md-8">
             <select name="job_category_id[]" class="form-control select2-show-search"
@@ -36,14 +36,14 @@
 <div class="form-group">
     <div class="row">
         <div class="col-md-4">
-            <label for="">Job Title</label>
+            <label for="">{{ __('Industry') }}</label>
         </div>
         <div class="col-md-8">
-            <select name="job_title[]" class="form-control select2-show-search" data-placeholder="Select Job Title"
+            <select name="industry_id[]" class="form-control select2-show-search" data-placeholder="Select Industry"
                 id="">
-                <option value="">Select Job Title</option>
-                @foreach ($jobs as $job)
-                    <option value="{{ $job->id }}">{{ $job->title }}</option>
+                <option value="">Select Industry</option>
+                @foreach ($industries as $industry)
+                    <option value="{{ $industry->id }}">{{ $industry->title }}</option>
                 @endforeach
             </select>
         </div>

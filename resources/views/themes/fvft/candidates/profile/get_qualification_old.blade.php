@@ -68,10 +68,10 @@
                                                         <select name="training[]" class="form-control select2 training"
                                                             multiple="multiple" id="training">
                                                             <option value="">{{ __('Select Training') }}</option>
-                                                            @if ($employ->employeeTrainings != null)
+                                                            @if (json_decode($employ->trainings) != null)
                                                                 @foreach ($trainings as $training)
                                                                     <option value="{{ $training->id }}"
-                                                                        {{ in_array($training->id, $employ->employeeTrainings->pluck('training_id')->toArray()) ? 'selected' : '' }}>
+                                                                        {{ in_array($training->id, json_decode($employ->trainings)) ? 'selected' : '' }}>
                                                                         {{ $training->title }}</option>
                                                                 @endforeach
                                                             @else
@@ -97,10 +97,10 @@
                                                         <select name="skill[]" class="form-control select2"
                                                             multiple="multiple" id="skill">
                                                             <option value="">{{ __('Select Skill') }}</option>
-                                                            @if ($employ->employeeSkills != null)
+                                                            @if (json_decode($employ->skills) != null)
                                                                 @foreach ($skills as $skill)
                                                                     <option value="{{ $skill->id }}"
-                                                                        {{ in_array($skill->id, $employ->employeeSkills->pluck('skills_id')->toArray()) ? 'selected' : '' }}>
+                                                                        {{ in_array($skill->id, json_decode($employ->skills)) ? 'selected' : '' }}>
                                                                         {{ $skill->title }}</option>
                                                                 @endforeach
                                                             @else
@@ -119,15 +119,15 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="form-label">{{ __('Language') }}</div>
-                                                @if ($employ->employeeLanguage != null)
-                                                    @foreach ($employ->employeeLanguage as $key => $employ_language)
+                                                @if (json_decode($employ->languages, true) != null)
+                                                    @foreach (json_decode($employ->languages, true) as $key => $employ_language)
                                                         <div class="row {{ !$loop->first ? 'mt-2' : '' }}">
                                                             <div class="col-md-6">
                                                                 <select name="language[]" class="form-control select2-show-search" data-placeholder="Select Language">
                                                                     <option value="">{{ __('Select Language') }}</option>
                                                                     @foreach ($languages as $language)
                                                                         <option value="{{ $language->id }}"
-                                                                            {{ $language->id == $employ_language->language_id ? 'selected' : '' }}>
+                                                                            {{ $language->id == $employ_language['language_id'] ? 'selected' : '' }}>
                                                                             {{ $language->lang }}</option>
                                                                     @endforeach
                                                                 </select>
@@ -137,14 +137,14 @@
                                                                     class="form-control select2-show-search" data-placeholder="Select Level">
                                                                     <option value="">{{ __('Select Level') }}</option>
                                                                     <option value="Very Good"
-                                                                        {{ $employ_language->language_level == 'Very Good' ? 'selected' : '' }}>
+                                                                        {{ $employ_language['language_level'] == 'Very Good' ? 'selected' : '' }}>
                                                                         Very Good</option>
                                                                     <option value="Good"
-                                                                        {{ $employ_language->language_level == 'Good' ? 'selected' : '' }}>
+                                                                        {{ $employ_language['language_level'] == 'Good' ? 'selected' : '' }}>
                                                                         Good
                                                                     </option>
                                                                     <option value="Fair"
-                                                                        {{ $employ_language->language_level == 'Fair' ? 'selected' : '' }}>
+                                                                        {{ $employ_language['language_level'] == 'Fair' ? 'selected' : '' }}>
                                                                         Fair
                                                                     </option>
                                                                 </select>

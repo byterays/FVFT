@@ -261,7 +261,8 @@
                                     </select>
                                 </div>
                                 <div class="col-6">
-                                    <select name="district_id" class="form-control select2-show-search" id="districts" data-placeholder="Select District">
+                                    <select name="district_id" class="form-control select2-show-search" id="districts"
+                                        data-placeholder="Select District">
                                         <option value="">District</option>
                                     </select>
                                 </div>
@@ -302,7 +303,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <input type="text" name="passport_number" class="form-control"
-                                    placeholder="Enter Passport Number">
+                                        placeholder="Enter Passport Number">
                                 </div>
                             </div>
 
@@ -315,7 +316,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <input type="text" name="passport_expiry_date" class="form-control datetimepicker"
-                                    placeholder="Enter Passport Expiry Date, eg:2020-01-02">
+                                        placeholder="Enter Passport Expiry Date, eg:2020-01-02">
                                 </div>
                             </div>
 
@@ -352,7 +353,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Country</label>
-                                            <select name="country_id[]" class="form-control select2-show-search" id="">
+                                            <select name="country_id[]" class="form-control select2-show-search"
+                                                data-placeholder="Select Country">
                                                 <option value="">Select Country</option>
                                                 @foreach ($countries as $country)
                                                     <option value="{{ $country->id }}">{{ $country->name }}</option>
@@ -363,7 +365,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Job Category</label>
-                                            <select name="job_category_id[]" class="form-control select2-show-search" id="">
+                                            <select name="job_category_id[]" class="form-control select2-show-search"
+                                                data-placeholder="Select Job Category">
                                                 <option value="">Select Job Category</option>
                                                 @foreach ($job_categories as $job_category)
                                                     <option value="{{ $job_category->id }}">
@@ -374,11 +377,13 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="">Job Title</label>
-                                            <select name="job_title[]" class="form-control select2-show-search" id="">
-                                                <option value="">Select Job Title</option>
-                                                @foreach ($jobs as $job)
-                                                    <option value="{{ $job->id }}">{{ $job->title }}</option>
+                                            <label for="">Industry</label>
+                                            <select name="industry_id[]" class="form-control select2-show-search"
+                                                data-placeholder="Select Industry">
+                                                <option value="">Select Industry</option>
+                                                @foreach ($industries as $industry)
+                                                    <option value="{{ $industry->id }}">{{ $industry->title }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -388,34 +393,20 @@
                                             <label for="">Working Duration</label>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <select name="working_year[]" class="form-control select2" id="">
-                                                        <option value="">Year</option>
-                                                        <?php
-                                                        $dyear = old('year');
-                                                        $year = date('Y');
-                                                        $min = $year - 250;
-                                                        $max = $year;
-                                                        for ($i = $max; $i >= $min; $i--) {
-                                                            $selected = $dyear == $i ? 'selected' : '';
-                                                            echo "<option value='$i' $selected>$i</option>";
-                                                        }
-                                                        ?>
+                                                    <select name="working_year[]" class="form-control select2-show-search" data-placeholder="Select Year">
+                                                        <option value="">{{ __('Year') }}</option>
+                                                        @for ($i = 0; $i <= 10; $i++)
+                                                            <option value="{{ $i }}">{{ $i }}
+                                                            </option>
+                                                        @endfor
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <select name="working_month[]" class="form-control select2" id="">
-                                                        <option value="">Month</option>
-                                                        <?php
-                                                        $dmonth = old('month');
-                                                        ?>
-                                                        <?php for( $m = 1; $m <= 12; ++$m ) {
-                                            $month_label = date('F', mktime(0, 0, 0, $m, 1));
-                                            $selected_month = $dmonth == $month_label ? 'selected' : '';
-                                            ?>
-                                                        <option value="<?php echo $month_label; ?>" <?php echo $selected_month; ?>>
-                                                            <?php echo $month_label; ?>
-                                                        </option>
-                                                        <?php } ?>
+                                                    <select name="working_month[]" class="form-control select2-show-search" data-placeholder="Select Month">
+                                                        <option value="">{{ __('Month') }}</option>
+                                                        @for ($i = 0; $i <= 12; $i++)
+                                                            <option value="{{ $i }}">{{ $i }}</option>
+                                                        @endfor
                                                     </select>
                                                 </div>
                                             </div>
@@ -458,8 +449,8 @@
                             <label for="">Training</label>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <select name="training[]" class="form-control select2-show-search training" multiple="multiple"
-                                        id="training">
+                                    <select name="training[]" class="form-control select2-show-search training"
+                                        multiple="multiple" id="training" data-placeholder="Select Training">
                                         <option value="">Select Training</option>
                                         @foreach ($trainings as $training)
                                             <option value="{{ $training->id }}">{{ $training->title }}</option>
@@ -479,7 +470,8 @@
                             <label for="">Skill</label>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <select name="skill[]" class="form-control select2-show-search" multiple="multiple" id="skill">
+                                    <select name="skill[]" class="form-control select2-show-search" data-placeholder="Select Skill" multiple="multiple"
+                                        id="skill">
                                         <option value="">Select Skill</option>
                                         @foreach ($skills as $skill)
                                             <option value="{{ $skill->id }}">{{ $skill->title }}</option>
@@ -572,8 +564,7 @@
     <script src="{{ env('APP_URL') }}js/location.js"></script>
     <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
     <script>
-        function select2()
-        {
+        function initializeSelect2() {
             $(".select2").select2();
             $(".select2-show-search").select2();
         }
@@ -688,7 +679,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Country</label>
-                                            <select name="country_id[]" class="form-control select2-show-search">
+                                            <select name="country_id[]" class="form-control select2-show-search" data-placeholder="Select Country">
                                                 <option value="">Select Country</option>
                                                 @foreach ($countries as $country)
                                                     <option value="{{ $country->id }}">{{ $country->name }}</option>
@@ -699,7 +690,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Job Category</label>
-                                            <select name="job_category_id[]" class="form-control select2-show-search" id="">
+                                            <select name="job_category_id[]" class="form-control select2-show-search" data-placeholder="Select Job Category">
                                                 <option value="">Select Job Category</option>
                                                 @foreach ($job_categories as $job_category)
                                                     <option value="{{ $job_category->id }}">
@@ -710,11 +701,11 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="">Job Title</label>
-                                            <select name="job_title[]" class="form-control select2-show-search" id="">
-                                                <option value="">Select Job Title</option>
-                                                @foreach ($jobs as $job)
-                                                    <option value="{{ $job->id }}">{{ $job->title }}</option>
+                                            <label for="">Industry</label>
+                                            <select name="industry_id[]" class="form-control select2-show-search" data-placeholder="Select Industry">
+                                                <option value="">Select Industry</option>
+                                                @foreach ($industries as $industry)
+                                                    <option value="{{ $industry->id }}">{{ $industry->title }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -724,34 +715,20 @@
                                             <label for="">Working Duration</label>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <select name="working_year[]" class="form-control select2" id="">
-                                                        <option value="">Year</option>
-                                                        <?php
-                                                        $dyear = old('year');
-                                                        $year = date('Y');
-                                                        $min = $year - 250;
-                                                        $max = $year;
-                                                        for ($i = $max; $i >= $min; $i--) {
-                                                            $selected = $dyear == $i ? 'selected' : '';
-                                                            echo "<option value='$i' $selected>$i</option>";
-                                                        }
-                                                        ?>
+                                                    <select name="working_year[]" class="form-control select2-show-search" data-placeholder="Select Year">
+                                                        <option value="">{{ __('Year') }}</option>
+                                                        @for ($i = 0; $i <= 10; $i++)
+                                                            <option value="{{ $i }}">{{ $i }}
+                                                            </option>
+                                                        @endfor
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <select name="working_month[]" class="form-control select2" id="">
-                                                        <option value="">Month</option>
-                                                        <?php
-                                                        $dmonth = old('month');
-                                                        ?>
-                                                        <?php for( $m = 1; $m <= 12; ++$m ) {
-                                            $month_label = date('F', mktime(0, 0, 0, $m, 1));
-                                            $selected_month = $dmonth == $month_label ? 'selected' : '';
-                                            ?>
-                                                        <option value="<?php echo $month_label; ?>" <?php echo $selected_month; ?>>
-                                                            <?php echo $month_label; ?>
-                                                        </option>
-                                                        <?php } ?>
+                                                    <select name="working_month[]" class="form-control select2-show-search" data-placeholder="Select Month">
+                                                        <option value="">{{ __('Month') }}</option>
+                                                        @for ($i = 0; $i <= 12; $i++)
+                                                            <option value="{{ $i }}">{{ $i }}</option>
+                                                        @endfor
                                                     </select>
                                                 </div>
                                             </div>
@@ -761,6 +738,7 @@
                                 </div>
                             </div>`;
                 $("#appendExperience").append(html);
+                // initializeSelect2();
                 ecount++;
             });
         });
@@ -794,7 +772,6 @@
                                 .training_title)
                             .attr('selected', 'selected');
                         $("#training").append(new_option);
-
                     }
 
                 }
@@ -826,7 +803,6 @@
                                 .skill_title)
                             .attr('selected', 'selected');
                         $("#skill").append(new_option);
-
                     }
 
                 }
@@ -869,13 +845,14 @@
                         </div>`;
             $("#appendLanguageDiv").append(html);
             count++;
+            initializeSelect2();
         });
 
 
         $("#addLanguage").on('click', () => {
             let language_html = `<div class="row mt-5" id="languageRow_` + count + `">
                                 <div class="col-md-6">
-                                    <select name="language[]" class="form-control select2" id="lang_`+count+`">
+                                    <select name="language[]" class="form-control select2" id="lang_` + count + `">
                                         <option value="">Select Language</option>
                                         @foreach ($languages as $language)
                                             <option value="{{ $language->id }}">{{ $language->lang }}</option>
@@ -896,6 +873,7 @@
                             </div>`;
             $("#appendLanguageDiv").append(language_html);
             count++;
+            initializeSelect2();
         });
         // End Language Section
 

@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin\Candidates;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employe;
+use App\Models\Industry;
 use App\Models\Training;
 use App\Models\User;
 use App\Traits\Admin\AdminMethods;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -18,16 +19,17 @@ class CandidateController extends Controller
     private $redirectTo = 'admin.candidates.list';
     public function __construct()
     {
-        $this->experiencelevels = \DB::table('experiencelevels')->get();
-        $this->educationlevels = \DB::table('educationlevels')->get();
-        $this->job_shifts = \DB::table('job_shifts')->get();
-        $this->job_categories = \DB::table('job_categories')->get();
-        $this->countries = \DB::table('countries')->get();
+        $this->experiencelevels = DB::table('experiencelevels')->get();
+        $this->educationlevels = DB::table('educationlevels')->get();
+        $this->job_shifts = DB::table('job_shifts')->get();
+        $this->job_categories = DB::table('job_categories')->get();
+        $this->countries = DB::table('countries')->where('is_active', 1)->get();
         $this->trainings = Training::get();
-        $this->skills = \DB::table('skills')->get();
-        $this->states = \DB::table('states')->get();
-        $this->languages = \DB::table('languages')->get();
-        $this->jobs = \DB::table('jobs')->get();
+        $this->skills = DB::table('skills')->get();
+        $this->states = DB::table('states')->get();
+        $this->languages = DB::table('languages')->get();
+        $this->jobs = DB::table('jobs')->get();
+        $this->industries = Industry::get();
     }
     function list() {
 
@@ -57,6 +59,7 @@ class CandidateController extends Controller
             'languages' => $this->languages,
             'job_categories' => $this->job_categories,
             'jobs' => $this->jobs,
+            'industries' => $this->industries,
         ]);
     }
 
@@ -76,6 +79,7 @@ class CandidateController extends Controller
             'job_categories' => $this->job_categories,
             'jobs' => $this->jobs,
             'employ_experiences' => DB::table('employes_experience')->where("employ_id", $employ->id)->get(),
+            'industries' => $this->industries,
         ]);
     }
 
@@ -112,7 +116,7 @@ class CandidateController extends Controller
 
         if ($validator->passes()) {
             try {
-                \DB::beginTransaction();
+                DB::beginTransaction();
                 $user = new User();
                 $user->email = $request->email;
                 $user->password = Hash::make('12345678');
@@ -122,10 +126,10 @@ class CandidateController extends Controller
                 $user->updated_at = date('Y-m-d h:i:s');
                 $user->save();
                 $this->__saveEmployee($user->id, $request);
-                \DB::commit();
+                DB::commit();
                 return response()->json(['msg' => 'Candidate created successfully', 'redirectRoute' => route($this->redirectTo)]);
             } catch (\Exception $e) {
-                \DB::rollBack();
+                DB::rollBack();
                 return response()->json(['db_error' => $e->getMessage()]);
                 // return redirect()->back()->with(notifyMsg('warning', $e->getMessage()));
             }
@@ -157,7 +161,7 @@ class CandidateController extends Controller
 
         if ($validator->passes()) {
             try {
-                \DB::beginTransaction();
+                DB::beginTransaction();
                 $user = User::find($employe->user_id);
                 $user->email = $request->email;
                 $user->update([
@@ -165,10 +169,10 @@ class CandidateController extends Controller
                     'user_type' => 'candidate',
                 ]);
                 $this->__updateEmployee($id, $user->id, $request);
-                \DB::commit();
+                DB::commit();
                 return response()->json(['msg' => 'Candidate updated successfully', 'redirectRoute' => route($this->redirectTo)]);
             } catch (\Exception $e) {
-                \DB::rollBack();
+                DB::rollBack();
                 return response()->json(['db_error' => $e->getMessage()]);
                 // return redirect()->back();
             }
@@ -256,7 +260,7 @@ class CandidateController extends Controller
                         [
                         'country_id' => $country,
                         'job_category_id' => $request->get('job_category_id')[$key],
-                        'job_title_id' => $request->get('job_title')[$key],
+                        'industry_id' => $request->get('industry_id')[$key],
                         'working_year' => $request->get('working_year')[$key],
                         'working_month' => $request->get('working_month')[$key],
                     ];
@@ -273,7 +277,7 @@ class CandidateController extends Controller
         $this->__updateExperience($employe->id, $request);
         $this->__updateEmployeSkill($employe->id, $request);
         $this->__updateEmployeLanguage($employe->id, $request);
-
+        $this->__updateEmployeTraining($employe->id, $request);
     }
 
     public function __updateExperience($employ_id, $request)
@@ -287,7 +291,7 @@ class CandidateController extends Controller
                     $fields['employ_id'] = $employ_id;
                     $fields['country_id'] = $country;
                     $fields['job_category_id'] = isset($request->get('job_category_id')[$key]) ? $request->get('job_category_id')[$key] : '';
-                    $fields['job_title_id'] = isset($request->get('job_title')[$key]) ? $request->get('job_title')[$key] : '';
+                    $fields['industry_id'] = isset($request->get('industry_id')[$key]) ? $request->get('industry_id')[$key] : '';
                     $fields['working_year'] = isset($request->get('working_year')[$key]) ? $request->get('working_year')[$key] : '';
                     $fields['working_month'] = isset($request->get('working_month')[$key]) ? $request->get('working_month')[$key] : '';
                     DB::table('employes_experience')->insert($fields);
@@ -306,7 +310,20 @@ class CandidateController extends Controller
             foreach ($request->skill as $key => $skill) {
                 $fields['employ_id'] = $employ_id;
                 $fields['skills_id'] = $skill;
-                \DB::table('employes_skills')->insert($fields);
+                DB::table('employes_skills')->insert($fields);
+            }
+        }
+    }
+
+    private function __updateEmployeTraining($employ_id, $request)
+    {
+        if (!empty($request->training || $request->training != null)) {
+            DB::table('employee_trainings')->where('employee_id', $employ_id)->delete();
+            $fields = [];
+            foreach ($request->training as $key => $training) {
+                $fields['employee_id'] = $employ_id;
+                $fields['training_id'] = $training;
+                DB::table('employee_trainings')->insert($fields);
             }
         }
     }
@@ -413,19 +430,11 @@ class CandidateController extends Controller
                         [
                         'country_id' => $country,
                         'job_category_id' => isset($request->get('job_category_id')[$key]) ? $request->get('job_category_id')[$key] : '',
-                        'job_title_id' => isset($request->get('job_title')[$key]) ? $request->get('job_title')[$key] : '',
+                        'industry_id' => isset($request->get('industry_id')[$key]) ? $request->get('industry_id')[$key] : '',
                         'working_year' => isset($request->get('working_year')[$key]) ? $request->get('working_year')[$key] : '',
                         'working_month' => isset($request->get('working_month')[$key]) ? $request->get('working_month')[$key] : '',
                     ];
                 }
-
-                // $experienceData[$country] =
-                //     [
-                //         'job_category_id' => $request->get('job_category_id')[$key],
-                //         'job_title_id' => $request->get('job_title')[$key],
-                //         'working_year' => $request->get('working_year')[$key],
-                //         'working_month' => $request->get('working_month')[$key],
-                //     ];
 
             }
             if (!empty($experienceData)) {
@@ -438,6 +447,7 @@ class CandidateController extends Controller
         $this->__saveExperience($employe->id, $request);
         $this->__saveEmployeSkill($employe->id, $request);
         $this->__saveEmployeLanguage($employe->id, $request);
+        $this->__saveEmployeeTraining($employe->id, $request);
     }
 
     private function __saveEmployeSkill($employ_id, $request)
@@ -447,10 +457,22 @@ class CandidateController extends Controller
             foreach ($request->skill as $key => $skill) {
                 $fields['employ_id'] = $employ_id;
                 $fields['skills_id'] = $skill;
-                \DB::table('employes_skills')->insert($fields);
+                DB::table('employes_skills')->insert($fields);
             }
         }
 
+    }
+
+    private function __saveEmployeeTraining($employ_id, $request)
+    {
+        $fields = [];
+        if (!empty($request->training || $request->training != null)) {
+            foreach ($request->training as $key => $training) {
+                $fields['employee_id'] = $employ_id;
+                $fields['training_id'] = $training;
+                DB::table('employee_trainings')->insert($fields);
+            }
+        }
     }
 
     private function __saveEmployeLanguage($employ_id, $request)
@@ -477,7 +499,7 @@ class CandidateController extends Controller
                     $fields['employ_id'] = $employe_id;
                     $fields['country_id'] = $country;
                     $fields['job_category_id'] = isset($request->get('job_category_id')[$key]) ? $request->get('job_category_id')[$key] : '';
-                    $fields['job_title_id'] = isset($request->get('job_title')[$key]) ? $request->get('job_title')[$key] : '';
+                    $fields['industry_id'] = isset($request->get('industry_id')[$key]) ? $request->get('industry_id')[$key] : '';
                     $fields['working_year'] = isset($request->get('working_year')[$key]) ? $request->get('working_year')[$key] : '';
                     $fields['working_month'] = isset($request->get('working_month')[$key]) ? $request->get('working_month')[$key] : '';
                     DB::table('employes_experience')->insert($fields);

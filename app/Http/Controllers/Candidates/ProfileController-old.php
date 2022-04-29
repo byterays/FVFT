@@ -18,13 +18,11 @@ use App\Traits\Site\ThemeMethods;
 use Illuminate\Support\Facades\DB;
 use App\Models\EmployJobPreference;
 use App\Http\Controllers\Controller;
-use App\Models\EmployeeTraining;
-use App\Models\Industry;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\Site\CandidateMethods;
 use Illuminate\Support\Facades\Validator;
 
-class ProfileController extends Controller
+class ProfileControllerOld extends Controller
 {
     use ThemeMethods;
     use CandidateMethods;
@@ -42,7 +40,6 @@ class ProfileController extends Controller
         $this->states = State::get();
         $this->languages = Language::get();
         $this->jobs = Job::get();
-        $this->industries = Industry::get();
     }
 
     public function profile()
@@ -58,8 +55,7 @@ class ProfileController extends Controller
                 'employeeLanguage.language:id,lang',
                 'experience.country:id,name',
                 'experience.job_category:id,functional_area',
-                'experience.industry:id,title',
-                // 'experience.job:id,title'
+                'experience.job:id,title'
             ])->first();
         return $this->client_view('candidates.profile.index', [
             'employ' => $employ,
@@ -220,11 +216,13 @@ class ProfileController extends Controller
                         $trainingData[] = $training;
                     }
                     $fields['trainings'] = json_encode($trainingData);
+                    // $employe->trainings = json_encode($trainingData);
                 }
                 if (!empty($request->skill)) {
                     foreach ($request->skill as $key => $skill) {
                         $skillData[] = $skill;
                     }
+                    // $employe->skills = json_encode($skillData);
                     $fields['skills'] = json_encode($skillData);
                 }
                 if (!empty($request->language)) {
@@ -239,6 +237,7 @@ class ProfileController extends Controller
 
                     }
                     if (!empty($languageData)) {
+                        // $employe->languages = json_encode($languageData);
                         $fields['languages'] = json_encode($languageData);
                     }
 
@@ -247,7 +246,6 @@ class ProfileController extends Controller
                 $employe->update($fields);
                 $this->__updateEmployeeSkill($employe->id, $request);
                 $this->__updateEmployeLanguage($employe->id, $request);
-                $this->__updateEmployeeTraining($employe->id, $request);
                 DB::commit();
                 $redirectTo = route('candidate.profile.get_experience');
                 return response()->json(['redirectRoute' => $redirectTo]);
@@ -264,7 +262,6 @@ class ProfileController extends Controller
             'employ' => $employ,
             'jobs' => $this->jobs,
             'languages' => $this->languages,
-            'industries' => $this->industries,
         ]);
     }
 
@@ -283,7 +280,7 @@ class ProfileController extends Controller
                             [
                             'country_id' => $country,
                             'job_category_id' => $request->get('job_category_id')[$key],
-                            'industry_id' => $request->get('industry_id')[$key],
+                            'job_title_id' => $request->get('job_title')[$key],
                             'working_year' => $request->get('working_year')[$key],
                             'working_month' => $request->get('working_month')[$key],
                         ];
@@ -394,19 +391,6 @@ class ProfileController extends Controller
         }
     }
 
-    private function __updateEmployeeTraining($employ_id, $request)
-    {
-        EmployeeTraining::where('employee_id', $employ_id)->delete();
-        $fields = [];
-        if(isset($request->training) and !blank($request->training)){
-            foreach($request->training as $key => $training){
-                $fields['employee_id'] = $employ_id;
-                $fields['training_id'] = $training;
-                DB::table('employee_trainings')->insert($fields);
-            }
-        }
-    }
-
     private function __updateEmployeLanguage($employ_id, $request)
     {
         DB::table('employes_languages')->where('employ_id', $employ_id)->delete();
@@ -434,7 +418,7 @@ class ProfileController extends Controller
                     $fields['employ_id'] = $employ_id;
                     $fields['country_id'] = $country;
                     $fields['job_category_id'] = $request->get('job_category_id')[$key];
-                    $fields['industry_id'] = $request->get('industry_id')[$key];
+                    $fields['job_title_id'] = $request->get('job_title')[$key];
                     $fields['working_year'] = $request->get('working_year')[$key];
                     $fields['working_month'] = $request->geT('working_month')[$key];
                     DB::table('employes_experience')->insert($fields);

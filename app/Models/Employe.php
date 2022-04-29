@@ -130,6 +130,11 @@ class Employe extends Model
         return $this->hasMany(EmployeeSkill::class, 'employ_id');
     }
 
+    public function employeeTrainings()
+    {
+        return $this->hasMany(EmployeeTraining::class, 'employee_id');
+    }
+
     public function education()
     {
         return $this->hasMany(EmployeeEducation::class, 'employ_id');
