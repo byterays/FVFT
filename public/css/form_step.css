@@ -52,15 +52,15 @@
     font-size: 25px;
     line-height: 40px;
     z-index: 5
-    
+
 }
 
 .steps .step .step-title {
     margin-top: 16px;
     margin-bottom: 0;
     color: #606975;
-    font-size: 14px;
-    font-weight: 500
+    font-size: 12px;
+    font-weight: 700
 }
 
 .steps .step:first-child .step-icon-wrap::before {

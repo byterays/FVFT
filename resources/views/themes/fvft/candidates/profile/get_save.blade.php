@@ -1,15 +1,15 @@
 @extends('themes.fvft.candidates.layouts.dashmaster')
 @section('title') Save Page @stop
 @section('content')
-<style>
-    .icon-service {
-        width: 100px !important;
-        height: 100px !important;
-    }
-</style>
+    <style>
+        .icon-service {
+            width: 100px !important;
+            height: 100px !important;
+        }
+    </style>
     <section>
         <div class="bannerimg cover-image bg-background3" data-image-src="/uploads/site/banner.png"
-            style="background: url(/uploads/site/banner.png) center center;">
+             style="background: url(/uploads/site/banner.png) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
                     <h1 class="">{{ __('My Profile') }}</h1>
@@ -30,36 +30,29 @@
                     @include('themes.fvft.candidates.components.sidebar')
                 </div>
                 <div class="col-xl-9 col-lg-12 col-md-12">
-                    <div class="row">
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h3 class="font-weight-bold">{{ strtoupper(__('Profile')) }}</h3>
-                                <div id="basicwizard" class="border pt-0">
-                                    @include('partial/candidates/tabs')
-                                </div>
+                    @include('partial/candidates/tabs', ['title' => 'My Profile'])
+
+                    <div class="row mt-5">
+                        <div class="card mb-2 ">
+                            <div class="card-header">
                                 @include('partial/candidates/step')
                             </div>
-                        </div>
-                        <div class="card mb-2">
-                            <div class="row">
-                                <div class="col-lg-8 col-md-12 mx-auto mt-5">
-                                    <div class="card">
-                                        <div class="card-body bg-primary">
-                                            <div class="service-card text-center">
-                                                <div class="icon-bg icon-service text-white" style="background-color: #adabb3;">
-                                                    <span class="" style="color: #0e0d0d; font-size: 18px">{{ $employ->calculateProfileCompletion() }} %</span>
-                                                </div>
-                                                <div class="servic-data text-white mt-3">
-                                                    <h4 class="font-weight-semibold mb-2">{{ __('Profile Completion') }}</h4>
-                                                    @if($employ->calculateProfileCompletion() < 100)
+                            <div class="card-body  bg-primary">
+                                <div class="row">
+                                    <div class="col-lg-8 col-md-12 mx-auto mt-5">
+                                        <div class="service-card text-center">
+                                            <div class="icon-bg icon-service" style="background-color: #fff;">
+                                                <span style="color: #0e0d0d; font-size: 18px">{{ $employ->calculateProfileCompletion() }}%</span>
+                                            </div>
+                                            <div class="servic-data text-white mt-3">
+                                                <h4 class="font-weight-semibold mb-2">{{ __('Profile Completion') }}</h4>
+                                                @if($employ->calculateProfileCompletion() < 100)
                                                     <p class="text-muted text-white">{{ __('Complete your profile to 100% to increase the chance of getting shortlisted for the right job!') }}</p>
-                                                    @else
+                                                @else
                                                     <p class="text-muted text-white">{{ __('Congratulation your profile is 100% complete. You have more chance of getting shortlisted for the right job!') }}</p>
-                                                    @endif
-                                                </div>
+                                                @endif
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
