@@ -8,7 +8,7 @@
 @section('content')
     <section>
         <div class="bannerimg cover-image bg-background3" data-image-src="/uploads/site/banner.png"
-            style="background: url(/uploads/site/banner.png) center center;">
+             style="background: url(/uploads/site/banner.png) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
                     <h1 class="">{{ __('My Profile') }}</h1>
@@ -28,30 +28,20 @@
                     @include('themes.fvft.candidates.components.sidebar')
                 </div>
                 <div class="col-xl-9 col-lg-12 col-md-12">
+                    @include('partial/candidates/tabs', ['title' => 'Edit My Profile - Personal Information'])
+
                     <form action="{{ route('candidate.profile.post_personal_information') }}" method="POST" id="candidateForm">
                         @csrf
-
-                        <div class="card mb-0">
-                            <div class="card-body">
-                                <h3 class="card-title">{{ __('Edit My Profile') }}</h3>
-                                @include('partial/candidates/tabs')
-                            </div>
-                        </div>
-
                         <div class="row mt-5">
                             <div class="col-md-12">
                                 <div class="card mb-2">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            @include('partial/candidates/step')
-                                        </div>
+                                    <div class="card-header">
+                                        @include('partial/candidates/step')
                                     </div>
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="card-body">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
                                                 <h3 class="card-title">{{ __('Personal Information') }}</h3>
-
                                                 <div class="form-group">
                                                     <input type="hidden" class="form-control" name="user_id" value="{{ setParameter($employ, 'user_id') }}">
                                                     <div class="row">
@@ -143,11 +133,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <label for="" class="form-label">{{ __('Date of Birth(Nepali B.S)') }}</label>
+                                                            <label for="" class="form-label">
+                                                                {{ __('Date of Birth(Nepali B.S)') }}
+                                                                <span class="req">*</span>
+                                                            </label>
                                                         </div>
                                                         <div class="col-md-8">
                                                             <input type="text" class="form-control nepaliDatePicker"
@@ -160,7 +152,7 @@
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <label for="" class="form-label">{{ __('Date of Birth(English A.D)') }}&nbsp;<span class="req">*</span></label>
+                                                            <label for="" class="form-label">{{ __('Date of Birth(English A.D)') }}&nbsp;</label>
                                                         </div>
                                                         <div class="col-md-8">
                                                             <input type="text" class="form-control datetime"
@@ -232,20 +224,20 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="card-body">
-                                                <div class="form-group profilePicture" id="profilePicture">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <label for="">{{ __('Profile Picture') }}</label>
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <input type="file" name="profile_picture"
-                                                                   data-default-file="{{ $employ->avatar != null && file_exists($employ->avatar) ? asset($employ->avatar) : '' }}"
-                                                                   class="dropify"
-                                                                   data-allowed-file-extensions="png jpg jpeg" data-height="180">
-                                                            <div class="require text-danger profile_picture"></div>
+                                            <div class="col-md-6">
+                                                <div class="card-body">
+                                                    <div class="form-group profilePicture" id="profilePicture">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label for="">{{ __('Profile Picture') }}</label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input type="file" name="profile_picture"
+                                                                       data-default-file="{{ $employ->avatar != null && file_exists($employ->avatar) ? asset($employ->avatar) : '' }}"
+                                                                       class="dropify"
+                                                                       data-allowed-file-extensions="png jpg jpeg" data-height="180">
+                                                                <div class="require text-danger profile_picture"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -265,6 +257,7 @@
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

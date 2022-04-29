@@ -8,7 +8,7 @@
 @section('content')
     <section>
         <div class="bannerimg cover-image bg-background3" data-image-src="/uploads/site/banner.png"
-            style="background: url(/uploads/site/banner.png) center center;">
+             style="background: url(/uploads/site/banner.png) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
                     <h1 class="">{{ __('My Profile') }}</h1>
@@ -31,20 +31,13 @@
                     <form action="{{ route('candidate.profile.post_contact_information') }}" method="POST" id="candidateForm">
                         @csrf
 
-                        <div class="card mb-0">
-                            <div class="card-body">
-                                <h3 class="card-title">{{ __('Edit My Profile') }}</h3>
-                                @include('partial/candidates/tabs')
-                            </div>
-                        </div>
+                        @include('partial/candidates/tabs', ['title' => 'Edit My Profile - Contact Information'])
 
                         <div class="row mt-5">
                             <div class="col-md-12">
                                 <div class="card mb-2">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            @include('partial/candidates/step')
-                                        </div>
+                                    <div class="card-header">
+                                        @include('partial/candidates/step')
                                     </div>
 
                                     <div class="row">
