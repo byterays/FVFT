@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers\Candidates;
 
-use PDF;
-use App\Models\Job;
-use App\Models\Skill;
-use App\Models\State;
+use App\Http\Controllers\Controller;
+use App\Models\EducationLevel;
 use App\Models\Employe;
+use App\Models\EmployeeSkill;
+use App\Models\EmployeeTraining;
+use App\Models\EmployJobPreference;
+use App\Models\ExperienceLevel;
+use App\Models\Industry;
+use App\Models\Job;
 use App\Models\JobShift;
 use App\Models\Language;
+use App\Models\Skill;
+use App\Models\State;
 use App\Models\Training;
-use Illuminate\Http\Request;
-use App\Models\EmployeeSkill;
-use App\Models\EducationLevel;
-use App\Models\ExperienceLevel;
-use App\Traits\Site\ThemeMethods;
-use Illuminate\Support\Facades\DB;
-use App\Models\EmployJobPreference;
-use App\Http\Controllers\Controller;
-use App\Models\EmployeeTraining;
-use App\Models\Industry;
-use Illuminate\Support\Facades\Auth;
 use App\Traits\Site\CandidateMethods;
+use App\Traits\Site\ThemeMethods;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use PDF;
 
 class ProfileController extends Controller
 {
@@ -128,7 +128,7 @@ class ProfileController extends Controller
                 DB::commit();
                 $redirectTo = route('candidate.profile.get_contact_information');
                 return response()->json(['redirectRoute' => $redirectTo]);
-            } catch (\Exception $e) {
+            } catch (\Exception$e) {
                 DB::rollBack();
                 return response()->json(['db_error' => $e->getMessage()]);
             }
@@ -181,7 +181,7 @@ class ProfileController extends Controller
                 DB::commit();
                 $redirectTo = route('candidate.profile.get_qualification');
                 return response()->json(['redirectRoute' => $redirectTo]);
-            } catch (\Exception $e) {
+            } catch (\Exception$e) {
                 DB::rollBack();
                 return response()->json(['db_error' => $e->getMessage()]);
             }
@@ -251,7 +251,7 @@ class ProfileController extends Controller
                 DB::commit();
                 $redirectTo = route('candidate.profile.get_experience');
                 return response()->json(['redirectRoute' => $redirectTo]);
-            } catch (\Exception $e) {
+            } catch (\Exception$e) {
                 DB::rollBack();
                 return response()->json(['db_error' => $e->getMessage()]);}
         }
@@ -302,7 +302,7 @@ class ProfileController extends Controller
             $redirectTo = route('candidate.profile.get_preferred_jobs');
             // $redirectTo = route('candidate.profile.get_preview');
             return response()->json(['redirectRoute' => $redirectTo]);
-        } catch (\Exception $e) {
+        } catch (\Exception$e) {
             DB::rollBack();
             return response()->json(['db_error' => $e->getMessage()]);
         }
@@ -311,44 +311,43 @@ class ProfileController extends Controller
     public function get_preferred_jobs()
     {
         $employ = $this->employe();
-        return $this->client_view('candidates.profile.get_preferred_jobs',[
-            'employ' => $employ
+        return $this->client_view('candidates.profile.get_preferred_jobs', [
+            'employ' => $employ,
         ]);
     }
 
     public function post_preferred_jobs(Request $request)
     {
-        try{
+        try {
             DB::beginTransaction();
-            if(in_array(!null, $request->categories) || in_array(!null, $request->countries) || in_array(!null, $request->job_title)){
+            if (in_array(!null, $request->categories) || in_array(!null, $request->countries) || in_array(!null, $request->job_title)) {
                 $preferences = EmployJobPreference::where('employ_id', $this->employe()->id);
-                if($preferences->exists()){
+                if ($preferences->exists()) {
                     $preferences->delete();
                 }
-                
+
                 $this->employe()->update([
                     'job_notify' => $request->has('job_notify') ? 1 : 0,
                 ]);
-               
 
-                foreach($request->categories as $key => $category){
-                    if($category != null){
+                foreach ($request->categories as $key => $category) {
+                    if ($category != null) {
                         EmployJobPreference::create([
                             'employ_id' => $this->employe()->id,
                             'job_category_id' => $category,
                         ]);
                     }
                 }
-                foreach($request->countries as $key => $country){
-                    if($country != null){
+                foreach ($request->countries as $key => $country) {
+                    if ($country != null) {
                         EmployJobPreference::create([
                             'country_id' => $country,
                             'employ_id' => $this->employe()->id,
                         ]);
                     }
                 }
-                foreach($request->job_title as $key => $job_title){
-                    if($job_title != null){
+                foreach ($request->job_title as $key => $job_title) {
+                    if ($job_title != null) {
                         EmployJobPreference::create([
                             'job_title' => $job_title,
                             'employ_id' => $this->employe()->id,
@@ -356,10 +355,10 @@ class ProfileController extends Controller
                     }
                 }
             }
-           
+
             DB::commit();
             return response()->json(['msg' => 'Job Preference updated successfully', 'redirectRoute' => route('candidate.profile.get_preview')]);
-        } catch(\Exception $e){
+        } catch (\Exception$e) {
             DB::rollBack();
             return response()->json(['db_error' => $e->getMessage()]);
         }
@@ -367,7 +366,20 @@ class ProfileController extends Controller
 
     public function get_preview()
     {
-        $employ = Employe::where('user_id', Auth::user()->id)->with(['user:id,email', 'country:id,name', 'state:id,name', 'city:id,name', 'education_level:id,title', 'employeeSkills.skill:id,title', 'employeeLanguage.language:id,lang', 'experience.country:id,name', 'experience.job_category:id,functional_area', 'experience.job:id,title'])->first();
+        $employ = Employe::where('user_id', Auth::user()->id)
+        ->with([
+            'user:id,email',
+            'country:id,name', 
+            'state:id,name', 
+            'city:id,name', 
+            'education_level:id,title', 
+            'employeeSkills.skill:id,title', 
+            'employeeLanguage.language:id,lang', 
+            'experience.country:id,name', 
+            'experience.job_category:id,functional_area', 
+            // 'experience.industry:id,title',
+            // 'experience.job:id,title'
+            ])->first();
         return $this->client_view('candidates.profile.get_preview', [
             'employ' => $employ,
         ]);
@@ -398,8 +410,8 @@ class ProfileController extends Controller
     {
         EmployeeTraining::where('employee_id', $employ_id)->delete();
         $fields = [];
-        if(isset($request->training) and !blank($request->training)){
-            foreach($request->training as $key => $training){
+        if (isset($request->training) and !blank($request->training)) {
+            foreach ($request->training as $key => $training) {
                 $fields['employee_id'] = $employ_id;
                 $fields['training_id'] = $training;
                 DB::table('employee_trainings')->insert($fields);
@@ -489,17 +501,30 @@ class ProfileController extends Controller
                 }
             });
         $jobs = $q->take(5)->get('title');
-        $employ = $this->employe(['user:id,email', 'country:id,name', 'state:id,name', 'city:id,name', 'education_level:id,title', 'employeeSkills.skill:id,title', 'employeeLanguage.language:id,lang', 'experience.country:id,name', 'experience.job_category:id,functional_area', 'experience.job:id,title']);
+        $employ = $this->employe([
+            'user:id,email',
+            'country:id,name',
+            'state:id,name',
+            'city:id,name',
+            'education_level:id,title',
+            'employeeSkills.skill:id,title',
+            'employeeLanguage.language:id,lang',
+            'experience.country:id,name',
+            'experience.job_category:id,functional_area',
+            // 'experience.job:id,title',
+            'experience.industry:id,title',
+        ]);
         // return $this->client_view('candidates.profile.cv', [
-        //     'employ' => $this->employe(['user:id,email', 'country:id,name', 'state:id,name', 'city:id,name', 'education_level:id,title', 'employeeSkills.skill:id,title', 'employeeLanguage.language:id,lang', 'experience.country:id,name', 'experience.job_category:id,functional_area', 'experience.job:id,title']),
+        //     //'employ' => $this->employe(['user:id,email', 'country:id,name', 'state:id,name', 'city:id,name', 'education_level:id,title', 'employeeSkills.skill:id,title', 'employeeLanguage.language:id,lang', 'experience.country:id,name', 'experience.job_category:id,functional_area', 'experience.job:id,title']),
+        //     'employ' => $employ,
         //     'jobs' => $jobs,
         // ]);
         $pdf = PDF::loadView('themes.fvft.candidates.profile.cv', compact('employ', 'jobs'))->setPaper('a4', 'portrait');
         PDF::setOptions(['dpi' => 300]);
         if ($request->type == 'preview') {
-            return $pdf->stream($employ->full_name.'.pdf');
+            return $pdf->stream($employ->full_name . '.pdf');
         }
-        return $pdf->download($employ->full_name.'.pdf');
+        return $pdf->download($employ->full_name . '.pdf');
 
     }
 }

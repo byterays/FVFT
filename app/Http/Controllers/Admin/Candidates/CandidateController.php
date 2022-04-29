@@ -8,8 +8,8 @@ use App\Models\Industry;
 use App\Models\Training;
 use App\Models\User;
 use App\Traits\Admin\AdminMethods;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -85,7 +85,19 @@ class CandidateController extends Controller
 
     public function show($id)
     {
-        $employ = Employe::where('id', $id)->with('user')->first();
+        $employ = Employe::where('id', $id)
+            ->with([
+                'user:id,email',
+                'country:id,name',
+                'state:id,name',
+                'city:id,name',
+                'education_level:id,title',
+                'employeeSkills.skill:id,title',
+                'employeeLanguage.language:id,lang',
+                'experience.country:id,name',
+                'experience.job_category:id,functional_area',
+                'experience.industry:id,title',
+            ])->first();
         return $this->view('admin.pages.candidates.show', [
             'action' => "View",
             'employ' => $employ,
@@ -128,7 +140,7 @@ class CandidateController extends Controller
                 $this->__saveEmployee($user->id, $request);
                 DB::commit();
                 return response()->json(['msg' => 'Candidate created successfully', 'redirectRoute' => route($this->redirectTo)]);
-            } catch (\Exception $e) {
+            } catch (\Exception$e) {
                 DB::rollBack();
                 return response()->json(['db_error' => $e->getMessage()]);
                 // return redirect()->back()->with(notifyMsg('warning', $e->getMessage()));
@@ -171,7 +183,7 @@ class CandidateController extends Controller
                 $this->__updateEmployee($id, $user->id, $request);
                 DB::commit();
                 return response()->json(['msg' => 'Candidate updated successfully', 'redirectRoute' => route($this->redirectTo)]);
-            } catch (\Exception $e) {
+            } catch (\Exception$e) {
                 DB::rollBack();
                 return response()->json(['db_error' => $e->getMessage()]);
                 // return redirect()->back();
@@ -569,7 +581,7 @@ class CandidateController extends Controller
                 ->with(['delete' => [
                     'status' => 'success',
                 ]]);
-        } catch (\Throwable $th) {
+        } catch (\Throwable$th) {
             return redirect()
                 ->route('admin.candidates.list')
                 ->with(['delete' => [
