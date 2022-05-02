@@ -73,7 +73,7 @@
                         <div class="d-flex">
                             <a href="{{ route('admin.support.index') }}" class="btn btn-link">Cancel</a>
                             <button id="saveButton" type="button" onclick="submitForm(event);"
-                                class="btn btn-success ml-auto">Save
+                                class="btn btn-primary ml-auto">Save
                             </button>
                         </div>
                     </div>

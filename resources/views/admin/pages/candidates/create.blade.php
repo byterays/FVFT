@@ -548,9 +548,12 @@
                     </div>
                 </div>
             </div>
-            <div class="mx-auto mb-2">
-                {{-- <button type="submit" class="btn btn-success">Submit</button> --}}
-                <button type="button" class="btn btn-success text-center" onclick="submitForm(event);">Submit</button>
+            <div class="col-xl-12 mx-auto mb-2">
+                <div class="card m-b-20">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary text-center" onclick="submitForm(event);">Submit</button>
+                    </div>
+                </div>
             </div>
         </div>
     </form>

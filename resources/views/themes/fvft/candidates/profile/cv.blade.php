@@ -104,30 +104,28 @@
                 <p class="otherP">Height : {{ $employ->height ? $employ->height . ' CM' : '' }}</p>
             </div>
         </div>
-        @if ($employ->experiences != null && !empty($employ->experiences))
+        @if ($employ->experience != null && !empty($employ->experience))
             <div class="row d-flex mt-3">
                 <div class="column">
                     <h2 class="pI">Experience</h2>
                 </div>
                 <div class="column1">
-                    @if (json_decode($employ->experiences != null))
-                        @foreach (json_decode($employ->experiences, true) as $employ_experience)
+                    @if ($employ->experience != null)
+                        @foreach ($employ->experience as $employ_experience)
                             <?php
-                            $job = DB::table('jobs')->where('id', $employ_experience['job_title_id']);
-                            $job_category = DB::table('job_categories')->where('id', $employ_experience['job_category_id']);
-                            $country_name = DB::table('countries')->where('id', $employ_experience['country_id']);
+                            // $job = DB::table('jobs')->where('id', $employ_experience['job_title_id']);
+                            // $job_category = DB::table('job_categories')->where('id', $employ_experience['job_category_id']);
+                            // $country_name = DB::table('countries')->where('id', $employ_experience['country_id']);
                             
-                            $job_title = $job->exists() ? $job->first()->title : '';
-                            $country_title = $country_name->exists() ? $country_name->first()->name : '';
-                            $job_category_title = $job_category->exists() ? $job_category->first()->functional_area : '';
+                            // $job_title = $job->exists() ? $job->first()->title : '';
+                            // $country_title = $country_name->exists() ? $country_name->first()->name : '';
+                            // $job_category_title = $job_category->exists() ? $job_category->first()->functional_area : '';
                             
                             ?>
-                            <p class="otherP">{{ $loop->iteration }}.&nbsp;<span>{{ $job_title }},
-                                    {{ $employ_experience['working_year'] }}
-                                    {{ $employ_experience['working_year'] > 1 ? 'Years' : 'Year' }}
-                                    {{ $employ_experience['working_month'] }}
-                                    {{ $employ_experience['working_month'] > 1 ? 'Months' : 'Month' }},
-                                    {{ $job_category_title }}, {{ $country_title }}</span></p>
+                            <p class="otherP">{{ $loop->iteration }}.&nbsp;<span>{{ $employ_experience->industry != null ? $employ_experience->industry->title : '' }},
+                                {{ $employ_experience->working_year != null ? $employ_experience->working_year . ' '. getYearForm($employ_experience->working_year) : '' }}
+                                {{ $employ_experience->working_month != null ? $employ_experience->working_month . ' '. getMonthForm($employ_experience->working_month) : '' }}
+                                {{ $employ_experience->job_category != null ? $employ_experience->job_category->functional_area : '' }}, {{ $employ_experience->country != null ? $employ_experience->country->name : '' }}</span></p>
                         @endforeach
                     @endif
                 </div>
@@ -147,10 +145,10 @@
             </div>
             <div class="column1">
                 <p>
-                    @if (json_decode($employ->trainings != null))
-                        @foreach (json_decode($employ->trainings) as $etraining)
+                    @if ($employ->employeeTrainings != null)
+                        @foreach ($employ->employeeTrainings as $etraining)
                             {{ $loop->first ? '' : ',' }}
-                            {{ App\Models\Training::where('id', $etraining)->value('title') ?? '' }}
+                            {{ $etraining->training != null ? $etraining->training->title : '' }}
                         @endforeach
                     @endif
                 </p>
@@ -181,7 +179,7 @@
                 @if ($employ->employeeLanguage != null)
                     @foreach ($employ->employeeLanguage as $elanguage)
                         @if ($elanguage->language != null)
-                            <p>{{ $elanguage->language != null ? $elanguage->language->lang : '' }} <span
+                            <p class="otherP">{{ $elanguage->language != null ? $elanguage->language->lang : '' }} <span
                                     class="ml-5">{{ $elanguage->language_level }}</span></p>
                         @endif
                     @endforeach
