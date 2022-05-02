@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmployJobPreferenceTable extends Migration
+class CreateJobPreferencesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateEmployJobPreferenceTable extends Migration
      */
     public function up()
     {
-        Schema::create('employ_job_preference', function (Blueprint $table) {
+        Schema::create('job_preferences', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('employ_id');
-            $table->unsignedBigInteger('job_category_id');
-            $table->unsignedBigInteger('country_id');
+            $table->unsignedBigInteger('employe_id');
+            $table->unsignedBigInteger('job_preference_id');
+            $table->string('job_preference_type', 100);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateEmployJobPreferenceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employ_job_preference');
+        Schema::dropIfExists('job_preferences');
     }
 }

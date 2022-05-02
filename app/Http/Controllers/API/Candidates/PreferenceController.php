@@ -16,6 +16,8 @@ use Illuminate\Validation\Rule;
 class PreferenceController extends Controller
 {
     use ApiMethods;
+
+    // with polymorphic relation
     public function getJobPreference()
     {
         $user = auth()->guard('api')->user();
@@ -95,7 +97,7 @@ class PreferenceController extends Controller
 
         return $this->sendResponse([], 'Preference removed successfully.');
     }
-
+    // with polymorphic relation end
 
     // Get employes job category
     public function get_employes_job_category()
