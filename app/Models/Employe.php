@@ -225,4 +225,19 @@ class Employe extends Model
         return $this->hasMany(EmployeeTraining::class, 'employee_id');
     }
 
+    // preference
+    public function countryPreference()
+    {
+        return $this->morphedByMany(Country::class, 'job_preference');
+    }
+
+    public function jobCategoryPreference()
+    {
+        return $this->morphedByMany(JobCategory::class, 'job_preference');
+    }
+
+    public function industryPreference()
+    {
+        return $this->morphedByMany(Industry::class, 'job_preference');
+    }
 }

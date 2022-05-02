@@ -57,3 +57,9 @@ Route::get('news', [NewsController::class, 'list']);
 Route::get('news/{id}', [NewsController::class, 'index']);
 
 Route::get('banners', [BannerController::class, 'list']);
+
+
+Route::post('saveJobPreference', [PreferenceController::class, 'saveJobPreference']);
+Route::get('getJobPreference', [PreferenceController::class, 'getJobPreference']);
+Route::post('removeJobPreference', [PreferenceController::class, 'removeJobPreference']);
+

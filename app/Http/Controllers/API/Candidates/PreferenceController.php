@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\API\Candidates;
 
 use App\Http\Controllers\Controller;
+use App\Models\Country;
 use App\Models\Employe;
 use App\Models\EmployesCountry;
 use App\Models\EmployesJobCategory;
+use App\Models\Industry;
+use App\Models\JobCategory;
 use App\Traits\Api\ApiMethods;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -13,6 +16,87 @@ use Illuminate\Validation\Rule;
 class PreferenceController extends Controller
 {
     use ApiMethods;
+    public function getJobPreference()
+    {
+        $user = auth()->guard('api')->user();
+        $employee = Employe::where('user_id', $user->id)->first();
+
+        $preferred_countries = $employee->countryPreference;
+        $preferred_industries = $employee->industryPreference;
+        $preferred_categories = $employee->jobCategoryPreference;
+
+        return $this->sendResponse(compact('preferred_categories','preferred_countries','preferred_industries'), 'Preference saved successfully.');
+    }
+
+    public function saveJobPreference(Request $request)
+    {
+        $user = auth()->guard('api')->user();
+        $employee = Employe::where('user_id', $user->id)->first();
+
+        $country_id = $request->country_id ?? null;
+        $industry_id = $request->industry_id ?? null;
+        $category_id = $request->job_category_id ?? null;
+
+        if (!blank($country_id)){
+
+            if (count($employee->countryPreference) > 2){
+                return $this->sendResponse([], 'Country limit reached in job preference', '', false);
+            }
+
+            $country = Country::find($country_id);
+            $employee->countryPreference()->attach($country);
+        }
+
+        if (!blank($industry_id)){
+
+            if (count($employee->industryPreference) > 2){
+                return $this->sendResponse([], 'Industry limit reached in job preference', '', false);
+            }
+
+            $industry = Industry::find($industry_id);
+            $employee->industryPreference()->attach($industry);
+        }
+
+        if (!blank($category_id)){
+
+            if (count($employee->jobCategoryPreference) > 2){
+                return $this->sendResponse([], 'Category limit reached in job preference', '', false);
+            }
+
+            $job_category = JobCategory::find($category_id);
+            $employee->jobCategoryPreference()->attach($job_category);
+        }
+        return $this->sendResponse([], 'Preference saved successfully.');
+    }
+
+    public function removeJobPreference(Request $request)
+    {
+        $user = auth()->guard('api')->user();
+        $employee = Employe::where('user_id', $user->id)->first();
+
+        $country_id = $request->country_id ?? null;
+        $industry_id = $request->industry_id ?? null;
+        $category_id = $request->job_category_id ?? null;
+
+        if (!blank($country_id)){
+            $country = Country::find($country_id);
+            $employee->countryPreference()->detach($country);
+        }
+
+        if (!blank($industry_id)){
+            $industry = Industry::find($industry_id);
+            $employee->industryPreference()->detach($industry);
+        }
+
+        if (!blank($category_id)){
+            $job_category = JobCategory::find($category_id);
+            $employee->jobCategoryPreference()->detach($job_category);
+        }
+
+        return $this->sendResponse([], 'Preference removed successfully.');
+    }
+
+
     // Get employes job category
     public function get_employes_job_category()
     {

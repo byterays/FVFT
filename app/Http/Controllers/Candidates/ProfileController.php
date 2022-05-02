@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Candidates;
 
+use App\Models\Country;
 use PDF;
 use App\Models\Job;
 use App\Models\Skill;
@@ -325,11 +326,11 @@ class ProfileController extends Controller
                 if($preferences->exists()){
                     $preferences->delete();
                 }
-                
+
                 $this->employe()->update([
                     'job_notify' => $request->has('job_notify') ? 1 : 0,
                 ]);
-               
+
 
                 foreach($request->categories as $key => $category){
                     if($category != null){
@@ -356,7 +357,7 @@ class ProfileController extends Controller
                     }
                 }
             }
-           
+
             DB::commit();
             return response()->json(['msg' => 'Job Preference updated successfully', 'redirectRoute' => route('candidate.profile.get_preview')]);
         } catch(\Exception $e){

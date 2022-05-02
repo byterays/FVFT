@@ -16,8 +16,10 @@ class CreateEmployJobPreferenceTable extends Migration
         Schema::create('employ_job_preference', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('employ_id');
-            $table->unsignedBigInteger('job_category_id');
-            $table->unsignedBigInteger('country_id');
+//            $table->unsignedBigInteger('job_category_id');
+//            $table->unsignedBigInteger('country_id');
+            $table->unsignedBigInteger('preference_id');
+            $table->string('preference_type', 100);
             $table->timestamps();
         });
     }
