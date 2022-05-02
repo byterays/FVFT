@@ -18,13 +18,18 @@ class JobCategory extends Model
         return $this->hasMany(Job::class, "job_categories_id");
     }
 
-    public function job_preference()
-    {
-        return $this->belongsTo(EmployJobPreference::class, "job_category_id");
-    }
+//    public function job_preference()
+//    {
+//        return $this->belongsTo(EmployJobPreference::class, "job_category_id");
+//    }
 
     public function jobsCount()
     {
         return $this->jobs()->count();
+    }
+
+    public function jobPreference()
+    {
+        return $this->morphOne(Employe::class, 'job_preference');
     }
 }

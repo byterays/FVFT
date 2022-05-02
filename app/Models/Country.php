@@ -15,10 +15,10 @@ class Country extends Model
         'emojiU', 'is_active',
     ];
 
-    public function job_preference()
-    {
-        return $this->belongsTo(EmployJobPreference::class, "country_id");
-    }
+//    public function job_preference()
+//    {
+//        return $this->belongsTo(EmployJobPreference::class, "country_id");
+//    }
 
     public function jobs()
     {
@@ -38,5 +38,10 @@ class Country extends Model
     public function districts()
     {
         return $this->hasMany(District::class, 'country_id');
+    }
+
+    public function jobPreference()
+    {
+        return $this->morphOne(Employe::class, 'job_preference');
     }
 }
