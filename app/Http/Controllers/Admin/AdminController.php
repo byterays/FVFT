@@ -74,4 +74,25 @@ class AdminController extends Controller
         }
 
     }
+
+    public function delete($id)
+    {
+        try{
+            DB::beginTransaction();
+            $user = User::where('id', $id)->with('admin_profile')->firstOrFail();
+            $avatar = !blank($user->admin_profile) ? $user->admin_profile->avatar : '';
+            $profile_delete = $user->admin_profile->delete();
+            $user_delete = $user->delete();
+            if($profile_delete && $user_delete){
+                if($avatar != null && file_exists($avatar)){
+                    unlink($avatar);
+                }
+            }
+            DB::commit();
+            return response()->json(['msg' => 'Admin deleted successfully']);
+        } catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['db_error' => $e->getMessage()]);
+        }
+    }
 }
