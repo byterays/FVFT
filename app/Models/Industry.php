@@ -10,4 +10,9 @@ class Industry extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'slug', 'is_active'];
+
+    public function jobPreference()
+    {
+        return $this->morphOne(Employe::class, 'job_preference');
+    }
 }

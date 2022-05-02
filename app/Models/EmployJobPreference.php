@@ -14,16 +14,28 @@ class EmployJobPreference extends Model
     protected $fillable = ['id', 'employ_id', 'job_category_id', 'country_id', 'job_title', 'created_at', 'updated_at'];
 
 
-    public function employ()
+//    public function employ()
+//    {
+//        return $this->belongsTo(Employe::class, 'employ_id', 'id');
+//    }
+//
+//    public function category(){
+//        return $this->belongsTo(JobCategory::class, 'job_category_id');
+//    }
+//
+//    public function country(){
+//        return $this->belongsTo(Country::class, 'country_id');
+//    }
+
+    public function employee()
     {
-        return $this->belongsTo('App\Models\Employee', 'employ_id', 'id');
+        return $this->belongsTo(Employe::class, 'employ_id', 'id');
     }
 
-    public function category(){
-        return $this->belongsTo(JobCategory::class, 'job_category_id');
-    }
+//    public function preference()
+//    {
+//        return $this->morphTo();
+//    }
 
-    public function country(){
-        return $this->belongsTo(Country::class, 'country_id');
-    }
+
 }

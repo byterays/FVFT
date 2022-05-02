@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers\Candidates;
 
+use App\Models\Country;
+use PDF;
+use App\Models\Job;
+use App\Models\Skill;
+use App\Models\State;
 use App\Http\Controllers\Controller;
 use App\Models\EducationLevel;
 use App\Models\Employe;
