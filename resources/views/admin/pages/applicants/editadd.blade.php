@@ -86,7 +86,7 @@
                                                                 Red Listed</option>
                                                         </select>
                                                     </div>
-                                                    <div class="form-group p-2">
+                                                    {{-- <div class="form-group p-2">
                                                         <label for="inputState" class="col-form-label card-title">Job
                                                             Preferences</label>
                                                         <div class="form-group">
@@ -115,7 +115,7 @@
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="form-group p-2">
                                                         <label for="inputState" class="col-form-label card-title">Interview
                                                             Process</label>

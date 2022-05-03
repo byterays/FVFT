@@ -36,9 +36,9 @@
         <a href="{{ route('candidate.savedjob.saveJobLists') }}" class="@if(Route::currentRouteName()=="candidate.savedjob.saveJobLists") active @endif   d-flex  border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> {{ __('Saved Jobs') }}
         </a>
-        <a href="{{ route('candidate.recommended_job') }}" class="@if(Route::currentRouteName()=="candidate.recommended_job") active @endif   d-flex  border-bottom">
+        {{-- <a href="{{ route('candidate.recommended_job') }}" class="@if(Route::currentRouteName()=="candidate.recommended_job") active @endif   d-flex  border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> {{ __('Recommended Jobs') }}
-        </a>
+        </a> --}}
         {{-- <a href="/pages/tips" class="d-flex border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-flag-outline fs-20"></i></span> Safety Tips
         </a> --}}
