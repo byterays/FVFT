@@ -51,8 +51,8 @@ class NewJobController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => ['required'],
             'company_id' => ['required'],
-            'male_employee' => ['required'],
-            'female_employee' => ['required'],
+            // 'male_employee' => ['required'],
+            // 'female_employee' => ['required'],
             'any_employee' => ['nullable'],
             'feature_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:4096'],
             'category_id' => ['required'],

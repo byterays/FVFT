@@ -11,13 +11,13 @@
                             <a href="/candidate/">{{ __('My Dashboard') }}</a>
                         </li>
                         <li>
-                            <a href="/candidate/profile">{{ __('Profile') }}</a>
+                            <a href="{{ route('candidate.profile.index') }}">{{ __('Profile') }}</a>
                         </li>
                         <li>
-                            <a href="/candidate/jobs">{{ __('My Jobs') }}</a>
+                            <a href="{{ route('candidate.job_application.index') }}">{{ __('My Jobs') }}</a>
                         </li>
                         <li>
-                            <a href="/candidate/settings">{{ __('Settings') }}</a>
+                            <a href="{{ route('candidate.account_setting.get_change_password') }}">{{ __('Settings') }}</a>
                         </li>
                     @elseif(auth()->user()->user_type=='company')
                         <li>

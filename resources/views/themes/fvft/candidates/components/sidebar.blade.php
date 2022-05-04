@@ -25,7 +25,7 @@
             <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> {{ __('My Job Applications') }}
         </a>
         <a href="{{ route('candidate.company_lists') }}" class="@if(Route::currentRouteName()=="candidate.company_lists") active @endif   d-flex  border-bottom">
-            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> {{ __('Employers') }}
+            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> {{ __('Companies') }}
         </a>
         <a href="{{ route('candidate.news.index') }}" class="@if(Route::currentRouteName()=="candidate.news.index" || Route::currentRouteName()=="candidate.news.detail") active @endif   d-flex  border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> {{ __('News') }}
