@@ -61,6 +61,10 @@
             color: red;
         }
 
+        .home_hr {
+            border-top: 1px solid black;
+        }
+
     </style>
     @yield('style')
     <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=626a7f190ebd0700197cc4c1&product=sop' async='async'></script>

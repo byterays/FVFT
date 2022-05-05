@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use App\Models\Job;
+use App\Models\JobCategory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\Paginator;
@@ -105,5 +106,24 @@ if(!function_exists('getYearForm')){
 if(!function_exists('getMonthForm')){
     function getMonthForm($month){
         return $month > 1 ? 'months' : 'month';
+    }
+}
+
+if(!function_exists('getJobCategories')){
+    function getJobCategories($limit = null){
+        $job_categories = JobCategory::whereHas('jobs');
+        if($limit != null){
+            return $job_categories = $job_categories->limit($limit)->get();
+        } 
+        return $job_categories = $job_categories->get();
+    }
+}
+
+if(!function_exists('getLatestJobs')){
+    function getLatestJobs($limit = null){
+        return Job::where('is_active', 1)
+            ->with(['company', 'country', 'job_category'])
+            ->orderBy('id', 'desc')->limit($limit ?? 10)->get();
+       
     }
 }
