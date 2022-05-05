@@ -614,7 +614,7 @@
             </div>
         </div>
         <div class="mr-auto">
-            <button type="button" onclick="submitForm(event);" class="btn btn-success ml-3">Submit</button>
+            <button type="button" onclick="submitForm(event);" class="btn btn-primary ml-3">Submit</button>
         </div>
     </div>
 </div>

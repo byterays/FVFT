@@ -39,7 +39,7 @@
     <!-- p-scroll bar css-->
     <link href="{{ asset('themes/fvft/assets/plugins/pscrollbar/pscrollbar.css') }}" rel="stylesheet" />
     <!-- file Uploads -->
-    <link href="{{ asset('themes/fvft/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet') }}" type="text/css" />
+    <link href="{{ asset('themes/fvft/assets/plugins/fileuploads/css/dropify.css') }}" rel="stylesheet" type="text/css" />
     <!---Font icons-->
     <link href="{{ asset('themes/fvft/assets/css/icons.css') }}" rel="stylesheet" />
     <!-- Color-Skins -->

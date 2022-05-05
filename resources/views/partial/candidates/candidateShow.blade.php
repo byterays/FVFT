@@ -55,39 +55,27 @@
                                 </p>
                             </div>
                         </div>
-                        @if (json_decode($employ->experiences, true) != null)
+                        @if ($employ->experience != null)
                             <div class="experience_div mt-5">
                                 <h4>{{ strtoupper('Experience') }}</h4>
 
                                 <div class="mt-5 experience_detail">
-                                    @foreach (json_decode($employ->experiences, true) as $employ_experience)
+                                    @foreach ($employ->experience as $employ_experience)
                                         <?php
-                                        $job = DB::table('jobs')->where('id', $employ_experience['job_title_id']);
-                                        $job_category = DB::table('job_categories')
-                                            ->where('id', $employ_experience['job_category_id']);
-                                        $country_name = DB::table('countries')
-                                            ->where('id', $employ_experience['country_id']);
-
-                                        $job_title = $job->exists() ? $job->first()->title : '';
-                                        $country_title = $country_name->exists() ? $country_name->first()->name : '';
-                                        $job_category_title = $job_category->exists() ? $job_category->first()->functional_area : '';
-
-                                        // $job_title = DB::table('jobs')
-                                        //     ->where('id', $employ_experience['job_title_id'])
-                                        //     ->first()->title;
+                                        // $job = DB::table('jobs')->where('id', $employ_experience['job_title_id']);
                                         // $job_category = DB::table('job_categories')
-                                        //     ->where('id', $employ_experience['job_category_id'])
-                                        //     ->first()->functional_area;
+                                        //     ->where('id', $employ_experience['job_category_id']);
                                         // $country_name = DB::table('countries')
-                                        //     ->where('id', $employ_experience['country_id'])
-                                        //     ->first()->name;
+                                        //     ->where('id', $employ_experience['country_id']);
+                                        
+                                        // $job_title = $job->exists() ? $job->first()->title : '';
+                                        // $country_title = $country_name->exists() ? $country_name->first()->name : '';
+                                        // $job_category_title = $job_category->exists() ? $job_category->first()->functional_area : '';
                                         ?>
-                                        <p>{{ $loop->iteration }}.&nbsp;<span>{{ $job_title }},
-                                                {{ $employ_experience['working_year'] }}
-                                                {{ $employ_experience['working_year'] > 1 ? 'Years' : 'Year' }}
-                                                {{ $employ_experience['working_month'] }}
-                                                {{ $employ_experience['working_month'] > 1 ? 'Months' : 'Month' }},
-                                                {{ $job_category_title }}, {{ $country_title }}</span></p>
+                                        <p>{{ $loop->iteration }}.&nbsp;<span>{{ $employ_experience->industry != null ? $employ_experience->industry->title : '' }},
+                                                {{ $employ_experience->working_year != null? $employ_experience->working_year . ' ' . getYearForm($employ_experience->working_year): '' }}
+                                                {{ $employ_experience->working_month != null? $employ_experience->working_month . ' ' . getMonthForm($employ_experience->working_month): '' }}
+                                                {{ $employ_experience->job_category != null ? $employ_experience->job_category->functional_area : '' }}, {{ $employ_experience->country != null ? $employ_experience->country->name : '' }}</span></p>
                                     @endforeach
                                 </div>
 
@@ -103,35 +91,35 @@
                                 </div>
                             </div>
                         @endif
-                        @if (json_decode($employ->trainings) != null)
+                        @if ($employ->employeeTrainings != null)
                             <div class="training_div mt-5">
                                 <h4>{{ strtoupper('Training') }}</h4>
                                 <div class="mt-3 training_detail">
-                                    @foreach (json_decode($employ->trainings) as $etraining)
-                                        <p>{{ $loop->iteration }}.&nbsp;<span>{{ App\Models\Training::where('id', $etraining)->first()->title }}</span>
+                                    @foreach ($employ->employeeTrainings as $etraining)
+                                        <p>{{ $loop->iteration }}.&nbsp;<span>{{ $etraining->training != null ? $etraining->training->title : '' }}</span>
                                         </p>
                                     @endforeach
 
                                 </div>
                             </div>
                         @endif
-                        @if (json_decode($employ->skills) != null)
+                        @if ($employ->employeeSkills != null)
                             <div class="skill_div mt-5">
                                 <h4>{{ strtoupper('Skills') }}</h4>
                                 <div class="mt-3 skill_detail">
-                                    @foreach (json_decode($employ->skills) as $eskill)
-                                        <p>{{ $loop->iteration }}.&nbsp;<span>{{ DB::table('skills')->where('id', $eskill)->first()->title }}</span>
+                                    @foreach ($employ->employeeSkills as $eskill)
+                                        <p>{{ $loop->iteration }}.&nbsp;<span>{{ $eskill->skill != null ? $eskill->skill->title : '' }}</span>
                                         </p>
                                     @endforeach
                                 </div>
                             </div>
                         @endif
-                        @if (json_decode($employ->languages, true) != null)
+                        @if ($employ->employeeLanguage != null)
                             <div class="language_div mt-5">
                                 <h4>{{ strtoupper('Language') }}</h4>
                                 <div class="mt-3 language_detail">
-                                    @foreach (json_decode($employ->languages, true) as $elanguage)
-                                        <p>{{ $loop->iteration }}.&nbsp;{{ DB::table('languages')->where('id', $elanguage['language_id'])->first()->lang }}:&nbsp;<span>{{ $elanguage['language_level'] }}</span>
+                                    @foreach ($employ->employeeLanguage as $elanguage)
+                                        <p>{{ $loop->iteration }}.&nbsp;{{ $elanguage->language != null ? $elanguage->language->lang : '' }}:&nbsp;<span>{{ $elanguage->language_level }}</span>
                                         </p>
                                     @endforeach
                                 </div>
