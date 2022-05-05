@@ -85,12 +85,12 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="industry_category">Industry Category&nbsp;<span
+                                    <label for="industry_category">Industry&nbsp;<span
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="industry_id" class="form-control select2">
-                                        <option value="">Select Industry Category</option>
+                                    <select name="industry_id" class="form-control select2-show-search" data-placeholder="Select Industry">
+                                        <option value="">Select Industry</option>
                                         @foreach ($industries as $industry)
                                             <option value="{{ $industry->id }}">
                                                 {{ $industry->title }}</option>
@@ -211,7 +211,7 @@
                                     <label for="country" class="form-label">Country</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="country_id" id="select-country" class="form-control select2"
+                                    <select name="country_id" id="select-country" class="form-control select2-show-search" data-placeholder="Select Country"
                                         onchange="patchStates(this)">
                                         <option value="">Select Country</option>
                                         @foreach ($countries as $country)
@@ -228,7 +228,7 @@
                                     <label for="state" class="form-label">State/Province</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="state_id" id="select-state" class="form-control select2"
+                                    <select name="state_id" id="select-state" class="form-control select2-show-search" data-placeholder="Select State/Province"
                                         onchange="patchCities(this)">
                                         <option value="">Select State/Province</option>
                                     </select>
@@ -241,7 +241,7 @@
                                     <label for="state" class="form-label">City</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="city_id" id="select-city" class="form-control select2">
+                                    <select name="city_id" id="select-city" class="form-control select2-show-search" data-placeholder="Select City">
                                         <option value="">Select City</option>
                                     </select>
                                 </div>

@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class ProfileController extends Controller
+class ProfileControllerOldDelete extends Controller
 {
     use ThemeMethods;
     use CandidateMethods;
@@ -321,39 +321,40 @@ class ProfileController extends Controller
     {
         try {
             DB::beginTransaction();
-            if (in_array(!null, $request->categories) || in_array(!null, $request->countries) || in_array(!null, $request->industry)) {
-                // $preferences = EmployJobPreference::where('employ_id', $this->employe()->id);
-                // if ($preferences->exists()) {
-                //     $preferences->delete();
-                // }
+            if (in_array(!null, $request->categories) || in_array(!null, $request->countries) || in_array(!null, $request->job_title)) {
+                $preferences = EmployJobPreference::where('employ_id', $this->employe()->id);
+                if ($preferences->exists()) {
+                    $preferences->delete();
+                }
 
                 $this->employe()->update([
                     'job_notify' => $request->has('job_notify') ? 1 : 0,
                 ]);
-                if(!blank($request->categories)){
-                    $this->employe()->jobCategoryPreference()->sync(collect($request->categories)->filter());
-                    if(count($this->employe()->jobCategoryPreference) > 2){
-                        DB::rollBack();
-                        return response()->json(['limit_error' => 'Category limit reached in job preference. Only 2 allowed']);
+
+                foreach ($request->categories as $key => $category) {
+                    if ($category != null) {
+                        EmployJobPreference::create([
+                            'employ_id' => $this->employe()->id,
+                            'job_category_id' => $category,
+                        ]);
                     }
                 }
-
-                if(!blank($request->countries)){
-                    $this->employe()->countryPreference()->sync(collect($request->countries)->filter());
-                    if(count($this->employe()->countryPreference) > 2){
-                        DB::rollBack();
-                        return response()->json(['limit_error' => 'Country limit reached in job preference. Only 2 allowed']);
+                foreach ($request->countries as $key => $country) {
+                    if ($country != null) {
+                        EmployJobPreference::create([
+                            'country_id' => $country,
+                            'employ_id' => $this->employe()->id,
+                        ]);
                     }
                 }
-
-                if(!blank($request->industry)){
-                    $this->employe()->industryPreference()->sync(collect($request->industry)->filter());
-                    if(count($this->employe()->industryPreference) > 2){
-                        DB::rollBack();
-                        return response()->json(['limit_error' => 'Industry limit reached in job preference. Only 2 allowed']);
+                foreach ($request->job_title as $key => $job_title) {
+                    if ($job_title != null) {
+                        EmployJobPreference::create([
+                            'job_title' => $job_title,
+                            'employ_id' => $this->employe()->id,
+                        ]);
                     }
                 }
-
             }
 
             DB::commit();

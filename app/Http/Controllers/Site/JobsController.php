@@ -14,7 +14,7 @@ class JobsController extends Controller
     public function index(Request $request)
     {
         // $jobs = new Job();
-        $jobs = Job::query();
+        $jobs = Job::whereIn('status', ['Active', 'Published', 'Approved']);
         global $search;
         if ($request->filled('search')) {
             $search = $request->search;

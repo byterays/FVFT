@@ -120,9 +120,14 @@ class Employe extends Model
         return $this->hasOne(EmployJobPreference::class, 'employ_id');
     }
 
+    // public function job_preferences()
+    // {
+    //     return $this->hasMany(EmployJobPreference::class, 'employ_id');
+    // }
+
     public function job_preferences()
     {
-        return $this->hasMany(EmployJobPreference::class, 'employ_id');
+        return $this->hasMany(JobPreference::class, 'employe_id');
     }
 
     public function employeeSkills()

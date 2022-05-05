@@ -50,7 +50,7 @@
                                                                 <div class="col-md-12">
                                                                     <div class="form-group">
                                                                         <label class="custom-switch">
-                                                                            <input type="checkbox" name="job_notify" class="custom-switch-input" {{ setParameter($employe, 'job_notify') ? 'checked' : '' }}>
+                                                                            <input type="checkbox" name="job_notify" class="custom-switch-input">
                                                                             <span class="custom-switch-indicator"></span>
                                                                             <span class="custom-switch-description">{{ __('Notify me for job') }}</span>
                                                                         </label>
@@ -93,24 +93,19 @@
                                                     <hr>
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <h3 class="card-title">{{ __('Industry') }}</h3>
+                                                            <h3 class="card-title">{{ __('Job Title') }}</h3>
                                                             <div class="row">
                                                                 <div class="col-md-8">
-                                                                    <input type="text" value="All Industry" placeholder="All Industry"
-                                                                           name="all_industry" class="form-control" readonly>
+                                                                    <input type="text" value="All Job Title" placeholder="All Job Title"
+                                                                           name="all_job_title" class="form-control" readonly>
                                                                     <div class="text-sm m-4">
-                                                                        <small>{{ __('Or Add your preferred job industry') }}</small>
+                                                                        <small>{{ __('Or Add your preferred job title') }}</small>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-md-8">
-                                                                    <select name="industry[]" class="form-control select2-show-search" data-placeholder="Select Industry">
-                                                                        <option value="">{{ __('Select Industry') }}</option>
-                                                                        @foreach($job_industries as $job_industry)
-                                                                            <option value="{{ $job_industry->id }}">{{ $job_industry->title }}</option>
-                                                                        @endforeach
-                                                                    </select>
+                                                                    <input type="text" class="form-control" name="job_title[]" placeholder="Enter Job Title">
                                                                 </div>
                                                                 <div class="col-md-2">
                                                                     <button type="button" onclick="addJobRow();" class="btn btn-block cur_sor my-auto">
@@ -137,7 +132,7 @@
                                                             <div class="row">
                                                                 <div class="col-md-8">
                                                                     <select name="countries[]" data-placeholder="Select Country"
-                                                                            class="form-control country select2-show-search">
+                                                                            class="form-control select2-show-search">
                                                                         <option value="">{{ __('Select Country') }}</option>
                                                                         @foreach ($countries as $country)
                                                                             <option value="{{ $country->id }}">
@@ -193,11 +188,11 @@
             @if ($employe->job_preferences->isEmpty())
         var c_count = 0;
         var jc_count = 0;
-        var jt_count = 0; //industry_count;
+        var jt_count = 0;
             @else
         var c_count = $("#cCount").val();
         var jc_count = $("#jcCount").val();
-        var jt_count = $("#jt_count").val(); // industry_count;
+        var jt_count = $("#jt_count").val();
         @endif
 
 
@@ -224,8 +219,6 @@
                         $(".alert-secondary").css('display', 'block');
                         $(".db_error").html(response.db_error);
                         toastr.warning(response.db_error);
-                    } else if(response.limit_error){
-                        toastr.error(response.limit_error);
                     } else if (response.errors) {
                         var error_html = "";
                         $.each(response.errors, function(key, value) {
@@ -248,8 +241,8 @@
             <div class="row mt-2" id="countryRow_` + c_count + `">
                 <div class="col-md-8">
                     <select name="countries[]" data-placeholder="Select Country"
-                        class="form-control country select2-show-search">
-                        <option value="">{{ __('Select Country') }}</option>
+                        class="form-control select2-show-search">
+                        <option value="">Select Country</option>
                         @foreach ($countries as $country)
                 <option value="{{ $country->id }}">{{ $country->name }}</option>
                         @endforeach
@@ -269,12 +262,8 @@
         function addJobRow() {
             var html = `<div class="row mt-2" id="jobRow_` + jt_count + `">
                         <div class="col-md-8">
-                            <select name="industry[]" class="form-control select2-show-search" data-placeholder="Select Industry">
-                                <option value="">{{ __('Select Industry') }}</option>
-                                @foreach($job_industries as $job_industry)
-                                    <option value="{{ $job_industry->id }}">{{ $job_industry->title }}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="form-control" name="job_title[]"
+                                placeholder="Enter Job Title">
                         </div>
                         <div class="col-md-2">
                             <button type="button" class="btn btn-block" onclick="removeRow('jobRow_` + jt_count + `')">
@@ -292,7 +281,7 @@
                         <div class="col-md-8">
                             <select name="categories[]" data-placeholder="Select Job Category"
                                 class="form-control select2-show-search">
-                                <option value="">{{ __('Select Job Category') }}</option>
+                                <option value="">Select Job Category</option>
                                 @foreach ($job_categories as $job_category)
                 <option value="{{ $job_category->id }}">
                                         {{ $job_category->functional_area }}</option>

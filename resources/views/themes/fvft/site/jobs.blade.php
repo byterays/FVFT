@@ -173,9 +173,7 @@
                                                                                 </a>
                                                                             </div>
                                                                             <div class="col-md-3">
-                                                                                <a href="#" class="btn btn-warning btn-block">
-                                                                                    <i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
-                                                                                </a>
+                                                                                <div class="sharethis-inline-share-buttons" data-url="{{ route('viewJob', $item->id) }}"></div>
                                                                             </div>
                                                                         @elseif(auth()->user()->user_type == 'company')
                                                                             <div class="col-md-3">
@@ -184,9 +182,7 @@
                                                                                 </a>
                                                                             </div>
                                                                             <div class="col-md-3">
-                                                                                <a href="#" class="btn btn-warning btn-block">
-                                                                                    <i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
-                                                                                </a>
+                                                                                <div class="sharethis-inline-share-buttons" data-url="{{ route('viewJob', $item->id) }}"></div>
                                                                             </div>
                                                                         @endif
                                                                     @else
@@ -349,9 +345,7 @@
                                                                                 </a>
                                                                             </div>
                                                                             <div class="col-md-6">
-                                                                                <a href="#" class="ico-grid-font btn btn-warning btn-block">
-                                                                                    <i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
-                                                                                </a>
+                                                                                <div class="sharethis-inline-share-buttons" data-url="{{ route('viewJob', $item->id) }}"></div>
                                                                             </div>
                                                                         @elseif(auth()->user()->user_type == 'company')
                                                                             <div class="col-md-6">
@@ -361,9 +355,7 @@
                                                                                 </a>
                                                                             </div>
                                                                             <div class="col-md-6">
-                                                                                <a href="#" class="ico-grid-font btn btn-warning btn-block">
-                                                                                    <i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
-                                                                                </a>
+                                                                                <div class="sharethis-inline-share-buttons" data-url="{{ route('viewJob', $item->id) }}"></div>
                                                                             </div>
                                                                         @endif
                                                                     @else
@@ -378,9 +370,7 @@
                                                                             </a>
                                                                         </div>
                                                                         <div class="col-md-6">
-                                                                            <a href="#" class="ico-grid-font btn btn-warning btn-block">
-                                                                                <i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
-                                                                            </a>
+                                                                            <div class="sharethis-inline-share-buttons" data-url="{{ route('viewJob', $item->id) }}"></div>
                                                                         </div>
                                                                     @endauth
                                                                 </div>

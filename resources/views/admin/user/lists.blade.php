@@ -28,16 +28,26 @@
                                     <th>Avatar</th>
                                     <th>Full Name</th>
                                     <th>Email</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($admins as $admin)
                                     <tr>
                                         <td>
-                                            <img src="{{ asset($admin->admin_profile->avatar) }}" class="imageSize" alt="">
+                                            <img src="{{ asset($admin->admin_profile->avatar) }}" class="imageSize"
+                                                alt="">
                                         </td>
                                         <td>{{ $admin->admin_profile->name }}</td>
                                         <td>{{ $admin->email }}</td>
+                                        <td>
+                                            @if (Auth::user()->id != $admin->id)
+                                                <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
+                                                    data-original-title="Delete" href="javascript:void(0);"
+                                                    onclick="deleteData({{ $admin->id }}, $(this));"><i
+                                                        class="fa fa-trash-o"></i></a>
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -58,5 +68,27 @@
                 $(this).remove();
             });
         }, 5000);
+
+        function deleteData(id, el) {
+            if (id) {
+                var url = "{{ route('admin.user.delete', ':id') }}",
+                    url = url.replace(":id", id);
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        _method: 'DELETE',
+                    },
+                    success: function(data) {
+                        if (data.db_error) {
+                            toastr.warning(data.db_error);
+                        } else {
+                            toastr.success(data.msg);
+                            el.closest('tr').remove();
+                        }
+                    }
+                });
+            }
+        }
     </script>
 @endsection

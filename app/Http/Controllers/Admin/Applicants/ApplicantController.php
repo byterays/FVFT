@@ -70,7 +70,7 @@ class ApplicantController extends Controller
         $request->has("category")?$preferences["job_category_id"]=$request->category:null;
 
         \DB::table('job_applications')->updateOrInsert(['id'=>$request->application_id],$fields);
-        EmployJobPreference::updateOrCreate(['employ_id'=>$request->employ_id],$preferences);
+        // EmployJobPreference::updateOrCreate(['employ_id'=>$request->employ_id],$preferences);
         return $this->edit($request->application_id);
     }
     public function delete($id){

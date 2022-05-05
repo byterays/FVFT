@@ -68,7 +68,7 @@
                             <div class="row ml-1">
                                 <div class="card mb-0">
                                     <div class="card-body">
-                                        <h3 class="card-title">{{ __('Other Informations') }}</h3>
+                                        <h3 class="card-title">{{ __('Other Useful Informations') }}</h3>
                                         @foreach ($other_information as $onitem)
                                             <div class="information-section">
                                                 <div class="d-flex justify-content-between">
@@ -79,7 +79,7 @@
                                                                 alt="img">
                                                         </a>
                                                     </div>
-                                                    <div class="information-title w-70">
+                                                    <div class="information-title my-auto w-70">
                                                         <a class="informationitem"
                                                             href="{{ route('candidate.usefulinfo.detail', $onitem->slug) }}">
                                                             <p>{{ $onitem->title }}</p>

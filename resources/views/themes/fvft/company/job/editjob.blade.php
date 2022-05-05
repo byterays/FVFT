@@ -280,7 +280,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @if ($job->status == 'Active')
+                            @if ($job->status == 'Active' || $job->status == 'Published' || $job->status == 'Unpublished' || $job->status == 'Approved')
                                 <div class="form-group">
                                     {{-- @if ($job->approval_status == 1)
                                     <label class="custom-switch-checkbox">

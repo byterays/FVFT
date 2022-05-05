@@ -1,5 +1,5 @@
 @if(isset($news) AND !blank($news))
-		<section class="sptb bg-white">
+		<section class="sptb" style="background-color: #b2cae342">
 			<div class="container">
 				<div class="section-title center-block text-center">
 					<h1>{{ __('News') }}</h1>
