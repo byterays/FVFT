@@ -33,13 +33,13 @@ Route::get('jobs/', [JobsController::class, 'index'])->name('site.jobs');
 Route::get('job/{id}', [JobsController::class, 'jobindex'])->name('viewJob');
 Route::get('news/', [NewsController::class, 'index'])->name('news.index');
 Route::get('news/{slug}', [NewsController::class, 'getNews'])->name('news.details');
-Route::get('page/{slug}', [PageController::class, 'index']);
+Route::get('page/{slug}', [PageController::class, 'index'])->name('viewPage');
 
 Route::post('get-job-by-title', [HomeController::class, 'getJobsByTitle'])->name('getJobsByTitle');
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/apply-job/{id}', [DashController::class, 'applyjob']);
+    Route::get('/apply-job/{id}', [DashController::class, 'applyjob'])->name('applyForJob');
     Route::get('/remove-application/{id}', [DashController::class, 'removeApplication']);
 });
 

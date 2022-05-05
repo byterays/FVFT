@@ -227,6 +227,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::get('', [AdminController::class, 'users'])->name('lists');
         Route::get('profile', [AdminController::class, "profile"])->name("profile");
         Route::put('update-profile', [AdminController::class, "updateProfile"])->name("updateProfile");
+        Route::delete('delete-user/{id}', [AdminController::class, "delete"])->name("delete");
     });
 
     Route::group(['prefix' => 'general-setting/', 'as' => 'admin.general_setting.'], function(){

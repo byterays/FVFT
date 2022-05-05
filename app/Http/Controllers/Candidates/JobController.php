@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Candidates;
 
-use App\Http\Controllers\Controller;
-use App\Models\Employe;
-use App\Models\EmployJobPreference;
 use App\Models\Job;
+use App\Models\Company;
+use App\Models\Employe;
 use App\Models\SavedJob;
-use App\Traits\Site\CandidateMethods;
-use App\Traits\Site\ThemeMethods;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
+use App\Traits\Site\ThemeMethods;
+use App\Models\EmployJobPreference;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\Site\CandidateMethods;
 use Illuminate\Validation\UnauthorizedException;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class JobController extends Controller
 {
@@ -73,9 +74,17 @@ class JobController extends Controller
         //         ->where('country_id', $employe->job_preference->country_id);
         //     });
         // })->paginate(10); //Todo Check Query
-        if(!empty($employe->job_preference)){
-            $job_preference = EmployJobPreference::where('employ_id', $employe->id)->first();
-            $recommended_jobs = Job::where('job_categories_id', $job_preference->job_category_id)->where('country_id', $job_preference->country_id)->paginate(10);
+        if(!empty($employe->job_preferences)){
+            $industry_preferences = $this->employe()->industryPreference()->pluck('job_preference_id')->toArray();
+            $job_category_preferences = $this->employe()->jobCategoryPreference()->pluck('job_preference_id')->toArray();
+            $country_preferences = $this->employe()->countryPreference()->pluck('job_preference_id')->toArray();
+            $recommended_jobs = Job::whereIn('job_categories_id', $job_category_preferences)
+            ->orWhereIn('country_id', $country_preferences)
+            ->when($industry_preferences, function($q) use ($industry_preferences){
+                $companies = Company::whereIn('industry_id', $industry_preferences)->pluck('id')->toArray();
+                $q->orWhereIn('company_id', $companies);
+            })
+            ->paginate(10);
         } else {
             $recommended_jobs = null;
         }

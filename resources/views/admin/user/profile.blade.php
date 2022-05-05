@@ -48,12 +48,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="form-label">Email</label>
-                                    <input type="email" name="email" value="{{ $admin->email }}" class="form-control">
+                                    <input type="email" name="email" value="{{ $admin->email }}" class="form-control" readonly>
                                     <div class="require email text-danger"></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="form-label">Password</label>
-                                    <input type="password" class="form-control" name="password">
+                                    <input type="password" class="form-control" name="password" autocomplete="off">
                                     <div class="require password text-danger"></div>
                                 </div>
                                 <div class="form-group">
@@ -65,15 +65,15 @@
                                 </div>
                                 <div class="form-group">
                                     <button type="button" onclick="submitForm(event);"
-                                        class="btn btn-success ml-auto">Save</button>
+                                        class="btn btn-primary ml-auto">Save</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer text-right">
                         <div class="d-flex">
-                            <a href="javascript:void(0)" class="btn btn-link">Cancel</a>
-                            <button type="button" onclick="showEditForm();" class="btn btn-success ml-auto"
+                            <a href="{{ route('admin.dashboard') }}" class="btn btn-link">Cancel</a>
+                            <button type="button" onclick="showEditForm();" class="btn btn-primary ml-auto"
                                 id="editbutton">Edit</button>
                         </div>
                     </div>

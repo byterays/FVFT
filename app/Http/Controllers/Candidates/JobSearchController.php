@@ -74,15 +74,24 @@ class JobSearchController extends Controller
         })->when($request->type == 'jobs_by_company', function ($q) use ($request) {
             $q->where('company_id', $request->company_id);
         })->when($request->type == 'prefered_jobs', function ($q) use ($category_id, $job_title, $country_id) {
-            $preference = EmployJobPreference::where('employ_id', $this->employe()->id)->get();
-            $category_id = array_merge($category_id, $preference->whereNotNull('job_category_id')->pluck('job_category_id')->toArray());
-            $job_title = array_merge($job_title, $preference->whereNotNull('job_title')->pluck('job_title')->toArray());
-            $country_id = array_merge($country_id, $preference->whereNotNull('country_id')->pluck('country_id')->toArray());
-            $q->whereIn('job_categories_id', $category_id)
-                ->orWhereIn('country_id', $country_id)->when($job_title, function ($q3) use ($job_title) {
-                foreach ($job_title as $title) {
-                    $q3->orWhere('title', 'LIKE', '%' . $title . '%');
-                }
+            // $preference = EmployJobPreference::where('employ_id', $this->employe()->id)->get();
+            // $category_id = array_merge($category_id, $preference->whereNotNull('job_category_id')->pluck('job_category_id')->toArray());
+            // $job_title = array_merge($job_title, $preference->whereNotNull('job_title')->pluck('job_title')->toArray());
+            // $country_id = array_merge($country_id, $preference->whereNotNull('country_id')->pluck('country_id')->toArray());
+            // $q->whereIn('job_categories_id', $category_id)
+            //     ->orWhereIn('country_id', $country_id)->when($job_title, function ($q3) use ($job_title) {
+            //     foreach ($job_title as $title) {
+            //         $q3->orWhere('title', 'LIKE', '%' . $title . '%');
+            //     }
+            // });
+            $industry_preferences = $this->employe()->industryPreference()->pluck('job_preference_id')->toArray();
+            $job_category_preferences = $this->employe()->jobCategoryPreference()->pluck('job_preference_id')->toArray();
+            $country_preferences = $this->employe()->countryPreference()->pluck('job_preference_id')->toArray();
+            $q->whereIn('job_categories_id', $job_category_preferences)
+            ->orWhereIn('country_id', $country_preferences)
+            ->when($industry_preferences, function($q3) use ($industry_preferences){
+                $companies = Company::whereIn('industry_id', $industry_preferences)->pluck('id')->toArray();
+                $q3->orWhereIn('company_id', $companies);
             });
         })->when($request->has('search'), function ($q) use ($request) {
             $q->where('title', 'LIKE', '%' . $request->search . '%');

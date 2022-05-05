@@ -49,9 +49,9 @@
                         <a class="dropdown-item" href="{{ route('admin.user.profile') }}">
                             <i class="dropdown-icon icon icon-user"></i> My Profile
                         </a>
-                        <a class="dropdown-item" href="{{ route('admin.user.profile') }}">
+                        {{-- <a class="dropdown-item" href="{{ route('admin.user.profile') }}">
                             <i class="dropdown-icon  icon icon-settings"></i> Account Settings
-                        </a>
+                        </a> --}}
                         <form action="/admin/logout" method="post">
                             @csrf
                             <button type="submit" class="dropdown-item">

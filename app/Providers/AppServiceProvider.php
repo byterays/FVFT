@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Page;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,9 +27,10 @@ class AppServiceProvider extends ServiceProvider
         global $this_action;
         $this_action = '';
 
-        view()->composer('themes.fvft.site.components.topmenu', function ($view) {
+        view()->composer('*', function ($view) {
             $view->with('current_locale', app()->getLocale());
             $view->with('available_locales', config('app.available_locales'));
+            $view->with('footer_pages', Page::whereIn('title', ['Privacy Policy', 'Terms and Condition'])->get());
         });
     }
 }

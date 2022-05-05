@@ -20,18 +20,11 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="clearfix">
+                    {{-- <div class="clearfix">
                         <ul class="contact border-left">
                             <li class="d-lg-none">
                                 <a href="#" class="callnumber"><span><i class="fa fa-phone mr-1"></i>: +425 3458765</span></a>
                             </li>
-                            {{--<li class="select-country">--}}
-                            {{--<select class="form-control select2-flag-search" data-placeholder="Select Country">--}}
-                            {{--@foreach ($countries as $index => $country)--}}
-                            {{--<option value="{{ $country->iso2 }}">{{ $country->name }}</option>--}}
-                            {{--@endforeach--}}
-                            {{--</select>--}}
-                            {{--</li>--}}
                             <li class="dropdown d-none d-xl-inline-block">
                                 <a href="#" class="" data-toggle="dropdown"><span>
                                         {{ in_array($current_locale, array_keys($available_locales)) ? __($available_locales[$current_locale]) : __('English') }}
@@ -59,28 +52,12 @@
 
                                 </div>
                             </li>
-                            {{-- <li class="dropdown d-none d-xl-inline-block">
-                                <a href="#" class="" data-toggle="dropdown"><span>Currency <i class="fa fa-caret-down"></i></span></a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    <a href="#" class="dropdown-item" >
-                                        USD
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        EUR
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        INR
-                                    </a>
-                                    <a href="#" class="dropdown-item" >
-                                        GBP
-                                    </a>
-                                </div>
-                            </li> --}}
+                            
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
-            <div class="col-xl-5 col-lg-5 col-sm-8 col-5">
+            {{-- <div class="col-xl-5 col-lg-5 col-sm-8 col-5">
                 <div class="top-bar-right">
                     <ul class="custom">
                         @guest
@@ -92,27 +69,10 @@
                             </li>
                         @endguest
                         @auth
-                            {{-- <li class="dropdown"> --}}
-                            {{-- <a href="#" class="" data-toggle="dropdown"><i class="fa fa-home mr-1"></i><span> My Dashboard</span></a> --}}
-                            {{-- <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"> --}}
-                            {{-- <a href="{{ route('company.dash') }}" class="dropdown-item" > --}}
-                            {{-- <i class="dropdown-icon icon icon-user"></i> My Profile --}}
-                            {{-- </a> --}}
-                            {{-- <a class="dropdown-item" href="{{ route('company.dash') }}"> --}}
-                            {{-- <i class="dropdown-icon icon icon-speech"></i> Inbox --}}
-                            {{-- </a> --}}
-                            {{-- <a class="dropdown-item" href="{{ route('company.dash') }}"> --}}
-                            {{-- <i class="dropdown-icon icon icon-bell"></i> Notifications --}}
-                            {{-- </a> --}}
-                            {{-- <a href="{{ route('company.dash') }}" class="dropdown-item" > --}}
-                            {{-- <i class="dropdown-icon  icon icon-settings"></i> Account Settings --}}
-                            {{-- </a> --}}
-                            {{-- </div> --}}
-                            {{-- </li> --}}
                         @endauth
                     </ul>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
