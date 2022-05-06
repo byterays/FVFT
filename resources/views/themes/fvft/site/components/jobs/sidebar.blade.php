@@ -43,8 +43,8 @@
                 <div class="filter-product-checkboxs">
                     @foreach ($job_categories as $item)                        
                     <label class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" name="job_catagory[{{ $item->id }}]" value="{{$item->id}}"  @if(Request::has("job_catagory")) @if((@Request::get('job_catagory')[$item->id]==$item->id) || (@Request::get('job_catagory')==$item->id)) checked @endif @else @if(@$job_preference->job_category_id == $item->id) checked @endif @endif >
-                        {{-- <input type="checkbox" class="custom-control-input" name="job_catagory[]" value="{{$item->id}}"  @if(Request::has("job_catagory")) {{ (request()->job_catagory == $item->id) || (in_array($item->id, request()->job_catagory)) ? 'checked' : '' }} @endif > --}}
+                        {{-- <input type="checkbox" class="custom-control-input" name="job_catagory[{{ $item->id }}]" value="{{$item->id}}"  @if(Request::has("job_catagory")) @if((@Request::get('job_catagory')[$item->id]==$item->id) || (@Request::get('job_catagory')==$item->id)) checked @endif @else @if(@$job_preference->job_category_id == $item->id) checked @endif @endif > --}}
+                        <input type="checkbox" class="custom-control-input" name="job_catagory[]" value="{{$item->id}}"  @if(Request::has("job_catagory")) {{ (request()->job_catagory == $item->id) || (gettype(request()->job_catagory) == 'array' AND in_array($item->id, request()->job_catagory)) ? 'checked' : '' }} @endif >
                         <span class="custom-control-label">
                             <a href="#" class="text-dark">{{ $item->functional_area }}<span class="label label-secondary float-right">{{DB::table('jobs')->where("job_categories_id",$item->id)->count()}}</span></a>
                         </span>
