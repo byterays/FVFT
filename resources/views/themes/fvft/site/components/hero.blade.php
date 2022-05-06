@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white">
                                         <select class="form-control select2-show-search  border-bottom-0"
-                                            data-placeholder="{{ __('All Categories') }}" name="job_catagory[]">
+                                            data-placeholder="{{ __('All Categories') }}" name="job_catagory">
                                             <optgroup label="Categories">
                                                 <option value="">{{ __('All Categories') }}</option>
                                                 @foreach ($job_categories as $item)
