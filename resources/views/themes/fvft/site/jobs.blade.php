@@ -1,6 +1,6 @@
 @extends('themes.fvft.layouts.master')
 @section('title')
-    Search Jobs | FreeVisaFreeTicket
+    Search Jobs
 @endsection
 @section('style')
     <!-- jquery ui RangeSlider -->
@@ -98,7 +98,7 @@
                                                                 <div class="mt-2 mb-2">
                                                                     <a class="mr-4">
                                                                         <span>
-                                                                           
+
                                                                             @if (!blank(data_get($item, 'country')))
                                                                                 <img class="mb-1"
                                                                                     src="{{ asset('https://flagcdn.com/16x12/' . strtolower(data_get($item, 'country.iso2')) . '.png') }}"
@@ -278,7 +278,7 @@
                                                                 <div class="mt-2 mb-2">
                                                                     <a class="mr-4">
                                                                         <span>
-                                                                           
+
                                                                             @if(!blank(data_get($item, 'country')))
                                                                             <img class="mb-1"
                                                                                 src="{{ asset('https://flagcdn.com/16x12/' . strtolower(data_get($item, 'country.iso2')) . '.png') }}"

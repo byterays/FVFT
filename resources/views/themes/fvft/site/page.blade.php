@@ -1,6 +1,6 @@
 @extends('themes.fvft.layouts.master')
 @section('title')
-    {{ $page->title ?? '' }} | FreeVisaFreeTicket
+    {{ $page->title ?? '' }}
 @endsection
 @section('style')
 <!-- jquery ui RangeSlider -->

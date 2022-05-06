@@ -1,6 +1,6 @@
 @extends('themes.fvft.layouts.master')
 @section('title')
-    Find Jobs & Vacancy | FreeVisaFreeTicket
+    Find Jobs & Vacancy
 @endsection
 {{-- @dd($countries) --}}
 @section('main')

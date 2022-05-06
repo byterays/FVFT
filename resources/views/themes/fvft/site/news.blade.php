@@ -1,6 +1,6 @@
 @extends('themes.fvft.layouts.master')
 @section('title')
-    News & Notices | FreeVisaFreeTicket
+    News & Notices
 @endsection
 @section('style')
 <!-- jquery ui RangeSlider -->
