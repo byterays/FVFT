@@ -19,7 +19,7 @@
                     @foreach (getJobCategories(8) as $job_category)
                         <div class="col-lg-3 col-md-4">
                             <div class="card card-aside">
-                                <a href="{{ route('site.jobs', ['job_catagory' => [$job_category->id]]) }}" class="mx-auto">
+                                <a href="{{ route('site.jobs', ['job_catagory' => $job_category->id]) }}" class="mx-auto">
                                     <div class="card-body ">
                                         <div class="card-item d-flex">
                                             <div class="ml-4 mx-auto">
