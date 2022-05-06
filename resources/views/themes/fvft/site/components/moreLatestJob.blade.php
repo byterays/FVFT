@@ -11,16 +11,15 @@
                                         <div class="item-card9-imgs">
                                             <a href="{{ route('viewJob', $latest_job->id) }}"></a>
                                             @if ($latest_job->feature_image_url)
-                                                <img src="{{ asset($latest_job->feature_image_url) }}"
-                                                    alt="img" class="h-100">
+                                                <img src="{{ asset($latest_job->feature_image_url) }}" alt="img"
+                                                    class="h-100">
                                             @else
-                                                <img src="{{ asset('images/defaultimage.jpg') }}"
-                                                    alt="img" class="h-100">
+                                                <img src="{{ asset('images/defaultimage.jpg') }}" alt="img"
+                                                    class="h-100">
                                             @endif
                                         </div>
                                     </div>
-                                    <div
-                                        class="card overflow-hidden  border-0 box-shadow-0 border-left br-0 mb-0">
+                                    <div class="card overflow-hidden  border-0 box-shadow-0 border-left br-0 mb-0">
                                         <div class="card-body pt-0 pt-md-5">
                                             <div class="item-card9">
                                                 <a href="{{ route('viewJob', $latest_job->id) }}"
@@ -35,7 +34,7 @@
                                                             class="mr-4"><span><i
                                                                     class="fa fa-building-o text-muted mr-1"></i>
                                                                 {{ data_get($latest_job, 'company.company_name') }}</span></a>
-                                                    @endisset
+                                                    @endif
                                             </div>
                                             <div class="mt-2 mb-2">
                                                 <a class="mr-4">
@@ -94,73 +93,78 @@
                                                         <div class="col-md-3">
                                                             @if ($application)
                                                                 <a href="javascript:void(0);"
-                                                                    class="btn btn-primary mr-5">{{ __('Applied') }}</a>
+                                                                    class="btn btn-primary mr-5 btn-block">{{ __('Applied') }}</a>
                                                             @else
                                                                 <a href="{{ route('applyForJob', $latest_job->id) }}}}"
-                                                                    class="btn btn-primary mr-5">
+                                                                    class="btn btn-primary mr-5 btn-block">
                                                                     {{ __('Apply Now') }}</a>
                                                             @endif
                                                         </div>
                                                         <div class="col-md-3">
                                                             @if ($savedJob->exists())
                                                                 <a href="javascript:void(0);"
-                                                                    class="saveJobButton ico-font">
+                                                                    class="saveJobButton btn btn-warning btn-block">
                                                                     <i class="fa fa-heart"></i>
                                                                     {{ __('Saved') }}
                                                                 </a>
                                                             @else
                                                                 <a href="javascript:void(0);"
                                                                     onclick="savejob({{ $latest_job->id }}, $(this))"
-                                                                    class="saveJobButton ico-font">
+                                                                    class="saveJobButton btn btn-block btn-warning">
                                                                     <i class="fa fa-heart-o"></i>
                                                                     {{ __('Save Job') }}
                                                                 </a>
                                                             @endif
                                                         </div>
                                                         <div class="col-md-3">
-                                                            <div class="sharethis-inline-share-buttons" data-url="{{ route('viewJob', $latest_job->id) }}"></div>
-                                                        </div>
-                                                        <div class="col-md-3">
                                                             <a href="{{ route('viewJob', $latest_job->id) }}}}"
-                                                                class="ico-font">
+                                                                class="btn btn-warning btn-block">
                                                                 <i
                                                                     class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                             </a>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="sharethis-inline-share-buttons"
+                                                                data-url="{{ route('viewJob', $latest_job->id) }}">
+                                                            </div>
                                                         </div>
                                                     @elseif(auth()->user()->user_type == 'company')
                                                         <div class="col-md-3">
-                                                            <div class="sharethis-inline-share-buttons" data-url="{{ route('viewJob', $latest_job->id) }}"></div>
-                                                        </div>
-                                                        <div class="col-md-3">
                                                             <a href="{{ route('viewJob', $latest_job->id) }}}}"
-                                                                class="ico-font">
+                                                                class="btn btn-warning btn-block">
                                                                 <i
                                                                     class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                             </a>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="sharethis-inline-share-buttons"
+                                                                data-url="{{ route('viewJob', $latest_job->id) }}">
+                                                            </div>
                                                         </div>
                                                     @endif
                                                 @else
                                                     <div class="col-md-3">
                                                         <a href="{{ route('applyForJob', $latest_job->id) }}}}"
-                                                            class="btn btn-primary mr-3">
+                                                            class="btn btn-primary mr-3 btn-block">
                                                             {{ __('Apply Now') }}</a>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <a href="{{ route('candidate.login', ['name' => 'login']) }}"
-                                                            class="saveJobButton ico-font">
+                                                            class="saveJobButton btn btn-warning btn-block">
                                                             <i class="fa fa-heart-o"></i>
                                                             {{ __('Save Job') }}
                                                         </a>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <div class="sharethis-inline-share-buttons" data-url="{{ route('viewJob', $latest_job->id) }}"></div>
-                                                    </div>
-                                                    <div class="col-md-3">
                                                         <a href="{{ route('viewJob', $latest_job->id) }}}}"
-                                                            class="ico-font">
+                                                            class="btn btn-warning btn-block">
                                                             <i
                                                                 class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                         </a>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="sharethis-inline-share-buttons"
+                                                            data-url="{{ route('viewJob', $latest_job->id) }}"></div>
                                                     </div>
 
                                                 @endauth

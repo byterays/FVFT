@@ -33,7 +33,7 @@ class JobSearchController extends Controller
         // $jobs = $query->where('publish_status', 1); //Todo uncomment later
         $action = $this->actions($request->type);
         $this->__query_jobs($query, $request);
-        $jobs = $query->paginate(10);
+        $jobs = $query->with(['company', 'country', 'job_category'])->paginate(10);
         return $this->client_view($this->page . 'index', [
             'jobs' => $jobs,
             "pagination" => $jobs->appends(array(

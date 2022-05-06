@@ -111,7 +111,7 @@ if(!function_exists('getMonthForm')){
 
 if(!function_exists('getJobCategories')){
     function getJobCategories($limit = null){
-        $job_categories = JobCategory::whereHas('jobs');
+        $job_categories = JobCategory::whereHas('jobs')->withCount('jobs');
         if($limit != null){
             return $job_categories = $job_categories->limit($limit)->get();
         } 
