@@ -53,7 +53,7 @@ class JobsController extends Controller
                 $jobs = $jobs->where('status', 'Active');
             }
         }
-        $jobs = $jobs->with(['country:id,name','company:id,company_name','job_category:id,functional_area'])->paginate(10)->setPath('');
+        $jobs = $jobs->with(['country:id,name','company:id,company_name','job_category:id,functional_area'])->orderBy('id', 'desc')->paginate(10)->setPath('');
         return $this->view('admin.pages.jobs.jobs_list', [
             'jobs' => $jobs,
             // 'jobs' => $jobs->paginate(10)->setPath(''),

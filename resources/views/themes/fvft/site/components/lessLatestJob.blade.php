@@ -30,10 +30,10 @@
                                                 </a>
                                                 <div class="mt-2 mb-2">
                                                     @if (!blank(data_get($latest_job, 'company.company_name')))
-                                                        <a href="{{ route('site.companydetail', data_get($latest_job, 'company.id')) }}"
-                                                           class="mr-4"><span><i
-                                                                    class="fa fa-building-o text-muted mr-1"></i>
-                                                                {{ data_get($latest_job, 'company.company_name') }}</span></a>
+                                                        <a href="{{ route('site.companydetail', data_get($latest_job, 'company.id')) }}" class="mr-4">
+                                                            <span><i class="fa fa-building-o text-muted mr-1"></i>
+                                                                {{ data_get($latest_job, 'company.company_name') }}</span>
+                                                        </a>
                                                     @endif
                                                 </div>
                                                 <div class="mt-2 mb-2">
