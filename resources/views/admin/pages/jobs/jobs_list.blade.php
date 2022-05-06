@@ -173,8 +173,7 @@
                                             {{ $job->country->name ?? 'Not-Available' }}
                                         </td>
                                         <td>
-                                            <i
-                                                class="fa fa-{{ $job->is_featured ? 'check-' : '' }}circle-o {{ $job->is_featured ? 'text-success' : 'text-warning' }}"></i>
+                                            <i class="fa fa-{{ $job->is_featured ? 'check-' : '' }}circle-o {{ $job->is_featured ? 'text-success' : 'text-warning' }}"></i>
                                         </td>
                                         {{-- <td>
                                             <span
