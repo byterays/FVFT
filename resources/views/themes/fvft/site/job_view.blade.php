@@ -1,5 +1,7 @@
 @extends('themes.fvft.layouts.master')
-@section('title', 'Job Detail')
+@section('title')
+    {{ $job->title ?? '' }} | {{ $company->company_name ?? '' }}
+@endsection
 @section('style')
     <!-- jquery ui RangeSlider -->
     <link href="{{ asset('themes/fvft/') }}/assets/plugins/jquery-uislider/jquery-ui.css" rel="stylesheet">
@@ -298,10 +300,10 @@
                                                             ->pluck('title')
                                                             ->toArray()
                                                         : '';
-                                                
+
                                                 // $skills = '<span class="badge badge-success">' . implode('</span> <span class="badge badge-success">', $skills) . '</span>'; //working code(converted to function)
                                                 $skills = $skills != null ? wrapInTag($skills, 'span', 'class="badge badge-success"', ' ') : '';
-                                                
+
                                             @endphp
                                             <div class="row">
                                                 <div class="col-md-4">
@@ -350,7 +352,7 @@
                                                 <div class="col-md-8">
                                                     @php
                                                         $country = App\Models\Country::where('id', $job->country_id)->first() ?? null;
-                                                        
+
                                                     @endphp
                                                     {{ $job->country_id != null && $country != null && $job->earning_country_salary != null ? 'Per Month ' . $country->currency . ' ' . $job->earning_country_salary : '' }}
                                                     {{ $job->country_id != null && $country != null && $job->earning_nepali_salary != null ? '- ' . $country->currency . ' ' . $job->earning_nepali_salary : '' }}
@@ -366,7 +368,7 @@
                                                 <div class="col-md-8">
                                                     @php
                                                         $accomodation = $job->accomodation == 1 ? 'Yes' : 'No';
-                                                        
+
                                                     @endphp
                                                     {{ $accomodation == 'Yes' ? $accomodation . ' (As Per Company Rule)' : $accomodation }}
                                                 </div>
@@ -380,7 +382,7 @@
                                                 <div class="col-md-8">
                                                     @php
                                                         $food = $job->food == 1 ? 'Yes' : 'No';
-                                                        
+
                                                     @endphp
                                                     {{ $food == 'Yes' ? $food . ' (As Per Company Rule)' : $food }}
                                                 </div>

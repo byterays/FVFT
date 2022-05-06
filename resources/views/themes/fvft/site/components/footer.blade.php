@@ -121,7 +121,7 @@ $pages = DB::table('pages')
                                         class="img-fluid w-100"></a>
                             </div>
                             <div class="w-50">
-                                <a href=""><img src="{{ asset('images/applestore5.jpeg') }}" alt=""
+                                <a href=""><img src="{{ asset('images/app-store-badge.png') }}" alt=""
                                         class="img-fluid w-100 ml-2"></a>
                             </div>
                         </div>

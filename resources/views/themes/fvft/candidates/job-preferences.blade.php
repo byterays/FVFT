@@ -28,7 +28,7 @@
                 @include('themes.fvft.candidates.components.sidebar')
             </div>
             <div class="col-lg-8 col-md-12 col-md-12">
-                @php 
+                @php
                 $user=Auth::user();
                 @endphp
                 <div class="card dropify-image-avatar">
@@ -36,9 +36,9 @@
                         <h3 class="card-title">Personal Data</h3>
                     </div>
                     <div class="card-body">
-                      
+
                         <div class="row">
-                       
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Job Category</label>
@@ -65,12 +65,12 @@
                                 <div class="d-flex justify-content-end align-items-center ">
                                     <button class="btn btn-primary w-150" type="submit">Save</button>
                                 </div>
-                            </div>  
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-           
+
         </div>
     </div>
     </form>

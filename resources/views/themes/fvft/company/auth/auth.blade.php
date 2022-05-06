@@ -1,6 +1,7 @@
 @extends('themes.fvft.layouts.master')
-{{-- @dd($countries) --}}
-@section('title') Login or Register @endsection
+@section('title')
+    Employer Login / Register | FreeVisaFreeTicket
+@endsection
 @section('main')
     @include('themes.fvft.site.components.header')
 
@@ -63,7 +64,7 @@
                                                 @csrf
                                                 <h3 class="pb-2">{{ __('Login') }}</h3>
                                                 <div class="mail">
-                                                    
+
                                                     <input type="email" name="email">
                                                     <label>{{ __('Email') }}</label>
 													@error('email')

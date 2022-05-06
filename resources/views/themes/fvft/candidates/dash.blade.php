@@ -247,7 +247,7 @@
                                                                                                         ->where('job_id', $item->job->id)
                                                                                                         ->where('employ_id', $employe->id)
                                                                                                         ->first();
-                                                                                                    
+
                                                                                                 @endphp
 
                                                                                                 <div class="col-md-3">

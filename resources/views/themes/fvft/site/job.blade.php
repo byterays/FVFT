@@ -109,5 +109,5 @@
     </style>
 @endsection
 @section('main')
-   
+
 @endsection

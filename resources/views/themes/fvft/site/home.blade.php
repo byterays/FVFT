@@ -1,6 +1,6 @@
 @extends('themes.fvft.layouts.master')
 @section('title')
-    Home Page
+    Find Jobs & Vacancy
 @endsection
 {{-- @dd($countries) --}}
 @section('main')
@@ -44,7 +44,7 @@
                                         <div class="ml-4 mx-auto">
                                             <h6 class="font-weight-bold mt-2">{{ $job_category->functional_area }}
                                             </h6>
-                                            {{ $job_category->jobs_count }}
+                                            {{ $job_category->jobs_count }} {{ $job_category->jobs_count > 1 ? 'Jobs' : 'Job' }}
                                         </div>
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@
                                         <div class="ml-4 mx-auto">
                                             <h6 class="font-weight-bold mt-2">{{ $job_category->functional_area }}
                                             </h6>
-                                            {{ $job_category->jobs_count }}
+                                            {{ $job_category->jobs_count }} {{ $job_category->jobs_count > 1 ? 'Jobs' : 'Job' }}
                                         </div>
                                     </div>
                                 </div>
