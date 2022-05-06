@@ -50,7 +50,7 @@ class HomeController extends Controller
     public function company($id)
     {
         $company = Company::findOrFail($id);
-        $company_jobs = Job::where("company_id", $id)->paginate(10);
+        $company_jobs = Job::where("company_id", $id)->with(['country', 'company', 'job_category'])->paginate(10);
         $employe = "";
         if(Auth::user()){
             $employe = Employe::where('user_id', Auth::user()->id)->first();
