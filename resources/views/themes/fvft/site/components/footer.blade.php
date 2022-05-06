@@ -33,21 +33,21 @@ $pages = DB::table('pages')
         margin-right: 6px;
     }
 
-	.subscribe_gradient{
-		background: linear-gradient(90deg, rgba(0,212,255,1) 0%, rgba(9,9,121,1) 32%);
-		border-color: #fff !important;
-	}
+    .subscribe_gradient {
+        background: linear-gradient(90deg, rgba(0, 212, 255, 1) 0%, rgba(9, 9, 121, 1) 32%);
+        border-color: #fff !important;
+    }
 
-	.social i{
-		background-color: #fff;
-		border-radius: 50%;
-		color: black;
-		height: 30px;
-		width: 30px;
-		font-size: 14px;
-		padding: 8px 0px 0px 0px;
-		text-align: center;
-	}
+    .social i {
+        background-color: #fff;
+        border-radius: 50%;
+        color: black;
+        height: 30px;
+        width: 30px;
+        font-size: 14px;
+        padding: 8px 0px 0px 0px;
+        text-align: center;
+    }
 
     /* .social i.fa {
         display: inline-block;
@@ -76,12 +76,15 @@ $pages = DB::table('pages')
                         </ul>
                     </div>
                     <div class="col-lg-3 col-md-12">
-                        <h6>{{ __('Job Shifts') }}</h6>
+                        <h6>{{ __('Job Seeker') }}</h6>
                         {{-- <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto"> --}}
                         <ul class="list-unstyled mb-0">
-                            @foreach ($job_shifts as $item)
-                                <li><a href="/jobs&job_shift={{ $item->id }}">{{ $item->job_shift }}</a></li>
-                            @endforeach
+                            <li><a
+                                    href="{{ route('candidate.login', ['name' => 'register']) }}">{{ __('Register') }}</a>
+                            </li>
+                            <li><a href="{{ route('candidate.login', ['name' => 'login']) }}">{{ __('Login') }}</a>
+                            </li>
+                            <li><a href="{{ route('site.jobs') }}">{{ __('Search Jobs') }}</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-3 col-md-12">
@@ -112,14 +115,21 @@ $pages = DB::table('pages')
                                 </li>
                             </ul>
                         </div>
-						{{-- <div class="d-flex mt-2 w-100">
-							<img src="{{ asset('images/google-play.png') }}" alt="" class="img-fluid" style="height: 120px;">
-							<img src="{{ asset('images/applestore1.png') }}" alt="" class="img-fluid" style="height: 120px;">
-						</div> --}}
+                        <div class="d-flex mt-2 w-100">
+                            <div class="w-50">
+                                <a href=""><img src="{{ asset('images/google-play3.png') }}" alt=""
+                                        class="img-fluid w-100"></a>
+                            </div>
+                            <div class="w-50">
+                                <a href=""><img src="{{ asset('images/applestore5.jpeg') }}" alt=""
+                                        class="img-fluid w-100 ml-2"></a>
+                            </div>
+                        </div>
                         <div class="input-group w-100 mt-5">
                             <input type="text" class="form-control " placeholder="{{ __('Email') }}">
                             <div class="input-group-append ">
-                                <button type="button" class="btn btn-primary subscribe_gradient"> {{ __('Subscribe') }} </button>
+                                <button type="button" class="btn btn-primary subscribe_gradient">
+                                    {{ __('Subscribe') }} </button>
                             </div>
                         </div>
 
@@ -139,7 +149,7 @@ $pages = DB::table('pages')
                             @foreach ($pages as $page)
                                 <li>
                                     <a class="social-icon"
-                                        href="{{ route('viewPage', $page->slug) }}">{{ $page->title }}</a>
+                                        href="{{ route('viewPage', $page->slug) }}">{{ __($page->title) }}</a>
                                 </li>
                             @endforeach
                         </ul>

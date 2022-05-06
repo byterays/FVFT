@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="form-group col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white">
                                         <select class="form-control select2-show-search  border-bottom-0"
-                                            data-placeholder="{{ __('All Categories') }}" name="job_catagory">
+                                            data-placeholder="{{ __('All Categories') }}" name="job_catagory[]">
                                             <optgroup label="Categories">
                                                 <option value="">{{ __('All Categories') }}</option>
                                                 @foreach ($job_categories as $item)
@@ -84,7 +84,7 @@
                             <div class="card mb-0">
                                 <div class="card-body p-3">
                                     <div class="cat-item d-flex">
-                                        <a href="jobs-list.html"></a>
+                                        <a href="{{ route('site.jobs', ['country_id' => $country->id]) }}"></a>
                                         <div class="cat-img mr-4 p-3">
                                             <img src="{{ 'https://ipdata.co/flags/' . strtolower($country->iso2) . '.png' }}" alt="img">
                                         </div>

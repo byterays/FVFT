@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Http\Controllers\Controller;
+use DB;
+use App\Models\Job;
+use App\Models\Company;
+use App\Models\Employe;
+use App\Models\JobCategory;
 use Illuminate\Http\Request;
 use App\Traits\Site\ThemeMethods;
-use App\Models\Job;
-use DB;
+use App\Http\Controllers\Controller;
 
 class JobsController extends Controller
 {
@@ -35,9 +38,9 @@ class JobsController extends Controller
         // dd($jobs->where('job_categories_id', $request->job_category)->get());
         $request->filled("salary_from") ? $jobs->where('salary_from', ">=", $request->salary_from) : null;
         $request->filled("salary_to") ? $jobs->where('salary_to', "<=", $request->salary_to) : null;
-        $job_categories = DB::table('job_categories')->get();
+        $job_categories = JobCategory::get();
         $job_shifts = DB::table('job_shifts')->get();
-        $jobs = $jobs->paginate(9)->setPath('');
+        $jobs = $jobs->with(['company', 'country', 'job_category'])->paginate(9)->setPath('');
         $fields = [
             "jobs" => $jobs,
             "pagination" => $jobs->appends(array(
@@ -52,7 +55,7 @@ class JobsController extends Controller
             "job_shifts" => $job_shifts,
         ];
         if (auth()->check() && auth()->user()->user_type == "candidate") {
-            $employ = \DB::table('employes')->where('user_id', auth()->user()->id)->first();
+            $employ = Employe::where('user_id', auth()->user()->id)->first();
             $job_preference = DB::table('employ_job_preference')->where('employ_id', $employ->id)->first();
             $fields['job_preference'] = $job_preference;
             $fields['employ'] = $employ;
@@ -63,7 +66,7 @@ class JobsController extends Controller
     {
         $job = Job::find($id);
         if ($job) {
-            $company = DB::table('companies')->where('id', $job->company_id)->first();
+            $company = Company::where('id', $job->company_id)->first();
             $company_contact_persons = DB::table('company_contact_persons')->where('company_id', $job->company_id)->first();
             $fields = [
                 "job" => $job,
@@ -71,7 +74,7 @@ class JobsController extends Controller
                 "company" => $company
             ];
             if (auth()->check() && auth()->user()->user_type == "candidate") {
-                $employ = \DB::table('employes')->where('user_id', auth()->user()->id)->first();
+                $employ = Employe::where('user_id', auth()->user()->id)->with('employeeSkills')->first();
                 $application = DB::table('job_applications')->where('job_id', $id)->where('employ_id', $employ->id)->first();
                 $fields['application'] = $application;
                 $fields['employ'] = $employ;

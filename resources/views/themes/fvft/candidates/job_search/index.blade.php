@@ -70,187 +70,188 @@
                         </div>
                     </div>
                     @include('partial.candidates.job_search.tabs')
-                    @if(!request()->has('is_active') && !request()->is_active == 'about')
-                    <div class="row">
-                        <div class="mb-lg-0">
-                            <div class="">
-                                <div class="item2-gl">
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="tab-11">
-                                            @foreach ($jobs as $item)
-                                                @php
-                                                    $company = DB::table('companies')->find($item->company_id);
-                                                    $cntry = App\Models\Country::where('id', $item->country_id)->first();
-                                                @endphp
-                                                <div class="card overflow-hidden  shadow-none">
-                                                    <div class="d-md-flex">
-                                                        <div class="p-0 m-0 item-card9-img">
-                                                            <div class="item-card9-imgs">
-                                                                <a href="job/{{ $item->id }}"></a>
-                                                                @if ($item->feature_image_url)
-                                                                    <img src="{{ asset($item->feature_image_url) }}"
-                                                                        alt="img" class="h-100">
-                                                                @else
-                                                                    <img src="{{ asset('images/defaultimage.jpg') }}"
-                                                                        alt="img" class="h-100">
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="card overflow-hidden  border-0 box-shadow-0 border-left br-0 mb-0">
-                                                            <div class="card-body pt-0 pt-md-5">
-                                                                <div class="item-card9">
-                                                                    <a href="/job/{{ $item->id }}"
-                                                                        class="text-dark">
-                                                                        <h4 class="font-weight-semibold mt-1">
-                                                                            {{ $item->title }}({{ $item->num_of_positions }})
-                                                                        </h4>
-                                                                    </a>
-                                                                    <div class="mt-2 mb-2">
-                                                                        @isset($company)
-                                                                            <a href="/company-view/{{ $company->id }}"
-                                                                                class="mr-4"><span><i
-                                                                                        class="fa fa-building-o text-muted mr-1"></i>
-                                                                                    {{ $company->company_name }}</span></a>
-                                                                        @endisset
-                                                                    </div>
-                                                                    <div class="mt-2 mb-2">
-                                                                        <a class="mr-4">
-                                                                            <span>
-                                                                                @php
-                                                                                    $country_flag = @DB::table('countries')->find($item->country_id)->iso2;
-                                                                                @endphp
-                                                                                {{-- <i class="fa fa-map-marker text-muted mr-1"></i> --}}
-                                                                                <img class="mb-1"
-                                                                                    src="{{ asset('https://flagcdn.com/16x12/' . strtolower($country_flag) . '.png') }}"
-                                                                                    alt="">
-                                                                                {{ @DB::table('countries')->find($item->country_id)->name }}
-                                                                            </span>
-                                                                        </a>
-                                                                        <a class="mr-4">
-                                                                            <span>
-                                                                                Basic Salary:
-                                                                                <span style="color: blue">
-                                                                                    {{ $cntry->currency ?? '' }}&nbsp;{{ $item->country_salary ?? '' }}&nbsp;&nbsp;
-                                                                                    @if ($cntry and $cntry->currency != 'NPR')
-                                                                                        NPR:
-                                                                                        {{ $item->nepali_salary ?? '' }}
-                                                                                    @endif
-
-                                                                                </span>
-                                                                            </span>
-                                                                        </a>
-                                                                        <a class="mr-4">
-                                                                            <span>
-                                                                                Post On:
-                                                                                {{ $item->publish_date != null ? date('j M Y', strtotime($item->publish_date)) : '' }}
-                                                                            </span>
-                                                                        </a>
-                                                                        <a class="mr-4">
-                                                                            <span>
-                                                                                Apply Before:
-                                                                                {{ $item->expiry_date != null ? date('j M Y', strtotime($item->expiry_date)) : '' }}
-                                                                            </span>
-                                                                        </a>
-                                                                    </div>
+                    @if (!request()->has('is_active') && !request()->is_active == 'about')
+                        <div class="row">
+                            <div class="mb-lg-0">
+                                <div class="">
+                                    <div class="item2-gl">
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab-11">
+                                                @foreach ($jobs as $item)
+                                                    <div class="card overflow-hidden  shadow-none">
+                                                        <div class="d-md-flex">
+                                                            <div class="p-0 m-0 item-card9-img">
+                                                                <div class="item-card9-imgs">
+                                                                    <a href="{{ route('viewJob', $item->id) }}"></a>
+                                                                    @if ($item->feature_image_url)
+                                                                        <img src="{{ asset($item->feature_image_url) }}"
+                                                                            alt="img" class="h-100">
+                                                                    @else
+                                                                        <img src="{{ asset('images/defaultimage.jpg') }}"
+                                                                            alt="img" class="h-100">
+                                                                    @endif
                                                                 </div>
                                                             </div>
-                                                            <div class="card-footer pt-3 pb-3">
-                                                                <div class="item-card9-footer">
-                                                                    <div class="row">
-                                                                        @auth
-                                                                            @if (auth()->user()->user_type == 'candidate')
-                                                                                @php
-                                                                                    $application = \DB::table('job_applications')
-                                                                                        ->where('job_id', $item->id)
-                                                                                        ->where('employ_id', $employ->id)
-                                                                                        ->first();
-                                                                                    $savedJob = App\Models\SavedJob::where('employ_id', $employ->id)->where('job_id', $item->id);
-                                                                                @endphp
-
-                                                                                <div class="col-md-3">
-                                                                                    @if ($application)
-                                                                                        <a href="javascript:void(0);"
-                                                                                            class="btn btn-primary mr-5">{{ __('Applied') }}</a>
-                                                                                    @else
-                                                                                        <a href="/apply-job/{{ $item->id }}"
-                                                                                            class="btn btn-primary mr-5"> {{ __('Apply Now') }}</a>
-                                                                                    @endif
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    @if ($savedJob->exists())
-                                                                                        <a href="javascript:void(0);"
-                                                                                            class="saveJobButton ico-font">
-                                                                                            <i class="fa fa-heart"></i> {{ __('Saved') }}
-                                                                                        </a>
-                                                                                    @else
-                                                                                        <a href="javascript:void(0);"
-                                                                                            onclick="savejob({{ $item->id }}, $(this))"
-                                                                                            class="saveJobButton ico-font">
-                                                                                            <i class="fa fa-heart-o"></i> {{ __('Save Job') }}
-                                                                                        </a>
-                                                                                    @endif
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <a href="#" class="ico-font">
-                                                                                        <i
-                                                                                            class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
-                                                                                    </a>
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <a href="/job/{{ $item->id }}"
-                                                                                        class="ico-font">
-                                                                                        <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
-                                                                                    </a>
-                                                                                </div>
-                                                                            @elseif(auth()->user()->user_type == 'company')
-                                                                                <div class="col-md-3">
-                                                                                    <a href="#" class="ico-font">
-                                                                                        <i
-                                                                                            class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
-                                                                                    </a>
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <a href="/job/{{ $item->id }}"
-                                                                                        class="ico-font">
-                                                                                        <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
-                                                                                    </a>
-                                                                                </div>
+                                                            <div
+                                                                class="card overflow-hidden  border-0 box-shadow-0 border-left br-0 mb-0">
+                                                                <div class="card-body pt-0 pt-md-5">
+                                                                    <div class="item-card9">
+                                                                        <a href="{{ route('viewJob', $item->id) }}"
+                                                                            class="text-dark">
+                                                                            <h4 class="font-weight-semibold mt-1">
+                                                                                {{ $item->title }}({{ $item->num_of_positions }})
+                                                                            </h4>
+                                                                        </a>
+                                                                        <div class="mt-2 mb-2">
+                                                                            @if (!blank(data_get($item, 'company.company_name')))
+                                                                                <a href="{{ route('site.companydetail', data_get($item, 'company.id')) }}"
+                                                                                    class="mr-4"><span><i
+                                                                                            class="fa fa-building-o text-muted mr-1"></i>
+                                                                                        {{ data_get($item, 'company.company_name') }}</span></a>
                                                                             @endif
-                                                                        @else
-                                                                            <div class="col-md-3">
-                                                                                <a href="/apply-job/{{ $item->id }}"
-                                                                                    class="btn btn-primary mr-3"> {{ __('Apply Now') }}</a>
-                                                                            </div>
-                                                                            <div class="col-md-3">
-                                                                                <a href="#" class="ico-font">
-                                                                                    <i class="fa fa-share-alt"></i>&nbsp;{{ __('Share') }}
-                                                                                </a>
-                                                                            </div>
-                                                                            <div class="col-md-3">
-                                                                                <a href="/job/{{ $item->id }}"
-                                                                                    class="ico-font">
-                                                                                    <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
-                                                                                </a>
-                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mt-2 mb-2">
+                                                                            <a class="mr-4">
+                                                                                <span>
+                                                                                    @if (!blank(data_get($item, 'country')))
+                                                                                        <img class="mb-1"
+                                                                                            src="{{ asset('https://flagcdn.com/16x12/' . strtolower(data_get($item, 'country.iso2')) . '.png') }}"
+                                                                                            alt="">
+                                                                                        {{ data_get($item, 'country.name') }}
+                                                                                    @endif
+                                                                                </span>
+                                                                            </a>
+                                                                            <a class="mr-4">
+                                                                                <span>
+                                                                                    Basic Salary:
+                                                                                    <span style="color: blue">
+                                                                                        @if (!blank(data_get($item, 'country')))
+                                                                                            {{ data_get($item, 'country.currency') ?? '' }}&nbsp;{{ $item->country_salary ?? '' }}&nbsp;&nbsp;
+                                                                                        @endif
+                                                                                        @if (!blank($item, 'country') and data_get($item, 'country.currency') != 'NPR')
+                                                                                            NPR:
+                                                                                            {{ $item->nepali_salary ?? '' }}
+                                                                                        @endif
 
-                                                                        @endauth
+                                                                                    </span>
+                                                                                </span>
+                                                                            </a>
+                                                                            <a class="mr-4">
+                                                                                <span>
+                                                                                    Post On:
+                                                                                    {{ $item->publish_date != null ? date('j M Y', strtotime($item->publish_date)) : '' }}
+                                                                                </span>
+                                                                            </a>
+                                                                            <a class="mr-4">
+                                                                                <span>
+                                                                                    Apply Before:
+                                                                                    {{ $item->expiry_date != null ? date('j M Y', strtotime($item->expiry_date)) : '' }}
+                                                                                </span>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card-footer pt-3 pb-3">
+                                                                    <div class="item-card9-footer">
+                                                                        <div class="row">
+                                                                            @auth
+                                                                                @if (auth()->user()->user_type == 'candidate')
+                                                                                    @php
+                                                                                        $application = \DB::table('job_applications')
+                                                                                            ->where('job_id', $item->id)
+                                                                                            ->where('employ_id', $employ->id)
+                                                                                            ->first();
+                                                                                        $savedJob = App\Models\SavedJob::where('employ_id', $employ->id)->where('job_id', $item->id);
+                                                                                    @endphp
+
+                                                                                    <div class="col-md-3">
+                                                                                        @if ($application)
+                                                                                            <a href="javascript:void(0);"
+                                                                                                class="btn btn-primary mr-5 btn-block">{{ __('Applied') }}</a>
+                                                                                        @else
+                                                                                            <a href="{{ route('applyForJob', $item->id) }}"
+                                                                                                class="btn btn-primary mr-5 btn-block">
+                                                                                                {{ __('Apply Now') }}</a>
+                                                                                        @endif
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        @if ($savedJob->exists())
+                                                                                            <a href="javascript:void(0);"
+                                                                                                class="saveJobButton btn btn-warning btn-block">
+                                                                                                <i class="fa fa-heart"></i>
+                                                                                                {{ __('Saved') }}
+                                                                                            </a>
+                                                                                        @else
+                                                                                            <a href="javascript:void(0);"
+                                                                                                onclick="savejob({{ $item->id }}, $(this))"
+                                                                                                class="saveJobButton btn btn-warning btn-block">
+                                                                                                <i class="fa fa-heart-o"></i>
+                                                                                                {{ __('Save Job') }}
+                                                                                            </a>
+                                                                                        @endif
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <a href="{{ route('viewJob', $item->id) }}"
+                                                                                            class="btn btn-warning btn-block">
+                                                                                            <i
+                                                                                                class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <div class="sharethis-inline-share-buttons"
+                                                                                            data-url="{{ route('viewJob', $item->id) }}">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @elseif(auth()->user()->user_type == 'company')
+                                                                                    <div class="col-md-3">
+                                                                                        <a href="{{ route('viewJob', $item->id) }}"
+                                                                                            class="btn btn-warning btn-block">
+                                                                                            <i
+                                                                                                class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <div class="sharethis-inline-share-buttons"
+                                                                                            data-url="{{ route('viewJob', $item->id) }}">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @endif
+                                                                            @else
+                                                                                <div class="col-md-3">
+                                                                                    <a href="{{ route('applyForJob', $item->id) }}"
+                                                                                        class="btn btn-primary mr-3 btn-block">
+                                                                                        {{ __('Apply Now') }}</a>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <a href="{{ route('viewJob', $item->id) }}"
+                                                                                        class="btn btn-warning btn-block">
+                                                                                        <i
+                                                                                            class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <div class="sharethis-inline-share-buttons"
+                                                                                        data-url="{{ route('viewJob', $item->id) }}">
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            @endauth
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            @endforeach
+                                                @endforeach
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="center-block text-center">
-                                    {{ $jobs->links('vendor.pagination.bootstrap-4') }}
+                                    <div class="center-block text-center">
+                                        {{ $jobs->links('vendor.pagination.bootstrap-4') }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     @endif
                 </div>
             </div>
@@ -291,21 +292,24 @@
             });
         }
 
-        function follow_company(company_id, employ_id, follow_button){
+        function follow_company(company_id, employ_id, follow_button) {
             $.ajax({
                 type: "POST",
                 url: "{{ route('candidate.follow_company') }}",
-                data: {'company_id': company_id, 'employ_id': employ_id},
-                beforeSend: function(){
+                data: {
+                    'company_id': company_id,
+                    'employ_id': employ_id
+                },
+                beforeSend: function() {
                     $(follow_button).text('Wait Submitting...')
-                }, 
-                success: function(data){
-                    if(data.db_error){
+                },
+                success: function(data) {
+                    if (data.db_error) {
                         toastr.warning(data.db_error)
-                    } else if(data.alreadyFollowed==true){
+                    } else if (data.alreadyFollowed == true) {
                         toastr.info(data.msg);
                         $(follow_button).text('Following');
-                    } else if(data.alreadyFollowed == false){
+                    } else if (data.alreadyFollowed == false) {
                         toastr.success(data.msg);
                         $(follow_button).text('Following');
                     }
