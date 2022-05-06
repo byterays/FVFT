@@ -1,2 +1,4 @@
 remove trainings column from employee table
 rename job_title_id to industry_id (changed in live server)
+
+remove employee_job_preference table
