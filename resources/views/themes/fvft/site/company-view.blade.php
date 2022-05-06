@@ -1,4 +1,7 @@
 @extends('themes.fvft.layouts.master')
+@section('title')
+    {{ $company->company_name ?? '' }} | FreeVisaFreeTicket
+@endsection
 @section('main')
     @include('themes.fvft.site.components.header')
     <!--User Profile-->

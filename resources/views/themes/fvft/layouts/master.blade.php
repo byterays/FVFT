@@ -15,7 +15,7 @@
     <meta name="MobileOptimized" content="320">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>FreeVisaFreeTicket -@yield('title')</title>
+    <title>@yield('title', 'FreeVisaFreeTicket')</title>
 
     {{-- FAV ICONS --}}
     <link rel="shortcut icon" href="{{ asset('/uploads/site/fav/favicon.ico') }}" />

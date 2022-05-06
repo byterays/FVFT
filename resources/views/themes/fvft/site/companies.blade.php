@@ -1,6 +1,6 @@
 @extends('themes.fvft.layouts.master')
 @section('title')
-    Companies
+    Search Company | FreeVisaFreeTicket
 @endsection
 @section('main')
     @include('themes.fvft.site.components.header')

@@ -1,6 +1,6 @@
 @extends('themes.fvft.layouts.master')
 @section('title')
-    Job
+    Search Jobs | FreeVisaFreeTicket
 @endsection
 @section('style')
     <!-- jquery ui RangeSlider -->

@@ -1,5 +1,7 @@
 @extends('themes.fvft.layouts.master')
-@section('title', 'Job Detail')
+@section('title')
+    {{ $job->title ?? '' }} | {{ $company->company_name ?? '' }} | FreeVisaFreeTicket
+@endsection
 @section('style')
     <!-- jquery ui RangeSlider -->
     <link href="{{ asset('themes/fvft/') }}/assets/plugins/jquery-uislider/jquery-ui.css" rel="stylesheet">
