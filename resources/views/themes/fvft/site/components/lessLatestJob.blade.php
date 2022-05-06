@@ -34,6 +34,10 @@
                                                             <span><i class="fa fa-building-o text-muted mr-1"></i>
                                                                 {{ data_get($latest_job, 'company.company_name') }}</span>
                                                         </a>
+                                                    @else
+                                                        <a href="#" class="mr-4">
+                                                            <span><i class="fa fa-building-o text-muted mr-1"></i>Not-Available</span>
+                                                        </a>
                                                     @endif
                                                 </div>
                                                 <div class="mt-2 mb-2">
@@ -44,6 +48,8 @@
                                                                  src="{{ asset('https://flagcdn.com/16x12/' . strtolower(data_get($latest_job, 'country.iso2')) . '.png') }}"
                                                                  alt="">
                                                             {{ data_get($latest_job, 'country.name') }}
+                                                        @else
+                                                            Address Unavailable
                                                         @endif
                                                     </span>
                                                     </a>
