@@ -103,8 +103,23 @@ class JobsController extends Controller
     public function viewJob($id)
     {
         return $this->view('admin.pages.jobs.viewjob',[
-            "job" => Job::where('id',$id)->with(['company'])->firstOrFail()
+            "job" => Job::where('id',$id)->with(['company', 'country', 'job_category'])->firstOrFail()
         ]);
+    }
+
+    public function updateJobStatus(Request $request)
+    {
+        try{
+            DB::beginTransaction();
+            $job = Job::find($request->job_id);
+            $job->update(['status' => $request->job_status]);
+            $msg = $request->job_status == 'Approved' ? 'Approved' : 'Rejected';
+            DB::commit();
+            return response()->json(['msg' => 'Job is '.$msg]);
+        } catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['db_error' => $e->getMessage()]);
+        }
     }
 
     public function save(Request $request)

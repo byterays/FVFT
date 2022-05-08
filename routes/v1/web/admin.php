@@ -44,6 +44,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::post('/save-job', [JobsController::class, 'saveNewJob'])->name('admin.saveNewJob');
     Route::put('/jobs-update/{id}', [JobsController::class, 'updateJob'])->name('admin.job.update');
     Route::get('/jobs-detail/{id}', [JobsController::class, 'viewJob'])->name('admin.job.view');
+    Route::post('/jobs/update-status', [JobsController::class, 'updateJobStatus'])->name('admin.job.updateJobStatus');
     // Companies Crude
     Route::prefix('companies')->group(function () {
         Route::get('/', [CompanyController::class, 'list'])->name('admin.companies.list');

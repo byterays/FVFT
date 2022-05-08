@@ -2,21 +2,24 @@
 
 namespace App\Http\Controllers\Admin\Applicants;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use DB;
-use App\Models\User;
-use App\Models\Employe;
-use App\Models\JobApplication;
 use App\Models\Job;
+use App\Models\User;
+use App\Models\Country;
+use App\Models\Employe;
+use App\Models\JobCategory;
+use Illuminate\Http\Request;
+use App\Models\JobApplication;
 use App\Traits\Admin\AdminMethods;
 use App\Models\EmployJobPreference;
+use App\Http\Controllers\Controller;
+
 class ApplicantController extends Controller
 {
     use AdminMethods;
     public function __construct(){
 
-        $this->countries=DB::table('countries')->where('is_active',1)->get();
+        $this->countries=Country::where('is_active', 1)->get();
     }
     public function list(){
         // $applicants = JobApplication::whereHas('job', function($q){
@@ -37,7 +40,8 @@ class ApplicantController extends Controller
         ]);
     }
     public function edit($id){
-        $job_categories=DB::table('job_categories')->get();
+        $job_categories=JobCategory::get();
+        // $job_categories=DB::table('job_categories')->get();
         $application=JobApplication::find($id);
         $candidate =Employe::find($application->employ_id);
         $job=Job::find($application->job_id);
