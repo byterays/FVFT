@@ -1,4 +1,5 @@
 @extends('admin.layouts.master')
+@section('title', 'Job List')
 @section('main')
     <link rel="stylesheet" href="{{ asset('css/datepicker.min.css') }}">
     <style>

@@ -14,7 +14,7 @@
     <meta name="MobileOptimized" content="320">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>FVFT-Admin</title>
+    <title>{{ !blank($general_setting) ? $general_setting->name : 'Free Visa Free Ticket' }} - @yield('title')</title>
 
     <link rel="stylesheet" href="{{ asset('themes/fvft/assets/fonts/fonts/font-awesome.min.css') }}">
     <!-- Bootstrap Css -->
