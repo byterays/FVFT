@@ -10,7 +10,7 @@
         </ol>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        {{-- <div class="col-lg-4">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Site Settings</h3>
@@ -18,10 +18,6 @@
                 </div>
                 <div class="card-body">
                     <div class="row mb-2">
-                        {{-- <div class="col-auto">
-                                <img class="avatar brround avatar-xl" src="../assets/images/users/male/25.jpg"
-                                    alt="Avatar-img">
-                            </div> --}}
                         <div class="col text-center">
                             <img class="avatar avatar-xl"
                                 src="{{ isset($general_setting->logo) ? asset($general_setting->logo) : 'themes/fvft/assets/images/users/male/25.jpg' }}" alt="Avatar-img">
@@ -30,7 +26,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="col-lg-8">
             <form class="card" action="{{ route('admin.general_setting.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -58,7 +54,17 @@
                                         <label for="">Site Logo</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input type="file" class="form-control dropify" name="logo" data-default-file="{{ isset($general_setting->logo) ? asset($general_setting->logo) : null }}" data-allowed-file-extensions="jpg png jpeg" data-max-file-size="4M">
+                                        <input type="file" class="form-control dropify" name="logo" data-default-file="{{ isset($general_setting->logo) ? asset($general_setting->logo) : null }}" data-allowed-file-extensions="jpg png jpeg svg" data-max-file-size="4M">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 my-auto">
+                                        <label for="">Site Favicon</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="file" class="form-control dropify" name="favicon" data-default-file="{{ isset($general_setting->favicon) ? asset($general_setting->favicon) : null }}" data-allowed-file-extensions="jpg png jpeg svg" data-max-file-size="2M">
                                     </div>
                                 </div>
                             </div>
