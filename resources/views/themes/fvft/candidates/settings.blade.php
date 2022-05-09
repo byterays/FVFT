@@ -1,8 +1,8 @@
-@php 
+@php
 $user=Auth::user();
 @endphp
 @extends('themes.fvft.candidates.layouts.dashmaster')
-@section('title', 'Setting')
+@section('title', 'Settings')
 @section('style')
 <!-- file Uploads -->
 <link href="/themes/fvft/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
@@ -31,7 +31,7 @@ $user=Auth::user();
                 @include('themes.fvft.candidates.components.sidebar')
             </div>
             <div class="col-lg-8 col-md-12 col-md-12">
-                
+
             <div class="card dropify-image-avatar">
                 <div class="card-header ">
                     <h3 class="card-title">Account Settings</h3>
@@ -62,7 +62,7 @@ $user=Auth::user();
                                 @enderror
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@ $user=Auth::user();
                     <button class="btn btn-primary w-150" type="submit">Save</button>
                 </div>
             </div>
-           
+
         </div>
     </div>
     </form>

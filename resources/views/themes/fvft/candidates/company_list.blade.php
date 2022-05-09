@@ -100,7 +100,7 @@
                                     </div>
                                     <div class="tab-pane" id="tab-12">
                                         <div class="row">
-            
+
                                             @if ($companies != null)
                                                 @foreach ($companies as $company)
                                                     @php

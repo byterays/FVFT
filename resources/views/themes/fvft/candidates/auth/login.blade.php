@@ -1,7 +1,7 @@
-{{-- @dd(Route::currentRouteName()) --}}
 @extends('themes.fvft.layouts.master')
-@section('title') Login or Register @endsection
-{{-- @dd($countries) --}}
+@section('title')
+    Candidate Login / Register | FreeVisaFreeTicket
+@endsection
 @section('main')
     @include('themes.fvft.site.components.header')
     <style>
@@ -32,7 +32,7 @@
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-md-12 register-right">
                             <ul class="nav nav-tabs nav-justified mb-5 p-2 border" id="myTab" role="tablist">
-                                <li cla ss="nav-item">
+                                <li class="nav-item">
                                     <a class="nav-link m-1 {{ isset($register_route) && $register_route == '' ? 'active' : '' }}" id="home-tab" data-toggle="tab" href="#home" role="tab"
                                         aria-controls="home" aria-selected="true">{{ __('Login') }}</a>
                                 </li>
@@ -63,7 +63,7 @@
                                                 @csrf
                                                 <h3 class="pb-2">{{ __('Login') }}</h3>
                                                 <div class="mail">
-                                                    
+
                                                     <input type="email" name="email">
                                                     <label>{{ __('Email') }}</label>
                                                     @error('email')
@@ -109,7 +109,7 @@
                                                 </div>
                                             </div>
                                             <hr class="divider">
-                                            
+
                                             <form id="Register" class="card-body" tabindex="500" method="POST"
                                                 action="/candidate/register">
                                                 @csrf

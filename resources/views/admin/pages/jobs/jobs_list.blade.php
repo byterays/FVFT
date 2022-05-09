@@ -168,14 +168,13 @@
                                         </td>
                                         <td>
                                             {{-- {{ DB::table('companies')->find($job->company_id)->company_name ?? '' }} --}}
-                                            {{ !($job->company != null && $job->company->company_name != null) ?: $job->company->company_name }}
+                                            {{ $job->company->company_name ?? 'Not-Available' }}
                                         </td>
                                         <td>
-                                            {{ !($job->country != null && $job->country->name != null) ?: $job->country->name }}
+                                            {{ $job->country->name ?? 'Not-Available' }}
                                         </td>
                                         <td>
-                                            <i
-                                                class="fa fa-{{ $job->is_featured ? 'check-' : '' }}circle-o {{ $job->is_featured ? 'text-success' : 'text-warning' }}"></i>
+                                            <i class="fa fa-{{ $job->is_featured ? 'check-' : '' }}circle-o {{ $job->is_featured ? 'text-success' : 'text-warning' }}"></i>
                                         </td>
                                         {{-- <td>
                                             <span
