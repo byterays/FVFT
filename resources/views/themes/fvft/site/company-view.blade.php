@@ -186,7 +186,7 @@
                                                                                                         @if (!blank(data_get($item, 'country')))
                                                                                                             {{ data_get($item, 'country.currency') ?? '' }}&nbsp;{{ $item->country_salary ?? '' }}&nbsp;&nbsp;
                                                                                                         @endif
-                                                                                                        @if (!blank($item, 'country') and data_get($item, 'country.currency') != 'NPR')
+                                                                                                        @if (!blank(data_get($item, 'country')) and data_get($item, 'country.currency') != 'NPR')
                                                                                                             NPR:
                                                                                                             {{ $item->nepali_salary ?? '' }}
                                                                                                         @endif

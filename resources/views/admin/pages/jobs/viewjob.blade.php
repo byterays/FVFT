@@ -1,416 +1,397 @@
 @extends('admin.layouts.master')
 @section('main')
+    <style>
+        .buttondiv {
+            margin-top: -43px;
+            z-index: 999;
+            position: absolute;
+            left: 35%;
+        }
+
+        .buttondiv button {
+            padding: 0.375rem 3rem;
+        }
+
+        .app-content .side-app {
+            padding: 38px 30px 30px 30px;
+        }
+
+    </style>
     <div class="row">
-        <div class="col-xl-6">
-            <div class="row">
-                <div class="card m-b-20">
-                    <div class="card-header">
-                        <h3 class="card-title tempcolor">{{ strtoupper('Job Details') }}</h3>
+        <div class="col-xl-12 col-lg-12 col-md-12">
+            <div class="card overflow-hidden">
+                <div class="card-body h-100">
+                    <div class="row">
+                        <div class="col">
+                            <div class="profile-pic mb-0">
+                                <div class="d-md-flex">
+                                    <img src="{{ asset('/') }}{{ $job->feature_image_url != null ? $job->feature_image_url : 'images/defaultimage.jpg' }}"
+                                        class="w-20 h-20" alt="user">
+                                    <div class="ml-4">
+                                        <a href="/job/{{ $job->id }}" class="text-dark">
+                                            <h4 class="mt-3 mb-1 fs-20 font-weight-bold">
+                                                {{ $job->title ?? 'Not-Available' }}</h4>
+                                        </a>
+                                        <div class="">
+                                            <ul class="mb-0 d-flex">
+                                                <li class="mr-3">
+                                                    @if (!blank(data_get($job, 'company')))
+                                                        <a href="#" class="icons">
+                                                            <i class="fa fa-building-o text-muted mr-1"></i>
+                                                            {{ data_get($job, 'company.company_name') ?? 'Not-Available' }}
+                                                        </a>
+                                                    @endif
+                                                </li>
+                                            </ul>
+                                            <ul class="mb-0 mt-2 d-flex">
+                                                <li class="mr-3">
+                                                    <a href="#" class="icons">
+                                                        @if (!blank(data_get($job, 'country')))
+                                                            <img src="{{ asset('https://flagcdn.com/16x12/' . strtolower(data_get($job, 'country.iso2')) . '.png') }}"
+                                                                class="mb-1" alt="">
+                                                            {{ data_get($job, 'country.name') ?? 'Not-Available' }}
+                                                        @endif
+                                                    </a>
+                                                </li>
+                                                <li class="mr-3">
+                                                    <a href="#" class="icons">
+                                                        Basic Salary:
+                                                        <span class="blue">
+                                                            @if (!blank(data_get($job, 'country')))
+                                                                {{ data_get($job, 'country.currency') ?? 'Not-Available' }}&nbsp;{{ $job->country_salary ?? 'Not-Available' }}&nbsp;&nbsp;
+                                                            @endif
+                                                            @if (!blank(data_get($job, 'country')) and data_get($job, 'country.currency') != 'NPR')
+                                                                NPR: {{ $job->nepali_salary ?? 'Not-Available' }}
+                                                            @endif
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="mr-3">
+                                                    <a href="#" class="icons">
+                                                        Post On:
+                                                        {{ $job->publish_date != null ? date('j M Y', strtotime($job->publish_date)) : '' }}
+                                                    </a>
+                                                </li>
+                                                <li class="mr-3">
+                                                    <a href="#" class="icons">
+                                                        Apply Before:
+                                                        {{ $job->expiry_date != null ? date('j M Y', strtotime($job->expiry_date)) : '' }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="title" class="form-label">Job Title</label>
-                                </div>
-                                <div class="col-md-8">
-                                    {{ $job->title }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="company" class="form-label">Company Name</label>
-                                </div>
-                                <div class="col-md-8">
-                                    {{ $job->company != null && isset($job->company) ? $job->company->company_name : '' }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="no_of_employee" class="form-label">No of Employee</label>
-                                </div>
-                                <div class="col-md-8">
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="card-body border-top">
+                                <h4 class="mb-4 card-title bg-primary text-white p-2">Job Details</h4>
+                                <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <label for="male_employee" class="form-label">Male</label>
-                                            <input type="text" class="form-control" value="{{ $job->no_of_male }}"
-                                                readonly>
+                                            <label for="" class="form-label">Job Title&nbsp;:</label>
                                         </div>
-                                        <div class="col-md-4">
-                                            <label for="female_employee" class="form-label">Female</label>
-                                            <input type="text" class="form-control" value="{{ $job->no_of_female }}"
-                                                readonly>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="any_employee" class="form-label">Any</label>
-                                            <input type="text" class="form-control" value="{{ $job->any_gender }}"
-                                                readonly>
+                                        <div class="col-md-8">
+                                            {{ $job->title }}
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="job_category" class="form-label">Job Category&nbsp;<span
-                                            class="req"></span></label>
-                                </div>
-                                <div class="col-md-8">
-                                    @php
-                                        $category = DB::table('job_categories')->where('id', $job->job_categories_id);
-                                        //    dd($category->exists());
-                                        $category_name = $category != null && $category->exists() ? $category->first()->functional_area : '';
-                                    @endphp
-                                    {{ $category_name }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="working_hours" class="form-label">Working Hours Per Day</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="input-group">
-                                        {{ $job->working_hours }}
-                                        {{ $job->working_hours != null ? 'hrs/day' : 'Not Available' }}
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="working_days" class="form-label">Working Days Per Week</label>
-                                </div>
-                                <div class="col-md-8">
-                                    {{ $job->working_days }}
-                                    {{ $job->working_days != null ? 'days/week' : 'Not Available' }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="deadline" class="form-label">Apply Before</label>
-                                </div>
-                                <div class="col-md-8">
-                                    {{ date('Y-m-d', strtotime($job->expiry_date)) }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label class="form-label" for="status">Status</label>
-                                </div>
-                                <div class="col-md-8">
-                                    {{ $job->status }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label class="form-label">Country</label>
-                                </div>
-                                <div class="col-md-8">
-                                    @php
-                                        $country = DB::table('countries')->where('id', $job->country_id);
-                                        $country_name = $country != null && $country->exists() ? $country->first()->name : '';
-                                        $country_code = $country != null && $country->exists() ? $country->first()->currency_name : 'NPR';
-                                    @endphp
-                                    {{ $country_name }}
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label class="form-label">States</label>
-                                </div>
-                                <div class="col-md-8">
-                                    @php
-                                        $state = DB::table('states')->where('id', $job->state_id);
-                                        $stateName = $state != null && $state->exists() ? $state->first()->name : '';
-                                    @endphp
-                                    {{ $stateName }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label class="form-label">Cities</label>
-                                </div>
-                                <div class="col-md-8">
-                                    @php
-                                        $city = DB::table('cities')->where('id', $job->city_id);
-                                        $cityName = $city != null && $city->exists() ? $city->first()->name : '';
-                                    @endphp
-                                    {{ $cityName }}
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="contract" class="form-label">Contract Period</label>
-                                </div>
-                                <div class="col-md-8">
-                                    @php
-                                        $contract_year = $job->contract_year != null && $job->contact_year > 1 ? 'years' : ($job->contract_year == null ? '' : 'year');
-                                        $contract_month = $job->contract_month != null && $job->contract_month > 1 ? 'months' : ($job->contract_month == null ? '' : 'month');
-                                    @endphp
-                                    {{ $job->contract_year }} {{ $contract_year }} &nbsp;
-                                    {{ $job->contract_month }} {{ $contract_month }}
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="job_description" class="form-label">Job Description</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <textarea style="width: 100%;">{!! html_entity_decode($job->description_intro) !!}</textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="custom-switch-checkbox">
-                                <input type="checkbox" name="is_active" class="custom-switch-input"
-                                    {{ $job->is_active == 1 ? 'checked' : '' }}>
-                                <span class="custom-switch-indicator"></span>
-                                <span class="custom-switch-description">Active</span>
-                            </label>
-                            <label class="custom-switch-checkbox">
-                                <input type="checkbox" name="is_featured" class="custom-switch-input"
-                                    {{ $job->is_featured == 1 ? 'checked' : '' }}>
-                                <span class="custom-switch-indicator"></span>
-                                <span class="custom-switch-description">Featured</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="card m-b-20">
-                    <div class="card-header">
-                        <h3 class="card-title tempcolor">{{ strtoupper('Salary Facility') }}</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="salary" class="form-label">Salary</label>
-                                </div>
-                                <div class="col-md-8">
+                                <div class="form-group">
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <input type="text" value="{{ $job->country_salary }}"
-                                                        class="form-control">
-                                                </div>
-                                                <div class="col-md-4">
-                                                    
-                                                    <label for="" class="form-label countrylabel">{{ $country_code }}</label>
-                                                </div>
-                                            </div>
-                                            <div class="row mt-3">
-                                                <div class="col-md-8">
-                                                    <input type="text" value="{{ $job->nepali_salary }}"
-                                                        class="form-control">
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="" class="form-label">NPR</label>
-                                                </div>
-                                            </div>
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Required Numbers&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            {{ $job->num_of_positions }}
                                         </div>
                                     </div>
-                                    <div class="form-group mt-2">
-                                        <label class="custom-switch-checkbox">
-                                            <input type="checkbox" name="hide_salary" class="custom-switch-input"
-                                                {{ $job->hide_salary == 1 ? 'checked' : '' }}>
-                                            <span class="custom-switch-indicator"></span>
-                                            <span class="custom-switch-description">Hide Salary</span>
-                                        </label>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Job Category&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            {{ !empty($job->job_category) || $job->job_category != null ? $job->job_category->functional_area : '' }}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="accomodation" class="form-label">Accomodation</label>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Wokring Hours Per
+                                                Day&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            {{ $job->working_hours }}
+                                            {{ $job->working_hours != null ? ($job->working_hours > 1 ? 'Hours' : 'Hour') : '' }}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-8">
-                                    {{ $job->accomodation == 1 ? 'Yes' : 'No' }}
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Wokring Days Per
+                                                Week&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            {{ $job->working_days }}
+                                            {{ $job->working_days != null ? ($job->working_days > 1 ? 'Days' : 'Day') : '' }}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="food" class="form-label">Food</label>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Job Posted On&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            {{ $job->publish_date != null ? date('j M Y', strtotime($job->publish_date)) : '' }}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-8">
-                                    {{ $job->food == 1 ? 'Yes' : 'No' }}
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Apply Before&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            {{ $job->expiry_date != null ? date('j M Y', strtotime($job->expiry_date)) : '' }}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="annual_vacation" class="form-label">Annual Vacation</label>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Contract Period&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            {{ $job->contract_year }}
+                                            {{ $job->contract_year != null ? ($job->contract_year > 1 ? 'Years' : 'Year') : '' }}
+                                            {{ $job->contract_month }}
+                                            {{ $job->contract_month != null ? ($job->contract_month > 1 ? 'Months' : 'Month') : '' }}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-8">
-                                    {{ $job->annual_vacation == 1 ? 'Yes' : 'No' }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="over_time" class="form-label">Over Time</label>
-                                </div>
-                                <div class="col-md-8">
-                                    {{ $job->over_time == 1 ? 'Yes' : 'No' }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="requirements" class="form-label">Other Benefits</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <textarea style="width: 100%">{!! $job->benefit_intro !!}</textarea>
+                                <div class="form-group">
+                                    <label for="" class="form-label">Job Description&nbsp;:</label>
+                                    {!! html_entity_decode($job->description_intro) !!}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-6">
-            <div class="row ml-2">
-                <div class="card m-b-20">
-                    <div class="card-header">
-                        <h3 class="card-title tempcolor">{{ strtoupper('Applicant Qualification') }}</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="education_level" class="form-label">Minimum Qualification</label>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="card-body border-top">
+                                <h4 class="mb-4 card-title bg-primary text-white p-2">Qualification</h4>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Minimum
+                                                Qualification&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            {{ $job->education_level_id != null && (!empty($job->education_level) || $job->education_level != null) ? $job->education_level->title : '' }}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-8">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Minimum Experience&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            {{ $job->min_experience }}
+                                            {{ $job->min_experience != null ? ($job->min_experience > 1 ? 'Years' : 'Year') : '' }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Age Requirement&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            {{ $job->min_age }}
+                                            {{ $job->min_age != null && $job->max_age != null ? '- ' . $job->max_age : '' }}
+                                            {{ $job->min_age != null && $job->max_age != null ? 'Years' : '' }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     @php
-                                        $educationlevel = DB::table('educationlevels')->where('id', $job->education_level_id);
-                                        $levelName = $educationlevel != null && $educationlevel->exists() ? $educationlevel->first()->title : '';
+                                        $json_skills = json_decode($job->skills, true);
+                                        $skills =
+                                            !empty($json_skills) || $json_skills != null
+                                                ? App\Models\Skill::whereIn('id', $json_skills)
+                                                    ->pluck('title')
+                                                    ->toArray()
+                                                : '';
+                                        
+                                        // $skills = '<span class="badge badge-success">' . implode('</span> <span class="badge badge-success">', $skills) . '</span>'; //working code(converted to function)
+                                        $skills = $skills != null ? wrapInTag($skills, 'span', 'class="badge badge-success"', ' ') : '';
+                                        
                                     @endphp
-                                    {{ $levelName }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="year_of_experience" class="form-label">Year of Experience</label>
-                                </div>
-                                <div class="col-md-8">
-                                    @php
-                                        $min_experience = $job->min_experience != null && $job->min_experience > 1 ? 'years' : ($job->min_experience == null ? '' : 'year');
-                                        $max_experience = $job->max_experience != null && $job->max_experience > 1 ? 'years' : ($job->max_experience == null ? '' : 'years');
-                                    @endphp
-                                    {{ $job->min_experience }} {{ $min_experience }}
-                                    {{ $job->min_experience != null && $job->max_experience != null ? '-' : '' }}
-                                    {{ $job->max_experience }} {{ $max_experience }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="age_requirement" class="form-label">Age Requirement</label>
-                                </div>
-                                <div class="col-md-8">
-                                    @php
-                                        $min_age = $job->min_age != null && $job->min_age > 1 ? 'years' : ($job->min_age == null ? '' : 'year');
-                                        $max_age = $job->max_age != null && $job->max_age > 1 ? 'years' : ($job->max_age == null ? '' : 'years');
-                                    @endphp
-                                    {{ $job->min_age }} {{ $min_age }}
-                                    {{ $job->min_age != null && $job->max_age != null ? '-' : '' }}
-                                    {{ $job->max_age }}
-                                    {{ $max_age }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="skils" class="form-label">Skills</label>
-                                </div>
-                                <div class="col-md-8">
-                                    @php
-                                        $skills = DB::table('skills')
-                                            ->whereIn('id', (array) json_decode($job->skills, true))
-                                            ->pluck('title');
-                                        foreach ($skills as $key => $skill) {
-                                            echo '<span class="badge badge-success">' . $skill . '</span>&nbsp;';
-                                        }
-                                    @endphp
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Skills&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            {!! $skills !!}
 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="form-label">Other Requirements&nbsp;:</label>
+                                    {!! html_entity_decode($job->requirement_intro) !!}
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="requirements" class="form-label">Other Requirements</label>
+                        <div class="row">
+                            <div class="card-body">
+                                <h4 class="mb-4 card-title bg-primary text-white p-2">Salary and Facility</h4>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Basic
+                                                Salary&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @php
+                                                $country = App\Models\Country::where('id', $job->country_id);
+                                                if ($country->exists()) {
+                                                    $country = $country->first();
+                                                } else {
+                                                    $country = null;
+                                                }
+                                            @endphp
+                                            {{ $job->country_id != null && $country != null && $job->country_salary != null ? 'Per Month ' . $country->currency . ' ' . $job->country_salary : '' }}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-8">
-                                    <textarea style="width: 100%">{!! html_entity_decode($job->requirement_intro) !!}</textarea>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Average
+                                                Earning&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @php
+                                                $country = App\Models\Country::where('id', $job->country_id)->first() ?? null;
+                                                
+                                            @endphp
+                                            {{ $job->country_id != null && $country != null && $job->earning_country_salary != null ? 'Per Month ' . $country->currency . ' ' . $job->earning_country_salary : '' }}
+                                            {{ $job->country_id != null && $country != null && $job->earning_nepali_salary != null ? '- ' . $country->currency . ' ' . $job->earning_nepali_salary : '' }}
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Accomodation&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @php
+                                                $accomodation = $job->accomodation == 1 ? 'Yes' : 'No';
+                                                
+                                            @endphp
+                                            {{ $accomodation == 'Yes' ? $accomodation . ' (As Per Company Rule)' : $accomodation }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Food&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @php
+                                                $food = $job->food == 1 ? 'Yes' : 'No';
+                                                
+                                            @endphp
+                                            {{ $food == 'Yes' ? $food . ' (As Per Company Rule)' : $food }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Annual Vacation&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @php
+                                                $vacation = $job->annual_vacation == 1 ? 'Yes' : 'No';
+                                            @endphp
+                                            {{ $vacation == 'Yes' ? $vacation . ' (As Per Company Rule)' : $vacation }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="" class="form-label">Over Time&nbsp;:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @php
+                                                $overtime = $job->overtime == 1 ? 'Yes' : 'No';
+                                            @endphp
+                                            {{ $overtime == 'Yes' ? $overtime . ' (As Per Company Rule)' : $overtime }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="form-label">Other Benefits&nbsp;:</label>
+                                    {!! html_entity_decode($job->benefit_intro) !!}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
-            @if ($job->feature_image_url != null && file_exists($job->feature_image_url))
-                <div class="row ml-2">
-                    <div class="card m-b-20">
-                        <div class="card-header">
-                            <h3 class="card-title tempcolor">{{ strtoupper('Picture') }}</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="" class="form-label">Feature Image</label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <img src="{{ asset($job->feature_image_url) }}" style="width: 100px;" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            @if ($job->status == 'Pending')
+                <div class="text-center buttondiv">
+                    <button class="btn btn-primary rounded-0" onclick="updateJobStatus({{ $job->id }}, 'Approved')">Approve</button>
+                    <button class="btn btn-secondary rounded-0 ml-5" onclick="updateJobStatus({{ $job->id }}, 'Rejected')">Reject</button>
                 </div>
             @endif
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        function updateJobStatus(job_id, job_status) {
+            if (job_id != null && job_status != null) {
+                $.ajax({
+                    url: "{{ route('admin.job.updateJobStatus') }}",
+                    type: 'POST',
+                    data: {'job_id': job_id, 'job_status': job_status},
+                    beforeSend: function(){
+                        $(".buttondiv").find('button').attr('disabled', true);
+                    }, 
+                    success: function(response){
+                        if(response.db_error){
+                            toastr.warning(response.db_error);
+                        } else if(!response.db_error){
+                            toastr.success(response.msg);
+                            $(".buttondiv").hide();
+                        }
+                    }, 
+                    complete: function(){
+                        $(".buttondiv").find('button').attr('disabled', false);
+                    }
+                });
+            } else {
+                toastr.error('Something went wrong');
+            }
+
+        }
+    </script>
 @endsection
