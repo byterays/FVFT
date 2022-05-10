@@ -62,6 +62,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('get-save', [ProfileController::class, 'get_save'])->name('get_save');
         Route::get('get-cv', [ProfileController::class, 'get_cv'])->name('get_cv');
         Route::get('download-cv', [ProfileController::class, 'downloadGeneratedCV'])->name('downloadGeneratedCV');
+        Route::post('upload-cv', [ProfileController::class, 'uploadCv'])->name('uploadCv');
+        Route::get('download-uploaded-cv', [ProfileController::class, 'downloadUploadedCv'])->name('downloadUploadedCv');
     });
 
     Route::group(['prefix' => 'account-setting/', 'as' => 'candidate.account_setting.'], function () {
