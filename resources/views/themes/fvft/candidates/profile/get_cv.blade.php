@@ -145,7 +145,9 @@
                         resetDropify();
                     } else {
                         toastr.success(data.msg);
-                        resetDropify();
+                        setTimeout(() => {
+                            resetDropify();
+                        }, 10000);
                     }
                 },
                 error: function(xhr, status, error) {
