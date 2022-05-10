@@ -5,20 +5,32 @@
             <div class="col-xl-7 col-lg-7 col-sm-4 col-7">
                 <div class="top-bar-left d-flex">
                     <div class="clearfix">
-                        <ul class="socials">
-                            <li>
-                                <a class="social-icon" href="#"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li>
-                                <a class="social-icon" href="#"><i class="fa fa-twitter"></i></a>
-                            </li>
-                            <li>
-                                <a class="social-icon" href="#"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                            <li>
-                                <a class="social-icon" href="#"><i class="fa fa-google-plus"></i></a>
-                            </li>
-                        </ul>
+                        @if (count($social_settings) > 0)
+                            <ul class="socials">
+                                @foreach ($social_settings as $social_setting)
+                                    <li>
+                                        <a class="social-icon" href="{{ $social_setting->value ?? '' }}" target="{{ $social_setting->value != null ? '_blank' : '' }}">
+                                            <i class="fa fa-{{ strstr($social_setting->title, '_', true) }}"></i>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                            @else
+                            <ul class="socials">
+                                <li>
+                                    <a class="social-icon" href="#"><i class="fa fa-facebook"></i></a>
+                                </li>
+                                <li>
+                                    <a class="social-icon" href="#"><i class="fa fa-twitter"></i></a>
+                                </li>
+                                <li>
+                                    <a class="social-icon" href="#"><i class="fa fa-linkedin"></i></a>
+                                </li>
+                                <li>
+                                    <a class="social-icon" href="#"><i class="fa fa-google-plus"></i></a>
+                                </li>
+                            </ul>
+                        @endif
                     </div>
                     {{-- <div class="clearfix">
                         <ul class="contact border-left">

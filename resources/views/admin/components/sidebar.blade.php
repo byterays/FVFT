@@ -158,10 +158,20 @@
         <li>
             <a class="side-menu__item" href="{{ route('admin.user.lists') }}"><i class="side-menu__icon fa fa-users"></i><span class="side-menu__label"> Admin Users</span></a>
         </li>
-        <li>
+        <li class="slide">
+            <a class="side-menu__item" data-toggle="slide" href="#">
+                <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Settings</span><i
+                    class="angle fa fa-angle-right"></i></a>
+            <ul class="slide-menu">
+                <li><a class="slide-item" href="{{ route('admin.general_setting.index') }}">Site Settings</a></li>
+                <li><a class="slide-item" href="{{ route('admin.setting.index') }}">Social Settings</a></li>
+                <li><a class="slide-item" href="{{ route('admin.setting.getContactSetting') }}">Contact Settings</a></li>
+            </ul>
+        </li>
+        {{-- <li>
             <a class="side-menu__item"  href="{{ route('admin.general_setting.index') }}">
                 <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Site Settings</span></a>
-        </li>
+        </li> --}}
 
     </ul>
 </aside>

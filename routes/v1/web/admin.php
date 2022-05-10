@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\Industry\IndustryController;
 use App\Http\Controllers\Admin\JobcategoryController;
 use App\Http\Controllers\Admin\Training\TrainingController;
 use App\Http\Controllers\Admin\SantiController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\Site\GeneralSettingController;
 use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\SupportCategoryController;
@@ -234,6 +235,13 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::group(['prefix' => 'general-setting/', 'as' => 'admin.general_setting.'], function(){
         Route::get('', [GeneralSettingController::class, 'index'])->name('index');
         Route::post('store', [GeneralSettingController::class, 'store'])->name('store');
+    });
+
+    Route::group(['prefix' => 'setting/', 'as' => 'admin.setting.'], function(){
+        Route::get('social-setting', [SettingController::class, 'index'])->name('index');
+        Route::post('save-social-setting', [SettingController::class, 'store'])->name('store');
+        Route::get('contact-setting', [SettingController::class, 'getContactSetting'])->name('getContactSetting');
+        Route::post('save-contact-setting', [SettingController::class, 'saveContactSetting'])->name('saveContactSetting');
     });
 
     Route::post('logout', [AuthController::class, 'logout']);

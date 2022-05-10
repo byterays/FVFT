@@ -15,15 +15,15 @@
     <meta name="MobileOptimized" content="320">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title') | FreeVisaFreeTicket</title>
+    <title>{{ !blank($general_setting) ? $general_setting->name : 'Free Visa Free Ticket' }} -@yield('title')</title>
 
     {{-- FAV ICONS --}}
     <link rel="shortcut icon" href="{{ asset('/uploads/site/fav/favicon.ico') }}" />
     <link rel="icon" href="{{ asset('/uploads/site/fav/favicon.ico') }}" />
     <link rel="icon" sizes="32x32" href="{{ asset('/uploads/site/fav/favicon-32x32.png') }}">
-    <link rel="icon" sizes="16x16" href="{{ asset('/uploads/site/fav/favicon-16x16.png') }}">
-    <link rel="icon" sizes="192x192" href="{{ asset('/uploads/site/fav/android-chrome-192x192.png') }}">
-    <link rel="icon" sizes="512x512" href="{{ asset('/uploads/site/fav/android-chrome-512x512.png') }}">
+    <link rel="icon" sizes="16x16" href="{{ !blank($general_setting) ? asset($general_setting->favicon) : asset('/uploads/site/fav/favicon-16x16.png') }}">
+    <link rel="icon" sizes="192x192" href="{{ !blank($general_setting) ? asset($general_setting->favicon) : asset('/uploads/site/fav/android-chrome-192x192.png') }}">
+    <link rel="icon" sizes="512x512" href="{{ !blank($general_setting) ? asset($general_setting->favicon) : asset('/uploads/site/fav/android-chrome-512x512.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('/uploads/site/fav/apple-touch-icon.png') }}">
 
     <link href="{{ asset('themes/fvft/assets/plugins/bootstrap-4.3.1-dist/css/bootstrap.min.css') }}"

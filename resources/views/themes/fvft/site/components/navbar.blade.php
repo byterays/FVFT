@@ -36,7 +36,7 @@
     </ul>
     <ul class="horizontalMenu-list d-lg-flex">
         <li class="mt-0 pt-0 pb-5 mt-lg-0 ml-lg-3">
-            <span><a class="btn btn-success rounded-0 mt-1" href="#">
+            <span><a class="btn btn-success rounded-0 mt-1" href="{{ !blank($google_play_link) ? $google_play_link : '#' }}" target="{{ !blank($google_play_link) ? '_blank' : '' }}">
                     {{ __('Download App') }}</a></span>
         </li>
         @auth
