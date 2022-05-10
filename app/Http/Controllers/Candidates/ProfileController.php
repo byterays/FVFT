@@ -2,27 +2,28 @@
 
 namespace App\Http\Controllers\Candidates;
 
-use App\Models\Country;
 use PDF;
-use App\Http\Controllers\Controller;
-use App\Models\EducationLevel;
-use App\Models\Employe;
-use App\Models\EmployeeSkill;
-use App\Models\EmployeeTraining;
-use App\Models\EmployJobPreference;
-use App\Models\ExperienceLevel;
-use App\Models\Industry;
 use App\Models\Job;
-use App\Models\JobShift;
-use App\Models\Language;
 use App\Models\Skill;
 use App\Models\State;
+use App\Models\Country;
+use App\Models\Employe;
+use App\Models\Industry;
+use App\Models\JobShift;
+use App\Models\Language;
 use App\Models\Training;
-use App\Traits\Site\CandidateMethods;
-use App\Traits\Site\ThemeMethods;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\EmployeeSkill;
+use Illuminate\Support\Facades\Response;
+use App\Models\EducationLevel;
+use App\Models\ExperienceLevel;
+use App\Models\EmployeeTraining;
+use App\Traits\Site\ThemeMethods;
 use Illuminate\Support\Facades\DB;
+use App\Models\EmployJobPreference;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Traits\Site\CandidateMethods;
 use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
@@ -527,4 +528,63 @@ class ProfileController extends Controller
         return $pdf->download($employ->full_name . '.pdf');
 
     }
+
+    public function uploadCv(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'cv' => ['required', 'mimes:pdf', 'max:4096'],
+        ]);
+        if($validator->fails()){
+            return response()->json(['status' => false, 'error' => $validator->errors()]);
+        }
+        if($validator->passes()){
+            try{
+                DB::beginTransaction();
+                $destination = 'uploads/candidate/cv/';
+                $employ = $this->employe();
+                if(!file_exists($destination)){
+                    mkdir($destination, 0777, true);
+                }
+                if($request->hasFile('cv')){
+                    $oldCv = $employ->cv;
+                    $cv = $request->file('cv');
+                    $cvName = time() .'.'.$cv->getClientOriginalExtension();
+                    $employ->update([
+                        'cv' => $destination.$cvName,
+                    ]);
+                    $cv->move($destination, $cvName);
+                }
+                DB::commit();
+                if($request->hasFile('cv')){
+                    if($oldCv != null AND file_exists($oldCv)){
+                        unlink($oldCv);
+                    }
+                }
+                return response()->json(['success'=>true,'msg'=>'Cv uploaded successfully']);
+            } catch(\Exception $e){
+                DB::rollBack();
+                return response()->json(['status'=>false,'db_error'=>$e->getMessage()]);
+            }
+        }
+    }
+
+    public function downloadUploadedCv(Request $request)
+    {
+        $employe = $this->employe();
+        if($employe->cv != null && file_exists($employe->cv)){
+            $pdf = public_path($employe->cv);
+            $headers = array(
+                'Content-Type: application/pdf',
+            );
+            $filename = $employe->full_name.'.pdf';
+            if($request->type == 'preview'){
+                return Response::make(file_get_contents($pdf), 200, [
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="'.$filename.'"'
+                ]);
+            }
+            return Response::download($pdf, $employe->full_name.'.pdf', $headers);
+        }
+    }
 }
+

@@ -333,15 +333,15 @@ class DashController extends Controller
     public function company_lists()
     {
         $employ = Employe::where('user_id', \Auth::user()->id)->first();
-        if (!empty($employ->job_preference)) {
-            $companies = Company::where('country_id', $employ->job_preference->country_id)->get();
+        if (!$employ->job_preferences->isEmpty()) {
+            $companies = Company::whereIn('country_id', $employ->countryPreference()->pluck('job_preference_id')->toArray())->get();
             $companys = Company::whereHas('jobs', function ($query) use ($employ) {
-                return $query->where('job_categories_id', $employ->job_preference->job_category_id);
+                return $query->whereIn('job_categories_id', $employ->jobCategoryPreference()->pluck('job_preference_id')->toArray());
             })->get();
             $companies = paginateCollection($companies->merge($companys), 12);
             // $companies = $this->paginate($companies->merge($companys), 12);
         } else {
-            $companies = null;
+            $companies = Company::whereHas('jobs')->paginate(12);
         }
         // $job_id = $employ->job_applications()->pluck('job_id');
         // $companies_id = Job::whereIn('id', $job_id)->pluck('company_id')->toArray();

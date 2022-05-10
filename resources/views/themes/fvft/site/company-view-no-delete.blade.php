@@ -16,18 +16,14 @@
                                     <div class="col-lg-12 col-md-12">
                                         <div class="wideget-user-desc d-sm-flex">
                                             <div class="wideget-user-img mr-5 noborder">
-                                                <img class="w-125 noborder"
-                                                    src="{{ asset('/') }}{{ $company->company_logo ?? 'images/defaultimage.jpg' }}">
+                                                <img class="w-125 noborder" src="{{ asset('/') }}{{ $company->company_logo ?? 'images/defaultimage.jpg' }}">
                                             </div>
-                                            <div class="user-wrap wideget-user-info"
-                                                style="margin-top: auto; margin-bottom:auto; text-align: left;">
+                                            <div class="user-wrap wideget-user-info" style="margin-top: auto; margin-bottom:auto; text-align: left;">
                                                 <a href="#" class="text-dark">
-                                                    <h2 class="font-weight-semibold mb-2">{{ $company->company_name }}
-                                                    </h2>
+                                                    <h2 class="font-weight-semibold mb-2">{{ $company->company_name }}</h2>
                                                 </a>
                                                 <h6 class="text-muted mb-1"><span class="text-dark">Followers : </span>
-                                                    <span
-                                                        id="count_{{ $company->id }}">({{ $company->followers->count() }})</span>
+                                                    <span id="count_{{ $company->id }}">({{ $company->followers->count() }})</span>
                                                 </h6>
                                                 <h6 class="text-muted mb-1"><span class="text-dark">Member Since :
                                                     </span>{{ \Carbon\Carbon::parse($company->created_at)->diffForHumans() }}
@@ -49,12 +45,13 @@
                                     <div class="tabs-menu1">
                                         <ul class="nav">
                                             <li class="">
-                                                <a href="#tab-5" class="@if (Request::get('page') == null) active @endif"
-                                                    data-toggle="tab">Profile</a>
+                                                <a href="#tab-5"
+                                                   class="@if (Request::get('page') == null) active @endif"
+                                                   data-toggle="tab">Profile</a>
                                             </li>
                                             <li>
                                                 <a href="#tab-6" data-toggle="tab"
-                                                    class="@if (Request::get('page') !== null) active @endif">Company Jobs</a>
+                                                   class="@if (Request::get('page') !== null) active @endif">Company Jobs</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -100,20 +97,20 @@
                                                 @if (Auth::check() && Auth::user()->user_type == 'candidate')
                                                     @if (count($employe->followings->where('company_id', $company->id)->all()) > 0)
                                                         <button type="button"
-                                                            class="btn btn-primary btn-block">{{ __('Following') }}</button>
+                                                                class="btn btn-primary btn-block">{{ __('Following') }}</button>
                                                     @else
                                                         <button type="button"
-                                                            onclick="follow_company({{ $company->id }}, {{ $employe->id }}, $(this))"
-                                                            class="btn btn-primary">{{ __('Follow') }}</button>
+                                                                onclick="follow_company({{ $company->id }}, {{ $employe->id }}, $(this))"
+                                                                class="btn btn-primary">{{ __('Follow') }}</button>
                                                     @endif
                                                 @else
                                                     <a type="button" href="{{ route('candidate.login') }}"
-                                                        class="btn btn-primary btn-block">{{ __('Follow') }}</a>
+                                                       class="btn btn-primary btn-block">{{ __('Follow') }}</a>
                                                 @endif
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="sharethis-inline-share-buttons"
-                                                    data-url="{{ route('site.companydetail', $company->id) }}">
+                                                     data-url="{{ route('site.companydetail', $company->id) }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -142,12 +139,12 @@
                                                                                         href="{{ route('viewJob', $item->id) }}"></a>
                                                                                     @if ($item->feature_image_url)
                                                                                         <img src="{{ asset($item->feature_image_url) }}"
-                                                                                            alt="img"
-                                                                                            class="h-100">
+                                                                                             alt="img"
+                                                                                             class="h-100">
                                                                                     @else
                                                                                         <img src="{{ asset('images/defaultimage.jpg') }}"
-                                                                                            alt="img"
-                                                                                            class="h-100">
+                                                                                             alt="img"
+                                                                                             class="h-100">
                                                                                     @endif
                                                                                 </div>
                                                                             </div>
@@ -156,7 +153,7 @@
                                                                                 <div class="card-body pt-0 pt-md-5">
                                                                                     <div class="item-card9">
                                                                                         <a href="{{ route('viewJob', $item->id) }}"
-                                                                                            class="text-dark">
+                                                                                           class="text-dark">
                                                                                             <h4
                                                                                                 class="font-weight-semibold mt-1">
                                                                                                 {{ $item->title }}({{ $item->num_of_positions }})
@@ -165,7 +162,7 @@
                                                                                         <div class="mt-2 mb-2">
                                                                                             @if (!blank(data_get($item, 'company.company_name')))
                                                                                                 <a href="{{ route('site.companydetail', data_get($item, 'company.id')) }}"
-                                                                                                    class="mr-4"><span><i
+                                                                                                   class="mr-4"><span><i
                                                                                                             class="fa fa-building-o text-muted mr-1"></i>
                                                                                                         {{ data_get($item, 'company.company_name') }}</span></a>
                                                                                             @endif
@@ -175,8 +172,8 @@
                                                                                                 <span>
                                                                                                     @if (!blank(data_get($item, 'country')))
                                                                                                         <img class="mb-1"
-                                                                                                            src="{{ asset('https://flagcdn.com/16x12/' . strtolower(data_get($item, 'country.iso2')) . '.png') }}"
-                                                                                                            alt="">
+                                                                                                             src="{{ asset('https://flagcdn.com/16x12/' . strtolower(data_get($item, 'country.iso2')) . '.png') }}"
+                                                                                                             alt="">
                                                                                                         {{ data_get($item, 'country.name') }}
                                                                                                     @endif
                                                                                                 </span>
@@ -215,14 +212,61 @@
                                                                                 <div class="card-footer pt-3 pb-3">
                                                                                     <div class="item-card9-footer">
                                                                                         <div class="row">
-                                                                                            @if (auth()->check() and auth()->user()->user_type == 'candidate')
-                                                                                                <x-job-button
-                                                                                                    :job="$item"
-                                                                                                    :employ="$employe" />
+                                                                                            @auth
+                                                                                                @if (auth()->user()->user_type == 'candidate')
+                                                                                                    @php
+                                                                                                        $application = \DB::table('job_applications')
+                                                                                                            ->where('job_id', $item->id)
+                                                                                                            ->where('employ_id', $employe->id)
+                                                                                                            ->first();
+                                                                                                        $savedJob = App\Models\SavedJob::where('employ_id', $employe->id)->where('job_id', $item->id);
+                                                                                                    @endphp
+                                                                                                    <div class="col-md-3">
+                                                                                                        @if ($application)
+                                                                                                            <a href="javascript:void(0);"
+                                                                                                               class="btn btn-primary mr-5 btn-block">{{ __('Applied') }}</a>
+                                                                                                        @else
+                                                                                                            <a href="{{ route('applyForJob', $item->id) }}"
+                                                                                                               class="btn btn-primary mr-5 btn-block">
+                                                                                                                {{ __('Apply Now') }}</a>
+                                                                                                        @endif
+                                                                                                    </div>
+                                                                                                    <div class="col-md-3">
+                                                                                                        @if ($savedJob->exists())
+                                                                                                            <a href="javascript:void(0);"
+                                                                                                               class="saveJobButton btn btn-warning btn-block">
+                                                                                                                <i class="fa fa-heart"></i>
+                                                                                                                {{ __('Saved') }}
+                                                                                                            </a>
+                                                                                                        @else
+                                                                                                            <a href="javascript:void(0);"
+                                                                                                               onclick="savejob({{ $item->id }}, $(this))"
+                                                                                                               class="saveJobButton btn btn-warning btn-block">
+                                                                                                                <i class="fa fa-heart-o"></i>
+                                                                                                                {{ __('Save Job') }}
+                                                                                                            </a>
+                                                                                                        @endif
+                                                                                                    </div>
+                                                                                                @endif
                                                                                             @else
-                                                                                                <x-job-button
-                                                                                                    :job="$item" />
-                                                                                            @endif
+                                                                                                <div class="col-md-3">
+                                                                                                    <a href="{{ route('applyForJob', $item->id) }}"
+                                                                                                       class="btn btn-primary mr-3 btn-block">
+                                                                                                        {{ __('Apply Now') }}</a>
+                                                                                                </div>
+                                                                                                <div class="col-md-3">
+                                                                                                    <a href="{{ route('viewJob', $item->id) }}"
+                                                                                                       class="btn btn-warning btn-block">
+                                                                                                        <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                                <div class="col-md-3">
+                                                                                                    <div class="sharethis-inline-share-buttons"
+                                                                                                         data-url="{{ route('viewJob', $item->id) }}">
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                            @endauth
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -257,35 +301,35 @@
 @section('script')
     <script>
         @if (auth()->check() and auth()->user()->user_type == 'candidate')
-            function savejob(job_id, this_button) {
-                var url = "{{ route('candidate.savedjob.saveJob') }}";
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: {
-                        'job_id': job_id,
-                        'employ_id': '{{ $employe->id }}',
-                    },
-                    beforeSend: function() {
-                        $(".saveJobButton").attr('disabled', true);
-                    },
-                    success: function(response) {
-                        if (response.db_error) {
-                            toastr.warning(response.db_error);
-                        } else if (response.error) {
-                            toastr.warning(response.error);
-                        } else if (response.redirectRoute) {
-                            location.href = response.redirectRoute
-                        } else {
-                            $(this_button).removeAttr('onclick').html('<i class="fa fa-heart"></i> Saved');
-                            toastr.success(response.msg);
-                        }
-                    },
-                    complete: function() {
-                        $(".saveJobButton").attr('disabled', false);
-                    },
-                });
-            }
+        function savejob(job_id, this_button) {
+            var url = "{{ route('candidate.savedjob.saveJob') }}";
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    'job_id': job_id,
+                    'employ_id': '{{ $employe->id }}',
+                },
+                beforeSend: function() {
+                    $(".saveJobButton").attr('disabled', true);
+                },
+                success: function(response) {
+                    if (response.db_error) {
+                        toastr.warning(response.db_error);
+                    } else if (response.error) {
+                        toastr.warning(response.error);
+                    } else if (response.redirectRoute) {
+                        location.href = response.redirectRoute
+                    } else {
+                        $(this_button).removeAttr('onclick').html('<i class="fa fa-heart"></i> Saved');
+                        toastr.success(response.msg);
+                    }
+                },
+                complete: function() {
+                    $(".saveJobButton").attr('disabled', false);
+                },
+            });
+        }
         @endif
 
         function follow_company(company_id, employ_id, follow_button) {

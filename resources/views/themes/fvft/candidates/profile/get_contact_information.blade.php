@@ -72,11 +72,11 @@
                                                     <label for="" class="form-label">{{ __('Address') }}</label>
                                                     <div class="row">
                                                         <div class="col-6">
-                                                            <select name="country_id" class="form-control select2-show-search" data-placeholder="Select Country" onchange="patchStates(this)" value="{{ setParameter($employ, 'country_id') }}" id="select-country">
+                                                            <select name="country_id" class="form-control select2-show-search" data-placeholder="Select Country" onchange="patchStates(this)" value="{{ setParameter($employ, 'country_id') ?? $defaultCountryId }}" id="select-country">
                                                                 <option value="">{{ __('Select Country') }}</option>
                                                                 @foreach ($countries as $country)
                                                                     <option value="{{ $country->id }}"
-                                                                        {{ $country->id == setParameter($employ, 'country_id') ? 'selected' : '' }}>
+                                                                        {{ $country->id == (setParameter($employ, 'country_id') ?? $defaultCountryId) ? 'selected' : '' }}>
                                                                         {{ $country->name }}</option>
                                                                 @endforeach
                                                             </select>
@@ -188,7 +188,7 @@
     </script>
     <script>
         const _token = $('meta[name="csrf-token"]')[0].content;
-        const country_id = {{ isset($employ->country_id) ? $employ->country_id : '154' }}
+        const country_id = {{ isset($employ->country_id) ? $employ->country_id : $defaultCountryId }};
         const state_id = {{ isset($employ->state_id) ? $employ->state_id : '3871' }};
         // const city_id = {{ isset($employ->city_id) ? $employ->city_id : 'null' }};
         const district_id = {{ isset($employ->district_id) ? $employ->district_id : 'null' }};

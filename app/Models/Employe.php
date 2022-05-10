@@ -56,7 +56,8 @@ class Employe extends Model
         'bio',
         'website',
         'job_notify',
-        'all_job_notify'
+        'all_job_notify',
+        'cv'
     ];
 
 

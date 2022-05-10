@@ -1,4 +1,5 @@
 const loadStates = (country_id) => {
+    console.log(country_id);
     fetch(appurl + "ajax/states", {
         method: "POST",
         headers: {
@@ -64,5 +65,6 @@ const patchDistricts = (obj) => {
     loadDistricts(obj.value);
 }
 $(document).ready(function () {
+    console.log($("#select-country").val());
     loadStates($("#select-country").val());
 });
