@@ -1,10 +1,10 @@
-<div class="row d-none" id="moreLatestJobs">
+<div class="row" id="lessLatestJobs">
     <div class="mb-lg-0 col-xl-12 col-lg-12 col-md-12 col-sm-6">
         <div class="">
             <div class="item2-gl">
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab-11">
-                        @foreach (getLatestJobs() as $latest_job)
+                        @foreach (getLatestJobs(4) as $latest_job)
                             <div class="card overflow-hidden  shadow-none">
                                 <div class="d-md-flex">
                                     <div class="p-0 m-0 item-card9-img">
@@ -30,9 +30,10 @@
                                                 </a>
                                                 <div class="mt-2 mb-2">
                                                     @if (!blank(data_get($latest_job, 'company.company_name')))
-                                                        <a href="{{ route('site.companydetail', data_get($latest_job, 'company.id')) }}"
-                                                           class="mr-4"><span><i class="fa fa-building-o text-muted mr-1"></i>
-                                                                {{ data_get($latest_job, 'company.company_name') }}</span></a>
+                                                        <a href="{{ route('site.companydetail', data_get($latest_job, 'company.id')) }}" class="mr-4">
+                                                            <span><i class="fa fa-building-o text-muted mr-1"></i>
+                                                                {{ data_get($latest_job, 'company.company_name') }}</span>
+                                                        </a>
                                                     @else
                                                         <a href="#" class="mr-4">
                                                             <span><i class="fa fa-building-o text-muted mr-1"></i>Not-Available</span>
@@ -48,7 +49,7 @@
                                                                  alt="">
                                                             {{ data_get($latest_job, 'country.name') }}
                                                         @else
-                                                           Address Unavailable
+                                                            Address Unavailable
                                                         @endif
                                                     </span>
                                                     </a>
@@ -85,11 +86,68 @@
                                         <div class="card-footer pt-3 pb-3">
                                             <div class="item-card9-footer">
                                                 <div class="row">
-                                                    @if(auth()->check() AND auth()->user()->user_type == 'candidate')
-                                                    <x-job-button :job="$latest_job" :employ="$employ" />
+                                                    @auth
+                                                        @if (auth()->user()->user_type == 'candidate')
+                                                            @php
+                                                                $application = \DB::table('job_applications')
+                                                                    ->where('job_id', $latest_job->id)
+                                                                    ->where('employ_id', $employ->id)
+                                                                    ->first();
+                                                                $savedJob = App\Models\SavedJob::where('employ_id', $employ->id)->where('job_id', $latest_job->id);
+                                                            @endphp
+
+                                                            <div class="col-md-3">
+                                                                @if ($application)
+                                                                    <a href="javascript:void(0);"
+                                                                       class="btn btn-primary mr-5 btn-block">{{ __('Applied') }}</a>
+                                                                @else
+                                                                    <a href="{{ route('applyForJob', $latest_job->id) }}"
+                                                                       class="btn btn-primary mr-5 btn-block">
+                                                                        {{ __('Apply Now') }}</a>
+                                                                @endif
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                @if ($savedJob->exists())
+                                                                    <a href="javascript:void(0);"
+                                                                       class="saveJobButton btn btn-warning btn-block">
+                                                                        <i class="fa fa-heart"></i>
+                                                                        {{ __('Saved') }}
+                                                                    </a>
+                                                                @else
+                                                                    <a href="javascript:void(0);"
+                                                                       onclick="savejob({{ $latest_job->id }}, $(this))"
+                                                                       class="saveJobButton btn btn-block btn-warning">
+                                                                        <i class="fa fa-heart-o"></i>
+                                                                        {{ __('Save Job') }}
+                                                                    </a>
+                                                                @endif
+                                                            </div>
+                                                        @endif
                                                     @else
-                                                    <x-job-button :job="$latest_job" />
-                                                    @endif
+                                                        <div class="col-md-3">
+                                                            <a href="{{ route('candidate.login', ['name' => 'login']) }}"
+                                                               class="btn btn-primary mr-3 btn-block">
+                                                                {{ __('Apply Now') }}</a>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <a href="{{ route('candidate.login', ['name' => 'login']) }}"
+                                                               class="saveJobButton btn btn-warning btn-block">
+                                                                <i class="fa fa-heart-o"></i>
+                                                                {{ __('Save Job') }}
+                                                            </a>
+                                                        </div>
+                                                    @endauth
+                                                    <div class="col-md-3">
+                                                        <a href="{{ route('viewJob', $latest_job->id) }}"
+                                                           class="btn btn-warning btn-block">
+                                                            <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="sharethis-inline-share-buttons"
+                                                             data-url="{{ route('viewJob', $latest_job->id) }}">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -102,3 +160,4 @@
             </div>
         </div>
     </div>
+</div>

@@ -17,16 +17,16 @@
             <div class="text-center">
                 @include('themes.fvft.site.components.lessLatestJob')
             </div>
-			<div class="text-center">
-			@include('themes.fvft.site.components.moreLatestJob')
-			</div>
-			<div class="mt-4 mx-auto">
-				<a href="javascript:void(0);" id="moreRecentJobs"
-					class="btn btn-primary btn-outline-primary">{{ __('View All') }}</a>
-				<a href="javascript:void(0);" id="lessRecentJobs"
-					class="btn btn-primary btn-outline-primary d-none">{{ __('View Less') }}</a>
-			</div>
+            <div class="text-center">
+                @include('themes.fvft.site.components.moreLatestJob')
+            </div>
+            <div class="mt-4 mx-auto">
+                <a href="javascript:void(0);" id="moreRecentJobs"
+                    class="btn btn-primary btn-outline-primary">{{ __('View All') }}</a>
+                <a href="javascript:void(0);" id="lessRecentJobs"
+                    class="btn btn-primary btn-outline-primary d-none">{{ __('View Less') }}</a>
+            </div>
         </div>
-    </div>
-</section>
+        </div>
+    </section>
 @endif

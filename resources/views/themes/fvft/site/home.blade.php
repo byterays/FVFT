@@ -95,6 +95,7 @@
 
         @if (auth()->check() and auth()->user()->user_type == 'candidate')
             function savejob(job_id, this_button) {
+                console.log(job_id, this_button);
             var url = "{{ route('candidate.savedjob.saveJob') }}";
             $.ajax({
             url: url,

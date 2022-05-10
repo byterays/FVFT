@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Enum\SettingKey;
+use App\Models\Country;
 use App\Models\GeneralSetting;
 use App\Models\Page;
 use App\Models\Setting;
@@ -40,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
                 'contact_settings' => Setting::whereIn('title', [SettingKey::ADDRESS, SettingKey::PHONE1, SettingKey::PHONE2, SettingKey::EMAIL])->get(),
                 'store_settings' => Setting::whereIn('title', [SettingKey::GOOGLE_PLAY_STORE, SettingKey::APPLE_PLAY_STORE])->get(),
                 'google_play_link' => Setting::whereTitle(SettingKey::GOOGLE_PLAY_STORE)->value('value'),
+                'defaultCountryId' => Country::where('name', 'Nepal')->value('id'),
             ]);
         });
     }

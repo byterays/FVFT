@@ -128,11 +128,69 @@
                                                         <div class="card-footer pt-3 pb-3">
                                                             <div class="item-card9-footer">
                                                                 <div class="row">
-                                                                    @if (auth()->check() and auth()->user()->user_type == 'candidate')
-                                                                        <x-job-button :job="$item" :employ="$employ" />
+                                                                    @auth
+                                                                        @if (auth()->user()->user_type == 'candidate')
+                                                                            @php
+                                                                                $application = \DB::table('job_applications')
+                                                                                    ->where('job_id', $item->id)
+                                                                                    ->where('employ_id', $employ->id)
+                                                                                    ->first();
+                                                                                $savedJob = App\Models\SavedJob::where('employ_id', $employ->id)->where('job_id', $item->id);
+                                                                            @endphp
+
+                                                                            <div class="col-md-3">
+                                                                                @if ($application)
+                                                                                    <a href="javascript:void(0);"
+                                                                                        class="btn btn-primary mr-5 btn-block">{{ __('Applied') }}</a>
+                                                                                @else
+                                                                                    <a href="{{ route('applyForJob', $item->id) }}"
+                                                                                        class="btn btn-primary mr-5 btn-block">
+                                                                                        {{ __('Apply Now') }}</a>
+                                                                                @endif
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                @if ($savedJob->exists())
+                                                                                    <a href="javascript:void(0);"
+                                                                                        class="saveJobButton btn btn-warning btn-block">
+                                                                                        <i class="fa fa-heart"></i>
+                                                                                        {{ __('Saved') }}
+                                                                                    </a>
+                                                                                @else
+                                                                                    <a href="javascript:void(0);"
+                                                                                        onclick="savejob({{ $item->id }})"
+                                                                                        class="saveJobButton btn btn-block btn-warning">
+                                                                                        <i class="fa fa-heart-o"></i>
+                                                                                        {{ __('Save Job') }}
+                                                                                    </a>
+                                                                                @endif
+                                                                            </div>
+                                                                        @endif
                                                                     @else
-                                                                        <x-job-button :job="$item" />
-                                                                    @endif
+                                                                        <div class="col-md-3">
+                                                                            <a href="{{ route('applyForJob', $item->id) }}"
+                                                                                class="btn btn-primary mr-3 btn-block">
+                                                                                {{ __('Apply Now') }}</a>
+                                                                        </div>
+                                                                        <div class="col-md-3">
+                                                                            <a href="{{ route('candidate.login', ['name' => 'login']) }}"
+                                                                                class="saveJobButton btn btn-warning btn-block">
+                                                                                <i class="fa fa-heart-o"></i>
+                                                                                {{ __('Save Job') }}
+                                                                            </a>
+                                                                        </div>
+                                                                    @endauth
+                                                                    <div class="col-md-3">
+                                                                        <a href="{{ route('viewJob', $item->id) }}"
+                                                                            class="btn btn-warning btn-block">
+                                                                            <i
+                                                                                class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="sharethis-inline-share-buttons"
+                                                                            data-url="{{ route('viewJob', $item->id) }}">
+                                                                        </div>
+                                                                    </div>
 
                                                                 </div>
                                                             </div>
@@ -230,12 +288,86 @@
                                                         <div class="card-footer pt-3 pb-3">
                                                             <div class="item-card9-footer">
                                                                 <div class="row">
-                                                                    @if (auth()->check() and auth()->user()->user_type == 'candidate')
-                                                                        <x-grid-job-button :job="$item"
-                                                                            :employ="$employ" />
+                                                                    @auth
+                                                                        @if (auth()->user()->user_type == 'candidate')
+                                                                            @php
+                                                                                $application = \DB::table('job_applications')
+                                                                                    ->where('job_id', $item->id)
+                                                                                    ->where('employ_id', $employ->id)
+                                                                                    ->first();
+                                                                                $savedJob = App\Models\SavedJob::where('employ_id', $employ->id)->where('job_id', $item->id);
+                                                                            @endphp
+                                                                            <div class="col-md-6">
+                                                                                @if ($savedJob->exists())
+                                                                                    <a href="javascript:void(0);"
+                                                                                        class="saveJobButton ico-grid-font btn btn-warning btn-block">
+                                                                                        <i class="fa fa-heart"></i>
+                                                                                        {{ __('Saved') }}
+                                                                                    </a>
+                                                                                @else
+                                                                                    <a href="javascript:void(0);"
+                                                                                        onclick="savejob({{ $item->id }})"
+                                                                                        class="saveJobButton ico-grid-font btn btn-warning btn-block">
+                                                                                        <i class="fa fa-heart-o"></i>
+                                                                                        {{ __('Save Job') }}
+                                                                                    </a>
+                                                                                @endif
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                @if ($application)
+                                                                                    <a href="javascript:void(0);"
+                                                                                        class="btn btn-primary mr-5 btn-block">{{ __('Applied') }}</a>
+                                                                                @else
+                                                                                    <a href="{{ route('applyForJob', $item->id) }}"
+                                                                                        class="btn btn-primary mr-5 btn-block">
+                                                                                        {{ __('Apply Now') }}</a>
+                                                                                @endif
+                                                                            </div>
+                                                                            <div class="col-md-6 mt-3">
+                                                                                <a href="{{ route('viewJob', $item->id) }}"
+                                                                                    class="ico-grid-font btn btn-warning btn-block">
+                                                                                    <i
+                                                                                        class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="col-md-6 mt-3">
+                                                                                <div class="sharethis-inline-share-buttons"
+                                                                                    data-url="{{ route('viewJob', $item->id) }}">
+                                                                                </div>
+                                                                            </div>
+                                                                        @elseif(auth()->user()->user_type == 'company')
+                                                                            <div class="col-md-6 mt-3">
+                                                                                <a href="{{ route('viewJob', $item->id) }}"
+                                                                                    class="ico-grid-font btn btn-warning btn-block">
+                                                                                    <i
+                                                                                        class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="col-md-6 mt-3">
+                                                                                <div class="sharethis-inline-share-buttons"
+                                                                                    data-url="{{ route('viewJob', $item->id) }}">
+                                                                                </div>
+                                                                            </div>
+                                                                        @endif
                                                                     @else
-                                                                        <x-grid-job-button :job="$item" />
-                                                                    @endif
+                                                                        <div class="col-md-6">
+                                                                            <a href="{{ route('applyForJob', $item->id) }}"
+                                                                                class="btn btn-primary mr-3 btn-block">
+                                                                                {{ __('Apply Now') }}</a>
+                                                                        </div>
+                                                                        <div class="col-md-6 mt-3">
+                                                                            <a href="{{ route('viewJob', $item->id) }}"
+                                                                                class="ico-grid-font btn btn-warning btn-block">
+                                                                                <i
+                                                                                    class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="col-md-6 mt-3">
+                                                                            <div class="sharethis-inline-share-buttons"
+                                                                                data-url="{{ route('viewJob', $item->id) }}">
+                                                                            </div>
+                                                                        </div>
+                                                                    @endauth
                                                                 </div>
                                                             </div>
                                                         </div>
