@@ -139,7 +139,7 @@
                             </div>
                             @if($companies != null)
                             <div class="center-block text-center">
-                                {{ $companies->links() }}
+                                {{ $companies->links('vendor.pagination.bootstrap-4') }}
                             </div>
                             @endif
                         </div>

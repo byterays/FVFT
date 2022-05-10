@@ -333,7 +333,7 @@ class DashController extends Controller
     public function company_lists()
     {
         $employ = Employe::where('user_id', \Auth::user()->id)->first();
-        if (!empty($employ->job_preferences)) {
+        if (!$employ->job_preferences->isEmpty()) {
             $companies = Company::whereIn('country_id', $employ->countryPreference()->pluck('job_preference_id')->toArray())->get();
             $companys = Company::whereHas('jobs', function ($query) use ($employ) {
                 return $query->whereIn('job_categories_id', $employ->jobCategoryPreference()->pluck('job_preference_id')->toArray());
