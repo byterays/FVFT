@@ -45,10 +45,14 @@
                                                     href="{{ route('admin.support_category.edit', $support_category->id) }}"><i
                                                         class="fa fa-pencil"></i></a>
                                             </div>
-                                            <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
+                                            <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="modal" data-target="#dataDeleteModal"
+                                                data-id="{{ $support_category->id }}" data-action="{{ route('admin.support_category.delete', $support_category->id) }}" data-method="{{ getRouteMethodName('admin.support_category.delete') }}" data-modaltitle="Delete Support Category">
+                                                <i class="fa fa-trash-o"></i>
+                                            </a><br>
+                                            {{-- <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
                                                 data-original-title="Delete"
                                                 href="javascript:void(0);" onclick="deleteData({{ $support_category->id }}, $(this));"><i
-                                                    class="fa fa-trash-o"></i></a><br>
+                                                    class="fa fa-trash-o"></i></a><br> --}}
                                         </td>
                                     </tr>
                                 @endforeach

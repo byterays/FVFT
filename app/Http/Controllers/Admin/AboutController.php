@@ -114,7 +114,7 @@ class AboutController extends Controller
         if($lastAbout->exists()){
             $lastAbout->first()->update(['status' => 1]);
         }
-        return response()->json(['msg' => 'About deleted']);
+        return redirect()->back()->with(notifyMsg('success', 'Data deleted'));
     }
 
     public function updateStatus(Request $request)
