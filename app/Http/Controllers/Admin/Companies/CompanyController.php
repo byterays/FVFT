@@ -319,20 +319,26 @@ class CompanyController extends Controller
     }
     public function delete($id)
     {
-        DB::table('companies')->delete($id);
-        try {
-            return redirect()
-                ->route('admin.companies.list')
-                ->with(['delete' => [
-                    'status' => 'success',
-                ]]);
-        } catch (\Throwable $th) {
-            return redirect()
-                ->route('admin.companies.list')
-                ->with(['delete' => [
-                    'status' => 'failed',
-                ]]);
+        $company = Company::find($id);
+        if($company != null){
+            $company->delete();
+            return redirect()->back()->with(notifyMsg('success', 'Company deleted successfully'));
         }
+        return redirect()->back()->with(notifyMsg('error', 'Company not found'));
+        // DB::table('companies')->delete($id);
+        // try {
+        //     return redirect()
+        //         ->route('admin.companies.list')
+        //         ->with(['delete' => [
+        //             'status' => 'success',
+        //         ]]);
+        // } catch (\Throwable $th) {
+        //     return redirect()
+        //         ->route('admin.companies.list')
+        //         ->with(['delete' => [
+        //             'status' => 'failed',
+        //         ]]);
+        // }
     }
 
     public function show($id)

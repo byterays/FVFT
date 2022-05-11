@@ -103,7 +103,7 @@
             </div>
         </div>
     </div>
-
+@include('modals.deleteModal')
     <!--footer-->
 @include('admin.components.footer')
 <!-- End Footer-->
@@ -253,6 +253,43 @@
             break;
     }
     @endif
+</script>
+{{-- Delete Modal Script --}}
+<script>
+    $(document).ready(function(){
+        $("#dataDeleteModal").on('show.bs.modal', function(e){
+            var delBtn = $(e.relatedTarget),
+                dataId = $(delBtn).data("id")
+                action = $(delBtn).data("action"),
+                methodName = $(delBtn).data('method'),
+                modalTitle = $(delBtn).data('modaltitle');
+                if(methodName == 'DELETE'){
+                    $("#deleteDataForm").append('@method('DELETE')');
+                }
+                $("#modalTitle").html(modalTitle);
+                $("#deleteDataForm").attr('action', action);
+                if(methodName == 'DELETE' || methodName == 'POST'){
+                    $("#deleteDataForm").attr('method', 'POST')
+                } else {
+                    $("#deleteDataForm").attr('method', 'GET');
+                }
+
+        });
+
+        $("#dataDelBtn").on('click', function(e){
+            e.preventDefault();
+            $("#deleteDataForm").submit();
+        });
+
+        $("#dataDeleteModal").on('hidden.bs.modal', function(e){
+            $("#deleteDataForm").attr('action', '#');
+            $("#deleteDataForm").attr('method', '#');
+            if($('input[name="_method"]').length > 0){
+                // console.log($("#deleteDataForm").find('input[name="_method"]').remove()); //do not remove this console
+                $("#deleteDataForm").find('input[name^="_method"]').remove()
+            }
+        });
+    });
 </script>
 @yield('script')
 </body>

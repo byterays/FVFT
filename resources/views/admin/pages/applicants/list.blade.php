@@ -96,10 +96,12 @@ if (session()->get('delete')) {
                                                     href="/admin/applicants/edit/{{ $item->id }}"><i
                                                         class="fa fa-pencil"></i></a>
                                             </div>
-                                            <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
+                                            <a class="btn btn-danger btn-sm text-white mb-1" data-id="{{ $item->id }}" data-action="{{ route('admin.applicants.delete', $item->id) }}" data-method="{{ getRouteMethodName('admin.applicants.delete') }}" data-modaltitle="Delete Applicant" data-toggle="modal" data-target="#dataDeleteModal">
+                                                <i class="fa fa-trash-o"></i></a><br>
+                                            {{-- <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
                                                 data-original-title="Delete"
                                                 href="/admin/candidates/delete/{{ $item->id }}"><i
-                                                    class="fa fa-trash-o"></i></a><br>
+                                                    class="fa fa-trash-o"></i></a><br> --}}
                                         </td>
                                     </tr>
                                 @endforeach

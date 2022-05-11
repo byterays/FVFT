@@ -79,18 +79,25 @@ class ApplicantController extends Controller
     }
     public function delete($id){
         try {
-            DB::table('job_applications')->delete($id);
-            return redirect()
-            ->route('admin.applicants.list')
-            ->with(['delete'=>[
-                'status' => 'success'
-            ]]);
-        } catch (\Throwable $th) {
-            return redirect()
-            ->route('admin.applicants.list')
-            ->with(['delete'=>[
-                'status' => 'failed'
-            ]]);
+            $applicant = JobApplication::find($id);
+            if($applicant != null){
+                $applicant->delete();
+                return redirect()->back()->with(notifyMsg('success', 'Applicant deleted successfully'));
+            }
+            return redirect()->back()->with(notifyMsg('error', 'Applicant Not Found'));
+            // DB::table('job_applications')->delete($id);
+            // return redirect()
+            // ->route('admin.applicants.list')
+            // ->with(['delete'=>[
+            //     'status' => 'success'
+            // ]]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(notifyMsg('error', $e->getMessage()));
+            // return redirect()
+            // ->route('admin.applicants.list')
+            // ->with(['delete'=>[
+            //     'status' => 'failed'
+            // ]]);
         }
     }
 }

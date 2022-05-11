@@ -232,10 +232,12 @@
                                                 data-original-title="View Job"
                                                 href="{{ route('admin.job.view', $job->id) }}"><i
                                                     class="fa fa-eye"></i></a>
-                                            <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
+                                            <a class="btn btn-danger btn-sm text-white mb-1" data-id="{{ $job->id }}" data-action="{{ route('admin.jobs.delete', $job->id) }}" data-method="{{ getRouteMethodName('admin.jobs.delete') }}" data-modaltitle="Delete Job" data-toggle="modal"
+                                                data-target="#dataDeleteModal"><i class="fa fa-trash-o"></i></a><br>
+                                            {{-- <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
                                                 data-original-title="Delete"
                                                 href="http://127.0.0.1:8000/admin/jobs-delete?id={{ $job->id }}&from={{ $jobs->currentPage() }}"><i
-                                                    class="fa fa-trash-o"></i></a><br>
+                                                    class="fa fa-trash-o"></i></a><br> --}}
                                         </td>
                                     </tr>
                                     <?php

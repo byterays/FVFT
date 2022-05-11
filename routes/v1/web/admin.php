@@ -39,7 +39,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/jobs-list', [JobsController::class, 'index'])->name('admin.jobs-list');
     Route::get('/jobs-save', [JobsController::class, 'edit']);
     Route::post('/jobs-save', [JobsController::class, 'save']);
-    Route::get('/jobs-delete', [JobsController::class, 'delete']);
+    Route::get('/jobs-delete/{id}', [JobsController::class, 'delete'])->name('admin.jobs.delete');
     Route::get('/jobs-new', [JobsController::class, 'new'])->name('admin.addNewJob');
     Route::get('/jobs-edit/{id}', [JobsController::class, 'edit'])->name('admin.editJob');
     Route::post('/save-job', [JobsController::class, 'saveNewJob'])->name('admin.saveNewJob');

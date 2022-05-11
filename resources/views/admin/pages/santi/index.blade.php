@@ -52,10 +52,13 @@
                                                     href="{{ route('admin.about.edit', $about->id) }}"><i
                                                         class="fa fa-pencil"></i></a>
                                             </div>
-                                            <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
+                                            <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="modal" data-target="#dataDeleteModal"
+                                                data-id="{{ $about->id }}" data-action="{{ route('admin.santi.delete', $about->id) }}" data-method="{{ getRouteMethodName('admin.santi.delete') }}" data-modaltitle="Delete Data">
+                                                <i class="fa fa-trash-o"></i></a><br>
+                                            {{-- <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
                                                 data-original-title="Delete"
                                                 href="javascript:void(0);" onclick="deleteData({{ $about->id }}, $(this));"><i
-                                                    class="fa fa-trash-o"></i></a><br>
+                                                    class="fa fa-trash-o"></i></a><br> --}}
                                         </td>
                                     </tr>
                                 @endforeach

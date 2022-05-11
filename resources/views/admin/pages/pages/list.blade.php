@@ -20,7 +20,7 @@
     <h4 class="page-title">Pages</h4>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Modules</a></li>
-        <li class="breadcrumb-item" aria-current="page"><a href="/admin/pages/">Page</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href="{{ route('admin.pages.list') }}">Page</a></li>
     </ol>
 </div>
 <div class="row">
@@ -31,7 +31,7 @@
                 <h3 class="card-title" style="width: 100%;">Pages List</h3>
                 <div class="d-flex flex-row-reverse mb-2" >
 
-                    <a type="button" class="btn btn-primary" href="/admin/pages/new"><i class="fe fe-plus mr-2"></i>Add New</a>
+                    <a type="button" class="btn btn-primary" href="{{ route('admin.pages.new') }}"><i class="fe fe-plus mr-2"></i>Add New</a>
                 </div>
             </div>
             <div class="card-body">
@@ -68,13 +68,16 @@
                                 </td>
                                 <td>
                                     {{-- <button class="btn btn-danger" data-toggle="modal" data-target="#largeModal">View modal</button> --}}
-                                    <div data-toggle="tooltip" data-original-title="View" style="display: inline-block;">
+                                    {{-- <div data-toggle="tooltip" data-original-title="View" style="display: inline-block;">
                                         <a class="btn btn-primary btn-sm text-white mb-1"  href="/page/{{$page->id}}" ><i class="fa fa-eye"></i></a>
-                                    </div>
+                                    </div> --}}
                                      <div data-toggle="tooltip" data-original-title="Edit" style="display: inline-block;">
-                                        <a class="btn btn-success btn-sm text-white mb-1"  href="/admin/pages/edit/{{$page->id}}"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-success btn-sm text-white mb-1"  href="{{route('admin.pages.edit',$page->id)}}"><i class="fa fa-pencil"></i></a>
                                     </div>
-                                    <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip" data-original-title="Delete" href="/admin/pages/delete/{{$page->id}}"><i class="fa fa-trash-o"></i></a><br>
+                                    <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="modal" data-target="#dataDeleteModal" data-id="{{ $page->id }}" data-action="{{ route('admin.pages.delete', $page->id) }}" data-method="{{ getRouteMethodName('admin.pages.delete') }}" data-modaltitle="Delete Page">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a><br>
+                                    {{-- <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip" data-original-title="Delete" href="/admin/pages/delete/{{$page->id}}"><i class="fa fa-trash-o"></i></a><br> --}}
                                 </td>
                             </tr>
                             @endforeach

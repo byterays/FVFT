@@ -10,7 +10,7 @@
             <select name="country_id[]" class="form-control select2-show-search" data-placeholder="Select Country" id="">
                 <option value="">Select Country</option>
                 @foreach ($countries as $country)
-                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                    <option value="{{ $country->id }}" {{ $country->id == $defaultCountryId ? 'selected' : '' }}>{{ $country->name }}</option>
                 @endforeach
             </select>
         </div>

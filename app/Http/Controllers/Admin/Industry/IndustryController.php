@@ -72,8 +72,17 @@ class IndustryController extends Controller
 
     public function delete($id)
     {
-        Industry::destroy($id);
-        return redirect()->back();
+        try{
+            $industry = Industry::find($id);
+            if(!blank($industry)){
+                $industry->delete();
+                return redirect()->back()->with(notifyMsg('success', 'Industry deleted successfully'));
+            }
+            return redirect()->back()->with(notifyMsg('error', 'Industry Not Found'));
+        } catch(\Exception $e){
+            return redirect()->back()->with(notifyMsg('error', $e->getMessage()));
+
+        }
     }
 
 

@@ -45,10 +45,10 @@ session()->forget('delete');
                                 {{-- <th>#id</th> --}}
                                 <th>Logo</th>
                                 <th>Name</th>
-                                <th>Country</th>
+                                {{-- <th>Country</th> --}}
                                 <th>Registered Date</th>
-                                <th>Contact Person</th>
-                                <th>Industry</th>
+                                {{-- <th>Contact Person</th> --}}
+                                {{-- <th>Industry</th> --}}
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Featured</th>
@@ -80,7 +80,8 @@ session()->forget('delete');
                                         <a class="btn btn-success btn-sm text-white mb-1" href="{{route('admin.companies.editCompany',$company->id)}}"><i class="fa fa-pencil"></i></a>
                                         {{-- <a class="btn btn-success btn-sm text-white mb-1" href="/admin/companies/edit/{{$company->id}}"><i class="fa fa-pencil"></i></a> --}}
                                     </div>
-                                    <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip" data-original-title="Delete" href="/admin/companies/delete/{{$company->id}}"><i class="fa fa-trash-o"></i></a><br>
+                                    <a class="btn btn-danger btn-sm text-white mb-1" data-id="{{ $company->id }}" data-action="{{ route('admin.companies.delete', $company->id) }}" data-method="{{ getRouteMethodName('admin.companies.delete') }}"  data-modaltitle="Delete Company" data-toggle="modal" data-target="#dataDeleteModal"><i class="fa fa-trash-o"></i></a><br>
+                                    {{-- <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip" data-original-title="Delete" href="/admin/companies/delete/{{$company->id}}"><i class="fa fa-trash-o"></i></a><br> --}}
                                 </td>
                             </tr>
                             @endforeach
