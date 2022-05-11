@@ -1,4 +1,5 @@
 @extends('admin.layouts.master')
+@section('title', 'Create Company')
 @section('style')
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/datepicker.min.css') }}">
@@ -21,7 +22,7 @@
 
 @section('main')
     <div class="page-header">
-        <h4 class="page-title tempcolor">{{ strtoupper($action) }}&nbsp;{{ strtoupper('Company') }}</h4>
+        <h4 class="page-title">{{ $action ?? '' }} Company</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Modules</a></li>
             <li class="breadcrumb-item" aria-current="page"><a href="/admin/companies/">Company</a></li>
@@ -130,7 +131,7 @@
                                             class="req">*</span></label>
                                 </div>
                                 <div class="col-md-8">
-                                    {{-- <input type="text" name="no_of_employee" 
+                                    {{-- <input type="text" name="no_of_employee"
                                         class="form-control" placeholder="eg, 1-50, 51-200"> --}}
                                     <select name="no_of_employee" class="form-control select2">
                                         <option value="">No of Employee</option>
