@@ -83,12 +83,18 @@ class SupportController extends Controller
         try {
             DB::beginTransaction();
             $support = Support::where('id', $id)->first();
-            $support->support_types()->detach($support->support_types);
-            $support->delete($id);
-            DB::commit();
-            return response()->json(['msg' => 'Support deleted successfully']);
+            if(!blank($support)){
+                $support->support_types()->detach($support->support_types);
+                $support->delete($id);
+                DB::commit();
+                return redirect()->back()->with(\notifyMsg('success', 'Support deleted successfully'));
+            }
+            return redirect()->back()->with(\notifyMsg('error', 'Support Not Found'));
+            // return response()->json(['msg' => 'Support deleted successfully']);
         } catch (\Exception $e) {
-            return response()->json(['db_error' => $e->getMessage()]);
+            DB::rollBack();
+            return redirect()->back()->with(\notifyMsg('error', $e->getMessage()));
+            // return response()->json(['db_error' => $e->getMessage()]);
         }
     }
 }

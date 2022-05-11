@@ -19,7 +19,7 @@ class TrainingController extends Controller
     public function index()
     {
         return $this->view($this->page . 'index', [
-            'trainings' => Training::latest()->get()
+            'trainings' => Training::orderBy('id', 'DESC')->get()
         ]);
     }
 
@@ -57,8 +57,17 @@ class TrainingController extends Controller
 
     public function delete($id)
     {
-        $training = Training::destroy($id);
-        return response()->json(['redirectRoute' => route($this->redirectTo), 'msg' => 'Training deleted successfully']);
+        try{
+            $training = Training::find($id);
+            if(!blank($training)){
+                $training->delete();
+                return redirect()->back()->with(notifyMsg('success', 'Training deleted successfully'));
+            }
+            return redirect()->back()->with(notifyMsg('error', 'Training Not Found'));
+        } catch(\Exception $e){
+            return redirect()->back()->with(notifyMsg('error', $e->getMessage()));
+        }
+        // return response()->json(['redirectRoute' => route($this->redirectTo), 'msg' => 'Training deleted successfully']);
     }
 
 

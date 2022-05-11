@@ -299,24 +299,14 @@ class JobsController extends Controller
         }
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request, $id)
     {
-
-        return $this->view('admin.pages.jobs.jobs_list', [
-            'jobs' => \DB::table('jobs')->paginate(10),
-            "companies" => $this->companies,
-            "experiencelevels" => $this->experiencelevels,
-            "job_shifts" => $this->job_shifts,
-            "job_categories" => $this->job_categories,
-            "educationlevels" => $this->educationlevels,
-        ]);
-//        try {
-//            // DB::table('jobs')->delete($request->id);
-//            // return redirect()->route('admin.jobs-list',["page"=>$request->from,"dstatus"=>"sucess"]);
-//
-//        } catch (\Throwable $th) {
-//            return redirect()->route('admin.jobs-list', ["page" => $request->from, "dstatus" => "failed"]);
-//        }
+        $job = Job::find($id);
+        if($job != null){
+            $job->delete();
+            return redirect()->back()->with(notifyMsg('success', 'Job deleted successfully'));
+        }
+        return redirect()->back()->with(notifyMsg('error', 'Job not found'));
     }
 //    function list() {
 //

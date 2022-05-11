@@ -15,7 +15,7 @@
         <h4 class="page-title">{{ $action }} Page</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Modules</a></li>
-            <li class="breadcrumb-item" aria-current="page"><a href="/admin/pages/">Page</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="{{ route('admin.pages.list') }}">Page</a></li>
             <li class="breadcrumb-item active" aria-current="page">Add</li>
         </ol>
     </div>
@@ -55,7 +55,7 @@
                             <div class="col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label class="form-label">Seo Title</label>
-                                    <input type="text" class="form-control" name="seo_title" placeholder="Slug"
+                                    <input type="text" class="form-control" name="seo_title" placeholder="Seo Title"
                                         value="{{ isset($page->title) ? $page->title : old('seo_title') }}" required>
                                 </div>
                                 <div class="form-group">
@@ -67,7 +67,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Seo Keywords</label>
                                     <input type="text" class="form-control" data-role="tagsinput" name="seo_keywords"
-                                        placeholder="Slug" value="{{ isset($page->seo_keywords) ? $page->seo_keywords : old('seo_keywords') }}"
+                                        placeholder="Seo Keywords" value="{{ isset($page->seo_keywords) ? $page->seo_keywords : old('seo_keywords') }}"
                                         required>
                                 </div>
                                 {{-- <div class="form-group">

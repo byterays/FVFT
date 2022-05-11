@@ -127,3 +127,14 @@ if(!function_exists('getLatestJobs')){
        
     }
 }
+
+if(!function_exists('getRouteMethodName')){
+    function getRouteMethodName($routeName){
+        $router = app('Illuminate\Routing\Router');
+        $methods = null;
+        if(! is_null($route = $router->getRoutes()->getByName($routeName))){
+            $methods = $route->methods();
+        }
+        return $methods[0];
+    }
+}

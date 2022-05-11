@@ -106,7 +106,7 @@ class SantiController extends Controller
         if ($lastAbout->exists()) {
             $lastAbout->first()->update(['status' => 1]);
         }
-        return response()->json(['msg' => 'About deleted']);
+        return redirect()->back()->with(notifyMsg('success', 'Data Deleted'));
     }
 
     public function updateStatus(Request $request)

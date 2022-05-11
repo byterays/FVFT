@@ -20,7 +20,7 @@
     <h4 class="page-title">News</h4>
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Modules</a></li>
-        <li class="breadcrumb-item" aria-current="news"><a href="/admin/news/">news</a></li>
+        <li class="breadcrumb-item" aria-current="news"><a href="{{ route('admin.news.list') }}">news</a></li>
     </ol>
 </div>
 <div class="row">
@@ -31,7 +31,7 @@
                 <h3 class="card-title" style="width: 100%;">News List</h3>
                 <div class="d-flex flex-row-reverse mb-2" >
 
-                    <a type="button" class="btn btn-primary" href="/admin/news/new"><i class="fe fe-plus mr-2"></i>Add New</a>
+                    <a type="button" class="btn btn-primary" href="{{ route('admin.news.new') }}"><i class="fe fe-plus mr-2"></i>Add New</a>
                 </div>
             </div>
             <div class="card-body">
@@ -72,12 +72,15 @@
                                 <td>
                                     {{-- <button class="btn btn-danger" data-toggle="modal" data-target="#largeModal">View modal</button> --}}
                                     <div data-toggle="tooltip" data-original-title="View" style="display: inline-block;">
-                                        <a class="btn btn-primary btn-sm text-white mb-1"  href="/news/{{$item->id}}" ><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-primary btn-sm text-white mb-1" target="_blank"  href="{{ route('news.details', $item->slug) }}" ><i class="fa fa-eye"></i></a>
                                     </div>
                                      <div data-toggle="tooltip" data-original-title="Edit" style="display: inline-block;">
-                                        <a class="btn btn-success btn-sm text-white mb-1"  href="/admin/news/edit/{{$item->id}}"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-success btn-sm text-white mb-1"  href="{{ route('admin.news.edit', $item->id) }}"><i class="fa fa-pencil"></i></a>
                                     </div>
-                                    <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip" data-original-title="Delete" href="/admin/news/delete/{{$item->id}}"><i class="fa fa-trash-o"></i></a><br>
+                                    <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="modal" data-target="#dataDeleteModal" data-id="{{ $item->id }}" data-action="{{ route('admin.news.delete', $item->id) }}" data-method="{{ getRouteMethodName('admin.news.delete') }}" data-modaltitle="Delete News">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a><br>
+                                    {{-- <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip" data-original-title="Delete" href="/admin/news/delete/{{$item->id}}"><i class="fa fa-trash-o"></i></a><br> --}}
                                 </td>
                             </tr>
                             @endforeach

@@ -46,10 +46,13 @@
                                                     href="{{ route('admin.industry.edit', $industry->id) }}"><i
                                                         class="fa fa-pencil"></i></a>
                                             </div>
-                                            <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
+                                            <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="modal"
+                                                data-target="#dataDeleteModal" data-id="{{ $industry->id }}" data-action="{{ route('admin.industry.delete', $industry->id) }}" data-method="{{ getRouteMethodName('admin.industry.delete') }}" data-modaltitle="Delete Industry">
+                                                <i class="fa fa-trash-o"></i></a><br>
+                                            {{-- <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
                                                 data-original-title="Delete"
                                                 href="javascript:void(0);" onclick="deleteData({{ $industry->id }}, $(this));"><i
-                                                    class="fa fa-trash-o"></i></a><br>
+                                                    class="fa fa-trash-o"></i></a><br> --}}
                                         </td>
                                     </tr>
                                 @endforeach

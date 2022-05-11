@@ -63,18 +63,25 @@ class NewsController extends Controller
     public function delete($id)
     {
         try {
-            DB::table('news')->delete($id);
-            return redirect()
-                ->route('admin.pages.news.list')
-                ->with(['delete' => [
-                    'status' => 'success'
-                ]]);
-        } catch (\Throwable $th) {
-            return redirect()
-                ->route('admin.news.list')
-                ->with(['delete' => [
-                    'status' => 'failed'
-                ]]);
+            $news = News::find($id);
+            if(!blank($news)){
+                $news->delete();
+                return redirect()->back()->with(notifyMsg('success', 'News deleted successfully'));
+            }
+            return redirect()->back()->with(notifyMsg('error', 'News Not Found'));  
+            // DB::table('news')->delete($id);
+            // return redirect()
+            //     ->route('admin.pages.news.list')
+            //     ->with(['delete' => [
+            //         'status' => 'success'
+            //     ]]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(notifyMsg('error', $e->getMessage()));
+            // return redirect()
+            //     ->route('admin.news.list')
+            //     ->with(['delete' => [
+            //         'status' => 'failed'
+            //     ]]);
         }
     }
 }

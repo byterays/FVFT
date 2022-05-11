@@ -62,18 +62,25 @@ class PageController extends Controller
     }
     public function delete($id){
         try {
-            DB::table('pages')->delete($id);
-            return redirect()
-            ->route('admin.pages.list')
-            ->with(['delete'=>[
-                'status' => 'success'
-            ]]);
-        } catch (\Throwable $th) {
-            return redirect()
-            ->route('admin.pages.list')
-            ->with(['delete'=>[
-                'status' => 'failed'
-            ]]);
+            $page = Page::find($id);
+            if($page != null){
+                $page->delete();
+                return redirect()->back()->with(notifyMsg('success', 'Page deleted successfully'));
+            }
+            return redirect()->back()->with(notifyMsg('error', 'Page Not Found'));
+            // DB::table('pages')->delete($id);
+            // return redirect()
+            // ->route('admin.pages.list')
+            // ->with(['delete'=>[
+            //     'status' => 'success'
+            // ]]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(notifyMsg('error', $e->getMessage()));
+            // return redirect()
+            // ->route('admin.pages.list')
+            // ->with(['delete'=>[
+            //     'status' => 'failed'
+            // ]]);
         }
     }
 }

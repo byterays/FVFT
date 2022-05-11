@@ -68,7 +68,18 @@ class UsefulInformationController extends Controller
 
     public function delete($id)
     {
-        $training = UsefulInformation::destroy($id);
-        return response()->json(['redirectRoute' => route('admin.usefulinfo.index'), 'msg' => 'Item deleted successfully']);
+        $info = UsefulInformation::find($id);
+        try{
+            if(!blank($info)){
+                $info->delete();
+                return redirect()->back()->with(notifyMsg('success', 'Information deleted successfully'));
+            }
+            return redirect()->back()->with(notifyMsg('error', 'Information Not Found'));
+        } catch(\Exception $e){
+            return redirect()->back()->with(notifyMsg('error', $e->getMessage()));
+        }
+        // return response()->json(['redirectRoute' => route('admin.usefulinfo.index'), 'msg' => 'Item deleted successfully']);
     }
 }
+
+
