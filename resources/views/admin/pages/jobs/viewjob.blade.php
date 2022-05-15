@@ -358,15 +358,34 @@
             </div>
             @if ($job->status == 'Pending')
                 <div class="text-center buttondiv">
-                    <button class="btn btn-primary rounded-0" onclick="updateJobStatus({{ $job->id }}, 'Approved')">Approve</button>
-                    <button class="btn btn-secondary rounded-0 ml-5" onclick="updateJobStatus({{ $job->id }}, 'Rejected')">Reject</button>
+                    <button class="btn btn-primary rounded-0" data-toggle="modal" data-target="#approveRejectJobModal" data-id="{{ $job->id }}" data-status="Approved" data-modaltitle="approve">Approve</button>
+                    <button class="btn btn-secondary rounded-0 ml-5" data-toggle="modal" data-target="#approveRejectJobModal" data-id="{{ $job->id }}" data-status="Rejected" data-modaltitle="reject">Reject</button>
+                    {{-- <button class="btn btn-primary rounded-0" onclick="updateJobStatus({{ $job->id }}, 'Approved')">Approve</button>
+                    <button class="btn btn-secondary rounded-0 ml-5" onclick="updateJobStatus({{ $job->id }}, 'Rejected')">Reject</button> --}}
                 </div>
             @endif
         </div>
     </div>
+    @include('modals.approveRejectJob')
 @endsection
 @section('script')
     <script>
+        $(document).ready(function(){
+            $("#approveRejectJobModal").on('show.bs.modal', function(e){
+                var $_button = $(e.relatedTarget),
+                    $_this_data_id = $($_button).data('id'),
+                    $_this_data_status = $($_button).data('status'),
+                    $_this_data_modal_title = $($_button).data('modaltitle');
+                $("#JobButton").attr('onclick', 'updateJobStatus('+ $_this_data_id +', '+ "'" + $_this_data_status + "'" +')');
+                $("#modalTitle").html(capitalizeFirstLetter($_this_data_modal_title));
+                $("#JobButton").html(capitalizeFirstLetter($_this_data_modal_title));
+                $("#ApproveRejectTitle").html($_this_data_modal_title);
+            });
+
+            $("#approveRejectJobModal").on('hide.bs.modal', function(){
+                $("#JobButton").removeAttr('onclick');
+            });
+        });
         function updateJobStatus(job_id, job_status) {
             if (job_id != null && job_status != null) {
                 $.ajax({
@@ -379,19 +398,27 @@
                     success: function(response){
                         if(response.db_error){
                             toastr.warning(response.db_error);
+                            hideApproveRejectJobModal();
                         } else if(!response.db_error){
                             toastr.success(response.msg);
                             $(".buttondiv").hide();
+                            hideApproveRejectJobModal();
                         }
                     }, 
                     complete: function(){
                         $(".buttondiv").find('button').attr('disabled', false);
+                        hideApproveRejectJobModal();
                     }
                 });
             } else {
                 toastr.error('Something went wrong');
             }
 
+        }
+
+        function hideApproveRejectJobModal()
+        {
+            $("#approveRejectJobModal").modal('hide');
         }
     </script>
 @endsection

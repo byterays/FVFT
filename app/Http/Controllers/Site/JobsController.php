@@ -19,9 +19,10 @@ class JobsController extends Controller
         // $jobs = new Job();
         $jobs = Job::whereIn('status', ['Active', 'Published', 'Approved']);
         global $search;
+        // dd($search);
         if ($request->filled('search')) {
             $search = $request->search;
-            $jobs = $jobs->orWhere(function ($jobs) {
+            $jobs = $jobs->where(function ($jobs) {
                 global $search;
                 $jobs->where('title', 'LIKE', '%' . $search . '%');
             });
@@ -36,11 +37,11 @@ class JobsController extends Controller
             $jobs = $jobs->whereIn('job_categories_id', (array)$request->job_catagory);
         }
         // dd($jobs->where('job_categories_id', $request->job_category)->get());
-        $request->filled("salary_from") ? $jobs->where('salary_from', ">=", $request->salary_from) : null;
-        $request->filled("salary_to") ? $jobs->where('salary_to', "<=", $request->salary_to) : null;
+        // $request->filled("salary_from") ? $jobs->where('salary_from', ">=", $request->salary_from) : null;
+        // $request->filled("salary_to") ? $jobs->where('salary_to', "<=", $request->salary_to) : null;
         $job_categories = JobCategory::get();
         $job_shifts = DB::table('job_shifts')->get();
-        $jobs = $jobs->with(['company', 'country', 'job_category'])->paginate(9)->setPath('');
+        $jobs = $jobs->orderBy('id', 'desc')->with(['company', 'country', 'job_category'])->paginate(9)->setPath('');
         $fields = [
             "jobs" => $jobs,
             "pagination" => $jobs->appends(array(
