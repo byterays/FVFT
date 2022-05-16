@@ -339,7 +339,7 @@ class ProfileController extends Controller
                     }
                 }
 
-                if(!blank($request->countries)){
+                if(!blank($request->countries) AND !is_null($request->countries)){
                     $this->employe()->countryPreference()->sync(collect($request->countries)->filter());
                     if(count($this->employe()->countryPreference) > 2){
                         DB::rollBack();
@@ -370,14 +370,14 @@ class ProfileController extends Controller
         $employ = Employe::where('user_id', Auth::user()->id)
         ->with([
             'user:id,email',
-            'country:id,name', 
-            'state:id,name', 
-            'city:id,name', 
-            'education_level:id,title', 
-            'employeeSkills.skill:id,title', 
-            'employeeLanguage.language:id,lang', 
-            'experience.country:id,name', 
-            'experience.job_category:id,functional_area', 
+            'country:id,name',
+            'state:id,name',
+            'city:id,name',
+            'education_level:id,title',
+            'employeeSkills.skill:id,title',
+            'employeeLanguage.language:id,lang',
+            'experience.country:id,name',
+            'experience.job_category:id,functional_area',
             // 'experience.industry:id,title',
             // 'experience.job:id,title'
             ])->first();
