@@ -164,16 +164,21 @@
                                 </div>
 
                                 <div class="card">
-                                    <div class="card-body mx-auto">
-                                        <div class="mx-auto">
-                                            <span>{{ __('Experience') }}</span> &nbsp;&nbsp;&nbsp;<a
-                                                href="{{ route('candidate.profile.get_experience') }}"
-                                                class="btn btn-primary rounded-0 "><i
-                                                    class="fa fa-arrow-left mr-1"></i>{{ __('Back') }} </a>
-                                            <button type="button" onclick="submitForm(event);"
-                                                    class="btn btn-primary ml-3 rounded-0" id="updateButton">{{ __('Next') }} <i
-                                                    class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Next') }}
-                                        </span>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="mx-auto float-left">
+                                                    <a href="{{ route('candidate.profile.get_experience') }}" class="btn btn-primary rounded-0">
+                                                        <i class="fa fa-arrow-left mr-1"></i>{{ __('Back') }}
+                                                    </a>
+                                                </div>
+                                                <div class="mx-auto float-right">
+                                                    <button type="button" onclick="submitForm(event, 'reload');" class="btn btn-primary rounded-0">{{ __('Save') }}</button>
+                                                    <button type="button" onclick="submitForm(event, 'proceed');" class="btn btn-primary rounded-0">
+                                                        {{ __('Next') }}<i class="fa fa-arrow-right ml-1"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -201,7 +206,7 @@
         @endif
 
 
-        function submitForm(e) {
+        function submitForm(e, redirect='proceed') {
             e.preventDefault();
             $('.require').css('display', 'none');
             let url = $("#preferenceForm").attr('action');
@@ -234,7 +239,11 @@
                         });
                     } else if (!response.errors && !response.db_error) {
                         toastr.success(response.msg);
-                        location.href = response.redirectRoute;
+                        if (redirect && redirect === 'reload') {
+                            window.location.reload()
+                        }else{
+                            location.href = response.redirectRoute;
+                        }
                     }
                 },
                 complete: function() {
