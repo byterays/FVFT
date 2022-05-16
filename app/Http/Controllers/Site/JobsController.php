@@ -22,8 +22,8 @@ class JobsController extends Controller
         // dd($search);
         if ($request->filled('search')) {
             $search = $request->search;
-            $jobs = $jobs->where(function ($jobs) {
-                global $search;
+            $jobs = $jobs->where(function ($jobs) use($search) {
+                // global $search;
                 $jobs->where('title', 'LIKE', '%' . $search . '%');
             });
         }
