@@ -155,10 +155,10 @@
                                                             <div id="countryAppend"></div>
                                                         </div>
                                                     </div>
+                                                @else
+                                                    @include('themes.fvft.candidates.profile.preference_partial')
+                                                @endif
                                             </div>
-                                            @else
-                                                @include('themes.fvft.candidates.profile.preference_partial')
-                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -281,12 +281,12 @@
                             <select name="industry[]" class="form-control select2-show-search" data-placeholder="Select Industry">
                                 <option value="">{{ __('Select Industry') }}</option>
                                 @foreach($job_industries as $job_industry)
-                                    <option value="{{ $job_industry->id }}">{{ $job_industry->title }}</option>
+                <option value="{{ $job_industry->id }}">{{ $job_industry->title }}</option>
                                 @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <button type="button" class="btn btn-block" onclick="removeRow('jobRow_` + jt_count + `')">
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-block" onclick="removeRow('jobRow_` + jt_count + `')">
                                 <i class="fa fa-close mr-1 text-danger"></i> Remove
                             </button>
                         </div>
