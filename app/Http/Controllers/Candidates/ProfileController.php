@@ -322,7 +322,7 @@ class ProfileController extends Controller
     {
         try {
             DB::beginTransaction();
-            if (in_array(!null, $request->categories) || in_array(!null, $request->countries) || in_array(!null, $request->industry)) {
+//            if (in_array(!null, $request->categories) || in_array(!null, $request->countries) || in_array(!null, $request->industry)) {
                 // $preferences = EmployJobPreference::where('employ_id', $this->employe()->id);
                 // if ($preferences->exists()) {
                 //     $preferences->delete();
@@ -339,7 +339,7 @@ class ProfileController extends Controller
                     }
                 }
 
-                if(!blank($request->countries) AND !is_null($request->countries)){
+                if(!blank($request->countries)){
                     $this->employe()->countryPreference()->sync(collect($request->countries)->filter());
                     if(count($this->employe()->countryPreference) > 2){
                         DB::rollBack();
@@ -355,7 +355,7 @@ class ProfileController extends Controller
                     }
                 }
 
-            }
+//            }
 
             DB::commit();
             return response()->json(['msg' => 'Job Preference updated successfully', 'redirectRoute' => route('candidate.profile.get_preview')]);
