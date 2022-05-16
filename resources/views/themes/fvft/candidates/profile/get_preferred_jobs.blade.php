@@ -42,7 +42,7 @@
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <input type="hidden" class="form-control" name="user_id" value="{{ setParameter($employ, 'user_id') }}">
-                                                @if ($employe->job_preferences->isEmpty())
+                                                @if (blank($employ->jobCategoryPreference))
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <h3 class="card-title">{{ __('Job Category') }}</h3>
@@ -90,7 +90,11 @@
                                                             <div id="categoryAppend"></div>
                                                         </div>
                                                     </div>
-                                                    <hr>
+                                                @else
+                                                    @include('themes.fvft.candidates.profile.preference-category')
+                                                @endif
+                                                <hr>
+                                                @if (blank($employ->industryPreference))
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <h3 class="card-title">{{ __('Industry') }}</h3>
@@ -121,7 +125,11 @@
                                                             <div id="jobTitleAppend"></div>
                                                         </div>
                                                     </div>
-                                                    <hr>
+                                                @else
+                                                    @include('themes.fvft.candidates.profile.preference-industry')
+                                                @endif
+                                                <hr>
+                                                @if (blank($employ->countryPreference))
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <h3 class="card-title">{{ __('Country') }}</h3>
@@ -156,7 +164,7 @@
                                                         </div>
                                                     </div>
                                                 @else
-                                                    @include('themes.fvft.candidates.profile.preference_partial')
+                                                    @include('themes.fvft.candidates.profile.preference-country')
                                                 @endif
                                             </div>
                                         </div>
