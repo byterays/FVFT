@@ -586,5 +586,44 @@ class ProfileController extends Controller
             return Response::download($pdf, $employe->full_name.'.pdf', $headers);
         }
     }
+
+    public function updateCandidateProfile(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'avatar' => ['required', 'mimes:jpeg,jpg,png,svg', 'max:4096'],
+        ]);
+        if($validator->fails()){
+            return response()->json(['status' => false, 'error' => $validator->errors()]);
+        }
+        if($validator->passes()){
+            try{    
+                DB::beginTransaction();
+                $destination = 'uploads/candidates/profiles/';
+                $employ = $this->employe();
+                if(!file_exists($destination)){
+                    mkdir($destination, 0777, true);
+                }
+                if($request->hasFile('avatar')){
+                    $oldAvatar = $employ->avatar;
+                    $avatar = $request->file('avatar');
+                    $avatarName = time(). '.'.$avatar->getClientOriginalExtension();
+                    $employ->update([
+                        'avatar' => $destination.$avatarName,
+                    ]);
+                    $avatar->move($destination, $avatarName);
+                }
+                DB::commit();
+                if($request->hasFile('avatar')){
+                    if($oldAvatar != null AND file_exists($oldAvatar)){
+                        unlink($oldAvatar);
+                    }
+                }
+                return response()->json(['success' => true, 'msg' => 'Profile Picture changed successfully', 'avatar' => $employ->avatar]);
+            } catch(\Exception $e){
+                DB::rollBack();
+                return response()->json(['status' => false, 'db_error' => $e->getMessage()]);
+            }
+        }
+    }
 }
 
