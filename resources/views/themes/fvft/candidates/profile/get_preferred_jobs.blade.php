@@ -256,8 +256,8 @@
                 </select>
             </div>
             <div class="col-md-2 my-auto">
-                <button type="button" class="btn btn-block" onclick="removeRow('countryRow_` + c_count + `')">
-                        <i class="fa fa-close mr-1 text-danger"></i> Remove
+                <button type="button" class="btn btn-sm btn-danger" onclick="removeRow('countryRow_` + c_count + `')">
+                         Remove
                     </button>
                 </div>
             </div>`;
@@ -277,8 +277,8 @@
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <button type="button" class="btn btn-block" onclick="removeRow('jobRow_` + jt_count + `')">
-                                <i class="fa fa-close mr-1 text-danger"></i> Remove
+                            <button type="button" class="btn btn-sm btn-danger" onclick="removeRow('jobRow_` + jt_count + `')">
+                                 Remove
                             </button>
                         </div>
                     </div>`;
@@ -300,8 +300,8 @@
                 </select>
             </div>
             <div class="col-md-2 my-auto">
-                <button type="button" class="btn btn-block" onclick="removeRow('catRow_` + jc_count + `')">
-                    <i class="fa fa-close mr-1 text-danger"></i> Remove
+                <button type="button" class="btn btn-sm btn-danger" onclick="removeRow('catRow_` + jc_count + `')">
+                     Remove
                     </button>
                         </div>
                     </div>`;

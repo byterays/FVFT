@@ -44,7 +44,7 @@
                                                 <input type="hidden" name="is_experience" value="Yes" class="form-control">
                                                 <input type="hidden" class="form-control" name="user_id"
                                                        value="{{ setParameter($employ, 'user_id') }}">
-                                                @if ($employ->experience != null)
+                                                @if (!blank($employ->experience))
                                                     @foreach ($employ->experience as $key => $employ_experience)
                                                         <div class="form-group">
                                                             <label for=""
@@ -139,10 +139,11 @@
                                                         </div>
                                                     @endforeach
                                                 @else
-                                                    @include(
-                                                        'admin.pages.candidates.partial.experience_new'
-                                                    )
+                                                    <div>
+                                                        @include('admin.pages.candidates.partial.experience_new')
+                                                    </div>
                                                 @endif
+
                                                 <div id="appendExperience">
 
                                                 </div>

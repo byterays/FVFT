@@ -8,6 +8,11 @@
         float: none;
     }
 
+    .horizontalMenu-list.rightList {
+        width: auto !important;
+
+    }
+
 
     @media only screen and (max-width: 991px) {
         .horizontalMenu>.horizontalMenu-list {
@@ -27,6 +32,12 @@
     <ul class="horizontalMenu-list">
         @foreach ($primary_menu as $item)
             <li><a href="{{ $item->link }}">{{ __($item->title) }}</a></li>
+            @if($item->title == 'Companies' AND auth()->check() AND auth()->user()->user_type == 'candidate')
+                <li>
+                    <a href="{{ route('candidate.usefulinfo.index') }}">{{ __('Information') }}</a>
+                </li>
+            @endif
+            @continue
         @endforeach
         {{-- @auth
             @if (auth()->user()->user_type == 'candidate')
@@ -34,9 +45,11 @@
             @endif
         @endauth --}}
     </ul>
-    <ul class="horizontalMenu-list d-lg-flex">
+    <ul class="horizontalMenu-list ml-auto rightList d-lg-flex">
         <li class="mt-0 pt-0 pb-5 mt-lg-0 ml-lg-3">
-            <span><a class="btn btn-success rounded-0 mt-1" href="{{ !blank($google_play_link) ? $google_play_link : '#' }}" target="{{ !blank($google_play_link) ? '_blank' : '' }}">
+            <span><a class="btn btn-success rounded-0 mt-1"
+                    href="{{ !blank($google_play_link) ? $google_play_link : '#' }}"
+                    target="{{ !blank($google_play_link) ? '_blank' : '' }}">
                     {{ __('Download App') }}</a></span>
         </li>
         @auth
@@ -113,7 +126,8 @@
         @endauth
         <li class="mt-0 pt-0 pb-5 mt-lg-0 ml-lg-3">
             <span>
-                <a class="btn btn-danger rounded-0  mt-1" href="{{ url('lang/' . ($current_locale == 'en' ? 'np' : 'en')) }}">
+                <a class="btn btn-danger rounded-0  mt-1"
+                    href="{{ url('lang/' . ($current_locale == 'en' ? 'np' : 'en')) }}">
                     {{ $current_locale == 'en' ? 'Nepali' : 'English' }}
                 </a>
             </span>

@@ -9,7 +9,7 @@
         @endphp
         <div class="col-md-6">
             @if ($savedJob->exists())
-                <a href="javascript:void(0);" class="saveJobButton ico-grid-font btn btn-warning btn-block">
+                <a href="javascript:void(0);" onclick="savejob({{ $job->id }}, $(this))" class="saveJobButton ico-grid-font btn btn-warning btn-block">
                     <i class="fa fa-heart"></i>
                     {{ __('Saved') }}
                 </a>
@@ -30,7 +30,7 @@
             @endif
         </div>
         <div class="col-md-6 mt-3">
-            <a href="{{ route('viewJob', $job->id) }}" class="ico-grid-font btn btn-warning btn-block">
+            <a href="{{ route('viewJob', $job->id) }}" class="ico-grid-font btn btn-success btn-block">
                 <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
             </a>
         </div>
@@ -40,7 +40,7 @@
         </div>
     @elseif(auth()->user()->user_type == 'company')
         <div class="col-md-6 mt-3">
-            <a href="{{ route('viewJob', $job->id) }}" class="ico-grid-font btn btn-warning btn-block">
+            <a href="{{ route('viewJob', $job->id) }}" class="ico-grid-font btn btn-success btn-block">
                 <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
             </a>
         </div>
@@ -55,7 +55,7 @@
             {{ __('Apply Now') }}</a>
     </div>
     <div class="col-md-6 mt-3">
-        <a href="{{ route('viewJob', $job->id) }}" class="ico-grid-font btn btn-warning btn-block">
+        <a href="{{ route('viewJob', $job->id) }}" class="ico-grid-font btn btn-success btn-block">
             <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
         </a>
     </div>

@@ -26,6 +26,17 @@ if (!function_exists('notifyMsg')) {
     }
 }
 
+if (!function_exists('swalNotify')) {
+    function swalNotify($msg, $icon='success', $title=null)
+    {
+        return [
+            'swalTitle' => $title,
+            'swalMessage' => $msg,
+            'swalIcon' => $icon
+        ];
+    }
+}
+
 if (!function_exists('getApplicantCompanyList')) {
     function getApplicantCompanyList($applicant)
     {
