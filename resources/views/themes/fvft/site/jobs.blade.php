@@ -55,7 +55,10 @@
                                                     <div class="p-0 m-0 item-card9-img">
                                                         <div class="item-card9-imgs">
                                                             <a href="{{ route('viewJob', $item->id) }}"></a>
-                                                            @if ($item->feature_image_url)
+                                                            @if (!blank($item, 'company') and !blank(data_get($item, 'company.company_logo')))
+                                                                <img src="{{ asset(data_get($item, 'company.company_logo')) }}"
+                                                                    alt="img" class="h-100">
+                                                            @elseif ($item->feature_image_url)
                                                                 <img src="{{ asset($item->feature_image_url) }}"
                                                                     alt="img" class="h-100">
                                                             @else

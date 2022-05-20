@@ -29,6 +29,14 @@
                 </div>
                 <div class="col-xl-9 col-lg-12 col-md-12">
                     @include('partial/candidates/tabs', ['title' => 'Edit My Profile - Qualification'])
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            @include(
+                                'themes.fvft.candidates.components.profile.profile-completion',
+                                ['employee' => $employe]
+                            )
+                        </div>
+                    </div>
 
                     <form action="{{ route('candidate.profile.post_qualification') }}" method="POST" id="candidateForm">
                         @csrf
@@ -166,9 +174,9 @@
                                         <div class="mx-auto">
                                             <span>{{ __('Contact Information') }}</span> &nbsp;&nbsp;&nbsp;<a
                                                 href="{{ route('candidate.profile.get_contact_information') }}"
-                                                class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i>{{ __('Back') }} </a>
+                                                class="btn btn-success rounded-0"><i class="fa fa-arrow-left"></i>{{ __('Back') }} </a>
                                             <button type="button" onclick="submitForm(event);"
-                                                    class="btn btn-primary ml-3 rounded-0">{{ __('Next') }} <i
+                                                    class="btn btn-success ml-3 rounded-0">{{ __('Next') }} <i
                                                     class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Experience') }}
                                             </span>
                                         </div>

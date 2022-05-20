@@ -34,12 +34,12 @@
                     @include('themes.fvft.candidates.components.sidebar')
                 </div>
                 <div class="col-xl-9 col-lg-12 col-md-12">
-                    <div class="card mb-0">
+                    {{-- <div class="card mb-0">
                         <div class="card-body">
-                            <h3 class="card-title">{{ __('My CV') }}</h3>
-                            @include('partial/candidates/tabs')
-                        </div>
-                    </div>
+                            <h3 class="card-title">{{ __('My CV') }}</h3> --}}
+                            @include('partial/candidates/tabs', ['title' => __('My CV')])
+                        {{-- </div>
+                    </div> --}}
 
                     <div class="row mt-5">
                         <div class="col-md-12">
@@ -89,10 +89,35 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <a href="{{ route('candidate.profile.downloadUploadedCv', ['type' => 'preview']) }}"
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <th>File</th>
+                                                <th>Action</th>
+                                            </thead>
+                                            <tbody>
+                                                @if(!blank($employ->cv) AND file_exists($employ->cv))
+                                                <tr>
+                                                    <td>{{ $employ->full_name.'.pdf' }}</td>
+                                                    <td>
+                                                        <div class="d-inline-flex">
+                                                            <a href="{{ route('candidate.profile.downloadUploadedCv', ['type' => 'preview']) }}"
+                                                                target="_blank" class="btn btn-primary rounded-0">{{ __('Preview') }}</a>
+                                                            <a href="{{ route('candidate.profile.downloadUploadedCv') }}" target="_blank"
+                                                                class="btn btn-primary ml-3 rounded-0">{{ __('Download') }}</a>
+                                                            <a href="{{ route('candidate.profile.removeCv') }}"
+                                                                class="btn btn-danger ml-3 rounded-0">{{ __('Remove') }}</a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {{-- <a href="{{ route('candidate.profile.downloadUploadedCv', ['type' => 'preview']) }}"
                                         target="_blank" class="btn btn-primary">{{ __('Preview') }}</a>
                                     <a href="{{ route('candidate.profile.downloadUploadedCv') }}" target="_blank"
-                                        class="btn btn-primary ml-5">{{ __('Download') }}</a>
+                                        class="btn btn-primary ml-5">{{ __('Download') }}</a> --}}
                                 </div>
                             </div>
                         </div>
@@ -145,6 +170,7 @@
                         resetDropify();
                     } else {
                         toastr.success(data.msg);
+                        location.reload();
                         setTimeout(() => {
                             resetDropify();
                         }, 10000);

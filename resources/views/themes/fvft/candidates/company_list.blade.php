@@ -71,14 +71,14 @@
                                                             <div class="p-0 m-0 mr-3">
                                                                 <div class="">
                                                                     <a
-                                                                        href="{{ route('site.companydetail', $company->id) }}"></a>
+                                                                        href="{{ route('site.companydetail', $company->id) }}" target="_blank"></a>
                                                                     <img src="{{ asset($company_logo) }}" alt="img"
-                                                                        class="w-9 h-9">
+                                                                        class="w-100 h-9">
                                                                 </div>
                                                             </div>
                                                             <div class="item-card9 mt-3 mt-md-5">
                                                                 <a href="{{ route('site.companydetail', $company->id) }}"
-                                                                    class="text-dark">
+                                                                    class="text-dark" target="_blank">
                                                                     <h4 class="font-weight-semibold mt-1">
                                                                         {{ $company->company_name }}</h4>
                                                                 </a>
@@ -86,7 +86,7 @@
                                                             </div>
                                                             <div class="ml-auto">
                                                                 <a class="btn btn-light mt-3 mt-md-6 mr-4 font-weight-semibold text-dark"
-                                                                    href="{{ route('site.companydetail', $company->id) }}"><i
+                                                                    href="{{ route('site.companydetail', $company->id) }}" target="_blank"><i
                                                                         class="fa fa-eye"></i>{{ __('View Detail') }}</a>
                                                             </div>
                                                         </div>
@@ -112,14 +112,14 @@
                                                                 <div class="p-0 m-0 mr-3">
                                                                     <div class="">
                                                                         <a
-                                                                            href="{{ route('site.companydetail', $company->id) }}"></a>
+                                                                            href="{{ route('site.companydetail', $company->id) }}" target="_blank"></a>
                                                                         <img src="{{ asset($company_logo) }}" alt="img"
                                                                             class="w-8 h-8">
                                                                     </div>
                                                                 </div>
                                                                 <div class="item-card9 mt-2">
                                                                     <a href="{{ route('site.companydetail', $company->id) }}"
-                                                                        class="text-dark">
+                                                                        class="text-dark" target="_blank">
                                                                         <h4 class="font-weight-semibold mt-1">
                                                                             {{ $company->company_name }}</h4>
                                                                     </a>

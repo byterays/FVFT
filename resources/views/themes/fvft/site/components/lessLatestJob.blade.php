@@ -10,7 +10,10 @@
                                     <div class="p-0 m-0 item-card9-img">
                                         <div class="item-card9-imgs">
                                             <a href="{{ route('viewJob', $latest_job->id) }}"></a>
-                                            @if ($latest_job->feature_image_url)
+                                            @if (!blank($latest_job, 'company') and !blank(data_get($latest_job, 'company.company_logo')))
+                                                <img src="{{ asset(data_get($latest_job, 'company.company_logo')) }}" alt="img"
+                                                    class="h-100">
+                                            @elseif ($latest_job->feature_image_url)
                                                 <img src="{{ asset($latest_job->feature_image_url) }}" alt="img"
                                                     class="h-100">
                                             @else

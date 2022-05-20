@@ -34,36 +34,44 @@
                                 <div class="col">
                                     <div class="profile-pic mb-0">
                                         <div class="d-md-flex">
-                                            <img src="{{ asset('/') }}{{ $job->feature_image_url != null ? $job->feature_image_url : 'images/defaultimage.jpg' }}"
+                                            <img src="{{ asset('/') }}{{ (!blank($job, 'company') and !blank(data_get($job, 'company.company_logo'))) ? data_get($job, 'company.company_logo') : ($job->feature_image_url != null ? $job->feature_image_url : 'images/defaultimage.jpg') }}"
                                                 class="w-20 h-20" alt="user">
                                             <div class="ml-4">
-                                                <a href="/job/{{ $job->id }}" class="text-dark">
+                                                <a href="{{ route('viewJob', $job->id) }}" class="text-dark">
                                                     <h4 class="mt-3 mb-1 fs-20 font-weight-bold">
                                                         {{ $job->title ?? 'Not-Available' }}</h4>
                                                 </a>
                                                 <div class="">
-                                                    <ul class="mb-0 d-flex">
-                                                        <li class="mr-3">
-                                                            <a href="#" class="icons">
-                                                                <i class="fa fa-building-o text-muted mr-1"></i>
-                                                                {{ $company->company_name ?? 'Not-Available' }}
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                                    @if (!blank(data_get($job, 'company')))
+                                                        <ul class="mb-0 d-flex">
+                                                            <li class="mr-3">
+                                                                <a href="{{ route('site.companydetail', data_get($job, 'company.id')) }}"
+                                                                    target="_blank" class="icons">
+                                                                    <i class="fa fa-building-o text-muted mr-1"></i>
+                                                                    {{ !blank(data_get($job, 'company.company_name')) ? data_get($job, 'company.company_name') : 'Not-Available' }}
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    @endif
                                                     <ul class="mb-0 mt-2 d-flex">
                                                         <li class="mr-3">
                                                             <a href="#" class="icons">
-                                                                <img src="{{ asset($country != null ? 'https://flagcdn.com/16x12/' . strtolower($country->iso2) . '.png' : '') }}"
-                                                                    class="mb-1" alt="">
-                                                                {{ $country->name ?? 'Not-Available' }}
+                                                                @if (!blank(data_get($job, 'country')))
+                                                                    <img src="{{ asset('https://flagcdn.com/16x12/' . strtolower(data_get($job, 'country.iso2')) . '.png') }}"
+                                                                        class="mb-1" alt="">
+                                                                    {{ data_get($job, 'country.name') ?? 'Not Available' }}
+                                                                @endif
                                                             </a>
                                                         </li>
                                                         <li class="mr-3">
                                                             <a href="#" class="icons">
                                                                 Basic Salary: <span class="blue">
-                                                                    {{ $country->currency ?? 'Not-Available' }}&nbsp;{{ $job->country_salary ?? 'Not-Available' }}&nbsp;&nbsp;
-                                                                    @if (isset($country->currency) and $country->currency != 'NPR')
-                                                                        NPR: {{ $job->nepali_salary ?? 'Not-Available' }}
+                                                                    @if (!blank(data_get($job, 'country')))
+                                                                        {{ data_get($job, 'country.currency') ?? '' }}&nbsp;{{ $job->country_salary ?? '' }}&nbsp;&nbsp;
+                                                                    @endif
+                                                                    @if (!blank(data_get($job, 'country')) and data_get($job, 'country.currency') != 'NPR')
+                                                                        NPR:
+                                                                        {{ $job->nepali_salary ?? '' }}
                                                                     @endif
                                                                 </span>
                                                             </a>
@@ -109,7 +117,7 @@
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     @if ($savedJob->exists())
-                                                                        <a href="javascript:void(0);"
+                                                                        <a href="javascript:void(0);" onclick="savejob({{ $job->id }})"
                                                                             class="saveJobButton ico-grid-font btn btn-warning btn-block">
                                                                             <i class="fa fa-heart"></i> Saved
                                                                         </a>
@@ -300,10 +308,10 @@
                                                             ->pluck('title')
                                                             ->toArray()
                                                         : '';
-
+                                                
                                                 // $skills = '<span class="badge badge-success">' . implode('</span> <span class="badge badge-success">', $skills) . '</span>'; //working code(converted to function)
                                                 $skills = $skills != null ? wrapInTag($skills, 'span', 'class="badge badge-success"', ' ') : '';
-
+                                                
                                             @endphp
                                             <div class="row">
                                                 <div class="col-md-4">
@@ -352,7 +360,7 @@
                                                 <div class="col-md-8">
                                                     @php
                                                         $country = App\Models\Country::where('id', $job->country_id)->first() ?? null;
-
+                                                        
                                                     @endphp
                                                     {{ $job->country_id != null && $country != null && $job->earning_country_salary != null ? 'Per Month ' . $country->currency . ' ' . $job->earning_country_salary : '' }}
                                                     {{ $job->country_id != null && $country != null && $job->earning_nepali_salary != null ? '- ' . $country->currency . ' ' . $job->earning_nepali_salary : '' }}
@@ -368,7 +376,7 @@
                                                 <div class="col-md-8">
                                                     @php
                                                         $accomodation = $job->accomodation == 1 ? 'Yes' : 'No';
-
+                                                        
                                                     @endphp
                                                     {{ $accomodation == 'Yes' ? $accomodation . ' (As Per Company Rule)' : $accomodation }}
                                                 </div>
@@ -382,7 +390,7 @@
                                                 <div class="col-md-8">
                                                     @php
                                                         $food = $job->food == 1 ? 'Yes' : 'No';
-
+                                                        
                                                     @endphp
                                                     {{ $food == 'Yes' ? $food . ' (As Per Company Rule)' : $food }}
                                                 </div>
@@ -440,33 +448,33 @@
     <script>
         @if (auth()->check() && auth()->user()->user_type == 'candidate')
             function savejob(job_id) {
-            var url = "{{ route('candidate.savedjob.saveJob') }}";
-            $.ajax({
-            url: url,
-            type: 'POST',
-            data: {
-            'job_id': job_id,
-            'employ_id': '{{ $employ->id }}',
-            },
-            beforeSend: function() {
-            $(".saveJobButton").attr('disabled', true);
-            },
-            success: function(response) {
-            if (response.db_error) {
-            toastr.warning(response.db_error);
-            } else if (response.error) {
-            toastr.warning(response.error);
-            } else if (response.redirectRoute) {
-            location.href = response.redirectRoute
-            } else {
-            toastr.success(response.msg);
-            }
-            window.location.reload()
-            },
-            complete: function() {
-            $(".saveJobButton").attr('disabled', false);
-            },
-            });
+                var url = "{{ route('candidate.savedjob.saveJob') }}";
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        'job_id': job_id,
+                        'employ_id': '{{ $employ->id }}',
+                    },
+                    beforeSend: function() {
+                        $(".saveJobButton").attr('disabled', true);
+                    },
+                    success: function(response) {
+                        if (response.db_error) {
+                            toastr.warning(response.db_error);
+                        } else if (response.error) {
+                            toastr.warning(response.error);
+                        } else if (response.redirectRoute) {
+                            location.href = response.redirectRoute
+                        } else {
+                            toastr.success(response.msg);
+                        }
+                        window.location.reload()
+                    },
+                    complete: function() {
+                        $(".saveJobButton").attr('disabled', false);
+                    },
+                });
             }
         @endif
     </script>

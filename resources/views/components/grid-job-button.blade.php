@@ -30,7 +30,7 @@
             @endif
         </div>
         <div class="col-md-6 mt-3">
-            <a href="{{ route('viewJob', $job->id) }}" class="ico-grid-font btn btn-success btn-block">
+            <a href="{{ route('viewJob', $job->id) }}" target="_blank" class="ico-grid-font btn btn-success btn-block">
                 <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
             </a>
         </div>
@@ -40,7 +40,7 @@
         </div>
     @elseif(auth()->user()->user_type == 'company')
         <div class="col-md-6 mt-3">
-            <a href="{{ route('viewJob', $job->id) }}" class="ico-grid-font btn btn-success btn-block">
+            <a href="{{ route('viewJob', $job->id) }}" target="_blank" class="ico-grid-font btn btn-success btn-block">
                 <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
             </a>
         </div>
@@ -55,7 +55,7 @@
             {{ __('Apply Now') }}</a>
     </div>
     <div class="col-md-6 mt-3">
-        <a href="{{ route('viewJob', $job->id) }}" class="ico-grid-font btn btn-success btn-block">
+        <a href="{{ route('viewJob', $job->id) }}" target="_blank" class="ico-grid-font btn btn-success btn-block">
             <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
         </a>
     </div>

@@ -49,13 +49,16 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Upload Logo</label>
-                                    <input type="file" class="dropify" name="feature_img" data-default-file="{{ isset($news->feature_img) ? asset($news->feature_img) : null }}" data-height="180" data-allowed-file-extensions="jpg png jpeg" data-max-file-size="2M">
+                                    <input type="file" class="dropify" name="feature_img" data-default-file="{{ isset($news->feature_img) ? asset($news->feature_img) : null }}" data-height="180" data-allowed-file-extensions="jpg png jpeg svg" data-max-file-size="2M">
+                                    @error('feature_img')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label class="form-label">Seo Title</label>
-                                    <input type="text" class="form-control" name="seo_title" placeholder="Slug"
+                                    <input type="text" class="form-control" name="seo_title" placeholder="Seo titile"
                                         value="{{ isset($news->title) ? $news->title : '' }}" required>
                                 </div>
                                 <div class="form-group">
@@ -67,7 +70,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Seo Keywords</label>
                                     <input type="text" class="form-control" data-role="tagsinput" name="seo_keywords"
-                                        placeholder="Slug" value="{{ isset($news->seo_keywords) ? $news->seo_keywords : '' }}"
+                                        placeholder="Keywords" value="{{ isset($news->seo_keywords) ? $news->seo_keywords : '' }}"
                                         required>
                                 </div>
                                 {{-- <div class="form-group">

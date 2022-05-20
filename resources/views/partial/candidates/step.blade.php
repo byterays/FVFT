@@ -76,11 +76,11 @@ $_7th = $RouteName == $route.'get_save';
                     </a>
                 </h4>
             </div>
-            <div class="step {{ $_7th ? 'active' : '' }}">
+            {{-- <div class="step {{ $_7th ? 'active' : '' }}"> //don't remove
                 <div class="step-icon-wrap">
                     <div class="step-icon">7</div>
                 </div>
                 <h4 class="step-title">{{ strtoupper(__('Save')) }}</h4>
-            </div>
+            </div> --}}
         </div>
 

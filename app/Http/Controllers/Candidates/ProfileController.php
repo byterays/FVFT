@@ -333,25 +333,25 @@ class ProfileController extends Controller
                 ]);
                 if(!blank($request->categories)){
                     $this->employe()->jobCategoryPreference()->sync(collect($request->categories)->filter());
-                    if(count($this->employe()->jobCategoryPreference) > 2){
+                    if(count($this->employe()->jobCategoryPreference) > 5){
                         DB::rollBack();
-                        return response()->json(['limit_error' => 'Category limit reached in job preference. Only 2 allowed']);
+                        return response()->json(['limit_error' => 'Category limit reached in job preference. Only 5 allowed']);
                     }
                 }
 
                 if(!blank($request->countries)){
                     $this->employe()->countryPreference()->sync(collect($request->countries)->filter());
-                    if(count($this->employe()->countryPreference) > 2){
+                    if(count($this->employe()->countryPreference) > 5){
                         DB::rollBack();
-                        return response()->json(['limit_error' => 'Country limit reached in job preference. Only 2 allowed']);
+                        return response()->json(['limit_error' => 'Country limit reached in job preference. Only 5 allowed']);
                     }
                 }
 
                 if(!blank($request->industry)){
                     $this->employe()->industryPreference()->sync(collect($request->industry)->filter());
-                    if(count($this->employe()->industryPreference) > 2){
+                    if(count($this->employe()->industryPreference) > 5){
                         DB::rollBack();
-                        return response()->json(['limit_error' => 'Industry limit reached in job preference. Only 2 allowed']);
+                        return response()->json(['limit_error' => 'Industry limit reached in job preference. Only 5 allowed']);
                     }
                 }
 
@@ -463,6 +463,7 @@ class ProfileController extends Controller
         $employ = $this->employe();
         return $this->client_view('candidates.profile.get_cv', [
             'employ' => $employ,
+            
         ]);
     }
 
@@ -624,6 +625,17 @@ class ProfileController extends Controller
                 return response()->json(['status' => false, 'db_error' => $e->getMessage()]);
             }
         }
+    }
+
+    public function removeCv(Request $request)
+    {
+        $employ = $this->employe();
+        $employeCv = $employ->cv;
+        if(!blank($employeCv) AND file_exists($employeCv)){
+            unlink($employeCv);
+        }
+        $employ->update(['cv' => null]);
+        return redirect()->back()->with(notifyMsg('success', 'Cv removed!'));
     }
 }
 

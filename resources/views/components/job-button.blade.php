@@ -44,7 +44,7 @@
     </div>
 @endauth
 <div class="col-md-3">
-    <a href="{{ route('viewJob', $job->id) }}" class="btn btn-success btn-block">
+    <a href="{{ route('viewJob', $job->id) }}" target="_blank" class="btn btn-success btn-block">
         <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
     </a>
 </div>

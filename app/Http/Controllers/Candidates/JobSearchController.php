@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers\Candidates;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use App\Models\Job;
 use App\Models\Company;
 use App\Models\Country;
-use App\Models\EmployJobPreference;
-use App\Models\Job;
-use App\Models\JobCategory;
+use App\Models\Employe;
 use App\Models\SavedJob;
-use App\Traits\Site\CandidateMethods;
-use App\Traits\Site\ThemeMethods;
-use Carbon\Carbon;
+use App\Models\JobCategory;
 use Illuminate\Http\Request;
+use App\Traits\Site\ThemeMethods;
+use Illuminate\Support\Facades\DB;
+use App\Models\EmployJobPreference;
+use App\Http\Controllers\Controller;
+use App\Traits\Site\CandidateMethods;
 
 class JobSearchController extends Controller
 {
@@ -62,7 +64,8 @@ class JobSearchController extends Controller
         })->when($request->type == 'featured_jobs', function ($q) {
             $q->where('is_featured', 1);
         })->when($request->type == 'new_jobs', function ($q) {
-            $q->where('publish_status', 1)->whereDate('created_at', '>=', Carbon::now()->subDays(30));
+            $q->where('publish_status', 1)->orderBy('created_at', 'DESC');
+            // $q->where('publish_status', 1)->whereDate('created_at', '>=', Carbon::now()->subDays(30)); // don't remove
         })->when($request->type == 'saved_jobs', function ($q) {
             $q->whereIn('id', function ($q1) {
                 $q1->select('job_id')->from((new SavedJob)->getTable())->where('employ_id', $this->employe()->id);
@@ -96,6 +99,31 @@ class JobSearchController extends Controller
         })->when($request->has('search'), function ($q) use ($request) {
             $q->where('title', 'LIKE', '%' . $request->search . '%');
         });
+    }
+
+    public function viewJobDetails(Request $request, $id)
+    {
+        $job = Job::find($id);
+        $action = $this->actions($request->type);
+        if ($job) {
+            $company = Company::where('id', $job->company_id)->first();
+            $company_contact_persons = DB::table('company_contact_persons')->where('company_id', $job->company_id)->first();
+            $fields = [
+                "job" => Job::where('id', $id)->with('company', 'country', 'job_category')->first(),
+                "company_contact_persons" => $company_contact_persons,
+                "company" => $company
+            ];
+            if (auth()->check() && auth()->user()->user_type == "candidate") {
+                $employ = Employe::where('user_id', auth()->user()->id)->with('employeeSkills')->first();
+                $application = DB::table('job_applications')->where('job_id', $id)->where('employ_id', $employ->id)->first();
+                $fields['application'] = $application;
+                $fields['employ'] = $employ;
+            }
+            $fields['action'] = $action;
+            return $this->client_view($this->page.'jobdetail', $fields);
+        } else {
+            return abort(404);
+        }
     }
 
     private function actions($type)
