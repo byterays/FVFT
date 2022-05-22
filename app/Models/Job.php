@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use App\Models\JobCategory;
 
 class Job extends Model
 {
-    use HasFactory;
+    use HasFactory, softDeletes;
 
     // earning_country_salary is equivalent to average_salary_from, and earning_nepali_salaryy is equivalent to average_salary_to
 

@@ -322,7 +322,7 @@ class ProfileController extends Controller
     {
         try {
             DB::beginTransaction();
-            if (in_array(!null, $request->categories) || in_array(!null, $request->countries) || in_array(!null, $request->industry)) {
+//            if (in_array(!null, $request->categories) || in_array(!null, $request->countries) || in_array(!null, $request->industry)) {
                 // $preferences = EmployJobPreference::where('employ_id', $this->employe()->id);
                 // if ($preferences->exists()) {
                 //     $preferences->delete();
@@ -355,7 +355,7 @@ class ProfileController extends Controller
                     }
                 }
 
-            }
+//            }
 
             DB::commit();
             return response()->json(['msg' => 'Job Preference updated successfully', 'redirectRoute' => route('candidate.profile.get_preview')]);
@@ -370,14 +370,14 @@ class ProfileController extends Controller
         $employ = Employe::where('user_id', Auth::user()->id)
         ->with([
             'user:id,email',
-            'country:id,name', 
-            'state:id,name', 
-            'city:id,name', 
-            'education_level:id,title', 
-            'employeeSkills.skill:id,title', 
-            'employeeLanguage.language:id,lang', 
-            'experience.country:id,name', 
-            'experience.job_category:id,functional_area', 
+            'country:id,name',
+            'state:id,name',
+            'city:id,name',
+            'education_level:id,title',
+            'employeeSkills.skill:id,title',
+            'employeeLanguage.language:id,lang',
+            'experience.country:id,name',
+            'experience.job_category:id,functional_area',
             // 'experience.industry:id,title',
             // 'experience.job:id,title'
             ])->first();

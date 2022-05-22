@@ -6,6 +6,7 @@ session()->forget('delete');
 }
 @endphp
 @extends('admin.layouts.master')
+@section('title', 'Companies List')
 @section('main')
 @if($delete)
 @if($delete["status"]=="success")

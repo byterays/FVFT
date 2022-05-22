@@ -49,7 +49,7 @@
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <input type="hidden" class="form-control" name="user_id" value="{{ setParameter($employ, 'user_id') }}">
-                                                @if ($employe->job_preferences->isEmpty())
+                                                @if (blank($employ->jobCategoryPreference))
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <h3 class="card-title">{{ __('Job Category') }}</h3>
@@ -97,7 +97,11 @@
                                                             <div id="categoryAppend"></div>
                                                         </div>
                                                     </div>
-                                                    <hr>
+                                                @else
+                                                    @include('themes.fvft.candidates.profile.preference-category')
+                                                @endif
+                                                <hr>
+                                                @if (blank($employ->industryPreference))
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <h3 class="card-title">{{ __('Industry') }}</h3>
@@ -128,7 +132,11 @@
                                                             <div id="jobTitleAppend"></div>
                                                         </div>
                                                     </div>
-                                                    <hr>
+                                                @else
+                                                    @include('themes.fvft.candidates.profile.preference-industry')
+                                                @endif
+                                                <hr>
+                                                @if (blank($employ->countryPreference))
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <h3 class="card-title">{{ __('Country') }}</h3>
@@ -162,10 +170,10 @@
                                                             <div id="countryAppend"></div>
                                                         </div>
                                                     </div>
+                                                @else
+                                                    @include('themes.fvft.candidates.profile.preference-country')
+                                                @endif
                                             </div>
-                                            @else
-                                                @include('themes.fvft.candidates.profile.preference_partial')
-                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -208,7 +216,7 @@
         @endif
 
 
-        function submitForm(e) {
+        function submitForm(e, redirect='proceed') {
             e.preventDefault();
             $('.require').css('display', 'none');
             let url = $("#preferenceForm").attr('action');
@@ -241,7 +249,11 @@
                         });
                     } else if (!response.errors && !response.db_error) {
                         toastr.success(response.msg);
-                        location.href = response.redirectRoute;
+                        if (redirect && redirect === 'reload') {
+                            window.location.reload()
+                        }else{
+                            location.href = response.redirectRoute;
+                        }
                     }
                 },
                 complete: function() {
@@ -279,13 +291,21 @@
                             <select name="industry[]" class="form-control select2-show-search" data-placeholder="Select Industry">
                                 <option value="">{{ __('Select Industry') }}</option>
                                 @foreach($job_industries as $job_industry)
-                                    <option value="{{ $job_industry->id }}">{{ $job_industry->title }}</option>
+                <option value="{{ $job_industry->id }}">{{ $job_industry->title }}</option>
                                 @endforeach
+<<<<<<< HEAD
                             </select>
                         </div>
                         <div class="col-md-2">
                             <button type="button" class="btn btn-sm btn-danger" onclick="removeRow('jobRow_` + jt_count + `')">
                                  Remove
+=======
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-block" onclick="removeRow('jobRow_` + jt_count + `')">
+                                <i class="fa fa-close mr-1 text-danger"></i> Remove
+>>>>>>> c3653110151c77bc87e18957ff10de232d754bd1
                             </button>
                         </div>
                     </div>`;

@@ -82,8 +82,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for=""
-                                                            class="form-label">{{ __('Marital Status') }}&nbsp;:</label>
+                                                        <label for="" class="form-label">{{ __('Marital Status') }}&nbsp;:</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         {{ $employ->marital_status }}
@@ -93,8 +92,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for=""
-                                                            class="form-label">{{ __('Date of Birth') }}&nbsp;:</label>
+                                                        <label for="" class="form-label">{{ __('Date of Birth') }}&nbsp;:</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         {{ date('Y F d', strtotime($employ->dob)) }}
@@ -104,8 +102,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for=""
-                                                            class="form-label">{{ __('Height') }}&nbsp;:</label>
+                                                        <label for="" class="form-label">{{ __('Height') }}&nbsp;:</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         {{ $employ->height ? $employ->height . ' ' . __('CM') : '' }}
@@ -115,8 +112,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for=""
-                                                            class="form-label">{{ __('Weight') }}&nbsp;:</label>
+                                                        <label for="" class="form-label">{{ __('Weight') }}&nbsp;:</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         {{ $employ->weight ? $employ->weight . ' ' . __('KG') : '' }}
@@ -130,8 +126,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for=""
-                                                            class="form-label">{{ __('Mobile Phone') }}&nbsp;:</label>
+                                                        <label for="" class="form-label">{{ __('Mobile Phone') }}&nbsp;:</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         {{ $employ->mobile_phone }}
@@ -141,8 +136,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for=""
-                                                            class="form-label">{{ __('Email ID') }}&nbsp;:</label>
+                                                        <label for="" class="form-label">{{ __('Email ID') }}&nbsp;:</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         {{ $employ->user != null ? $employ->user->email : '' }}
@@ -152,8 +146,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for=""
-                                                            class="form-label">{{ __('Address') }}&nbsp;:</label>
+                                                        <label for="" class="form-label">{{ __('Address') }}&nbsp;:</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         {{ $employ->state != null ? $employ->state->name : '' }}
@@ -172,8 +165,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for=""
-                                                            class="form-label">{{ __('Education') }}&nbsp;:</label>
+                                                        <label for="" class="form-label">{{ __('Education') }}&nbsp;:</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         {{ $employ->education_level != null ? $employ->education_level->title : '' }}
@@ -183,8 +175,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for=""
-                                                            class="form-label">{{ __('Training') }}&nbsp;:</label>
+                                                        <label for="" class="form-label">{{ __('Training') }}&nbsp;:</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         @if ($employ->employeeTrainings != null)
@@ -201,8 +192,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for=""
-                                                            class="form-label">{{ __('Skills') }}&nbsp;:</label>
+                                                        <label for="" class="form-label">{{ __('Skills') }}&nbsp;:</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         @if ($employ->employeeSkills != null)
@@ -219,8 +209,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <label for=""
-                                                            class="form-label">{{ __('Languages') }}&nbsp;:</label>
+                                                        <label for="" class="form-label">{{ __('Languages') }}&nbsp;:</label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         @if ($employ->employeeLanguage != null)

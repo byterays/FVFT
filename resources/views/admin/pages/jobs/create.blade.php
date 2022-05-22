@@ -1,4 +1,5 @@
 @extends('admin.layouts.master')
+@section('title', 'Create Job')
 @section('main')
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/datepicker.min.css') }}">
@@ -18,19 +19,27 @@
 
     </style>
     <div class="page-header">
-        <h4 class="page-title tempcolor">{{ strtoupper('Post a new Job') }}</h4>
+        <h4 class="page-title">Post a New Job</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Modules</a></li>
             <li class="breadcrumb-item" aria-current="page">Jobs</li>
             <li class="breadcrumb-item active" aria-current="page">Add</li>
         </ol>
     </div>
-    <div class="alert alert-secondary d-none" role="alert"><button type="button" class="close" data-dismiss="alert"
-            aria-hidden="true">×</button><span id="db_error" class="db_error"></span></div>
-    <form action="{{ route('admin.saveNewJob') }}" method="post" enctype="multipart/form-data" id="jobForm">
-        @csrf
-        @include('partial/job/createJob')
-    </form>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="alert alert-secondary d-none" role="alert"><button type="button" class="close" data-dismiss="alert"
+                                                                                   aria-hidden="true">×</button><span id="db_error" class="db_error"></span></div>
+                    <form action="{{ route('admin.saveNewJob') }}" method="post" enctype="multipart/form-data" id="jobForm">
+                        @csrf
+                        @include('partial/job/createJob')
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')

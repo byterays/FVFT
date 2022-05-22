@@ -29,7 +29,7 @@
         </div>
     @endif
     <div class="page-header">
-        <h4 class="page-title">Jobs</h4>
+        <h4 class="page-title">Jobs Listing</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Modules</a></li>
             <li class="breadcrumb-item active" aria-current="page">Jobs</li>
@@ -38,112 +38,108 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card status_pane">
-                <div class="card-header">
+                <div class="card-body">
                     <div class="panel panel-primary">
-                        <div class=" tab-menu-heading">
-                            <div class="tabs-menu1 ">
-                                <!-- Tabs -->
-                                <ul class="nav panel-tabs">
-                                    <li class="">
-                                        <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Active']) }}" class="{{ !(request()->job_status=='Active') ?: 'active' }}">Active</a>
-                                    </li>
-                                    <li class="">
-                                        <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Pending']) }}" class="{{ !(request()->job_status=='Pending') ?: 'active' }}">Pending</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Approved']) }}" class="{{ !(request()->job_status=='Approved') ?: 'active' }}">Approved</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Published']) }}" class="{{ !(request()->job_status=='Published') ?: 'active' }}">Published</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Expired']) }}" class="{{ !(request()->job_status=='Expired') ?: 'active' }}">Expired</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                       <div class="row">
+                           <div class="col-md-10 col-lg-10 pl-2 mb-2">
+                               <div class="tab-menu-heading">
+                                   <div class="tabs-menu1 ">
+                                       <!-- Tabs -->
+                                       <ul class="nav panel-tabs">
+                                           <li class="">
+                                               <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Active']) }}" class="{{ !(request()->job_status=='Active') ?: 'active' }} ml-0">Active</a>
+                                           </li>
+                                           <li class="">
+                                               <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Pending']) }}" class="{{ !(request()->job_status=='Pending') ?: 'active' }}">Pending</a>
+                                           </li>
+                                           <li>
+                                               <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Approved']) }}" class="{{ !(request()->job_status=='Approved') ?: 'active' }}">Approved</a>
+                                           </li>
+                                           <li>
+                                               <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Published']) }}" class="{{ !(request()->job_status=='Published') ?: 'active' }}">Published</a>
+                                           </li>
+                                           <li>
+                                               <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Expired']) }}" class="{{ !(request()->job_status=='Expired') ?: 'active' }}">Expired</a>
+                                           </li>
+                                       </ul>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-md-2 col-lg-2">
+                               <a href="/admin/jobs-new" class="btn btn-primary float-right mt-1">
+                                   <i class="fe fe-plus mr-2"></i>Add New</a>
+                           </div>
+                           <div class="col-md-12 col-lg-12">
+                               <form action="{{ route('admin.jobs-list') }}" method="GET">
+                                   <div class="row">
+                                       <div class="col-md-3 mb-3">
+                                           <input type="text" name="title" value="{{ request('title') }}" class="form-control"
+                                                  placeholder="Search By Title">
+                                       </div>
+                                       <div class="col-md-3 mb-3">
+                                           <select name="category_id" class="form-control">
+                                               <option value="">Select Category</option>
+                                               @foreach ($job_categories as $job_category)
+                                                   <option value="{{ $job_category->id }}"
+                                                       {{ request('category_id') == $job_category->id ? 'selected' : '' }}>
+                                                       {{ $job_category->functional_area }}
+                                                   </option>
+                                               @endforeach
+                                           </select>
+                                       </div>
+                                       <div class="col-md-3 mb-3">
+                                           <select name="employer_id" class="form-control">
+                                               <option value="">Select Employer</option>
+                                               @foreach ($companies as $company)
+                                                   <option value="{{ $company->id }}"
+                                                       {{ request('employer_id') == $company->id ? 'selected' : '' }}>
+                                                       {{ $company->company_name }}
+                                                   </option>
+                                               @endforeach
+                                           </select>
+                                       </div>
+                                       <div class="col-md-3 mb-3">
+                                           <select name="country_id" class="form-control">
+                                               <option value="">Select Country</option>
+                                               @foreach ($countries as $country)
+                                                   <option value="{{ $country->id }}"
+                                                       {{ request('country_id') == $country->id ? 'selected' : '' }}>
+                                                       {{ $country->name }}
+                                                   </option>
+                                               @endforeach
+                                           </select>
+                                       </div>
+                                       {{--<div class="col-md-4 mb-3">--}}
+                                       {{--@php--}}
+                                       {{--$statuses = ['Active', 'Pending', 'Approved', 'Published', 'Expired'];--}}
+                                       {{--@endphp--}}
+                                       {{--<select name="job_status" class="form-control d-none">--}}
+                                       {{--<option value="">Select Status</option>--}}
+                                       {{--@foreach ($statuses as $value)--}}
+                                       {{--<option value="{{ $value }}"--}}
+                                       {{--{{ request('job_status') == $value ? 'selected' : '' }}>{{ $value }}--}}
+                                       {{--</option>--}}
+                                       {{--@endforeach--}}
+                                       {{--</select>--}}
+                                       {{--</div>--}}
+                                       <div class="col-md-4">
+                                           <button type="submit" class="btn btn-primary">Filter</button>
+                                       </div>
+
+                                   </div>
+                               </form>
+                           </div>
+                       </div>
+
                     </div>
                 </div>
             </div>
             <div class="card">
-                <div class="card-header">
-
-                    <form action="{{ route('admin.jobs-list') }}" method="GET">
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <h3 class="card-title mt-2" style="width: 100%;">Jobs List</h3>
-
-                            </div>
-                            <div class="col-md-6">
-                                <a href="/admin/jobs-new" class="btn btn-primary float-right"><i
-                                        class="fe fe-plus mr-2"></i>Add New</a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <input type="text" name="title" value="{{ request('title') }}" class="form-control"
-                                    placeholder="Search By Title">
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <select name="category_id" class="form-control">
-                                    <option value="">Select Category</option>
-                                    @foreach ($job_categories as $job_category)
-                                        <option value="{{ $job_category->id }}"
-                                            {{ request('category_id') == $job_category->id ? 'selected' : '' }}>
-                                            {{ $job_category->functional_area }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <select name="employer_id" class="form-control">
-                                    <option value="">Select Employer</option>
-                                    @foreach ($companies as $company)
-                                        <option value="{{ $company->id }}"
-                                            {{ request('employer_id') == $company->id ? 'selected' : '' }}>
-                                            {{ $company->company_name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <select name="country_id" class="form-control">
-                                    <option value="">Select Country</option>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}"
-                                            {{ request('country_id') == $country->id ? 'selected' : '' }}>
-                                            {{ $country->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                @php
-                                    $statuses = ['Active', 'Pending', 'Approved', 'Published', 'Expired'];
-                                @endphp
-                                <select name="job_status" class="form-control d-none">
-                                    <option value="">Select Status</option>
-                                    @foreach ($statuses as $value)
-                                        <option value="{{ $value }}"
-                                            {{ request('job_status') == $value ? 'selected' : '' }}>{{ $value }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary">Search</button>
-                            </div>
-
-                        </div>
-
-                    </form>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive border-top">
                         <table class="table table-bordered table-hover mb-0 text-nowrap">
                             <thead>
                                 <tr>
-
                                     <th>Image</th>
                                     <th>Title</th>
                                     <th>Category</th>
@@ -257,7 +253,6 @@
                     </div>
                 </div>
             </div>
-            <img src="" alt="">
         </div>
     </div>
 @endsection

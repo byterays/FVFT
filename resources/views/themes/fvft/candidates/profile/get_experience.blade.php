@@ -307,7 +307,7 @@
             $("#" + idname).remove();
         }
 
-        function submitForm(e) {
+        function submitForm(e, redirect='proceed') {
             e.preventDefault();
             $('.require').css('display', 'none');
             let url = $("#candidateForm").attr('action');
@@ -334,7 +334,11 @@
                             $('.' + key).css('display', 'block').html(error_html);
                         });
                     } else if (!response.errors && !response.db_error) {
-                        location.href = response.redirectRoute;
+                        if (redirect && redirect === 'reload') {
+                            window.location.reload()
+                        }else{
+                            location.href = response.redirectRoute;
+                        }
                     }
                 }
             });
