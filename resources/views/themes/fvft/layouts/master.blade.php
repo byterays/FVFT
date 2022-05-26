@@ -69,6 +69,10 @@
             border-top: 1px solid black;
         }
 
+        .toast{
+            opacity: 1 !important;
+        }
+
     </style>
     @yield('style')
     <script type='text/javascript'
@@ -272,19 +276,20 @@
             "closeButton": true,
             "debug": false,
             "newestOnTop": false,
-            "progressBar": true,
-            "positionClass": "toast-top-container",
-            "preventDuplicates": false,
-            "onclick": null,
+            "progressBar": false,
+            "preventDuplicates": true,
+            "onclick": onClick,
             "showDuration": "300",
             "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
+            "timeOut": 0,
+            "extendedTimeOut": 0,
             "showEasing": "swing",
             "hideEasing": "linear",
             "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
+            "hideMethod": "fadeOut",
+            "positionClass": "toast-bottom-full-width",
         };
+
         @if (Session::has('message'))
             var type = "{{ Session::get('alert-type', 'info') }}";
             switch (type) {
@@ -293,7 +298,7 @@
                     break;
 
                 case 'warning':
-                    toastr.warning("{{ Session::get('message') }}");
+                    toastr.info("{{ Session::get('message') }}");
                     break;
 
                 case 'success':
@@ -314,6 +319,10 @@
                 // confirmButtonText: 'Ok'
             });
         @endif
+
+        function onClick() {
+            toastr.clear()
+        }
     </script>
     @yield('script')
     @yield('scripts')

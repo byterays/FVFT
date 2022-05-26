@@ -67,12 +67,13 @@
                                 <div class="card-header">
                                     <div class="col-md-6">
                                         <div class="row">
-                                            <h3 class="card-title">{{ __('Upload CV') }}</h3>
+                                            <h3 class="card-title">{{ __('Upload CV') }} (PDF)</h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <input type="file" class="form-control dropify" data-allowed-file-extensions="pdf"
+                                           accept=".pdf"
                                         data-max-file-size="4M" id="employeeCv">
                                 </div>
                             </div>
@@ -93,13 +94,13 @@
                                         <table class="table table-bordered">
                                             <thead>
                                                 <th>File</th>
-                                                <th>Action</th>
+                                                <th class="text-right">Action</th>
                                             </thead>
                                             <tbody>
                                                 @if(!blank($employ->cv) AND file_exists($employ->cv))
                                                 <tr>
                                                     <td>{{ $employ->full_name.'.pdf' }}</td>
-                                                    <td>
+                                                    <td class="text-right">
                                                         <div class="d-inline-flex">
                                                             <a href="{{ route('candidate.profile.downloadUploadedCv', ['type' => 'preview']) }}"
                                                                 target="_blank" class="btn btn-primary rounded-0">{{ __('Preview') }}</a>
@@ -110,6 +111,10 @@
                                                         </div>
                                                     </td>
                                                 </tr>
+                                                    @else
+                                                    <tr>
+                                                        <td colspan="2">No files available.</td>
+                                                    </tr>
                                                 @endif
                                             </tbody>
                                         </table>
@@ -135,8 +140,8 @@
         $(document).ready(function() {
             $(".dropify").dropify();
             // $(".dropify").dropify();
-            $(".dropify-message p:first").html('Upload Cv');
-            $(".dropify-infos-message").html('Upload Cv')
+            $(".dropify-message p:first").html('Upload CV (PDF)');
+            $(".dropify-infos-message").html('Upload CV (PDF)')
         });
         $("#employeeCv").on('change', function() {
             if ($(this).val() != '') {
