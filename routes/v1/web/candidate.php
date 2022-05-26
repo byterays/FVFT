@@ -64,6 +64,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('download-cv', [ProfileController::class, 'downloadGeneratedCV'])->name('downloadGeneratedCV');
         Route::post('upload-cv', [ProfileController::class, 'uploadCv'])->name('uploadCv');
         Route::get('download-uploaded-cv', [ProfileController::class, 'downloadUploadedCv'])->name('downloadUploadedCv');
+        Route::get('remove-uploaded-cv', [ProfileController::class, 'removeCv'])->name('removeCv');
+        Route::post('update-candidate-avatar', [ProfileController::class, 'updateCandidateProfile'])->name('updateCandidateProfile');
     });
 
     Route::group(['prefix' => 'account-setting/', 'as' => 'candidate.account_setting.'], function () {
@@ -96,6 +98,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['prefix' => 'job-search/', 'as' => 'candidate.job_search.'], function () {
         Route::get('index', [JobSearchController::class, 'index'])->name('index');
+        Route::get('jobdetail/{id}', [JobSearchController::class, 'viewJobDetails'])->name('viewJobDetails');
     });
 
     Route::group(['prefix' => 'job-application/', 'as' => 'candidate.job_application.'], function () {

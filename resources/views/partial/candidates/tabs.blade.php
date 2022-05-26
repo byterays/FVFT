@@ -19,7 +19,7 @@ $_cv = $RouteName == $route.'get_cv';
             <li class="nav-item {{ $_edit ? 'active' : '' }}"><a href="{{ route('candidate.profile.get_personal_information') }}"
                                                                  class="nav-link font-bold">{{ __('Edit Profile') }}</a></li>
             <li class="nav-item {{ $_cv ? 'active' : '' }}"><a href="{{ route('candidate.profile.get_cv') }}" class="nav-link font-bold">{{ __('CV') }}</a></li>
-            <li class="nav-item"><a href="#tab4" class="nav-link font-bold"></a></li>
+            {{-- <li class="nav-item"><a href="#tab4" class="nav-link font-bold"></a></li> --}}
         </ul>
     </div>
 </div>

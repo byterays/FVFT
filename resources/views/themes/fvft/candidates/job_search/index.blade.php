@@ -36,7 +36,7 @@
         .icon {
             padding: 10px;
             min-width: 40px;
-            z-index: 99999
+            z-index: 9
         }
 
     </style>
@@ -83,7 +83,10 @@
                                                             <div class="p-0 m-0 item-card9-img">
                                                                 <div class="item-card9-imgs">
                                                                     <a href="{{ route('viewJob', $item->id) }}"></a>
-                                                                    @if ($item->feature_image_url)
+                                                                    @if(!blank($item, 'company') AND !blank(data_get($item, 'company.company_logo')))
+                                                                    <img src="{{ asset(data_get($item, 'company.company_logo')) }}"
+                                                                            alt="img" class="h-100">
+                                                                    @elseif ($item->feature_image_url)
                                                                         <img src="{{ asset($item->feature_image_url) }}"
                                                                             alt="img" class="h-100">
                                                                     @else
@@ -97,7 +100,7 @@
                                                                 <div class="card-body pt-0 pt-md-5">
                                                                     <div class="item-card9">
                                                                         <a href="{{ route('viewJob', $item->id) }}"
-                                                                            class="text-dark">
+                                                                            class="text-dark" target="_blank">
                                                                             <h4 class="font-weight-semibold mt-1">
                                                                                 {{ $item->title }}({{ $item->num_of_positions }})
                                                                             </h4>
@@ -105,7 +108,7 @@
                                                                         <div class="mt-2 mb-2">
                                                                             @if (!blank(data_get($item, 'company.company_name')))
                                                                                 <a href="{{ route('site.companydetail', data_get($item, 'company.id')) }}"
-                                                                                    class="mr-4"><span><i
+                                                                                    class="mr-4" target="_blank"><span><i
                                                                                             class="fa fa-building-o text-muted mr-1"></i>
                                                                                         {{ data_get($item, 'company.company_name') }}</span></a>
                                                                             @endif
@@ -177,6 +180,7 @@
                                                                                     <div class="col-md-3">
                                                                                         @if ($savedJob->exists())
                                                                                             <a href="javascript:void(0);"
+                                                                                                onclick="savejob({{ $item->id }}, $(this))"
                                                                                                 class="saveJobButton btn btn-warning btn-block">
                                                                                                 <i class="fa fa-heart"></i>
                                                                                                 {{ __('Saved') }}
@@ -191,8 +195,10 @@
                                                                                         @endif
                                                                                     </div>
                                                                                     <div class="col-md-3">
-                                                                                        <a href="{{ route('viewJob', $item->id) }}"
-                                                                                            class="btn btn-warning btn-block">
+                                                                                        {{-- <a href="{{ route('viewJob', $item->id) }}" --}}
+                                                                                        <a href="{{ route('candidate.job_search.viewJobDetails', $item->id) }}"
+                                                                                            class="btn btn-success btn-block"
+                                                                                            target="_blank">
                                                                                             <i
                                                                                                 class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                                         </a>
@@ -205,7 +211,8 @@
                                                                                 @elseif(auth()->user()->user_type == 'company')
                                                                                     <div class="col-md-3">
                                                                                         <a href="{{ route('viewJob', $item->id) }}"
-                                                                                            class="btn btn-warning btn-block">
+                                                                                            class="btn btn-success btn-block"
+                                                                                            target="_blank">
                                                                                             <i
                                                                                                 class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                                         </a>
@@ -224,7 +231,8 @@
                                                                                 </div>
                                                                                 <div class="col-md-3">
                                                                                     <a href="{{ route('viewJob', $item->id) }}"
-                                                                                        class="btn btn-warning btn-block">
+                                                                                        class="btn btn-success btn-block"
+                                                                                        target="_blank">
                                                                                         <i
                                                                                             class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                                     </a>
@@ -282,7 +290,13 @@
                     } else if (response.redirectRoute) {
                         location.href = response.redirectRoute
                     } else {
-                        $(this_button).removeAttr('onclick').html('<i class="fa fa-heart"></i> Saved');
+                        if (response.status == 'delete') {
+                            $(this_button).html('<i class="fa fa-heart-o"></i> Save Job');
+                        } else if (response.status == 'saved') {
+                            $(this_button).html('<i class="fa fa-heart"></i> Saved');
+                            // $(this_button).removeAttr('onclick').html('<i class="fa fa-heart"></i> Saved');
+                        }
+
                         toastr.success(response.msg);
                     }
                 },

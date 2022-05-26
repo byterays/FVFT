@@ -29,7 +29,14 @@
                 </div>
                 <div class="col-xl-9 col-lg-12 col-md-12">
                     @include('partial/candidates/tabs', ['title' => 'Edit My Profile - Preferred Jobs'])
-
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            @include(
+                                'themes.fvft.candidates.components.profile.profile-completion',
+                                ['employee' => $employe]
+                            )
+                        </div>
+                    </div>
                     <form action="{{ route('candidate.profile.post_preferred_jobs') }}" method="POST" id="preferenceForm">
                         @csrf
                         <div class="row mt-5">
@@ -172,21 +179,16 @@
                                 </div>
 
                                 <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="mx-auto float-left">
-                                                    <a href="{{ route('candidate.profile.get_experience') }}" class="btn btn-primary rounded-0">
-                                                        <i class="fa fa-arrow-left mr-1"></i>{{ __('Back') }}
-                                                    </a>
-                                                </div>
-                                                <div class="mx-auto float-right">
-                                                    <button type="button" onclick="submitForm(event, 'reload');" class="btn btn-primary rounded-0">{{ __('Save') }}</button>
-                                                    <button type="button" onclick="submitForm(event, 'proceed');" class="btn btn-primary rounded-0">
-                                                        {{ __('Next') }}<i class="fa fa-arrow-right ml-1"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
+                                    <div class="card-body mx-auto">
+                                        <div class="mx-auto">
+                                            <span>{{ __('Experience') }}</span> &nbsp;&nbsp;&nbsp;<a
+                                                href="{{ route('candidate.profile.get_experience') }}"
+                                                class="btn btn-success rounded-0 "><i
+                                                    class="fa fa-arrow-left mr-1"></i>{{ __('Back') }} </a>
+                                            <button type="button" onclick="submitForm(event);"
+                                                    class="btn btn-success ml-3 rounded-0" id="updateButton">{{ __('Next') }} <i
+                                                    class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Next') }}
+                                        </span>
                                         </div>
                                     </div>
                                 </div>
@@ -273,8 +275,8 @@
                 </select>
             </div>
             <div class="col-md-2 my-auto">
-                <button type="button" class="btn btn-block" onclick="removeRow('countryRow_` + c_count + `')">
-                        <i class="fa fa-close mr-1 text-danger"></i> Remove
+                <button type="button" class="btn btn-sm btn-danger" onclick="removeRow('countryRow_` + c_count + `')">
+                         Remove
                     </button>
                 </div>
             </div>`;
@@ -291,11 +293,19 @@
                                 @foreach($job_industries as $job_industry)
                 <option value="{{ $job_industry->id }}">{{ $job_industry->title }}</option>
                                 @endforeach
+<<<<<<< HEAD
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-sm btn-danger" onclick="removeRow('jobRow_` + jt_count + `')">
+                                 Remove
+=======
                 </select>
             </div>
             <div class="col-md-2">
                 <button type="button" class="btn btn-block" onclick="removeRow('jobRow_` + jt_count + `')">
                                 <i class="fa fa-close mr-1 text-danger"></i> Remove
+>>>>>>> c3653110151c77bc87e18957ff10de232d754bd1
                             </button>
                         </div>
                     </div>`;
@@ -317,8 +327,8 @@
                 </select>
             </div>
             <div class="col-md-2 my-auto">
-                <button type="button" class="btn btn-block" onclick="removeRow('catRow_` + jc_count + `')">
-                    <i class="fa fa-close mr-1 text-danger"></i> Remove
+                <button type="button" class="btn btn-sm btn-danger" onclick="removeRow('catRow_` + jc_count + `')">
+                     Remove
                     </button>
                         </div>
                     </div>`;

@@ -25,45 +25,26 @@ $jt_count = 0; //industry_count
         <div class="font-weight-normal mt-2 ml-3">{{ __('Or Select your preferred job category') }}
         </div>
     </div>
-
+    <span class="cur_sor my-auto" onclick="addCategoryRow()"><i
+            class="fa fa-plus"></i>{{ __('Add Category') }}</span>
     @foreach ($employ->jobCategoryPreference as $key => $category_preference)
-        @if ($loop->first)
-            <div class="row mt-2" id="catRow_{{ $jc_count }}">
-                <div class="col-md-8">
-                    <select name="categories[]" data-placeholder="Select Job Category"
-                        class="form-control select2-show-search">
-                        <option value="">{{ __('Select Job Category') }}</option>
-                        @foreach ($job_categories as $job_category)
-                            <option value="{{ $job_category->id }}"
-                                {{ !($job_category->id == $category_preference->id) ?: 'selected' }}>
-                                {{ $job_category->functional_area }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <span class="cur_sor my-auto" onclick="addCategoryRow()"><i
-                            class="fa fa-plus"></i>{{ __('Add') }}</span>
-                </div>
+        <div class="row mt-2" id="catRow_{{ $jc_count }}">
+            <div class="col-md-8">
+                <select name="categories[]" data-placeholder="Select Job Category"
+                    class="form-control select2-show-search">
+                    <option value="">{{ __('Select Job Category') }}</option>
+                    @foreach ($job_categories as $job_category)
+                        <option value="{{ $job_category->id }}"
+                            {{ !($job_category->id == $category_preference->id) ?: 'selected' }}>
+                            {{ $job_category->functional_area }}</option>
+                    @endforeach
+                </select>
             </div>
-        @else
-            <div class="row mt-2" id="catRow_{{ $jc_count }}">
-                <div class="col-md-8">
-                    <select name="categories[]" data-placeholder="Select Job Category"
-                        class="form-control select2-show-search">
-                        <option value="">{{ __('Select Job Category') }}</option>
-                        @foreach ($job_categories as $job_category)
-                            <option value="{{ $job_category->id }}"
-                                {{ !($job_category->id == $category_preference->id) ?: 'selected' }}>
-                                {{ $job_category->functional_area }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-2 my-auto">
-                    <button type="button" class="btn btn-sm btn-danger"
-                        onclick="removeRow('catRow_{{ $jc_count }}')">{{ __('Remove') }}</button>
-                </div>
+            <div class="col-md-2 my-auto">
+                <button type="button" class="btn btn-sm btn-danger"
+                    onclick="removeRow('catRow_{{ $jc_count }}')">{{ __('Remove') }}</button>
             </div>
-        @endif
+        </div>
         <?php
         $jc_count++;
         ?>
@@ -81,43 +62,26 @@ $jt_count = 0; //industry_count
         <div class="font-weight-normal mt-2 ml-3">{{ __('Or Add your preferred job industry') }}
         </div>
     </div>
+    <span onclick="addJobRow();" class="cur_sor my-auto"><i
+            class="fa fa-plus"></i>{{ __('Add Industry') }}</span>
     @foreach ($employe->industryPreference as $k => $industry_preference)
-        @if ($loop->first)
-            <div class="row" id="jobRow_{{ $jt_count }}">
-                <div class="col-md-8">
-                    <select name="industry[]" class="form-control select2-show-search">
-                        <option value="">Select Industry</option>
-                        @foreach ($job_industries as $job_industry)
-                            <option value="{{ $job_industry->id }}"
-                                {{ $job_industry->id == $industry_preference->id ? 'selected' : '' }}>
-                                {{ $job_industry->title }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <span onclick="addJobRow();" class="cur_sor my-auto"><i
-                            class="fa fa-plus"></i>{{ __('Add') }}</span>
-                </div>
-            </div>
-        @else
-            <div class="row mt-2" id="jobRow_{{ $jt_count }}">
-                <div class="col-md-8">
-                    <select name="industry[]" class="form-control select2-show-search" data-placeholder="Select Industry">
-                        <option value="">Select Industry</option>
-                        @foreach ($job_industries as $job_industry)
-                            <option value="{{ $job_industry->id }}"
-                                {{ $job_industry->id == $industry_preference->id ? 'selected' : '' }}>
-                                {{ $job_industry->title }}</option>
-                        @endforeach
-                    </select>
+        <div class="row mt-2" id="jobRow_{{ $jt_count }}">
+            <div class="col-md-8">
+                <select name="industry[]" class="form-control select2-show-search" data-placeholder="Select Industry">
+                    <option value="">Select Industry</option>
+                    @foreach ($job_industries as $job_industry)
+                        <option value="{{ $job_industry->id }}"
+                            {{ $job_industry->id == $industry_preference->id ? 'selected' : '' }}>
+                            {{ $job_industry->title }}</option>
+                    @endforeach
+                </select>
 
-                </div>
-                <div class="col-md-2 my-auto">
-                    <button type="button" class="btn btn-sm btn-danger"
-                        onclick="removeRow('jobRow_{{ $jt_count }}')">{{ __('Remove') }}</button>
-                </div>
             </div>
-        @endif
+            <div class="col-md-2 my-auto">
+                <button type="button" class="btn btn-sm btn-danger"
+                    onclick="removeRow('jobRow_{{ $jt_count }}')">{{ __('Remove') }}</button>
+            </div>
+        </div>
         <?php
         $jt_count++;
         ?>
@@ -134,47 +98,27 @@ $jt_count = 0; //industry_count
         <div class="font-weight-normal mt-2 ml-3">{{ __('Or Select your preferred country') }}
         </div>
     </div>
+    <span class="cur_sor my-auto" onclick="addCountryRow();"><i
+            class="fa fa-plus"></i>{{ __('Add Country') }}</span>
     @foreach ($employe->countryPreference as $a => $country_preference)
-        @if ($loop->first)
-            <div class="row" id="countryRow_{{ $c_count }}">
-                <div class="col-md-8">
-                    <select name="countries[]" data-placeholder="Select Country"
-                        class="form-control country select2-show-search">
-                        <option value="">{{ __('Select Country') }}</option>
-                        @foreach ($countries as $country)
-                            <option value="{{ $country->id }}"
-                                {{ !($country->id == $country_preference->id) ?: 'selected' }}>
-                                {{ $country->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <span class="cur_sor my-auto" onclick="addCountryRow();"><i
-                            class="fa fa-plus"></i>{{ __('Add') }}</span>
-                </div>
-            </div>
-        @else
-            <div class="row mt-2" id="countryRow_{{ $c_count }}">
-                <div class="col-md-8">
-                    <select name="countries[]" data-placeholder="Select Country"
-                        class="form-control select2-show-search">
-                        <option value="">{{ __('Select Country') }}</option>
-                        @foreach ($countries as $country)
-                            <option value="{{ $country->id }}"
-                                {{ !($country->id == $country_preference->id) ?: 'selected' }}>
-                                {{ $country->name }}
-                            </option>
-                        @endforeach
-                    </select>
+        <div class="row mt-2" id="countryRow_{{ $c_count }}">
+            <div class="col-md-8">
+                <select name="countries[]" data-placeholder="Select Country" class="form-control select2-show-search">
+                    <option value="">{{ __('Select Country') }}</option>
+                    @foreach ($countries as $country)
+                        <option value="{{ $country->id }}"
+                            {{ !($country->id == $country_preference->id) ?: 'selected' }}>
+                            {{ $country->name }}
+                        </option>
+                    @endforeach
+                </select>
 
-                </div>
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-sm btn-danger"
-                        onclick="removeRow('countryRow_{{ $c_count }}')">{{ __('Remove') }}</button>
-                </div>
             </div>
-        @endif
+            <div class="col-md-2 my-auto">
+                <button type="button" class="btn btn-sm btn-danger"
+                    onclick="removeRow('countryRow_{{ $c_count }}')">{{ __('Remove') }}</button>
+            </div>
+        </div>
         <?php
         $c_count++;
         ?>

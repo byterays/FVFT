@@ -29,6 +29,14 @@
                 </div>
                 <div class="col-xl-9 col-lg-12 col-md-12">
                     @include('partial/candidates/tabs', ['title' => 'Edit My Profile - Experience'])
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            @include(
+                                'themes.fvft.candidates.components.profile.profile-completion',
+                                ['employee' => $employe]
+                            )
+                        </div>
+                    </div>
 
                     <form action="{{ route('candidate.profile.post_experience') }}" method="POST" id="candidateForm">
                         @csrf
@@ -44,11 +52,17 @@
                                                 <input type="hidden" name="is_experience" value="Yes" class="form-control">
                                                 <input type="hidden" class="form-control" name="user_id"
                                                        value="{{ setParameter($employ, 'user_id') }}">
-                                                @if ($employ->experience != null)
+                                                @if (!blank($employ->experience))
+                                                @php
+                                                $experienceCount = 0;
+                                                @endphp
                                                     @foreach ($employ->experience as $key => $employ_experience)
+                                                    <div id="eRow_{{ $experienceCount }}">
                                                         <div class="form-group">
                                                             <label for=""
-                                                                   class="form-label">{{ __('Experience') }}</label>
+                                                                   class="form-label">{{ __('Experience') }}
+                                                                   <span class="float-right cur_sor p-1 btn-danger" onclick="removeRow('eRow_{{ $experienceCount }}')">{{ __('Remove') }}</span>
+                                                                </label>
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="row">
@@ -137,12 +151,18 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                    @php
+                                                    $experienceCount++;
+                                                    @endphp
                                                     @endforeach
+                                                    <input type="hidden" value="{{ $experienceCount }}" id="experienceCount">
                                                 @else
-                                                    @include(
-                                                        'admin.pages.candidates.partial.experience_new'
-                                                    )
+                                                    <div>
+                                                        @include('admin.pages.candidates.partial.experience_new')
+                                                    </div>
                                                 @endif
+
                                                 <div id="appendExperience">
 
                                                 </div>
@@ -156,21 +176,16 @@
                                     </div>
                                 </div>
                                 <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="mx-auto float-left">
-                                                    <a href="{{ route('candidate.profile.get_qualification') }}" class="btn btn-primary rounded-0">
-                                                        <i class="fa fa-arrow-left mr-1"></i>{{ __('Back') }}
-                                                    </a>
-                                                </div>
-                                                <div class="mx-auto float-right">
-                                                    <button type="button" onclick="submitForm(event, 'reload');" class="btn btn-primary rounded-0">{{ __('Save') }}</button>
-                                                    <button type="button" onclick="submitForm(event, 'proceed');" class="btn btn-primary rounded-0">
-                                                        {{ __('Next') }}<i class="fa fa-arrow-right ml-1"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
+                                    <div class="card-body mx-auto">
+                                        <div class="mx-auto">
+                                            <span>{{ __('Qualification') }}</span> &nbsp;&nbsp;&nbsp;<a
+                                                href="{{ route('candidate.profile.get_qualification') }}"
+                                                class="btn btn-success rounded-0"><i
+                                                    class="fa fa-arrow-left"></i>{{ __('Back') }} </a>
+                                            <button type="button" onclick="submitForm(event);"
+                                                    class="btn btn-success ml-3 rounded-0">{{ __('Next') }} <i
+                                                    class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Preferred Jobs') }}
+                                        </span>
                                         </div>
                                     </div>
                                 </div>
@@ -191,7 +206,11 @@
             $(".select2-show-search").select2();
         }
         // Experience Section
+        @if(blank($employ->experience))
         var ecount = 0;
+        @else
+        var ecount = $("#experienceCount").val();
+        @endif
         $(function() {
             $("#addExperience").on('click', () => {
                 let html = `<div id="eRow_` + ecount +

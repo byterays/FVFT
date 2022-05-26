@@ -24,10 +24,9 @@ class JobController extends Controller
 
     public function saveJobLists()
     {
-        $employ=@Employe::where('user_id',Auth::user()->id)->first();
         $employe=@Employe::where('user_id',Auth::user()->id)->first();
-        $saved_jobs = SavedJob::where('employ_id', $employ->id)->latest()->paginate(10);
-        return $this->site_view($this->page.'savedjobs',['saved_jobs' => $saved_jobs, 'employe' => $employe]);
+        $saved_jobs = SavedJob::where('employ_id', $employe->id)->with(['job.company', 'job.country', 'job.job_category'])->latest()->paginate(10);
+        return $this->site_view($this->page.'savedjobs',['saved_jobs' => $saved_jobs, 'employe' => $employe, 'employ' => $employe]);
     }
 
     public function saveJob(Request $request)
@@ -36,13 +35,15 @@ class JobController extends Controller
             if(auth()->check() && auth()->user()->user_type == 'candidate'){
                 if($request->job_id != null && $request->employ_id != null){
                     if(SavedJob::where('employ_id', $request->employ_id)->where('job_id', $request->job_id)->exists()){
-                        return response()->json(['error' => 'This job is already saved on your profile']);
+                        SavedJob::where('employ_id', $request->employ_id)->where('job_id', $request->job_id)->delete();
+                        return response()->json(['msg' => 'You unsaved job successfully', 'status' => 'delete']);
+                        // return response()->json(['error' => 'This job is already saved on your profile']);
                     }
                     $saveJob = SavedJob::create([
                         'employ_id' => $request->employ_id,
                         'job_id' => $request->job_id,
                     ]);
-                    return response()->json(['msg' => 'Job saved to your profile successfully.']);
+                    return response()->json(['msg' => 'Job saved to your profile successfully.', 'status' => 'saved']);
                 } else {
                     return response()->json(['error' => 'Something went wrong']);
                 }
@@ -55,6 +56,21 @@ class JobController extends Controller
             return response()->json(['redirectRoute' => route('candidate.login')]);
         }
 
+    }
+
+    public function unsaveJob(Request $request)
+    {
+        try{
+            if(auth()->check() && auth()->user()->user_type=='candidate'){
+                if($request->job_id != null && $request->employ_id != null){
+                    if(SavedJob::where('employ_id', $request->employ_id)->where('job_id', $request->job_id)->exists()){
+
+                    }
+                }
+            }
+        } catch(\Exception $e){
+            return response()->json(['db_error' => $e->getMessage()]);
+        }
     }
 
     public function delete($id)

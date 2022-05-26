@@ -28,10 +28,17 @@
                     @include('themes.fvft.candidates.components.sidebar')
                 </div>
                 <div class="col-xl-9 col-lg-12 col-md-12">
+                    @include('partial/candidates/tabs', ['title' => 'Edit My Profile - Contact Information'])
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            @include(
+                                'themes.fvft.candidates.components.profile.profile-completion',
+                                ['employee' => $employe]
+                            )
+                        </div>
+                    </div>
                     <form action="{{ route('candidate.profile.post_contact_information') }}" method="POST" id="candidateForm">
                         @csrf
-
-                        @include('partial/candidates/tabs', ['title' => 'Edit My Profile - Contact Information'])
 
                         <div class="row mt-5">
                             <div class="col-md-12">
@@ -129,21 +136,14 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="mx-auto float-left">
-                                                    <a href="{{ route('candidate.profile.get_personal_information') }}" class="btn btn-primary rounded-0">
-                                                        <i class="fa fa-arrow-left mr-1"></i>{{ __('Back') }}
-                                                    </a>
-                                                </div>
-                                                <div class="mx-auto float-right">
-                                                    <button type="button" onclick="submitForm(event, 'reload');" class="btn btn-primary rounded-0">{{ __('Save') }}</button>
-                                                    <button type="button" onclick="submitForm(event, 'proceed');" class="btn btn-primary rounded-0">
-                                                        {{ __('Next') }}<i class="fa fa-arrow-right ml-1"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
+                                    <div class="card-body mx-auto">
+                                        <div class="mx-auto">
+                                            <span>{{ __('Personal Information') }}</span> &nbsp;&nbsp;&nbsp;<a
+                                                href="{{ route('candidate.profile.get_personal_information') }}"
+                                                class="btn btn-success rounded-0"><i class="fa fa-arrow-left"></i>{{ __('Back') }} </a>
+                                            <button type="button" onclick="submitForm(event);"
+                                                    class="btn btn-success ml-3 rounded-0">{{ __('Next') }} <i
+                                                    class="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;<span>{{ __('Qualification') }}</span>
                                         </div>
                                     </div>
                                 </div>

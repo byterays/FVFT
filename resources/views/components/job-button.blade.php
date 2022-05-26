@@ -18,7 +18,7 @@
         </div>
         <div class="col-md-3">
             @if ($savedJob->exists())
-                <a href="javascript:void(0);" class="saveJobButton btn btn-warning btn-block">
+                <a href="javascript:void(0);" onclick="savejob({{ $job->id }}, $(this))" class="saveJobButton btn btn-warning btn-block">
                     <i class="fa fa-heart"></i>
                     {{ __('Saved') }}
                 </a>
@@ -44,7 +44,7 @@
     </div>
 @endauth
 <div class="col-md-3">
-    <a href="{{ route('viewJob', $job->id) }}" class="btn btn-warning btn-block">
+    <a href="{{ route('viewJob', $job->id) }}" target="_blank" class="btn btn-success btn-block">
         <i class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
     </a>
 </div>

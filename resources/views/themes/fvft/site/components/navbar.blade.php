@@ -8,6 +8,11 @@
         float: none;
     }
 
+    .horizontalMenu-list.rightList {
+        width: auto !important;
+
+    }
+
 
     @media only screen and (max-width: 991px) {
         .horizontalMenu>.horizontalMenu-list {
@@ -27,6 +32,12 @@
     <ul class="horizontalMenu-list">
         @foreach ($primary_menu as $item)
             <li><a href="{{ $item->link }}">{{ __($item->title) }}</a></li>
+            @if($item->title == 'Companies' AND auth()->check() AND auth()->user()->user_type == 'candidate')
+                <li>
+                    <a href="{{ route('candidate.usefulinfo.index') }}">{{ __('Information') }}</a>
+                </li>
+            @endif
+            @continue
         @endforeach
         {{-- @auth
             @if (auth()->user()->user_type == 'candidate')
@@ -34,9 +45,11 @@
             @endif
         @endauth --}}
     </ul>
-    <ul class="horizontalMenu-list d-lg-flex">
+    <ul class="horizontalMenu-list ml-auto rightList d-lg-flex">
         <li class="mt-0 pt-0 pb-5 mt-lg-0 ml-lg-3">
-            <span><a class="btn btn-success rounded-0 mt-1" href="{{ !blank($google_play_link) ? $google_play_link : '#' }}" target="{{ !blank($google_play_link) ? '_blank' : '' }}">
+            <span><a class="btn btn-success rounded-0 mt-1"
+                    href="{{ !blank($google_play_link) ? $google_play_link : '#' }}"
+                    target="{{ !blank($google_play_link) ? '_blank' : '' }}">
                     {{ __('Download App') }}</a></span>
         </li>
         @auth
@@ -92,13 +105,18 @@
                 </ul>
             </li>
         @else
-            <li class="mt-0 pt-0 pb-5 mt-lg-0 ml-lg-3">
+            {{-- <li class="mt-0 pt-0 pb-5 mt-lg-0 ml-lg-3">
                 <span><a class="btn btn-outline-primary rounded-0 mt-1"
                         href="{{ route('candidate.login', ['name' => 'login']) }}">{{ __('Login') }}</a></span>
             </li>
             <li class="mt-0 pt-0 pb-5 mt-lg-0 ml-lg-3">
                 <span><a class="btn btn-outline-primary rounded-0 mt-1"
                         href="{{ route('candidate.login', ['name' => 'register']) }}">{{ __('Sign Up') }}</a></span>
+            </li> --}}
+            <li class="mt-0 pt-0 pb-5 mt-lg-0 ml-lg-3">
+                <span><a class="btn btn-info rounded-0  mt-1" href="{{ route('candidate.login') }}"><i
+                            class="fa fa-users"></i>
+                        {{ __('For Candidate') }}</a></span>
             </li>
             <li class="mt-0 pt-0 pb-5 mt-lg-0 ml-lg-3">
                 <span><a class="btn btn-info rounded-0  mt-1" href="{{ route('company.login') }}"><i
@@ -106,7 +124,15 @@
                         {{ __('For Employer') }}</a></span>
             </li>
         @endauth
-        <li class="mt-0 pt-0 ml-lg-3 pb-5 mt-lg-0"><span><a href="#"
+        <li class="mt-0 pt-0 pb-5 mt-lg-0 ml-lg-3">
+            <span>
+                <a class="btn btn-danger rounded-0  mt-1"
+                    href="{{ url('lang/' . ($current_locale == 'en' ? 'np' : 'en')) }}">
+                    {{ $current_locale == 'en' ? 'Nepali' : 'English' }}
+                </a>
+            </span>
+        </li>
+        {{-- <li class="mt-0 pt-0 ml-lg-3 pb-5 mt-lg-0"><span><a href="#"
                     class="btn btn-primary rounded-0 mt-1">{{ in_array($current_locale, array_keys($available_locales)) ? __($available_locales[$current_locale]) : __('English') }}
                     <span class="fa fa-caret-down m-0"></span></a> </span>
             <ul class="sub-menu">
@@ -135,7 +161,7 @@
                     @endforeach
                 @endif
             </ul>
-        </li>
+        </li> --}}
     </ul>
     {{-- <ul class="horizontalMenu-list d-lg-flex">
 

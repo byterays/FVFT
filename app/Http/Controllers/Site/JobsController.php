@@ -22,9 +22,10 @@ class JobsController extends Controller
         // dd($search);
         if ($request->filled('search')) {
             $search = $request->search;
-            $jobs = $jobs->where(function ($jobs) use($search) {
+            $categories = JobCategory::where('functional_area', 'LIKE', '%'.$search.'%')->pluck('id')->toArray();
+            $jobs = $jobs->where(function ($jobs) use($search, $categories) {
                 // global $search;
-                $jobs->where('title', 'LIKE', '%' . $search . '%');
+                $jobs->where('title', 'LIKE', '%' . $search . '%')->orWhereIn('job_categories_id', $categories);
             });
         }
         if($request->filled('country_id') && $request->country_id != 'All Countries'){
@@ -70,7 +71,7 @@ class JobsController extends Controller
             $company = Company::where('id', $job->company_id)->first();
             $company_contact_persons = DB::table('company_contact_persons')->where('company_id', $job->company_id)->first();
             $fields = [
-                "job" => $job,
+                "job" => Job::where('id', $id)->with('company', 'country', 'job_category')->first(),
                 "company_contact_persons" => $company_contact_persons,
                 "company" => $company
             ];

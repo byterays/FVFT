@@ -297,7 +297,9 @@ class DashController extends Controller
             }
 
         }
-        return redirect()->route('candidate.dashboard')->with(notifyMsg('success', 'Successfully applied for job'));
+        return redirect()->back()->with(swalNotify('Thank you for applying for the job. Please check your profile regularly for application status.', 'success', 'You applied for job'));
+        // return redirect()->back()->with('swalMessage', 'Thank you for applying for the job. Please check your profile regularly for application status.');
+        // return redirect()->route('candidate.dashboard')->with(notifyMsg('success', 'Successfully applied for job'));
     }
     public function removeApplication($id)
     {

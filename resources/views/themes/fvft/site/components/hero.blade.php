@@ -14,11 +14,11 @@
                         <div class="col-xl-10 col-lg-12 col-md-12 d-block mx-auto">
                             <div class="search-background bg-transparent">
                                 <div class="form row no-gutters ">
-                                    <div class="form-group  col-xl-4 col-lg-3 col-md-12 mb-0 bg-white ">
+                                    <div class="form-group  col-xl-5 col-lg-3 col-md-12 mb-0 bg-white ">
                                         <input type="text" class="form-control input-lg br-tr-md-0 br-br-md-0"
                                             id="jobSearch" placeholder="{{ __('Search Jobs') }}" name="search">
                                     </div>
-                                    <div class="form-group col-xl-3 col-lg-3 col-md-12 select2-lg mb-0 bg-white">
+                                    <div class="form-group col-xl-5 col-lg-3 col-md-12 select2-lg mb-0 bg-white">
                                         {{-- <input type="text" class="form-control input-lg br-md-0" id="text5" placeholder="Select Location"> --}}
                                         <select class="form-control select2-show-search  border-bottom-0"
                                             data-placeholder="{{ __('All Countries') }}" id="select-country"
@@ -29,7 +29,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white">
+                                    {{-- <div class="form-group col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white">
                                         <select class="form-control select2-show-search  border-bottom-0"
                                             data-placeholder="{{ __('All Categories') }}" name="job_catagory">
                                             <optgroup label="Categories">
@@ -40,7 +40,7 @@
                                                 @endforeach
                                             </optgroup>
                                         </select>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-xl-2 col-lg-3 col-md-12 mb-0">
                                         <button type="submit" href="#"
                                             class="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0"><i

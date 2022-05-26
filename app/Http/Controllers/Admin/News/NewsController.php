@@ -37,6 +37,14 @@ class NewsController extends Controller
     public function save(Request $request)
     {
         // dd($request->all());
+        $validator = Validator::make($request->all(),[
+            'title' => ['required'],
+            'seo_title' => ['required'],
+            'feature_img' => ['required', 'image', 'mimes:jpeg,jpg,png,svg', 'max:2048'],
+        ]);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         $destination = 'uploads/news/';
         $fields = [];
         $request->title ? $fields['title'] = $request->title : null;

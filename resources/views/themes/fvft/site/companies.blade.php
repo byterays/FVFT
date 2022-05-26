@@ -56,7 +56,7 @@
                                                                     <a href="javascript:void(0)"></a>
                                                                     @if (!blank($item->company_logo) && file_exists($item->company_logo))
                                                                         <img src="{{ asset($item->company_logo) }}"
-                                                                            alt="img" class="w-9 h-9">
+                                                                            alt="img" class="w-100 h-9">
                                                                     @else
                                                                         <img src="/uploads/defaultimage.jpg" alt="img"
                                                                             class="w-9 h-9">

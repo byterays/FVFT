@@ -25,7 +25,7 @@
                         <div class="col">
                             <div class="profile-pic mb-0">
                                 <div class="d-md-flex">
-                                    <img src="{{ asset('/') }}{{ $job->feature_image_url != null ? $job->feature_image_url : 'images/defaultimage.jpg' }}"
+                                    <img src="{{ asset('/') }}{{ (!blank($job, 'company') AND !blank(data_get($job, 'company.company_logo'))) ? data_get($job, 'company.company_logo') :  ($job->feature_image_url != null ? $job->feature_image_url : 'images/defaultimage.jpg') }}"
                                         class="w-20 h-20" alt="user">
                                     <div class="ml-4">
                                         <a href="/job/{{ $job->id }}" class="text-dark">
