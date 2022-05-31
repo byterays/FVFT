@@ -41,9 +41,7 @@ Route::middleware(['auth', 'is_company'])->group(function () {
         Route::put('update-application/{id}', [ApplicantController::class, 'updateApplication'])->name('updateApplication');
 
         Route::get('index', [NewApplicantController::class, "index"])->name("indexpage");
-        Route::put('bulk-application-status-update', [NewApplicantController::class, "bulkUpdateApplicationStatus"])->name("bulkUpdateApplicationStatus");
-        Route::get('bulk-cv-download', [NewApplicantController::class, "bulkCvDownload"])->name("bulkCvDownload");
-        Route::delete('bulk-application-delete', [NewApplicantController::class, "bulkApplicationDelete"])->name("bulkApplicationDelete");
+        Route::get('advanced-search', [NewApplicantController::class, "advancedSearch"])->name("advancedSearch");
     });
 
     Route::group(['prefix' => 'job/', 'as' => 'company.newjob.'], function(){

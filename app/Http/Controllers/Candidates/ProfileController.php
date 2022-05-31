@@ -215,7 +215,7 @@ class ProfileController extends Controller
         if ($validator->passes()) {
             try {
                 DB::beginTransaction();
-                $employe = Employe::where('user_id', $request->user_id)->first();
+                $employe = Employe  ::where('user_id', $request->user_id)->first();
                 $fields = [];
                 if (!empty($request->training)) {
                     foreach ($request->training as $key => $training) {
