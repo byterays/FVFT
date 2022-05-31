@@ -5,6 +5,11 @@
 @section('title')
     Jobs
 @endsection
+@section('css')
+    <!-- Data table css -->
+    <link href="{{ asset('themes/fvft/assets/plugins/datatable/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('themes/fvft/assets/plugins/datatable/jquery.dataTables.min.css') }}" rel="stylesheet" />
+@endsection
 @section('data')
     <style>
         .input-icons i {
@@ -29,39 +34,38 @@
     </div> --}}
     <div class="card m-b-0">
         {{-- <div class="card-header">
-            
+
             <div class="col-md-6">
                 <h3 class="">My Jobs</h3>
             </div>
 
         </div> --}}
         <div class="card-body">
-            <h3 class="font-weight-bold">{{ strtoupper(__('Job Management')) }}</h3>
-            <div id="basicwizard" class="border pt-0">
-                @include('partial/companies/tabs')
-            </div>
+            <h3 class="card-title">{{ strtoupper(__('Job Management')) }}</h3>
+            @include('partial/companies/tabs')
+
 
             @if ($company->is_active == 1)
-                <div class="row mb-5 mt-5">
-                    <div class="col-md-6">
-                        {{-- <a href="{{ route('company.addNewJob') }}" class="btn btn-success">Add New Job</a> --}}
-                        {{-- <a href="{{ route('company.newjob.get_job_detail') }}" class="btn btn-success">Add New Job</a> --}}
-                    </div>
-                    <div class="col-md-6">
-                        <form action="{{ route('company.jobs') }}" method="GET">
-                            <div class="input-group input-icons mb-3">
-                                <i class="fa fa-search icon"></i>
-                                <input type="hidden" name="type" value="{{ request()->type }}">
-                                <input type="text" name="term" value="{{ request()->term }}" class="form-control"
-                                    placeholder="{{ __('Search Your Job') }}" aria-label="Search your Job"
-                                    aria-describedby="button-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-primary btn-rounded-0" type="submit">{{ __('Search') }}</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                {{--<div class="row mb-5 mt-5">--}}
+                {{--<div class="col-md-6">--}}
+                {{-- <a href="{{ route('company.addNewJob') }}" class="btn btn-success">Add New Job</a> --}}
+                {{-- <a href="{{ route('company.newjob.get_job_detail') }}" class="btn btn-success">Add New Job</a> --}}
+                {{--</div>--}}
+                {{--<div class="col-md-6">--}}
+                {{--<form action="{{ route('company.jobs') }}" method="GET">--}}
+                {{--<div class="input-group input-icons mb-3">--}}
+                {{--<i class="fa fa-search icon"></i>--}}
+                {{--<input type="hidden" name="type" value="{{ request()->type }}">--}}
+                {{--<input type="text" name="term" value="{{ request()->term }}" class="form-control"--}}
+                {{--placeholder="{{ __('Search Your Job') }}" aria-label="Search your Job"--}}
+                {{--aria-describedby="button-addon2">--}}
+                {{--<div class="input-group-append">--}}
+                {{--<button class="btn btn-outline-primary btn-rounded-0" type="submit">{{ __('Search') }}</button>--}}
+                {{--</div>--}}
+                {{--</div>--}}
+                {{--</form>--}}
+                {{--</div>--}}
+                {{--</div>--}}
             @endif
             <div class="ads-tabs">
                 <div class="tabs-menus">
@@ -76,17 +80,18 @@
                         <li {{ !(app()->getLocale() == 'np') ?: 'class=mt-5' }}><a href="{{ route('company.jobs', ['type' => 'rejected_jobs']) }}" class="{{ !(request()->type == 'rejected_jobs') ?: 'active' }}">{{ __('Rejected Jobs') }}</a></li>
                     </ul>
                 </div>
-                <div class="tab-content">
-                    <div class="tab-pane table-responsive border-top userprof-tab active">
-                        @include('themes.fvft.company.components.jobs.joblist')
-                    </div>
-                </div>
+
+                @include('themes.fvft.company.components.jobs.joblist')
+
             </div>
         </div>
     </div>
 @endsection
 
 @section('js')
+    <script src="{{ asset('themes/fvft/assets/plugins/datatable/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('themes/fvft/assets/plugins/datatable/dataTables.bootstrap4.min.js') }}"></script>
+
     <script>
         function cloneJob(item_id) {
             var url = "{{ route('company.cloneJob', ':id') }}",
@@ -105,5 +110,10 @@
                 }
             });
         }
+
+        $(function(e) {
+            $('#example').DataTable();
+            $('#example2').DataTable();
+        } );
     </script>
 @endsection

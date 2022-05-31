@@ -69,10 +69,10 @@
             border-top: 1px solid black;
         }
 
-<<<<<<< HEAD
-        .toast{
+        .toast {
             opacity: 1 !important;
-=======
+        }
+
         #ajaxLoader {
             position: absolute;
             top: 0;
@@ -95,7 +95,6 @@
 
         #ajaxLoader.show {
             display: block;
->>>>>>> cca17b5867d54fe931ff7f37084efdc8c3c83a87
         }
 
     </style>
@@ -348,17 +347,15 @@
             });
         @endif
 
-<<<<<<< HEAD
         function onClick() {
             toastr.clear()
-=======
+        }
         function busySign() {
             $('#ajaxLoader').css('display', 'block');
         }
 
         function hideBusySign() {
             $('#ajaxLoader').css('display', 'none');
->>>>>>> cca17b5867d54fe931ff7f37084efdc8c3c83a87
         }
     </script>
     @yield('script')
