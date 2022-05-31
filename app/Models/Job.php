@@ -11,7 +11,7 @@ use App\Models\JobCategory;
 
 class Job extends Model
 {
-    use HasFactory, softDeletes;
+    use HasFactory, SoftDeletes;
 
     // earning_country_salary is equivalent to average_salary_from, and earning_nepali_salaryy is equivalent to average_salary_to
 

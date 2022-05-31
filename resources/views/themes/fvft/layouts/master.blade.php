@@ -69,8 +69,33 @@
             border-top: 1px solid black;
         }
 
+<<<<<<< HEAD
         .toast{
             opacity: 1 !important;
+=======
+        #ajaxLoader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, .8) url('{{ asset('themes/fvft/assets/images/loader.svg') }}') no-repeat 50%
+        }
+
+        .fog_div {
+            display: none;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            height: 100%;
+            width: 100%;
+            z-index: 100;
+            background-color: rgba(30, 30, 30, 0.5);
+        }
+
+        #ajaxLoader.show {
+            display: block;
+>>>>>>> cca17b5867d54fe931ff7f37084efdc8c3c83a87
         }
 
     </style>
@@ -81,6 +106,9 @@
 </head>
 
 <body class="main-body">
+    <div id="ajaxLoader" class="fog_div">
+        <div></div>
+    </div>
     <div id="app">
         @yield('main')
     </div>
@@ -320,8 +348,17 @@
             });
         @endif
 
+<<<<<<< HEAD
         function onClick() {
             toastr.clear()
+=======
+        function busySign() {
+            $('#ajaxLoader').css('display', 'block');
+        }
+
+        function hideBusySign() {
+            $('#ajaxLoader').css('display', 'none');
+>>>>>>> cca17b5867d54fe931ff7f37084efdc8c3c83a87
         }
     </script>
     @yield('script')
