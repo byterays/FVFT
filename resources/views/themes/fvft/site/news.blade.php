@@ -10,7 +10,7 @@
         @include('themes.fvft.site.components.header')
         	<!--Breadcrumb-->
 		<section>
-			<div class="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg">
+			<div class="bannerimg cover-image bg-background3" data-image-src="{{ asset('/uploads/site/banner.png') }}">
 				<div class="header-text mb-0">
 					<div class="container">
 						<div class="text-center text-white">

@@ -21,35 +21,28 @@
     }
 
 </style>
-<div class="page-header">
-    <h4 class="page-title tempcolor">{{ $company->company_name }}</h4>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item tempcolor active" aria-current="page">
-            <a href="{{ $editRoute }}" class=""><i class="fa fa-pencil"></i>&nbsp;Edit Profile</a>
-        </li>
-    </ol>
-</div>
 @php
-$country = DB::table('countries')->where('id', $company->country_id);
-$state = DB::table('states')->where('id', $company->state_id);
-$city = DB::table('cities')->where('id', $company->city_id);
+    $country = DB::table('countries')->where('id', $company->country_id);
+    $state = DB::table('states')->where('id', $company->state_id);
+    $city = DB::table('cities')->where('id', $company->city_id);
 
-$flag = $country->exists() ? $country->first()->emojiU : DB::table('countries')->where('name', 'Nepal')->first()->emojiU;
-// {{ dd($flag) }}
+    $flag = $country->exists() ? $country->first()->emojiU : DB::table('countries')->where('name', 'Nepal')->first()->emojiU;
 @endphp
+
 <div class="row">
-    <div class="col-xl-6">
+    <div class="col-md-12">
         <div class="card m-b-20">
             <div class="card-header">
-                <div class="row">
-                    <div class="col-md-6">
-                        <img src="{{ asset($company->company_logo != null ? $company->company_logo : 'images/defaultimage.jpg' ) }}" class="img-fluid" alt="">
-                    </div>
-                    <div class="col-md-6 justify-content-between">
-                        {{-- <img src="{{ asset('https://ipdata.co/flags/np.png') }}" class="img-fluid" alt=""> --}}
-                        <img src="{{ $country->exists() ? 'https://ipdata.co/flags/'.strtolower($country->first()->iso2).'.png' : asset('images/defaultimage.jpg') }}" style="height: 100%; width: 100%;" class="img-fluid" alt="">
-                    </div>
-                </div>
+                <h3 class="card-title tempcolor">{{ $company->company_name ?? 'Not-Available' }}</h3>
+                <a href="{{ $editRoute }}" class="float-right" style="position:absolute; right: 20px;"><i class="fa fa-pencil"></i>&nbsp;Edit Profile</a>
+                {{--<div class="row">--}}
+                    {{--<div class="col-md-6">--}}
+                        {{--<img src="{{ asset($company->company_logo != null ? $company->company_logo : 'images/defaultimage.jpg' ) }}" class="img-fluid" alt="">--}}
+                    {{--</div>--}}
+                    {{--<div class="col-md-6 justify-content-between">--}}
+                        {{--<img src="{{ $country->exists() ? 'https://ipdata.co/flags/'.strtolower($country->first()->iso2).'.png' : asset('images/defaultimage.jpg') }}" style="position:absolute;bottom: 10px;" class="img-fluid" alt="">--}}
+                    {{--</div>--}}
+                {{--</div>--}}
             </div>
             <div class="card-body">
                 <div class="row">
@@ -82,7 +75,7 @@ $flag = $country->exists() ? $country->first()->emojiU : DB::table('countries')-
     </div>
 
 
-    <div class="col-xl-6">
+    <div class="col-md-12">
         <div class="card m-b-20">
             <div class="card-body">
                 <div class="row">

@@ -3,12 +3,12 @@
         <div class="card m-b-20">
             <div class="card-header">
                 @if (Request::is('company/profile'))
-                    <div class="col-md-6">
-                        <h3>{{ strtoupper(__('Picture')) }}</h3>
+                    <div class="col-md-6 pl-0">
+                        <h3 class="card-title">{{ strtoupper(__('Picture')) }}</h3>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 pr-0">
                         <a href="{{ $viewRoute }}"
-                            class="btn btn-primary mr-auto float-right">{{ __('View Profile') }}</a>
+                           class="btn btn-primary mr-auto float-right">{{ __('View Profile') }}</a>
                     </div>
                 @else
                     <h3 class="card-title">{{ strtoupper(__('Picture')) }}</h3>
@@ -22,8 +22,8 @@
                         <div class="form-group company_logo" id="company_logo">
                             <label for="">{{ __('Display') }} {{ __('Picture') }}</label>
                             <input type="file" name="company_logo"
-                                data-default-file="{{ $company->company_logo ? asset($company->company_logo) : '' }}"
-                                class="dropify" data-allowed-file-extensions="png jpg jpeg" data-height="180">
+                                   data-default-file="{{ $company->company_logo ? asset($company->company_logo) : '' }}"
+                                   class="dropify" data-allowed-file-extensions="png jpg jpeg" data-height="180">
                             <div class="require text-danger profile_picture"></div>
                         </div>
                     </div>
@@ -31,10 +31,14 @@
                         <div class="form-group company_logo">
                             <label for="">{{ __('Cover') }} {{ __('Picture') }}</label>
                             <input type="file" name="company_cover"
-                                data-default-file="{{ $company->company_cover ? asset($company->company_cover) : '' }}"
-                                class="dropify" data-height="180" data-allowed-file-extensions="png jpg jpeg">
+                                   data-default-file="{{ $company->company_cover ? asset($company->company_cover) : '' }}"
+                                   class="dropify" data-height="180" data-allowed-file-extensions="png jpg jpeg">
                             <div class="require text-danger company_cover"></div>
                         </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-primary float-right text-center"
+                                onclick="submitForm(event);">{{ __('Update') }}</button>
                     </div>
                 </div>
             </div>
@@ -42,7 +46,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-xl-6">
+    <div class="col-xl-12">
         <div class="card m-b-20">
             <div class="card-header">
                 <h3 class="card-title">{{ strtoupper(__('Basic Information')) }}</h3>
@@ -56,7 +60,7 @@
                         </div>
                         <div class="col-md-8">
                             <input type="text" class="form-control" value="{{ $company->company_name }}"
-                                name="company_name" placeholder="Enter Company Name">
+                                   name="company_name" placeholder="Enter Company Name">
                             <div class="require text-danger company_name"></div>
                         </div>
                     </div>
@@ -149,7 +153,7 @@
                         </div>
                         <div class="col-md-8">
                             <input type="text" class="form-control opsince" value="{{ $company->operating_since }}"
-                                name="operating_since" readonly id="">
+                                   name="operating_since" readonly id="">
                             <div class="require text-danger operating_since"></div>
                         </div>
                     </div>
@@ -157,20 +161,19 @@
                 <div class="form-group">
                     <label for="company_introduction">{{ __('Company Introduction') }}</label>
                     <input type="hidden" class="form-control" name="company_introduction" id="body_id"
-                        value="{{ isset($company->company_details) ? $company->company_details : null }}">
+                           value="{{ isset($company->company_details) ? $company->company_details : null }}">
                     <input type="hidden" class="form-control" name="html_content_intro" id="html_content_intro"
-                        value="{{ isset($company->html_content_intro) ? $company->html_content_intro : null }}">
-                    <div id="editor" style="min-height: 15rem;">
-                    </div>
+                           value="{{ isset($company->html_content_intro) ? $company->html_content_intro : null }}">
+                    <div id="editor"></div>
 
                 </div>
                 <div class="form-group">
                     <label for="company_services">{{ __('Company Services') }}</label>
                     <input type="hidden" class="form-control" name="company_services" id="company_service_id"
-                        value="{{ isset($company->company_services) ? $company->company_services : null }}">
+                           value="{{ isset($company->company_services) ? $company->company_services : null }}">
                     <input type="hidden" class="form-control" name="html_content_service" id="html_content_service"
-                        value="{{ isset($company->html_content_service) ? $company->html_content_service : null }}">
-                    <div id="companyServices" style="min-height: 20rem;">
+                           value="{{ isset($company->html_content_service) ? $company->html_content_service : null }}">
+                    <div id="companyServices">
                     </div>
 
                 </div>
@@ -181,19 +184,23 @@
                         <span class="custom-switch-indicator"></span>
                         <span class="custom-switch-description">{{ __('Active') }}</span>
                     </label>
-                    <label class="custom-switch-checkbox">
-                        <input type="checkbox" name="is_featured" class="custom-switch-input"
-                            {{ $company->is_featured ? 'checked' : '' }}>
-                        <span class="custom-switch-indicator"></span>
-                        <span class="custom-switch-description">{{ __('Featured') }}</span>
-                    </label>
+
+                    {{--show if admin--}}
+                    @if(auth()->user()->user_type === 'admin')
+                        <label class="custom-switch-checkbox">
+                            <input type="checkbox" name="is_featured" class="custom-switch-input"
+                                {{ $company->is_featured ? 'checked' : '' }}>
+                            <span class="custom-switch-indicator"></span>
+                            <span class="custom-switch-description">{{ __('Featured') }}</span>
+                        </label>
+                    @endif
                 </div>
 
             </div>
         </div>
     </div>
     <!-- end col -->
-    <div class="col-xl-6">
+    <div class="col-xl-12">
 
         <div class="card m-b-20">
             <div class="card-header">
@@ -208,8 +215,8 @@
                         </div>
                         <div class="col-md-8">
                             <select name="country_id" id="select-country" class="form-control select2-show-search" data-placeholder="Select Country"
-                                value="{{ isset($company->country_id) ? $company->country_id : '' }}"
-                                onchange="patchStates(this)">
+                                    value="{{ isset($company->country_id) ? $company->country_id : '' }}"
+                                    onchange="patchStates(this)">
                                 <option value="">{{ __('Select Country') }}</option>
                                 @foreach ($countries as $country)
                                     <option value="{{ $country->id }}"
@@ -227,8 +234,8 @@
                         </div>
                         <div class="col-md-8">
                             <select name="state_id" id="select-state" class="form-control select2-show-search" data-placeholder="Select State/Province"
-                                value="{{ isset($company->state_id) ? $company->state_id : '' }}"
-                                onchange="patchCities(this)">
+                                    value="{{ isset($company->state_id) ? $company->state_id : '' }}"
+                                    onchange="patchCities(this)">
                                 <option value="">Select State/Province</option>
                             </select>
                         </div>
@@ -241,7 +248,7 @@
                         </div>
                         <div class="col-md-8">
                             <select name="city_id" id="select-city" class="form-control select2-show-search" data-placeholder="Select City"
-                                value="{{ isset($company->city_id) ? $company->city_id : '' }}">
+                                    value="{{ isset($company->city_id) ? $company->city_id : '' }}">
                                 <option value="">{{ __('Select City') }}</option>
                             </select>
                         </div>
@@ -254,7 +261,7 @@
                         </div>
                         <div class="col-md-8">
                             <input type="text" name="company_address" value="{{ $company->company_address }}"
-                                class="form-control" placeholder="Enter Company Address">
+                                   class="form-control" placeholder="Enter Company Address">
                         </div>
                     </div>
                 </div>
@@ -275,9 +282,9 @@
                         </div>
                         <div class="col-md-5">
                             <input type="text" name="mobile_phone1" class="form-control"
-                                placeholder="Enter Phone Number1" value="{{ $company->mobile_phone1 }}">
+                                   placeholder="Enter Phone Number1" value="{{ $company->mobile_phone1 }}">
                             <input type="text" name="mobile_phone2" class="form-control mt-3"
-                                placeholder="Enter Phone Number2" value="{{ $company->mobile_phone2 }}">
+                                   placeholder="Enter Phone Number2" value="{{ $company->mobile_phone2 }}">
                         </div>
                     </div>
                 </div>
@@ -288,7 +295,7 @@
                         </div>
                         <div class="col-md-8">
                             <input type="email" class="form-control" name="company_email"
-                                placeholder="Enter Company Email ID" value="{{ $company->company_email }}">
+                                   placeholder="Enter Company Email ID" value="{{ $company->company_email }}">
                             <div class="require text-danger company_email"></div>
                         </div>
                     </div>
@@ -300,8 +307,9 @@
                         </div>
                         <div class="col-md-8">
                             <input type="text" name="company_website" class="form-control"
-                                placeholder="Enter Website" value="{{ $company->company_website }}">
+                                   placeholder="Enter Website URL" value="{{ $company->company_website }}">
                             <div class="require text-danger company_website"></div>
+                            <small class="text-info">Eg. https://www.companydomain.com</small>
                         </div>
                     </div>
                 </div>
@@ -312,9 +320,10 @@
                         </div>
                         <div class="col-md-8">
                             <input type="text" name="company_fb_page" class="form-control"
-                                placeholder="Enter Company Facebook Page Link"
-                                value="{{ $company->company_fb_page }}">
+                                   placeholder="Enter Company Facebook Page Link"
+                                   value="{{ $company->company_fb_page }}">
                             <div class="require text-danger company_fb_page"></div>
+                            <small class="text-info">Eg. https://www.facebook.com/username</small>
                         </div>
                     </div>
                 </div>
@@ -332,7 +341,7 @@
                         </div>
                         @php
                             $hasContactPerson = !empty($company->company_contact_person);
-                            
+
                         @endphp
                         <div class="col-md-3">
                             <select name="person_designation" class="form-control select2">
@@ -350,8 +359,8 @@
                         </div>
                         <div class="col-md-6">
                             <input type="text" class="form-control"
-                                value="{{ $hasContactPerson ? $company->company_contact_person->name : '' }}"
-                                name="full_name" placeholder="Enter Full Name">
+                                   value="{{ $hasContactPerson ? $company->company_contact_person->name : '' }}"
+                                   name="full_name" placeholder="Enter Full Name">
                             <div class="require text-danger full_name"></div>
                         </div>
                     </div>
@@ -363,8 +372,8 @@
                         </div>
                         <div class="col-md-9">
                             <input type="text" name="contact_person_designation"
-                                value="{{ $hasContactPerson ? $company->company_contact_person->position : '' }}"
-                                class="form-control" placeholder="Enter Designation, eg, HR, Manager">
+                                   value="{{ $hasContactPerson ? $company->company_contact_person->position : '' }}"
+                                   class="form-control" placeholder="Enter Designation, eg, HR, Manager">
                         </div>
                     </div>
                 </div>
@@ -388,8 +397,8 @@
                         </div>
                         <div class="col-md-6">
                             <input type="text" class="form-control" name="contact_person_mobile"
-                                placeholder="Enter Mobile Number"
-                                value="{{ $hasContactPerson ? $company->company_contact_person->phone : '' }}">
+                                   placeholder="Enter Mobile Number"
+                                   value="{{ $hasContactPerson ? $company->company_contact_person->phone : '' }}">
                         </div>
                     </div>
                 </div>
@@ -400,16 +409,18 @@
                         </div>
                         <div class="col-md-9">
                             <input type="email" class="form-control"
-                                value="{{ $hasContactPerson ? $company->company_contact_person->email : '' }}"
-                                name="contact_person_email" placeholder="Enter Email">
+                                   value="{{ $hasContactPerson ? $company->company_contact_person->email : '' }}"
+                                   name="contact_person_email" placeholder="Enter Email">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="mx-auto mb-2">
-        <button type="button" class="btn btn-primary float-right text-center"
-            onclick="submitForm(event);">{{ __('Submit') }}</button>
+    <div class="col-xl-12 mb-2">
+        <div class="mb-2">
+            <button type="button" class="btn btn-primary float-right text-center"
+                    onclick="submitForm(event);">{{ __('Update Profile') }}</button>
+        </div>
     </div>
 </div>
