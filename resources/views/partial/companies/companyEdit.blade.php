@@ -22,8 +22,10 @@
                         <div class="form-group company_logo" id="company_logo">
                             <label for="">{{ __('Display') }} {{ __('Picture') }}</label>
                             <input type="file" name="company_logo"
+                                   data-delete-url="{{ route('company.remove_image') }}"
+                                   data-company-id="{{ $company->id }}"
                                    data-default-file="{{ $company->company_logo ? asset($company->company_logo) : '' }}"
-                                   class="dropify" data-allowed-file-extensions="png jpg jpeg" data-height="180">
+                                   class="custom-dropify" data-allowed-file-extensions="png jpg jpeg" data-height="180">
                             <div class="require text-danger profile_picture"></div>
                         </div>
                     </div>
@@ -31,8 +33,10 @@
                         <div class="form-group company_logo">
                             <label for="">{{ __('Cover') }} {{ __('Picture') }}</label>
                             <input type="file" name="company_cover"
+                                   data-delete-url="{{ route('company.remove_image') }}"
+                                   data-company-id="{{ $company->id }}"
                                    data-default-file="{{ $company->company_cover ? asset($company->company_cover) : '' }}"
-                                   class="dropify" data-height="180" data-allowed-file-extensions="png jpg jpeg">
+                                   class="custom-dropify" data-height="180" data-allowed-file-extensions="png jpg jpeg">
                             <div class="require text-danger company_cover"></div>
                         </div>
                     </div>

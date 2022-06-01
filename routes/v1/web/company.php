@@ -15,6 +15,7 @@ Route::middleware(['auth', 'is_company'])->group(function () {
     Route::get('/', [DashController::class, 'dashboard'])->name('company.dash');
     Route::get('/profile', [DashController::class, 'profile'])->name('company.edit_profile');
     Route::post('/profile', [DashController::class, 'saveProfile'])->name('company.save_profile');
+    Route::post('/remove-image', [DashController::class, 'removeImage'])->name('company.remove_image');
     Route::put('/update/{id}', [DashController::class, 'updateProfile'])->name('company.update_profile');
     Route::get('/view-my-profile', [DashController::class, 'show'])->name('company.view_profile');
 

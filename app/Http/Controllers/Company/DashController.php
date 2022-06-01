@@ -281,7 +281,7 @@ class DashController extends Controller
 
     public function updateProfile(Request $request, $id)
     {
-        // dd($request->all());
+//         dd($request->all());
         $validator = Validator::make($request->all(), [
             'company_name' => ['required'],
             'industry_id' => ['required'],
@@ -506,5 +506,30 @@ class DashController extends Controller
             ],
         ];
 
+    }
+
+    public function removeImage(Request $request)
+    {
+        $request->validate([
+            'company_id' => 'required',
+            'name' => 'required',
+        ]);
+
+        try{
+            $company = Company::findOrFail($request->company_id);
+            if ($request->name === 'company_logo'){
+                $company->company_logo = '';
+            }
+            elseif($request->name === 'company_cover'){
+                $company->company_cover = '';
+            }
+
+            $company->save();
+            return response()->json(['error' => false, 'message' => 'Image removed successfully']);
+
+        }catch (\Exception $exception){
+            return response()->json(['error' => true, 'message' => $exception->getMessage()]);
+
+        }
     }
 }
