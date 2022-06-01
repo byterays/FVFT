@@ -13,6 +13,7 @@ use App\Traits\Site\CompanyMethods;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
 class DashController extends Controller
@@ -107,13 +108,13 @@ class DashController extends Controller
                 [
                     'title' => 'New Message',
                     'link' => '#',
-                    'totalcount' => 2,
+                    'totalcount' => 0,
                     'icon' => '/uploads/site/svgs/mail.svg',
                 ],
                 [
-                    'title' => 'New Notification',
-                    'link' => '#',
-                    'totalcount' => 2,
+                    'title' => 'Notifications',
+                    'link' => route('company.get_notifications'),
+                    'totalcount' => Auth::user()->unReadNotifications->count(),
                     'icon' => '/uploads/site/svgs/megaphone.svg',
                 ],
             ],
@@ -531,5 +532,23 @@ class DashController extends Controller
             return response()->json(['error' => true, 'message' => $exception->getMessage()]);
 
         }
+    }
+
+    public function getNotifications()
+    {
+        return $this->company_view('company.notifications', []);
+    }
+
+    public function readNotifications($type, $notification_id)
+    {
+        $user = \Auth::user();
+        if ($type == 'single'){
+            $notification = $user->notifications()->where('id',$notification_id)->first();
+            $notification->markAsRead();
+        }elseif($type == 'unread'){
+            $user->unreadNotifications->markAsRead();
+        }
+
+        return redirect()->back();
     }
 }
