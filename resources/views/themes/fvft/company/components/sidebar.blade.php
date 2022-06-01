@@ -20,7 +20,7 @@
         <a href="{{ route('company.dash') }}" class="@yield('dashboard') d-flex border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-home fs-20"></i></span> {{ __('Dashboard') }}
         </a>
-        <a href="{{ route('company.edit_profile') }}" class="@yield('edit_profile') d-flex border-bottom">
+        <a href="{{ route('company.view_profile') }}" class="@yield('edit_profile') d-flex border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-edit fs-20"></i></span> {{ __('Profile') }}
         </a>
         <a href="{{ route('company.jobs') }}" class="@yield('jobs') d-flex border-bottom">

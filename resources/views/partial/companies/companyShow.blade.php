@@ -34,7 +34,7 @@
         <div class="card m-b-20">
             <div class="card-header">
                 <h3 class="card-title tempcolor">{{ $company->company_name ?? 'Not-Available' }}</h3>
-                <a href="{{ $editRoute }}" class="float-right" style="position:absolute; right: 20px;"><i class="fa fa-pencil"></i>&nbsp;Edit Profile</a>
+                <a href="{{ $editRoute }}" class="float-right tempcolor" style="position:absolute; right: 20px;"><i class="fa fa-pencil"></i>&nbsp;Edit Profile</a>
                 {{--<div class="row">--}}
                     {{--<div class="col-md-6">--}}
                         {{--<img src="{{ asset($company->company_logo != null ? $company->company_logo : 'images/defaultimage.jpg' ) }}" class="img-fluid" alt="">--}}
@@ -65,7 +65,7 @@
         <div class="card m-b-20">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 text-center">
                         <img src="{{ asset($company->company_cover) }}" alt="">
                     </div>
                 </div>
