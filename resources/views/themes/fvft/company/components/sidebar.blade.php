@@ -27,7 +27,7 @@
             <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> {{ __('My Jobs') }}
         </a>
 
-        <a href="{{ route('company.applicant.index') }}" class="@yield('applicants') d-flex border-bottom">
+        <a href="{{ route('company.applicant.indexpage') }}" class="@yield('applicants') d-flex border-bottom">
             <span class="icon1 mr-2"><i class="typcn typcn-heart-outline fs-20"></i></span> {{ __('Applicants') }}
         </a>
 

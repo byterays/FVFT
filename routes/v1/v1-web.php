@@ -1,15 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Admin\Location\LocationAjaxController;
+use App\Http\Controllers\ApplicantFilterController;
+use App\Http\Controllers\Candidates\AuthController as CanidateAuthController;
+use App\Http\Controllers\Candidates\DashController;
+use App\Http\Controllers\Company\NewApplicantController;
+use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Site\JobsController;
 use App\Http\Controllers\Site\NewsController;
 use App\Http\Controllers\Site\PageController;
-use App\Http\Controllers\Candidates\DashController;
-use App\Http\Controllers\Candidates\AuthController as CanidateAuthController;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
     require_once 'web/admin.php';
@@ -37,7 +38,6 @@ Route::get('page/{slug}', [PageController::class, 'index'])->name('viewPage');
 
 Route::post('get-job-by-title', [HomeController::class, 'getJobsByTitle'])->name('getJobsByTitle');
 
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/apply-job/{id}', [DashController::class, 'applyjob'])->name('applyForJob');
     Route::get('/remove-application/{id}', [DashController::class, 'removeApplication']);
@@ -49,3 +49,10 @@ Route::prefix('ajax')->group(function () {
     Route::post('/cities', [LocationAjaxController::class, 'cities']);
     Route::post('/districts', [LocationAjaxController::class, 'districts'])->name('getAjaxDistricts');
 });
+
+Route::put('bulk-application-status-update', [NewApplicantController::class, "bulkUpdateApplicationStatus"])->name("bulkUpdateApplicationStatus");
+Route::get('bulk-cv-download', [NewApplicantController::class, "bulkCvDownload"])->name("bulkCvDownload");
+Route::delete('bulk-application-delete', [NewApplicantController::class, "bulkApplicationDelete"])->name("bulkApplicationDelete");
+Route::match(['GET', 'POST'], 'save-applicant-filter', [ApplicantFilterController::class, 'saveFilter'])->name('saveFilter');
+Route::get('get-applicant-filter', [ApplicantFilterController::class, "getApplicantFilter"])->name("getApplicantFilter");
+Route::post('bulk-schedule-interview', [NewApplicantController::class, "bulkScheduleInterview"])->name("bulkScheduleInterview");

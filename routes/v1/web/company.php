@@ -1,12 +1,13 @@
 <?php
-use App\Http\Controllers\Company\ApplicantController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Company\JobController;
 
 use App\Http\Controllers\Company\AuthController;
 use App\Http\Controllers\Company\DashController;
-use App\Http\Controllers\Company\JobController;
-use App\Http\Controllers\Company\NewJobController;
 use App\Http\Controllers\Company\JobsController;
+use App\Http\Controllers\Company\NewJobController;
+use App\Http\Controllers\Company\ApplicantController;
+use App\Http\Controllers\Company\NewApplicantController;
 
 Route::get('/login', [AuthController::class, 'login'])->name('company.login');
 Route::post('/register', [AuthController::class, 'register'])->name('company.register');
@@ -38,6 +39,9 @@ Route::middleware(['auth', 'is_company'])->group(function () {
         Route::get('applicant-detail/{id}', [ApplicantController::class, 'applicant_detail'])->name('detail');
         Route::get('edit/{id}', [ApplicantController::class, 'edit_application'])->name('editApplication');
         Route::put('update-application/{id}', [ApplicantController::class, 'updateApplication'])->name('updateApplication');
+
+        Route::get('index', [NewApplicantController::class, "index"])->name("indexpage");
+        Route::get('advanced-search', [NewApplicantController::class, "advancedSearch"])->name("advancedSearch");
     });
 
     Route::group(['prefix' => 'job/', 'as' => 'company.newjob.'], function(){
