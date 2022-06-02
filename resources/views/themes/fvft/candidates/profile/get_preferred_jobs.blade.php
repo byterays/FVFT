@@ -291,21 +291,13 @@
                             <select name="industry[]" class="form-control select2-show-search" data-placeholder="Select Industry">
                                 <option value="">{{ __('Select Industry') }}</option>
                                 @foreach($job_industries as $job_industry)
-                <option value="{{ $job_industry->id }}">{{ $job_industry->title }}</option>
+                                <option value="{{ $job_industry->id }}">{{ $job_industry->title }}</option>
                                 @endforeach
-<<<<<<< HEAD
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <button type="button" class="btn btn-sm btn-danger" onclick="removeRow('jobRow_` + jt_count + `')">
-                                 Remove
-=======
-                </select>
-            </div>
-            <div class="col-md-2">
-                <button type="button" class="btn btn-block" onclick="removeRow('jobRow_` + jt_count + `')">
+                            <button type="button" class="btn btn-block" onclick="removeRow('jobRow_` + jt_count + `')">
                                 <i class="fa fa-close mr-1 text-danger"></i> Remove
->>>>>>> c3653110151c77bc87e18957ff10de232d754bd1
                             </button>
                         </div>
                     </div>`;

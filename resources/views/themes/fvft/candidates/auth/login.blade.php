@@ -45,21 +45,20 @@
                                 <div class="tab-pane fade {{ isset($register_route) && $register_route == '' ? 'active show' : '' }}" id="home" role="tabpanel" aria-labelledby="home-tab">
                                     <div class="single-page  w-100  p-0">
                                         <div class="wrapper wrapper2">
-                                            <div class="p-4 mb-5">
-                                                <h4 class="text-left font-weight-semibold fs-16">{{ __('Login With') }}</h4>
-                                                <div class="btn-list d-sm-flex">
-                                                    <a href="https://www.google.com/gmail/"
-                                                        class="btn btn-primary mb-sm-0"><i
-                                                            class="fa fa-google fa-1x mr-2"></i> {{ __('Google') }}</a>
-                                                    <a href="https://twitter.com/" class="btn btn-secondary mb-sm-0"><i
-                                                            class="fa fa-twitter fa-1x mr-2"></i> {{ __('Twitter') }}</a>
-                                                    <a href="https://www.facebook.com/" class="btn btn-info mb-0"><i
-                                                            class="fa fa-facebook fa-1x mr-2"></i> {{ __('Facebook') }}</a>
-                                                </div>
-                                            </div>
-                                            <hr class="divider">
-                                            <form id="login" class="card-body" tabindex="500" method="POST"
-                                                action="{{ route('login') }}">
+                                            {{--<div class="p-4 mb-5">--}}
+                                                {{--<h4 class="text-left font-weight-semibold fs-16">{{ __('Login With') }}</h4>--}}
+                                                {{--<div class="btn-list d-sm-flex">--}}
+                                                    {{--<a href="https://www.google.com/gmail/"--}}
+                                                        {{--class="btn btn-primary mb-sm-0"><i--}}
+                                                            {{--class="fa fa-google fa-1x mr-2"></i> {{ __('Google') }}</a>--}}
+                                                    {{--<a href="https://twitter.com/" class="btn btn-secondary mb-sm-0"><i--}}
+                                                            {{--class="fa fa-twitter fa-1x mr-2"></i> {{ __('Twitter') }}</a>--}}
+                                                    {{--<a href="https://www.facebook.com/" class="btn btn-info mb-0"><i--}}
+                                                            {{--class="fa fa-facebook fa-1x mr-2"></i> {{ __('Facebook') }}</a>--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                            {{--<hr class="divider">--}}
+                                            <form id="login" class="card-body" tabindex="500" method="POST" action="{{ route('login') }}">
                                                 @csrf
                                                 <h3 class="pb-2">{{ __('Login') }}</h3>
                                                 <div class="mail">
@@ -85,7 +84,7 @@
                                                 <div class="submit">
                                                     <button class="btn btn-primary btn-block" type="submit">{{ __('Login') }}</button>
                                                 </div>
-                                                <p class="mb-2"><a href="forgot.html">{{ __('Forgot Password') }}</a></p>
+                                                {{--<p class="mb-2"><a href="forgot.html">{{ __('Forgot Password') }}</a></p>--}}
                                                 <p class="text-dark mb-0">{{ __('Don\'t have account?') }}<a data-toggle="tab"
                                                         href="#profile" role="tab" aria-controls="profile"
                                                         aria-selected="false" class="text-primary ml-1">{{ __('Sign Up') }}</a></p>
@@ -96,24 +95,23 @@
                                 <div class="tab-pane fade {{ isset($register_route) && $register_route == 'register' ? 'active show' : '' }}" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <div class="single-page w-100  p-0">
                                         <div class="wrapper wrapper2">
-                                            <div class="p-4 mb-5">
-                                                <h4 class="text-left font-weight-semibold fs-16">{{ __('Register With') }}</h4>
-                                                <div class="btn-list d-sm-flex">
-                                                    <a href="https://www.google.com/gmail/"
-                                                        class="btn btn-primary mb-sm-0"><i
-                                                            class="fa fa-google fa-1x mr-2"></i> {{ __('Google') }}</a>
-                                                    <a href="https://twitter.com/" class="btn btn-secondary mb-sm-0"><i
-                                                            class="fa fa-twitter fa-1x mr-2"></i> {{ __('Twitter') }}</a>
-                                                    <a href="https://www.facebook.com/" class="btn btn-info mb-0"><i
-                                                            class="fa fa-facebook fa-1x mr-2"></i> {{ __('Facebook') }}</a>
-                                                </div>
-                                            </div>
-                                            <hr class="divider">
+                                            {{--<div class="p-4 mb-5">--}}
+                                                {{--<h4 class="text-left font-weight-semibold fs-16">{{ __('Register With') }}</h4>--}}
+                                                {{--<div class="btn-list d-sm-flex">--}}
+                                                    {{--<a href="https://www.google.com/gmail/"--}}
+                                                        {{--class="btn btn-primary mb-sm-0"><i--}}
+                                                            {{--class="fa fa-google fa-1x mr-2"></i> {{ __('Google') }}</a>--}}
+                                                    {{--<a href="https://twitter.com/" class="btn btn-secondary mb-sm-0"><i--}}
+                                                            {{--class="fa fa-twitter fa-1x mr-2"></i> {{ __('Twitter') }}</a>--}}
+                                                    {{--<a href="https://www.facebook.com/" class="btn btn-info mb-0"><i--}}
+                                                            {{--class="fa fa-facebook fa-1x mr-2"></i> {{ __('Facebook') }}</a>--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                            {{--<hr class="divider">--}}
 
-                                            <form id="Register" class="card-body" tabindex="500" method="POST"
-                                                action="/candidate/register">
+                                            <form id="Register" class="card-body" tabindex="500" method="POST" action="/candidate/register">
                                                 @csrf
-
+                                                <h3 class="pb-2">{{ __('Register') }}</h3>
                                                 <div class="form-group">
                                                     <input type="text" name="first_name">
 													@error('first_name')
