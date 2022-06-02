@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\Companies\CompanyController;
 use App\Http\Controllers\Admin\Candidates\CandidateController;
 use App\Http\Controllers\Admin\Pages\PageController;
 use App\Http\Controllers\Admin\Applicants\ApplicantController;
+use App\Http\Controllers\Admin\ApplicationManagementController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DistrictController;
@@ -80,6 +81,9 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::get('edit/{id}', [ApplicantController::class, 'edit'])->name('admin.applicants.edit');
         Route::get('delete/{id}', [ApplicantController::class, 'delete'])->name('admin.applicants.delete');
         Route::post('save', [ApplicantController::class, 'save']);
+
+        Route::get('index', [ApplicationManagementController::class, 'index'])->name('admin.applicant.indexpage');
+        Route::get('advanced-search', [ApplicationManagementController::class, 'advancedSearch'])->name('admin.applicant.advancedSearch');
     });
     //Pages Crude
     Route::prefix('pages')->group(function () {
@@ -248,4 +252,5 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     // Ajax Requests
 
     Route::get('store-district',[DashboardController::class, "storeDistrict"]);
+
 });

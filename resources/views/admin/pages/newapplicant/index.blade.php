@@ -1,7 +1,5 @@
-@extends('themes.fvft.company.layouts.dashmaster')
-@section('title', 'Applicants')
-@section('applicants', 'active')
-@section('data')
+@extends('admin.layouts.master')
+@section('main')
     <style>
         .table-responsive>.table-bordered {
             border: 1px solid #e8ebf3;
@@ -16,10 +14,12 @@
     <?php
     use App\Enum\ApplicantStatus;
     ?>
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{{ __('Application Management') }}</h3>
-        </div>
+    <div class="page-header">
+        <h4 class="page-title">Application Management</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Modules</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/admin/applicants/">Applicants</a></li>
+        </ol>
     </div>
     <div class="card">
         <div class="card-body">
@@ -54,7 +54,7 @@
                 <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-6">
-                        <form action="{{ route('company.applicant.indexpage') }}" method="GET">
+                        <form action="{{ route('admin.applicant.indexpage') }}" method="GET">
                             <div class="input-group input-icons mb-3">
                                 <i class="fa fa-search-icon"></i>
                                 <input type="text" name="q" value="{{ request()->q }}" class="form-control"
@@ -68,7 +68,7 @@
                         </form>
                     </div>
                     <div class="col-md-2">
-                        <a href="{{ route('company.applicant.advancedSearch') }}"
+                        <a href="{{ route('admin.applicant.advancedSearch') }}"
                             class="btn btn-outline-primary rounded-0 advancedSearch text-dark">Advanced
                             Search</a>
                     </div>
@@ -123,42 +123,51 @@
         </div>
     </div>
     <div class="applicant-section">
-        <form action="{{ route('company.applicant.indexpage') }}" id="searchForm">
+        <form action="{{ route('admin.applicant.indexpage') }}" id="searchForm">
             <input type="hidden" class="form-control" id="SearchInput">
             @if(request()->limit)
             <input type="hidden" class="form-control" name="limit" value="{{ request('limit') }}">
             @endif
         </form>
-        <form action="{{ route('company.applicant.indexpage') }}">
-            <div class="row">
-                <div class="col-md-4">
-                    <select name="jobTitle" class="form-control select2-show-search" id="JobTitle">
-                        <option value="All Job Titles">All Job Titles</option>
-                        @foreach ($job_categories as $job_category)
-                            <option value="{{ $job_category->id }}"
-                                {{ request()->jobTitle == $job_category->id ? 'selected' : '' }}>
-                                {{ $job_category->functional_area }}
-                            </option>
-                        @endforeach
-                    </select>
+        <div class="row">
+            <div class="col-md-4">
+                <select name="jobTitle" class="form-control select2-show-search" id="JobTitle">
+                    <option value="All Job Titles">All Job Titles</option>
+                    @foreach ($job_categories as $job_category)
+                        <option value="{{ $job_category->id }}"
+                            {{ request()->jobTitle == $job_category->id ? 'selected' : '' }}>
+                            {{ $job_category->functional_area }}
+                        </option>
+                    @endforeach
+                </select>
 
-                </div>
-                <div class="col-md-4">
-                    <select name="countries" class="form-control select2-show-search" id="Countries">
-                        <option value="All Countries">All Countries</option>
-                        @foreach ($countries as $country)
-                            <option value="{{ $country->id }}"
-                                {{ request()->countries == $country->id ? 'selected' : '' }}>
-                                {{ $country->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
             </div>
-        </form>
+            <div class="col-md-4">
+                <select name="countries" class="form-control select2-show-search" id="Countries">
+                    <option value="All Countries">All Countries</option>
+                    @foreach ($countries as $country)
+                        <option value="{{ $country->id }}"
+                            {{ request()->countries == $country->id ? 'selected' : '' }}>
+                            {{ $country->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select name="companies" class="form-control select2-show-search" id="Companies">
+                    <option value="All Companies">All Companies</option>
+                    @foreach ($companies as $company)
+                        <option value="{{ $company->id }}"
+                            {{ request()->companies == $company->id ? 'selected' : '' }}>
+                            {{ $company->company_name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
         <div class="row mt-2">
             <div class="col-md-4">
-                <form action="{{ route('company.applicant.indexpage') }}" method="GET">
+                <form action="{{ route('admin.applicant.indexpage') }}" method="GET">
                     <input type="hidden" name="q" value="{{ request()->q }}" class="form-control">
                     @if (!blank(request()->jobTitle))
                         <input type="hidden" name="jobTitle" class="form-control" value="{{ request()->jobTitle }}">
@@ -166,9 +175,12 @@
                     @if (!blank(request()->countries))
                         <input type="hidden" name="countries" class="form-control" value="{{ request()->countries }}">
                     @endif
+                    @if (!blank(request()->companies))
+                        <input type="hidden" name="companies" class="form-control" value="{{ request()->companies }}">
+                    @endif
                     <div class="form-inline">
                         <label for="">Applicant Per Page</label>
-                        <select name="limit" class="form-control rounded-0 bg-gray text-white"
+                        <select name="limit" class="form-control rounded-0 bg-gray text-white w-50"
                             onchange="this.form.submit();">
                             <option value="All" {{ !(request('limit') == 'All') ?: 'selected' }}>All
                             </option>
@@ -189,7 +201,7 @@
                 </form>
             </div>
             <div class="col-md-4 my-auto">
-                <div class="form-checkntjobs@gmail.com">
+                <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="checkAll">
                     <label for="" class="my-auto">Select All Applicants On This Page</label>
                 </div>
@@ -318,10 +330,10 @@
         </td>
         <td class="applicantStatus">{{ ucfirst($applicant->status) }}</td>
         <td>
-            <a href="{{ route('company.applicant.editApplication', $applicant->id) }}"
+            <a href="{{ route('admin.applicants.edit', $applicant->id) }}"
                 class="text-primary my-auto"><i class="fa fa-edit"></i></a>
-            <a href="{{ route('company.applicant.detail', $applicant->employ_id) }}"
-                class="text-primary my-auto"><i class="fa fa-eye"></i></a>
+            <a href="{{ route('company.applicant.detail', $applicant->employ_id) }}" data-id="{{ $applicant->id }}" data-action="{{ route('admin.applicants.delete', $applicant->id) }}" data-method="{{ getRouteMethodName('admin.applicants.delete') }}" data-modaltitle="Delete Applicant" data-toggle="modal" data-target="#dataDeleteModal"
+                class="text-danger my-auto"><i class="fa fa-trash-o"></i></a>
         </td>
     </tr>
 @endforeach
@@ -333,16 +345,13 @@
 </div>
 </div>
 </div>
-
-
 {{-- Modal Section --}}
 {{-- Interview Modal --}}
 @include('themes/fvft/company/newapplicant/interviewModal')
 {{-- End Interview Modal --}}
 {{-- End Modal Section --}}
 @endsection
-
-@section('js')
+@section('script')
 @include('themes/fvft/company/newapplicant/script')
 <script>
     $("#JobTitle").on('change', function() {
@@ -351,6 +360,10 @@
     });
     $("#Countries").on('change', function() {
         $("#SearchInput").attr('name', 'countries').val($("#Countries").val());
+        $("#searchForm").submit();
+    });
+    $("#Companies").on('change', function() {
+        $("#SearchInput").attr('name', 'companies').val($("#Companies").val());
         $("#searchForm").submit();
     });
 </script>

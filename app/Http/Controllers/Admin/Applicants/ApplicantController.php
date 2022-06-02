@@ -48,16 +48,17 @@ class ApplicantController extends Controller
         $job_preference=EmployJobPreference::where('employ_id',$application->employ_id)->first();
         // dd($candidate->id);
         // dd(User::find($candidate->user_id));
-        return $this->view('admin.pages.applicants.editadd',[
-            'candidate'=>$candidate,
-            'job'=>$job,
-            'application'=>$application,
-            'action'=>"Edit",
-            'candidate_user'=>User::find($candidate->user_id),
-            'countries'=>$this->countries,
-            'job_categories'=>$job_categories,
-            'job_preference'=>$job_preference
-        ]);
+        return redirect()->route('admin.applicant.indexpage')->with(notifyMsg('success', 'Applicant updated successfully'));
+        // return $this->view('admin.pages.applicants.editadd',[
+        //     'candidate'=>$candidate,
+        //     'job'=>$job,
+        //     'application'=>$application,
+        //     'action'=>"Edit",
+        //     'candidate_user'=>User::find($candidate->user_id),
+        //     'countries'=>$this->countries,
+        //     'job_categories'=>$job_categories,
+        //     'job_preference'=>$job_preference
+        // ]);
     }
     public function save(Request $request){
         $fields=[];
@@ -74,8 +75,9 @@ class ApplicantController extends Controller
         $request->has("category")?$preferences["job_category_id"]=$request->category:null;
 
         \DB::table('job_applications')->updateOrInsert(['id'=>$request->application_id],$fields);
+        return redirect()->route('admin.applicant.indexpage')->with(notifyMsg('success', 'Applicant saved'));
         // EmployJobPreference::updateOrCreate(['employ_id'=>$request->employ_id],$preferences);
-        return $this->edit($request->application_id);
+        // return $this->edit($request->application_id);
     }
     public function delete($id){
         try {

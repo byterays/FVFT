@@ -1,7 +1,5 @@
-@extends('themes.fvft.company.layouts.dashmaster')
-@section('title', 'Applicants')
-@section('applicants', 'active')
-@section('data')
+@extends('admin.layouts.master')
+@section('main')
     <link rel="stylesheet" href="{{ asset('css/datepicker.min.css') }}">
     <style>
         .table-responsive>.table-bordered {
@@ -40,13 +38,15 @@
     <?php
     use App\Enum\ApplicantStatus;
     ?>
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{{ __('Application Management') }}</h3>
-        </div>
+    <div class="page-header">
+        <h4 class="page-title">Application Management</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Modules</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/admin/applicants/">Applicants</a></li>
+        </ol>
     </div>
     <form action="#" method="#" id="FilterForm">
-        {{-- @csrf --}}
+        @csrf
         <div class="card">
             <div class="card-body">
                 <div class="search-section mx-auto">
@@ -357,14 +357,13 @@
             </div>
         </div>
         <div class="text-center mx-auto">
-            <button type="button" class="btn btn-primary rounded-0 text-right mx-auto font-weight-bold" id="SearchNow"
-                onclick="searchNow();">Search Now</button>
+            <button type="button" class="btn btn-primary rounded-0 text-right mx-auto font-weight-bold"
+                id="SearchNow">Search Now</button>
 
         </div>
     </form>
 @endsection
-
-@section('js')
+@section('script')
     <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
     <script>
         function removeSpan() {
@@ -420,13 +419,11 @@
                 method = "POST";
             $("#FilterForm").attr('action', url);
             $("#FilterForm").attr('method', 'POST');
-            var formData = new FormData($("#FilterForm")[0]);
-            formData.append('_token', "{{ csrf_token() }}");
+            $(".require").css('display', 'none');
             $.ajax({
                 url: url,
                 type: "POST",
-                data: formData,
-                // data: new FormData($("#FilterForm")[0]),
+                data: new FormData($("#FilterForm")[0]),
                 processData: false,
                 contentType: false,
                 cache: false,
@@ -450,15 +447,6 @@
                     hideBusySign();
                 }
             });
-        }
-
-
-        function searchNow() {
-            var url = "{{ route('getAdvancedSearchData') }}",
-                method = 'GET';
-            $("#FilterForm").attr('action', url);
-            $("#FilterForm").attr('method', method);
-            $("#FilterForm").submit();
         }
 
         $("#profileScoreSlider").slider({
