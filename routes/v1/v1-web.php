@@ -56,3 +56,4 @@ Route::delete('bulk-application-delete', [NewApplicantController::class, "bulkAp
 Route::match(['GET', 'POST'], 'save-applicant-filter', [ApplicantFilterController::class, 'saveFilter'])->name('saveFilter');
 Route::get('get-applicant-filter', [ApplicantFilterController::class, "getApplicantFilter"])->name("getApplicantFilter");
 Route::post('bulk-schedule-interview', [NewApplicantController::class, "bulkScheduleInterview"])->name("bulkScheduleInterview");
+Route::get('get-advaced-search', [ApplicantFilterController::class, "getAdvancedSearchData"])->name("getAdvancedSearchData");

@@ -82,7 +82,7 @@
                             <a href="/company/jobs">{{ __('My Jobs') }}</a>
                         </li>
                         <li>
-                            <a href="/company/applicants">{{ __('Applicants') }}</a>
+                            <a href="{{ route('company.applicant.indexpage') }}">{{ __('Applicants') }}</a>
                         </li>
 
                         <li>

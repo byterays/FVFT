@@ -51,6 +51,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/nepali.datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('themes/fvft/assets/css/jquery-ui.css') }}">
 
     {{-- FAV ICONS --}}
     <link rel="shortcut icon" href="{{ asset('/uploads/site/fav/favicon.ico') }}" />
@@ -72,6 +73,30 @@
         .select2-selection__choice__remove{
             border-radius: 3px;
             border: 1px;
+        }
+
+        #ajaxLoader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, .8) url('{{ asset('themes/fvft/assets/images/loader.svg') }}') no-repeat 50%
+        }
+
+        .fog_div {
+            display: none;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            height: 100%;
+            width: 100%;
+            z-index: 100;
+            background-color: rgba(30, 30, 30, 0.5);
+        }
+
+        #ajaxLoader.show {
+            display: block;
         }
 
     </style>
@@ -155,7 +180,8 @@
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/toastr.min.js') }}"></script>
 <script src="{{ asset('js/nepali.datepicker.min.js') }}"></script>
-
+<script src="{{ asset('js/sweetalert2.js') }}"></script>
+<script src="{{ asset('themes/fvft/') }}/assets/plugins/jquery-uislider/jquery-ui.js"></script>
 <script>
     $.ajaxSetup({
         headers: {
@@ -294,6 +320,23 @@
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
+
+    @if (Session::has('swalMessage'))
+            Swal.fire({
+                title: "{{ Session::get('swalTitle') }}",
+                text: "{{ Session::get('swalMessage') }}",
+                icon: "{{ Session::get('swalIcon') }}",
+                // confirmButtonText: 'Ok'
+            });
+        @endif
+
+        function busySign() {
+            $('#ajaxLoader').css('display', 'block');
+        }
+
+        function hideBusySign() {
+            $('#ajaxLoader').css('display', 'none');
+        }
 </script>
 @yield('script')
 </body>
