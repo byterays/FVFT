@@ -38,6 +38,9 @@
             min-width: 40px;
             z-index: 9
         }
+        .tab-content{
+            padding-top: 0 !important;
+        }
 
     </style>
     <section>
@@ -100,7 +103,7 @@
                                                                 <div class="card-body pt-0 pt-md-5">
                                                                     <div class="item-card9">
                                                                         <a href="{{ route('viewJob', $item->id) }}"
-                                                                            class="text-dark" target="_blank">
+                                                                            class="text-dark">
                                                                             <h4 class="font-weight-semibold mt-1">
                                                                                 {{ $item->title }}({{ $item->num_of_positions }})
                                                                             </h4>
@@ -108,7 +111,7 @@
                                                                         <div class="mt-2 mb-2">
                                                                             @if (!blank(data_get($item, 'company.company_name')))
                                                                                 <a href="{{ route('site.companydetail', data_get($item, 'company.id')) }}"
-                                                                                    class="mr-4" target="_blank"><span><i
+                                                                                    class="mr-4"><span><i
                                                                                             class="fa fa-building-o text-muted mr-1"></i>
                                                                                         {{ data_get($item, 'company.company_name') }}</span></a>
                                                                             @endif
@@ -197,8 +200,7 @@
                                                                                     <div class="col-md-3">
                                                                                         {{-- <a href="{{ route('viewJob', $item->id) }}" --}}
                                                                                         <a href="{{ route('candidate.job_search.viewJobDetails', $item->id) }}"
-                                                                                            class="btn btn-success btn-block"
-                                                                                            target="_blank">
+                                                                                            class="btn btn-success btn-block">
                                                                                             <i
                                                                                                 class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                                         </a>
@@ -211,8 +213,7 @@
                                                                                 @elseif(auth()->user()->user_type == 'company')
                                                                                     <div class="col-md-3">
                                                                                         <a href="{{ route('viewJob', $item->id) }}"
-                                                                                            class="btn btn-success btn-block"
-                                                                                            target="_blank">
+                                                                                            class="btn btn-success btn-block">
                                                                                             <i
                                                                                                 class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                                         </a>
@@ -231,8 +232,7 @@
                                                                                 </div>
                                                                                 <div class="col-md-3">
                                                                                     <a href="{{ route('viewJob', $item->id) }}"
-                                                                                        class="btn btn-success btn-block"
-                                                                                        target="_blank">
+                                                                                        class="btn btn-success btn-block">
                                                                                         <i
                                                                                             class="fa fa-eye"></i>&nbsp;{{ __('View Details') }}
                                                                                     </a>

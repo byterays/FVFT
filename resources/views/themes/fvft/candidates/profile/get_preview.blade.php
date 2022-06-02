@@ -286,6 +286,16 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="card">
+                                <div class="card-body mx-auto">
+                                    <div class="mx-auto">
+                                        <a href="{{ route('candidate.profile.index') }}"
+                                            class="btn btn-primary rounded-0"><i class="fa fa-arrow-left"></i> {{ __('Back To Profile') }}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                             {{-- <div class="card"> // don't remove
                                 <div class="card-body mx-auto">
                                     <div class="mx-auto">
@@ -299,33 +309,33 @@
                                     </div>
                                 </div>
                             </div> --}}
-                            <div class="card">
-                                <div class="card-body  bg-primary">
-                                    <div class="row">
-                                        <div class="col-lg-8 col-md-12 mx-auto mt-5">
-                                            <div class="service-card text-center">
-                                                <div class="icon-bg icon-service" style="background-color: #fff;">
-                                                    <span
-                                                        style="color: #0e0d0d; font-size: 18px">{{ $employ->calculateProfileCompletion() }}%</span>
-                                                </div>
-                                                <div class="servic-data text-white mt-3">
-                                                    <h4 class="font-weight-semibold mb-2">{{ __('Profile Completion') }}
-                                                    </h4>
-                                                    @if ($employ->calculateProfileCompletion() < 100)
-                                                        <p class="text-muted text-white">
-                                                            {{ __('Complete your profile to 100% to increase the chance of getting shortlisted for the right job!') }}
-                                                        </p>
-                                                    @else
-                                                        <p class="text-muted text-white">
-                                                            {{ __('Congratulation your profile is 100% complete. You have more chance of getting shortlisted for the right job!') }}
-                                                        </p>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {{--<div class="card">--}}
+                                {{--<div class="card-body  bg-primary">--}}
+                                    {{--<div class="row">--}}
+                                        {{--<div class="col-lg-8 col-md-12 mx-auto mt-5">--}}
+                                            {{--<div class="service-card text-center">--}}
+                                                {{--<div class="icon-bg icon-service" style="background-color: #fff;">--}}
+                                                    {{--<span--}}
+                                                        {{--style="color: #0e0d0d; font-size: 18px">{{ $employ->calculateProfileCompletion() }}%</span>--}}
+                                                {{--</div>--}}
+                                                {{--<div class="servic-data text-white mt-3">--}}
+                                                    {{--<h4 class="font-weight-semibold mb-2">{{ __('Profile Completion') }}--}}
+                                                    {{--</h4>--}}
+                                                    {{--@if ($employ->calculateProfileCompletion() < 100)--}}
+                                                        {{--<p class="text-muted text-white">--}}
+                                                            {{--{{ __('Complete your profile to 100% to increase the chance of getting shortlisted for the right job!') }}--}}
+                                                        {{--</p>--}}
+                                                    {{--@else--}}
+                                                        {{--<p class="text-muted text-white">--}}
+                                                            {{--{{ __('Congratulation your profile is 100% complete. You have more chance of getting shortlisted for the right job!') }}--}}
+                                                        {{--</p>--}}
+                                                    {{--@endif--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
                         </div>
                     </div>
                 </div>
