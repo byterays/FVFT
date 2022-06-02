@@ -15,7 +15,7 @@ use App\Http\Controllers\Candidates\UsefulInformationController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register'])->name('candidate.register');
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'is_candidate'])->group(function () {
     Route::get('/', [DashController::class, 'dashboard'])->name('candidate.dashboard');
     Route::get('/jobs', [DashController::class, 'jobs'])->name('candidate.jobs');
     Route::get('/profile', [DashController::class, 'profile'])->name('candidate.profile');

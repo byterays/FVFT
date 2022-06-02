@@ -70,6 +70,10 @@
         }
 
 
+        .toast {
+            opacity: 1 !important;
+        }
+
         #ajaxLoader {
             position: absolute;
             top: 0;
@@ -93,6 +97,7 @@
         #ajaxLoader.show {
             display: block;
 
+        }
         .toast{
             opacity: 1 !important;
         }
@@ -348,15 +353,16 @@
         @endif
 
 
+        function onClick() {
+            toastr.clear()
+        }
+
         function busySign() {
             $('#ajaxLoader').css('display', 'block');
         }
 
         function hideBusySign() {
             $('#ajaxLoader').css('display', 'none');
-
-        function onClick() {
-            toastr.clear()
         }
     </script>
     @yield('script')

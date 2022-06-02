@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Admin\Jobs;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Country;
 use App\Models\Job;
+use App\Notifications\JobApprovalNotification;
 use App\Traits\Admin\AdminMethods;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
 class JobsController extends Controller
@@ -115,6 +119,14 @@ class JobsController extends Controller
             $job->update(['status' => $request->job_status]);
             $msg = $request->job_status == 'Approved' ? 'Approved' : 'Rejected';
             DB::commit();
+
+            $company = Company::find($job->company_id);
+            $user = $company->user;
+            $admin = Auth::user();
+
+            $subject = "Job post request for $job->title has been approved";
+            Notification::send([$user, $admin], new JobApprovalNotification($job, $subject));
+
             return response()->json(['msg' => 'Job is '.$msg]);
         } catch(\Exception $e){
             DB::rollBack();

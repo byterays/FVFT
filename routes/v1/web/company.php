@@ -15,9 +15,11 @@ Route::middleware(['auth', 'is_company'])->group(function () {
     Route::get('/', [DashController::class, 'dashboard'])->name('company.dash');
     Route::get('/profile', [DashController::class, 'profile'])->name('company.edit_profile');
     Route::post('/profile', [DashController::class, 'saveProfile'])->name('company.save_profile');
+    Route::post('/remove-image', [DashController::class, 'removeImage'])->name('company.remove_image');
     Route::put('/update/{id}', [DashController::class, 'updateProfile'])->name('company.update_profile');
     Route::get('/view-my-profile', [DashController::class, 'show'])->name('company.view_profile');
-
+    Route::get('/notifications', [DashController::class, "getNotifications"])->name('company.get_notifications');
+    Route::get('/notifications-read/{type}/{id}', [DashController::class, "readNotifications"])->name('company.read_notifications');
 
     Route::get('/jobs', [JobsController::class, 'index'])->name('company.jobs');
     // Route::get('/jobs', [DashController::class, 'jobs'])->name('company.jobs');
@@ -55,4 +57,5 @@ Route::middleware(['auth', 'is_company'])->group(function () {
         Route::get('get_approval', [NewJobController::class, "get_approval_form"])->name('get_approval_form');
         Route::post('post_approval', [NewJobController::class, "post_approval_form"])->name('post_approval_form');
     });
+
 });

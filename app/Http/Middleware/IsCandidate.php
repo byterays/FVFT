@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class IsCompany
+class IsCandidate
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,9 @@ class IsCompany
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->user_type == "company") {
+        if (auth()->user()->user_type == "candidate") {
             return $next($request);
         }
         return abort(403, 'This page can not be accessed.');
-//        return redirect()->route('company.login')->with('error', "You don't have company access.");
     }
 }

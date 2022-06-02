@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Company;
 
 use PDF;
 use App\Models\Skill;
+use App\Models\Company;
 use App\Models\Country;
 use App\Models\Employe;
 use App\Models\Language;
@@ -34,16 +35,34 @@ class NewApplicantController extends Controller
 
     public function index(Request $request)
     {
+        // $applicants = JobApplication::when($request->status != null, function ($q) use ($request) {
+        //     $q->where('status', $request->status);
+        // })->whereHas('job', function ($query) {
+        //     return $query->whereHas('company', function ($query2) {
+        //         return $query2->where('user_id', Auth::user()->id)->with(['employe', 'job']); // don't remove
+        //     });
+        // });
         $applicants = JobApplication::when($request->status != null, function ($q) use ($request) {
             $q->where('status', $request->status);
-        })->whereHas('job', function ($query) {
-            return $query->whereHas('company', function ($query2) {
+        })->whereHas('job', function ($query) use($request) {
+            return $query->whereHas('company', function ($query2) use($query, $request) {
+                $query->when(!blank($request->jobTitle) AND $request->jobTitle != 'All Job Titles', function($q) use($request){
+                    $q->where('job_categories_id', $request->jobTitle);
+                })->when(!blank($request->jobTitle) AND $request->jobTitle == 'All Job Titles', function($q) use($request){
+                    $categoriesId = JobCategory::pluck('id')->toArray();
+                    $q->whereIn('job_categories_id', $categoriesId);
+                })->when(!blank($request->countries) AND $request->countries != 'All Countries', function($q) use($request){
+                    $q->where('country_id', $request->countries);
+                })->when(!blank($request->countries) AND $request->countries == 'All Countries', function($q) use($request){
+                    $countriesId = Country::pluck('id')->toArray();
+                    $q->whereIn('country_id', $countriesId);
+                });
                 return $query2->where('user_id', Auth::user()->id)->with(['employe', 'job']);
             });
         });
         $totalApplicant = $applicants->count();
         if ($request->limit != 'All') {
-            $applicants = $applicants->paginate($request->limit ?? 3);
+            $applicants = $applicants->paginate($request->limit ?? 10);
         } else {
             $applicants = $applicants->paginate($applicants->count());
         }
@@ -51,12 +70,15 @@ class NewApplicantController extends Controller
         return $this->company_view($this->page . 'index', [
             "application_datas" => $this->__datas()['application_datas'],
             "applicants" => $applicants,
+            "companies" => Company::whereHas('jobs')->get(),
             "sn" => $sn,
             "totalApplicant" => $totalApplicant,
             "pagination" => $applicants->appends([
                 'limit' => $request->limit,
                 'status' => $request->status,
                 'q' => $request->q,
+                'jobTitle' => !blank($request->jobTitle) ? $request->jobTitle : '',
+                'countries' => !blank($request->countries) ? $request->countries : '',
             ]),
         ]);
 
@@ -217,42 +239,42 @@ class NewApplicantController extends Controller
             'application_datas' => [
                 [
                     'title' => 'All Applications',
-                    'link' => route('company.applicant.index'),
+                    'link' => route('company.applicant.indexpage'),
                     'totalcount' => ($this->company()) ? $this->company()->job_applications->count() : '',
                     'image' => 'mail.svg',
                     'bg-color' => 'bg-blue',
                 ],
                 [
                     'title' => 'Unscreened Applications',
-                    'link' => route('company.applicant.index'),
+                    'link' => route('company.applicant.indexpage',['status' => ApplicantStatus::PENDING]),
                     'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', ApplicantStatus::PENDING)->count() : '',
                     'image' => 'megaphone.svg',
                     'bg-color' => 'bg-gray',
                 ],
                 [
                     'title' => 'Shortlisted Applications',
-                    'link' => route('company.applicant.index'),
+                    'link' => route('company.applicant.indexpage',['status' => ApplicantStatus::SHORTLISTED]),
                     'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', ApplicantStatus::SHORTLISTED)->count() : '',
                     'image' => 'blogging.svg',
                     'bg-color' => 'bg-pink',
                 ],
                 [
                     'title' => 'Interviewed Applications',
-                    'link' => route('company.applicant.index'),
+                    'link' => route('company.applicant.indexpage',['status' => ApplicantStatus::SELECTEDFORINTERVIEW]),
                     'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', ApplicantStatus::SELECTEDFORINTERVIEW)->count() : '',
                     'image' => 'picture.svg',
                     'bg-color' => 'bg-orange',
                 ],
                 [
                     'title' => 'Selected Applications',
-                    'link' => route('company.applicant.index'),
+                    'link' => route('company.applicant.indexpage',['status' => ApplicantStatus::ACCEPTED]),
                     'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', ApplicantStatus::ACCEPTED)->count() : '',
                     'image' => 'picture.svg',
                     'bg-color' => 'bg-green',
                 ],
                 [
                     'title' => 'Rejected Applications',
-                    'link' => route('company.applicant.index'),
+                    'link' => route('company.applicant.indexpage',['status' => ApplicantStatus::REJECTED]),
                     'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', ApplicantStatus::REJECTED)->count() : '',
                     'image' => 'box-closed.svg',
                     'bg-color' => 'bg-red',

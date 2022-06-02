@@ -30,6 +30,27 @@ class JobsController extends Controller
         ]);
     }
 
+//    public function index(Request $request)
+//    {
+//        $query = Job::where('company_id', $this->company()->id);
+//        $this->__query_jobs($query, $request);
+////        $jobs = $query->paginate(10);
+//        $jobs = $query->get();
+////        $sn = ($jobs->perPage() * ($jobs->currentPage() - 1)) + 1;
+//        return $this->site_view('company.jobs', [
+//            'jobs' => $jobs,
+////            "pagination" => $jobs->appends(array(
+////                'type' => $request->type,
+////                'search' => $request->term,
+////            )),
+//            // 'all_jobs' => $jobs->paginate(10),
+//            // 'active_jobs' => $jobs->where('is_active', 1)->paginate(10),
+//            // 'inactive_jobs' => $jobs->where('is_active', 0)->paginate(10),
+//            "company" => $this->company(),
+////            'sn' => $sn,
+//        ]);
+//    }
+
     private function __query_jobs($query, $request)
     {
         $query->when($request->type == 'all', function ($q) {
