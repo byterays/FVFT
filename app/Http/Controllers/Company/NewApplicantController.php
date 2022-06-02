@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers\Company;
 
-use App\Enum\ApplicantStatus;
-use App\Http\Controllers\Controller;
-use App\Models\Employe;
-use App\Models\JobApplication;
-use App\Traits\Site\CompanyMethods;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 use PDF;
+use App\Models\Skill;
+use App\Models\Country;
+use App\Models\Employe;
+use App\Models\Language;
+use App\Models\Training;
+use App\Models\JobCategory;
+use Illuminate\Http\Request;
+use App\Enum\ApplicantStatus;
+use App\Models\JobPreference;
+use App\Models\EducationLevel;
+use App\Models\JobApplication;
+use App\Models\ApplicantFilter;
+use Illuminate\Support\Facades\DB;
+use App\Traits\Site\CompanyMethods;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class NewApplicantController extends Controller
 {
@@ -33,6 +41,7 @@ class NewApplicantController extends Controller
                 return $query2->where('user_id', Auth::user()->id)->with(['employe', 'job']);
             });
         });
+        $totalApplicant = $applicants->count();
         if ($request->limit != 'All') {
             $applicants = $applicants->paginate($request->limit ?? 3);
         } else {
@@ -43,6 +52,7 @@ class NewApplicantController extends Controller
             "application_datas" => $this->__datas()['application_datas'],
             "applicants" => $applicants,
             "sn" => $sn,
+            "totalApplicant" => $totalApplicant,
             "pagination" => $applicants->appends([
                 'limit' => $request->limit,
                 'status' => $request->status,
@@ -50,6 +60,21 @@ class NewApplicantController extends Controller
             ]),
         ]);
 
+    }
+
+    public function advancedSearch(Request $request)
+    {
+        $jobPreferredCategories = JobPreference::where('job_preference_type', get_class(new JobCategory()))->pluck('job_preference_id')->toArray();
+        $jobPreferredCountries = JobPreference::where('job_preference_type', get_class(new Country()))->pluck('job_preference_id')->toArray();
+        return $this->company_view($this->page."advancedSearch", [
+            "education_levels" => EducationLevel::select("id", "title")->get(),
+            "skills" => Skill::select("id", "title")->get(),
+            "trainings" => Training::select("id", "title")->get(),
+            "languages" => Language::select("id", "lang")->get(),
+            "preferredCategories" => JobCategory::whereIn("id", $jobPreferredCategories)->select("id", "functional_area")->get(),
+            "preferredCountries" => Country::whereIn("id", $jobPreferredCountries)->select("id", "name")->get(),
+            "applicantFilters" => ApplicantFilter::get(),
+        ]);
     }
 
     public function bulkUpdateApplicationStatus(Request $request)
@@ -69,7 +94,7 @@ class NewApplicantController extends Controller
                 $application = JobApplication::where('id', $explodedId);
                 if ($application->exists()) {
                     $application = $application->first();
-                    $application->update(['status' => $request->applicantStatus]);
+                    $application->update(['status' => $request->applicantStatus, 'interview_date' => null, 'interview_status' => 'notstarted', 'interview_time' =>null]);
                     $statuses[] = [
                         $application->id => ucfirst($application->status),
                     ];
@@ -145,6 +170,39 @@ class NewApplicantController extends Controller
         } catch (\Exception$e) {
             DB::rollBack();
             return response()->json(['success' => false, 'error' => $e->getMessage()]);
+        }
+    }
+
+    public function bulkScheduleInterview(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'interview_date' => ['required'],
+            'interview_time' => ['required'],
+        ]);
+        if($validator->fails()){
+            return response()->json(['errors' => $validator->errors(), 'success' => false]);
+        }
+        try{
+            DB::beginTransaction();
+            $ids = $request->ids;
+            $explodedIds = explode(",", $ids);
+            JobApplication::whereIn('id', $explodedIds)->update([
+                'interview_date' => $request->interview_date,
+                'interview_time' => $request->interview_time,
+                'interview_status' => 'started',
+                'status' => ApplicantStatus::SELECTEDFORINTERVIEW,
+            ]);
+            foreach($explodedIds as $eIds){
+                $statuses[] = [
+                    $eIds => ApplicantStatus::SELECTEDFORINTERVIEW,
+                ];
+            }
+            
+            DB::commit();
+            return response()->json(['success' => true, 'msg' => 'Interview Status updated for selected applicants', 'statuses' => json_encode($statuses)]);
+        } catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['success'=>false, 'error' => $e->getMessage()]);
         }
     }
 

@@ -8,7 +8,7 @@ interface ApplicantStatus
     const SHORTLISTED = "shortlisted";
     const SELECTEDFORINTERVIEW = "selectedForInterview";
     const INTERVIEWED = "interviewed";
-    const ACCEPTED = "accepted";
+    const ACCEPTED = "selected";
     const REJECTED = "rejected";
     const REDLISTED = "redlisted";
 }

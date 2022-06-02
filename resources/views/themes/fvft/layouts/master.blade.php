@@ -69,6 +69,7 @@
             border-top: 1px solid black;
         }
 
+
         .toast {
             opacity: 1 !important;
         }
@@ -95,6 +96,10 @@
 
         #ajaxLoader.show {
             display: block;
+
+        }
+        .toast{
+            opacity: 1 !important;
         }
 
     </style>
@@ -347,9 +352,11 @@
             });
         @endif
 
+
         function onClick() {
             toastr.clear()
         }
+
         function busySign() {
             $('#ajaxLoader').css('display', 'block');
         }
