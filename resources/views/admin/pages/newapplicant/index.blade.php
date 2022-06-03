@@ -12,7 +12,7 @@
 
     </style>
     <?php
-    use App\Enum\ApplicantStatus;
+    use App\Enum\JobApplicationStatus;
     ?>
     <div class="page-header">
         <h4 class="page-title">Application Management</h4>
@@ -82,19 +82,19 @@
                     </div>
                     <div class="col-md-9">
                         <a href="javascript:void(0)"
-                            onclick="updateBulkApplicantStatus('{{ ApplicantStatus::PENDING }}');"
+                            onclick="updateBulkApplicantStatus('{{ JobApplicationStatus::PENDING }}');"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white">Unscreened</a>
                         <a href="javascript:void(0)"
-                            onclick="updateBulkApplicantStatus('{{ ApplicantStatus::SHORTLISTED }}');"
+                            onclick="updateBulkApplicantStatus('{{ JobApplicationStatus::SHORT_LISTED }}');"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Shortlisted</a>
                         <a href="javascript:void(0)"
-                            onclick="updateBulkApplicantStatus('{{ ApplicantStatus::INTERVIEWED }}');"
+                            onclick="updateBulkApplicantStatus('{{ JobApplicationStatus::INTERVIEWED }}');"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Interviewed</a>
                         <a href="javascript:void(0)"
-                            onclick="updateBulkApplicantStatus('{{ ApplicantStatus::ACCEPTED }}');"
+                            onclick="updateBulkApplicantStatus('{{ JobApplicationStatus::ACCEPTED }}');"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Selected</a>
                         <a href="javascript:void(0)"
-                            onclick="updateBulkApplicantStatus('{{ ApplicantStatus::REJECTED }}');"
+                            onclick="updateBulkApplicantStatus('{{ JobApplicationStatus::REJECTED }}');"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Rejected</a>
                     </div>
                 </div>

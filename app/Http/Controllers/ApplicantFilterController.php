@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Enum\ApplicantStatus;
 use App\Models\JobApplication;
 use App\Models\ApplicantFilter;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +14,7 @@ class ApplicantFilterController extends Controller
     use CompanyMethods;
     public function __construct()
     {
-        
+
     }
 
     public function getApplicantFilter(Request $request)
@@ -136,6 +135,6 @@ class ApplicantFilterController extends Controller
 
     public function filterByTitleCountryCompany(Request $request)
     {
-        
+
     }
 }

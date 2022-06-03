@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enum\ApplicantStatus;
+use App\Enum\JobApplicationStatus;
 use App\Http\Controllers\Controller;
 use App\Models\ApplicantFilter;
 use App\Models\Company;
@@ -106,36 +106,36 @@ class ApplicationManagementController extends Controller
                 ],
                 [
                     'title' => 'Unscreened Applications',
-                    'link' => route('admin.applicant.indexpage', ['status' => ApplicantStatus::PENDING]),
-                    'totalcount' => $jobapplication->where('status', ApplicantStatus::PENDING)->count(),
+                    'link' => route('admin.applicant.indexpage', ['status' => JobApplicationStatus::PENDING]),
+                    'totalcount' => $jobapplication->where('status', JobApplicationStatus::PENDING)->count(),
                     'image' => 'megaphone.svg',
                     'bg-color' => 'bg-gray',
                 ],
                 [
                     'title' => 'Shortlisted Applications',
-                    'link' => route('admin.applicant.indexpage', ['status' => ApplicantStatus::SHORTLISTED]),
-                    'totalcount' => $jobapplication->where('status', ApplicantStatus::SHORTLISTED)->count(),
+                    'link' => route('admin.applicant.indexpage', ['status' => JobApplicationStatus::SHORT_LISTED]),
+                    'totalcount' => $jobapplication->where('status', JobApplicationStatus::SHORT_LISTED)->count(),
                     'image' => 'blogging.svg',
                     'bg-color' => 'bg-pink',
                 ],
                 [
                     'title' => 'Interviewed Applications',
-                    'link' => route('admin.applicant.indexpage', ['status' => ApplicantStatus::SELECTEDFORINTERVIEW]),
-                    'totalcount' => $jobapplication->where('status', ApplicantStatus::SELECTEDFORINTERVIEW)->count(),
+                    'link' => route('admin.applicant.indexpage', ['status' => JobApplicationStatus::SELECTED_FOR_INTERVIEW]),
+                    'totalcount' => $jobapplication->where('status', JobApplicationStatus::SELECTED_FOR_INTERVIEW)->count(),
                     'image' => 'picture.svg',
                     'bg-color' => 'bg-orange',
                 ],
                 [
                     'title' => 'Selected Applications',
-                    'link' => route('admin.applicant.indexpage', ['status' => ApplicantStatus::ACCEPTED]),
-                    'totalcount' => $jobapplication->where('status', ApplicantStatus::ACCEPTED)->count(),
+                    'link' => route('admin.applicant.indexpage', ['status' => JobApplicationStatus::ACCEPTED]),
+                    'totalcount' => $jobapplication->where('status', JobApplicationStatus::ACCEPTED)->count(),
                     'image' => 'picture.svg',
                     'bg-color' => 'bg-green',
                 ],
                 [
                     'title' => 'Rejected Applications',
-                    'link' => route('admin.applicant.indexpage', ['status' => ApplicantStatus::REJECTED]),
-                    'totalcount' => $jobapplication->where('status', ApplicantStatus::REJECTED)->count(),
+                    'link' => route('admin.applicant.indexpage', ['status' => JobApplicationStatus::REJECTED]),
+                    'totalcount' => $jobapplication->where('status', JobApplicationStatus::REJECTED)->count(),
                     'image' => 'box-closed.svg',
                     'bg-color' => 'bg-red',
                 ],

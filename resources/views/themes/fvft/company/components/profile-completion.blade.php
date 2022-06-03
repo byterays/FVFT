@@ -1,3 +1,4 @@
+@if(isset($company) AND !blank($company))
 <div class="row">
     <div class="col-md-12">
         <div class="progress">
@@ -13,3 +14,4 @@
         @endif
     </div>
 </div>
+@endif
