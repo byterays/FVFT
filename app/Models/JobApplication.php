@@ -14,14 +14,19 @@ class JobApplication extends Model
         'id', 'employ_id', 'job_id', 'status', 'created_at', 'updated_at', 'interview_status', 'interview_date', 'interview_time'
     ];
 
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d M Y', strtotime($value));
+    }
+
     public function job()
     {
-        return $this->belongsTo('App\Models\Job', 'job_id', 'id');
+        return $this->belongsTo(Job::class, 'job_id', 'id');
     }
 
     public function employe()
     {
-        return $this->belongsTo('App\Models\Employe', 'employ_id', 'id');
+        return $this->belongsTo(Employe::class, 'employ_id', 'id');
     }
 
     public function company()

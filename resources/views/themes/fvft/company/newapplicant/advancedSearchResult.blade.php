@@ -14,7 +14,7 @@
 
     </style>
     <?php
-    use App\Enum\ApplicantStatus;
+    use App\Enum\JobApplicationStatus;
     ?>
     <div class="card">
         <div class="card-header">

@@ -1,8 +1,12 @@
 import Api from './Api';
 
 export default {
-    getData(page,meta){
-        // return Api().get('/api/data/list?page=' + page + '&filter=' + meta.filter);
+    getApplicants(page,filter){
+        return Api().get('/company/web-api/getApplicants?page=' + page + '&filter=' + filter);
+    },
+
+    getDataSets(){
+        return Api().get('/company/web-api/getDataSets');
     },
 
     createNewJob(formData){
