@@ -242,13 +242,41 @@
                                 <td>
                                     <span v-if="applicant.employe">{{ applicant.employe.country.name }}</span>
                                 </td>
-
-
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>
+                                    <span v-if="applicant.employe">{{ applicant.employe.profile_score }} %</span>
+                                </td>
+                                <td>
+                                    <span v-if="applicant.employe && applicant.employe.experience">
+                                        <span v-for="(experience, i) in applicant.employe.experience" :key="i">
+                                            <span v-if="i==0">
+                                                {{ experience.job_category.functional_area }}, {{ experience.working_year + getYearForm(experience.working_year) }}, {{ experience.working_month + getMonthForm(experience.working_month) }}
+                                            </span>
+                                        </span>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span v-if="applicant.employe.education_level">
+                                        {{ applicant.employe.education_level.title }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span v-if="applicant.employe && applicant.employe.employee_trainings">
+                                        <span v-for="(item, i) in applicant.employe.employee_trainings" :key="i">
+                                            <span v-if="i==0">
+                                                {{ item.training.title }}
+                                            </span>
+                                        </span>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span v-if="applicant.employe && applicant.employe.employee_language">
+                                        <span v-for="(item, i) in applicant.employe.employee_language" :key="i">
+                                            <span v-if="i==0">
+                                                {{ item.language.lang }}
+                                            </span>
+                                        </span>
+                                    </span>
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

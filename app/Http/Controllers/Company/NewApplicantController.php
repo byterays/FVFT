@@ -97,8 +97,9 @@ class NewApplicantController extends Controller
         });
 
         $query->with([
-            'employe', 'employe.country', 'employe.user',
-            'job', 'job.job_category',
+            'employe', 'employe.country:id,name', 'employe.user',
+            'job', 'job.job_category', 'employe.experience.country:id,name', 'employe.experience.job_category:id,functional_area',
+            'employe.education_level:id,title', 'employe.employeeTrainings.training:id,title', 'employe.employeeLanguage.language:id,lang'
         ]);
 
         // filter

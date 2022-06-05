@@ -1,4 +1,4 @@
-@extends('themes.fvft.company.layouts.dashmaster')
+        @extends('themes.fvft.company.layouts.dashmaster')
 @section('title', 'Applicants')
 @section('applicants', 'active')
 @section('data')
