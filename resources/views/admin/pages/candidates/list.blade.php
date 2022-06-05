@@ -26,7 +26,7 @@ if (session()->get('delete')) {
         <h4 class="page-title">Candidates</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Modules</a></li>
-            <li class="breadcrumb-item" aria-current="page"><a href="/admin/candidates/">Candidate</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="{{ route('admin.candidates.list') }}">Candidate</a></li>
         </ol>
     </div>
     <div class="row">
@@ -92,6 +92,12 @@ if (session()->get('delete')) {
                                                 {{-- <a class="btn btn-success btn-sm text-white mb-1"
                                                     href="/admin/candidates/edit/{{ $candidate->id }}"><i
                                                         class="fa fa-pencil"></i></a> --}}
+                                            </div>
+                                            <div data-toggle="tooltip" data-original-title="Edit"
+                                                style="display: inline-block;">
+                                                <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="modal" data-target="#dataDeleteModal" data-id="{{ $candidate->id }}" data-action="{{ route('admin.candidates.delete', $candidate->id) }}" data-method="{{ getRouteMethodName('admin.candidates.delete') }}" data-modaltitle="Delete Candidate"
+                                                    ><i
+                                                        class="fa fa-trash-o"></i></a>
                                             </div>
                                             {{-- <a class="btn btn-danger btn-sm text-white mb-1" data-toggle="tooltip"
                                                 data-original-title="Delete"

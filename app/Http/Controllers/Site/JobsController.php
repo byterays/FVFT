@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Site;
 
-use DB;
-use App\Models\Job;
+use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Employe;
+use App\Models\Job;
 use App\Models\JobCategory;
-use Illuminate\Http\Request;
+use App\Models\JobView;
 use App\Traits\Site\ThemeMethods;
-use App\Http\Controllers\Controller;
+use DB;
+use Illuminate\Http\Request;
 
 class JobsController extends Controller
 {
@@ -22,20 +23,20 @@ class JobsController extends Controller
         // dd($search);
         if ($request->filled('search')) {
             $search = $request->search;
-            $categories = JobCategory::where('functional_area', 'LIKE', '%'.$search.'%')->pluck('id')->toArray();
-            $jobs = $jobs->where(function ($jobs) use($search, $categories) {
+            $categories = JobCategory::where('functional_area', 'LIKE', '%' . $search . '%')->pluck('id')->toArray();
+            $jobs = $jobs->where(function ($jobs) use ($search, $categories) {
                 // global $search;
                 $jobs->where('title', 'LIKE', '%' . $search . '%')->orWhereIn('job_categories_id', $categories);
             });
         }
-        if($request->filled('country_id') && $request->country_id != 'All Countries'){
+        if ($request->filled('country_id') && $request->country_id != 'All Countries') {
             $jobs = $jobs->where('country_id', $request->country_id);
         }
         if ($request->filled("job_catagory") && $request->job_catagory != 'All Categories') {
             // foreach ($request->job_category as $item) {
             //     $jobs = $jobs->where('job_categories_id', $item);
             // }
-            $jobs = $jobs->whereIn('job_categories_id', (array)$request->job_catagory);
+            $jobs = $jobs->whereIn('job_categories_id', (array) $request->job_catagory);
         }
         // dd($jobs->where('job_categories_id', $request->job_category)->get());
         // $request->filled("salary_from") ? $jobs->where('salary_from', ">=", $request->salary_from) : null;
@@ -51,7 +52,7 @@ class JobsController extends Controller
                 'job_catagory' => $request->job_catagory,
                 'salary_from' => $request->salary_from,
                 'salary_to' => $request->salary_to,
-                
+
             )),
             "job_categories" => $job_categories,
             "job_shifts" => $job_shifts,
@@ -73,7 +74,7 @@ class JobsController extends Controller
             $fields = [
                 "job" => Job::where('id', $id)->with('company', 'country', 'job_category')->first(),
                 "company_contact_persons" => $company_contact_persons,
-                "company" => $company
+                "company" => $company,
             ];
             if (auth()->check() && auth()->user()->user_type == "candidate") {
                 $employ = Employe::where('user_id', auth()->user()->id)->with('employeeSkills')->first();
@@ -85,5 +86,29 @@ class JobsController extends Controller
         } else {
             return abort(404);
         }
+    }
+
+    public function storeJobView(Request $request)
+    {
+        $date = date('Y-m-d');
+        $time = date('h:i:s');
+        $job = Job::where('id',$request->job_id)->first();
+        $jobView = JobView::firstOrCreate([
+            'job_id' => $request->job_id,
+            'fingerprint' => $request->fingerprint,
+            'view_date' => $date,
+        ], [
+            'job_id' => $request->job_id,
+            'fingerprint' => $request->fingerprint,
+            'useragent' => $request->useragent,
+            'browser' => $request->browser,
+            'timezone' => $request->timezone,
+            'view_date' => $date,
+            'view_time' => $time,
+        ]);
+        if($jobView->wasRecentlyCreated === true){
+            $job->increment('total_views', 1); // item was not found and created in database;
+        }
+        return response()->json(['message' => 'View created']);
     }
 }
