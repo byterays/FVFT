@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Company;
 
+use App\Enum\JobApplicationStatus;
+use App\Traits\Api\ApiMethods;
 use PDF;
 use App\Models\Skill;
 use App\Models\Company;
@@ -11,7 +13,6 @@ use App\Models\Language;
 use App\Models\Training;
 use App\Models\JobCategory;
 use Illuminate\Http\Request;
-use App\Enum\ApplicantStatus;
 use App\Models\JobPreference;
 use App\Models\EducationLevel;
 use App\Models\JobApplication;
@@ -24,7 +25,7 @@ use Illuminate\Support\Facades\Validator;
 
 class NewApplicantController extends Controller
 {
-    use CompanyMethods;
+    use CompanyMethods, ApiMethods;
 
     private $page = "company.newapplicant.";
 
@@ -82,6 +83,107 @@ class NewApplicantController extends Controller
             ]),
         ]);
 
+    }
+
+    public function getApplicants(Request $request)
+    {
+        $input = json_decode($request->filter, true);
+//dd($input);
+        $query = JobApplication::query();
+        $query->whereHas('job', function ($query){
+            return $query->whereHas('company', function ($query){
+                return $query->where('user_id', AUth()->user()->id);
+            });
+        });
+
+        $query->with([
+            'employe', 'employe.country', 'employe.user',
+            'job', 'job.job_category',
+        ]);
+
+        // filter
+        if (!blank($input)){
+
+            // text search
+            if (isset($input['query']) AND !blank($input['query'])){
+                $input_query = $input['query'];
+                $query->whereHas('employe', function ($query) use ($input_query){
+                    $query->where('first_name', 'like', '%'.$input_query.'%');
+                    $query->orWhere('middle_name', 'like', '%'.$input_query.'%');
+                    $query->orWhere('last_name', 'like', '%'.$input_query.'%');
+                });
+            }
+
+            // Job Application Filter
+            if (isset($input['application_status']) AND !blank($input['application_status'])){
+                $input_query = $input['application_status'];
+                $query->where('status', $input_query);
+            }
+
+            // Job Category Filter
+            if (isset($input['category']) AND !blank($input['category'])){
+                $input_query = $input['category'];
+                $query->whereHas('job', function ($query) use ($input_query){
+                    $query->where('job_categories_id', $input_query);
+                });
+            }
+
+            // Job Country Filter
+            if (isset($input['country']) AND !blank($input['country'])){
+                $input_query = $input['country'];
+                $query->whereHas('job', function ($query) use ($input_query){
+                    $query->where('country_id', $input_query);
+                });
+            }
+
+        }
+
+        $applicants = $query->paginate(50);
+
+        return $this->sendResponse(compact('applicants'),'success','',true);
+    }
+
+    public function getDataSets()
+    {
+        // application status
+        $status_count = [];
+        if ($this->company()) {
+            $status_count['total'] = $this->company()->job_applications->count();
+            $status_count['pending'] = $this->company()->job_applications->where('status', JobApplicationStatus::PENDING)->count();
+            $status_count['shortlisted'] = $this->company()->job_applications->where('status', JobApplicationStatus::SHORT_LISTED)->count();
+            $status_count['interviewed'] = $this->company()->job_applications->where('status', JobApplicationStatus::INTERVIEWED)->count();
+            $status_count['accepted'] = $this->company()->job_applications->where('status', JobApplicationStatus::ACCEPTED)->count();
+            $status_count['rejected'] = $this->company()->job_applications->where('status', JobApplicationStatus::REJECTED)->count();
+        }
+
+        // job categories
+        $job_categories = JobCategory::whereHas('jobs')->get();
+        $countries = Country::where('is_active', 1)->get();
+
+        $jobPreferredCategories = JobPreference::where('job_preference_type', get_class(new JobCategory()))->pluck('job_preference_id')->toArray();
+        $jobPreferredCountries = JobPreference::where('job_preference_type', get_class(new Country()))->pluck('job_preference_id')->toArray();
+
+        $education_levels = EducationLevel::select("id", "title")->get();
+        $skills = Skill::select("id", "title")->get();
+        $trainings = Training::select("id", "title")->get();
+        $languages = Language::select("id", "lang")->get();
+        $preferredCategories = JobCategory::whereIn("id", $jobPreferredCategories)->select("id", "functional_area")->get();
+        $preferredCountries = Country::whereIn("id", $jobPreferredCountries)->select("id", "name")->get();
+        $applicant_filters = ApplicantFilter::get();
+
+        return $this->sendResponse(
+            compact(
+                'status_count',
+                'job_categories',
+                'countries',
+                'education_levels',
+                'skills',
+                'trainings',
+                'languages',
+                'preferredCategories',
+                'preferredCountries',
+                'applicant_filters'
+            ),'success','',true);
     }
 
     public function advancedSearch(Request $request)
@@ -212,14 +314,14 @@ class NewApplicantController extends Controller
                 'interview_date' => $request->interview_date,
                 'interview_time' => $request->interview_time,
                 'interview_status' => 'started',
-                'status' => ApplicantStatus::SELECTEDFORINTERVIEW,
+                'status' => JobApplicationStatus::SELECTED_FOR_INTERVIEW,
             ]);
             foreach($explodedIds as $eIds){
                 $statuses[] = [
-                    $eIds => ApplicantStatus::SELECTEDFORINTERVIEW,
+                    $eIds => JobApplicationStatus::SELECTED_FOR_INTERVIEW,
                 ];
             }
-            
+
             DB::commit();
             return response()->json(['success' => true, 'msg' => 'Interview Status updated for selected applicants', 'statuses' => json_encode($statuses)]);
         } catch(\Exception $e){
@@ -246,36 +348,36 @@ class NewApplicantController extends Controller
                 ],
                 [
                     'title' => 'Unscreened Applications',
-                    'link' => route('company.applicant.indexpage',['status' => ApplicantStatus::PENDING]),
-                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', ApplicantStatus::PENDING)->count() : '',
+                    'link' => route('company.applicant.indexpage',['status' => JobApplicationStatus::PENDING]),
+                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', JobApplicationStatus::PENDING)->count() : '',
                     'image' => 'megaphone.svg',
                     'bg-color' => 'bg-gray',
                 ],
                 [
                     'title' => 'Shortlisted Applications',
-                    'link' => route('company.applicant.indexpage',['status' => ApplicantStatus::SHORTLISTED]),
-                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', ApplicantStatus::SHORTLISTED)->count() : '',
+                    'link' => route('company.applicant.indexpage',['status' => JobApplicationStatus::SHORT_LISTED]),
+                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', JobApplicationStatus::SHORT_LISTED)->count() : '',
                     'image' => 'blogging.svg',
                     'bg-color' => 'bg-pink',
                 ],
                 [
                     'title' => 'Interviewed Applications',
-                    'link' => route('company.applicant.indexpage',['status' => ApplicantStatus::SELECTEDFORINTERVIEW]),
-                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', ApplicantStatus::SELECTEDFORINTERVIEW)->count() : '',
+                    'link' => route('company.applicant.indexpage',['status' => JobApplicationStatus::SELECTED_FOR_INTERVIEW]),
+                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', JobApplicationStatus::SELECTED_FOR_INTERVIEW)->count() : '',
                     'image' => 'picture.svg',
                     'bg-color' => 'bg-orange',
                 ],
                 [
                     'title' => 'Selected Applications',
-                    'link' => route('company.applicant.indexpage',['status' => ApplicantStatus::ACCEPTED]),
-                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', ApplicantStatus::ACCEPTED)->count() : '',
+                    'link' => route('company.applicant.indexpage',['status' => JobApplicationStatus::ACCEPTED]),
+                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', JobApplicationStatus::ACCEPTED)->count() : '',
                     'image' => 'picture.svg',
                     'bg-color' => 'bg-green',
                 ],
                 [
                     'title' => 'Rejected Applications',
-                    'link' => route('company.applicant.indexpage',['status' => ApplicantStatus::REJECTED]),
-                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', ApplicantStatus::REJECTED)->count() : '',
+                    'link' => route('company.applicant.indexpage',['status' => JobApplicationStatus::REJECTED]),
+                    'totalcount' => ($this->company()) ? $this->company()->job_applications->where('status', JobApplicationStatus::REJECTED)->count() : '',
                     'image' => 'box-closed.svg',
                     'bg-color' => 'bg-red',
                 ],

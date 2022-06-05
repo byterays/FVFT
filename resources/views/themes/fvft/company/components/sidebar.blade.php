@@ -7,13 +7,13 @@
         <div class="profile-pic">
             <div class="profile-pic-img">
                 <span class="bg-success dots" data-toggle="tooltip" data-placement="top" title="" data-original-title="online"></span>
-                @if(!blank($company->company_logo))
+                @if($company AND !blank($company->company_logo))
                     <img src="{{ asset($company->company_logo) }}" class="brround" alt="user">
                     @else
                     <img src="{{ asset('/uploads/site/logo-min.png') }}" class="logo" alt="user" >
                 @endif
             </div>
-            <a href="#" class="text-dark"><h4 class="mt-3 mb-0 font-weight-bold">{{ $company->company_name}}</h4></a>
+            <a href="#" class="text-dark"><h4 class="mt-3 mb-0 font-weight-bold">{{ $company->company_name ?? ''}}</h4></a>
         </div>
     </div>
     <div class="item1-links  mb-0">

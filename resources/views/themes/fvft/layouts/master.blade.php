@@ -113,9 +113,9 @@
     <div id="ajaxLoader" class="fog_div">
         <div></div>
     </div>
-    <div id="app">
+    {{--<div id="app">--}}
         @yield('main')
-    </div>
+    {{--</div>--}}
     <!-- Back to top -->
     <a href="#top" id="back-to-top"><i class="fa fa-arrow-up"></i></a>
 

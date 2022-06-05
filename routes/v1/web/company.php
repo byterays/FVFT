@@ -58,4 +58,9 @@ Route::middleware(['auth', 'is_company'])->group(function () {
         Route::post('post_approval', [NewJobController::class, "post_approval_form"])->name('post_approval_form');
     });
 
+    Route::group(['prefix' => 'web-api'], function(){
+        Route::get('getApplicants', [NewApplicantController::class, "getApplicants"]);
+        Route::get('getDataSets', [NewApplicantController::class, "getDataSets"]);
+    });
+
 });

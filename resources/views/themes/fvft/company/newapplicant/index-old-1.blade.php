@@ -8,13 +8,13 @@
             ;
         }
 
-        a.advancedSearch:hover{
+        a.advancedSearch:hover {
             color: white !important;
         }
 
     </style>
     <?php
-    use App\Enum\JobApplicationStatus;
+    use App\Enum\ApplicantStatus;
     ?>
     <div class="card">
         <div class="card-header">
@@ -41,19 +41,20 @@
                 <div class="card-header bg-primary">
                     <div class="row w-100">
                         <div class="col-md-6">
-                            <h6 class="card-title">Shortlisted Applicants</h6>
+                            <h6 class="card-title">All Applicants</h6>
                         </div>
                         <div class="col-md-6">
-                            <a href="javascript:void(0);" class="float-right text-white">View All</a>
+                            <a href="" class="float-right text-white">View All</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <form action="{{ route('company.applicant.indexpage') }}" method="GET">
-                <div class="search-section mx-auto mt-5 text-center">
-                    <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-6">
+
+            <div class="search-section mx-auto mt-5 text-center">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-6">
+                        <form action="{{ route('company.applicant.indexpage') }}" method="GET">
                             <div class="input-group input-icons mb-3">
                                 <i class="fa fa-search-icon"></i>
                                 <input type="text" name="q" value="{{ request()->q }}" class="form-control"
@@ -63,67 +64,16 @@
                                     <button type="submit" class="btn btn-primary rounded-0">{{ __('Search') }}</button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-2">
-                            <a href="#" class="btn btn-outline-primary rounded-0 advancedSearch text-dark">Advanced Search</a>
-                        </div>
+                            <input type="hidden" name="limit" value="{{ request()->limit }}" class="form-control">
+                        </form>
                     </div>
-
-                    {{-- <div class="d-inline-flex">
-                        <div class="form-group">
-                            <input type="text" name="q" value="{{ request()->q }}" class="form-control"
-                                placeholder="{{ __('Search Applicants') }}">
-                        </div>
-                        <div class="ml-3">
-                            <button type="submit" class="btn btn-primary rounded-0">{{ __('Search') }}</button>
-                        </div>
-                    </div> --}}
+                    <div class="col-md-2">
+                        <a href="{{ route('company.applicant.advancedSearch') }}"
+                            class="btn btn-outline-primary rounded-0 advancedSearch text-dark">Advanced
+                            Search</a>
+                    </div>
                 </div>
-                {{-- <div class="applicant-per-page-section mt-5">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-7 my-auto">
-                                        <label for="">Applicant Per Page</label>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <select name="limit" class="form-control rounded-0 bg-gray text-white"
-                                            onchange="this.form.submit();">
-                                            <option value="All" {{ !(request('limit') == 'All') ?: 'selected' }}>All
-                                            </option>
-                                            <option value="10"
-                                                {{ !(request('limit') == '10' || request('limit') == '') ?: 'selected' }}>
-                                                10</option>
-                                            <option value="50" {{ !(request('limit') == '50') ?: 'selected' }}>50
-                                            </option>
-                                            <option value="100" {{ !(request('limit') == '100') ?: 'selected' }}>100
-                                            </option>
-                                            <option value="250" {{ !(request('limit') == '250') ?: 'selected' }}>250
-                                            </option>
-                                            <option value="500" {{ !(request('limit') == '500') ?: 'selected' }}>500
-                                            </option>
-                                            <option value="1000" {{ !(request('limit') == '1000') ?: 'selected' }}>1000
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mt-1">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="checkAll"> Select All Applicants On This
-                                Page
-                            </div>
-                        </div>
-                        <div class="col-md-4 mt-1">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input"> Select All Applicants On This Job
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-            </form>
+            </div>
             <div class="status-section mt-5">
                 <div class="row">
                     <div class="col-md-3">
@@ -141,7 +91,7 @@
                             onclick="updateBulkApplicantStatus('{{ ApplicantStatus::INTERVIEWED }}');"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Interviewed</a>
                         <a href="javascript:void(0)"
-                            onclick="updateBulkApplicantStatus('{{ ApplicantStatus::SELECTEDFORINTERVIEW }}');"
+                            onclick="updateBulkApplicantStatus('{{ ApplicantStatus::ACCEPTED }}');"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Selected</a>
                         <a href="javascript:void(0)"
                             onclick="updateBulkApplicantStatus('{{ ApplicantStatus::REJECTED }}');"
@@ -155,7 +105,8 @@
                         <a href="javascript:void(0);" class="btn btn-primary rounded-0 w-90">{{ __('Action') }}</a>
                     </div>
                     <div class="col-md-9">
-                        <a href="javascript:void(0)" class="btn btn-outline-secondary rounded-0 text-dark bg-white">Schedule
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#interviewModal"
+                            class="btn btn-outline-secondary rounded-0 text-dark bg-white" id="scheduleInterview">Schedule
                             Interview</a>
                         <a href="javascript:void(0)"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Send Email</a>
@@ -172,30 +123,73 @@
         </div>
     </div>
     <div class="applicant-section">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="form-inline">
-                    <label for="">Applicant Per Page</label>
-                    <select name="limit" class="form-control rounded-0 bg-gray text-white" onchange="this.form.submit();">
-                        <option value="All" {{ !(request('limit') == 'All') ?: 'selected' }}>All
-                        </option>
-                        <option value="10" {{ !(request('limit') == '10' || request('limit') == '') ?: 'selected' }}>
-                            10</option>
-                        <option value="50" {{ !(request('limit') == '50') ?: 'selected' }}>50
-                        </option>
-                        <option value="100" {{ !(request('limit') == '100') ?: 'selected' }}>100
-                        </option>
-                        <option value="250" {{ !(request('limit') == '250') ?: 'selected' }}>250
-                        </option>
-                        <option value="500" {{ !(request('limit') == '500') ?: 'selected' }}>500
-                        </option>
-                        <option value="1000" {{ !(request('limit') == '1000') ?: 'selected' }}>1000
-                        </option>
+        <form action="{{ route('company.applicant.indexpage') }}" id="searchForm">
+            <input type="hidden" class="form-control" id="SearchInput">
+            @if(request()->limit)
+            <input type="hidden" class="form-control" name="limit" value="{{ request('limit') }}">
+            @endif
+        </form>
+        <form action="{{ route('company.applicant.indexpage') }}">
+            <div class="row">
+                <div class="col-md-4">
+                    <select name="jobTitle" class="form-control select2-show-search" id="JobTitle">
+                        <option value="All Job Titles">All Job Titles</option>
+                        @foreach ($job_categories as $job_category)
+                            <option value="{{ $job_category->id }}"
+                                {{ request()->jobTitle == $job_category->id ? 'selected' : '' }}>
+                                {{ $job_category->functional_area }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                </div>
+                <div class="col-md-4">
+                    <select name="countries" class="form-control select2-show-search" id="Countries">
+                        <option value="All Countries">All Countries</option>
+                        @foreach ($countries as $country)
+                            <option value="{{ $country->id }}"
+                                {{ request()->countries == $country->id ? 'selected' : '' }}>
+                                {{ $country->name }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
             </div>
+        </form>
+        <div class="row mt-2">
+            <div class="col-md-4">
+                <form action="{{ route('company.applicant.indexpage') }}" method="GET">
+                    <input type="hidden" name="q" value="{{ request()->q }}" class="form-control">
+                    @if (!blank(request()->jobTitle))
+                        <input type="hidden" name="jobTitle" class="form-control" value="{{ request()->jobTitle }}">
+                    @endif
+                    @if (!blank(request()->countries))
+                        <input type="hidden" name="countries" class="form-control" value="{{ request()->countries }}">
+                    @endif
+                    <div class="form-inline">
+                        <label for="">Applicant Per Page</label>
+                        <select name="limit" class="form-control rounded-0 bg-gray text-white"
+                            onchange="this.form.submit();">
+                            <option value="All" {{ !(request('limit') == 'All') ?: 'selected' }}>All
+                            </option>
+                            <option value="10" {{ !(request('limit') == '10' || request('limit') == '') ?: 'selected' }}>
+                                10</option>
+                            <option value="50" {{ !(request('limit') == '50') ?: 'selected' }}>50
+                            </option>
+                            <option value="100" {{ !(request('limit') == '100') ?: 'selected' }}>100
+                            </option>
+                            <option value="250" {{ !(request('limit') == '250') ?: 'selected' }}>250
+                            </option>
+                            <option value="500" {{ !(request('limit') == '500') ?: 'selected' }}>500
+                            </option>
+                            <option value="1000" {{ !(request('limit') == '1000') ?: 'selected' }}>1000
+                            </option>
+                        </select>
+                    </div>
+                </form>
+            </div>
             <div class="col-md-4 my-auto">
-                <div class="form-check">
+                <div class="form-checkntjobs@gmail.com">
                     <input type="checkbox" class="form-check-input" id="checkAll">
                     <label for="" class="my-auto">Select All Applicants On This Page</label>
                 </div>
@@ -323,7 +317,6 @@
             @endif
         </td>
         <td class="applicantStatus">{{ ucfirst($applicant->status) }}</td>
-        {{-- <td>{{ !blank(data_get($applicant, 'employe')) ? $applicant->employe->job_applications->count() : '' }}</td> --}}
         <td>
             <a href="{{ route('company.applicant.editApplication', $applicant->id) }}"
                 class="text-primary my-auto"><i class="fa fa-edit"></i></a>
@@ -340,205 +333,25 @@
 </div>
 </div>
 </div>
+
+
+{{-- Modal Section --}}
+{{-- Interview Modal --}}
+@include('themes/fvft/company/newapplicant/interviewModal')
+{{-- End Interview Modal --}}
+{{-- End Modal Section --}}
 @endsection
 
 @section('js')
+@include('themes/fvft/company/newapplicant/script')
 <script>
-    $("#checkAll").click(function() {
-        $(".rowCheck").prop('checked', $(this).prop('checked'));
+    $("#JobTitle").on('change', function() {
+        $("#SearchInput").attr('name', 'jobTitle').val($("#JobTitle").val());
+        $("#searchForm").submit();
     });
-
-    $(".rowCheck").click(function() {
-        $("#checkAll").prop('checked', false);
+    $("#Countries").on('change', function() {
+        $("#SearchInput").attr('name', 'countries').val($("#Countries").val());
+        $("#searchForm").submit();
     });
-
-    function updateBulkApplicantStatus(applicantStatus) {
-        var allIds = [];
-        $(".rowCheck:checked").each(function() {
-            allIds.push($(this).val());
-        });
-        if (allIds.length <= 0) {
-            Swal.fire({
-                title: 'Oops..',
-                text: 'Please Select Row',
-                icon: 'error'
-            });
-        } else {
-            Swal.fire({
-                text: 'Are you sure you want to perform bulk operation?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: "Yes",
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    var joinCheckedValues = allIds.join(",");
-                    $.ajax({
-                        url: "{{ route('company.applicant.bulkUpdateApplicationStatus') }}",
-                        type: "POST",
-                        data: {
-                            "ids": joinCheckedValues,
-                            "applicantStatus": applicantStatus,
-                            _method: "PUT",
-                        },
-                        beforeSend: function() {
-                            busySign();
-                        },
-                        success: function(response) {
-                            if (response.success == false) {
-                                if (response.db_error) {
-                                    toastr.error(response.db_error);
-                                } else if (response.error) {
-                                    toastr.error(response.error);
-                                }
-                            }
-                            if (response.success == true) {
-                                var statuses = JSON.parse(response.statuses);
-                                $.each(statuses, function(k, v) {
-                                    $.each(v, function(key, value) {
-                                        var tableRow = $('tr[data-id="' + key +
-                                            '"]');
-                                        $(tableRow).find(".applicantStatus").text(
-                                            value);
-                                    });
-                                });
-                                toastr.success(response.msg);
-                                $('input:checkbox').prop('checked', false);
-                            }
-                        },
-                        complete: function() {
-                            hideBusySign();
-                        }
-                    });
-                }
-            });
-            // var check = confirm("Are you sure you want to perform bulk operation?");
-            // if (check == true) {
-
-            // }
-        }
-    }
-
-
-    function bulkCvDownload() {
-        var allIds = [];
-        $(".rowCheck:checked").each(function() {
-            allIds.push($(this).val());
-        });
-        if (allIds.length <= 0) {
-            Swal.fire({
-                title: 'Oops..',
-                text: 'Please Select Row',
-                icon: 'error'
-            });
-        } else {
-            Swal.fire({
-                text: 'Are you sure you want to perform bulk download?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: "Yes Download!",
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    var joinCheckedValues = allIds.join(",");
-                    $.ajax({
-                        url: "{{ route('company.applicant.bulkCvDownload') }}",
-                        type: "GET",
-                        data: {
-                            "ids": joinCheckedValues
-                        },
-                        xhrFields: {
-                            responseType: 'blob',
-                        },
-                        beforeSend: function() {
-                            busySign();
-                        },
-                        success: function(data) {
-                            if (data.success == false) {
-                                if (data.error) {
-                                    toastr.error(data.error);
-                                }
-                            }
-                            var blob = new Blob([data], {
-                                type: 'application/pdf'
-                            });
-                            var link = document.createElement('a');
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = "Applicants.pdf";
-                            link.click();
-                            toastr.success('Applicants CV Downloaded');
-                            $('input:checkbox').prop('checked', false);
-                        },
-                        complete: function() {
-                            hideBusySign();
-                        }
-                    });
-                }
-            });
-            // var check = confirm("Are you sure you want to perform bulk download?");
-            // if (check == true) {
-
-            // }
-        }
-    }
-
-    function bulkApplicationDelete() {
-        var allIds = [];
-        $(".rowCheck:checked").each(function() {
-            allIds.push($(this).val());
-        });
-        if (allIds.length <= 0) {
-            Swal.fire({
-                title: 'Oops..',
-                text: 'Please Select Row',
-                icon: 'error'
-            });
-        } else {
-            Swal.fire({
-                text: 'Are you sure you want to perform bulk delete?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: "Yes Delete!",
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    var joinCheckedValues = allIds.join(",");
-                    $.ajax({
-                        url: "{{ route('company.applicant.bulkApplicationDelete') }}",
-                        type: "POST",
-                        data: {
-                            "ids": joinCheckedValues,
-                            _method: 'DELETE'
-                        },
-                        beforeSend: function() {
-                            busySign();
-                        },
-                        success: function(data) {
-                            if (data.success == false) {
-                                if (data.error) {
-                                    toastr.error(data.error);
-                                }
-                            }
-                            $(".rowCheck:checked").each(function() {
-                                $(this).parents("tr").remove();
-                            });
-                            toastr.success(data.msg);
-                            $('input:checkbox').prop('checked', false);
-                        },
-                        complete: function() {
-                            hideBusySign();
-                        }
-                    });
-                }
-            });
-            // var check = confirm("Are you sure you want to perform bulk delete?");
-            // if (check == true) {
-
-            // }
-        }
-    }
 </script>
 @endsection
