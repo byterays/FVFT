@@ -6,7 +6,7 @@
     <div class="card-body text-center item-user border-bottom">
         <div class="profile-pic">
             <div class="profile-pic-img">
-                <span class="bg-success dots" data-toggle="tooltip" data-placement="top" title="" data-original-title="online"></span>
+                {{--<span class="bg-success dots" data-toggle="tooltip" data-placement="top" title="" data-original-title="online"></span>--}}
                 @if($company AND !blank($company->company_logo))
                     <img src="{{ asset($company->company_logo) }}" class="brround" alt="user">
                     @else

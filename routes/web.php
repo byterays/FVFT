@@ -21,7 +21,7 @@ Route::get('lang/{locale?}', function($locale = null){
         session()->put('locale', $locale);
     }
     return redirect()->back();
-    
+
 });
 Route::group(['prefix' => 'skill/', 'as' => 'admin.skill.'], function(){
     Route::post('ajax-store-skill', [AddController::class, "ajaxStoreSKill"])->name("ajaxAddSkill");
@@ -30,3 +30,6 @@ Route::group(['prefix' => 'training/', 'as' => 'admin.training.'], function(){
     Route::post('ajax-store-training', [AddController::class, "ajaxStoreTraining"])->name("ajaxAddTraining");
 });
 require_once 'v1/v1-web.php';
+
+//NOTIFICATION
+Route::get('/notifications-read/{type}/{id}', [\App\Http\Controllers\Site\HomeController::class, "readNotifications"])->name('site.read-notifications');

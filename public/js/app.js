@@ -3251,8 +3251,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -22742,35 +22740,59 @@ var render = function () {
                     _vm._v(" "),
                     _c("th", [_vm._v("S.N")]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Candidate")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Candidate"),
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Contact")]),
+                    _c("th", [_vm._v("Status")]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Job")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Contact"),
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Job"),
+                    ]),
                     _vm._v(" "),
                     _c("th", [_vm._v("Category")]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Applied On")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Applied On"),
+                    ]),
                     _vm._v(" "),
                     _c("th", [_vm._v("Country")]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Profile Score")]),
+                    _c("th", { staticStyle: { "min-width": "150px" } }, [
+                      _vm._v("Profile Score"),
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Experience")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Experience"),
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Education")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Education"),
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Training")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Training"),
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Language")]),
+                    _c("th", { staticStyle: { "min-width": "150px" } }, [
+                      _vm._v("Language"),
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Skill")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Skill"),
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Preferred Country")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Preferred Country"),
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Preferred Job")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Status")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Preferred Job"),
+                    ]),
                     _vm._v(" "),
                     _c("th", [_vm._v("Action")]),
                   ]),
@@ -22828,7 +22850,7 @@ var render = function () {
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(index + 1))]),
                         _vm._v(" "),
-                        _c("td", { staticStyle: { width: "600px" } }, [
+                        _c("td", [
                           applicant.employe
                             ? _c("span", [
                                 _vm._v(
@@ -22843,7 +22865,7 @@ var render = function () {
                                 ),
                                 _c("br"),
                                 _vm._v(
-                                  "\n                    Email:" +
+                                  "\n                    Email: " +
                                     _vm._s(applicant.employe.user.email) +
                                     "\n                  "
                                 ),
@@ -22851,17 +22873,33 @@ var render = function () {
                             : _vm._e(),
                         ]),
                         _vm._v(" "),
+                        _c("td", { staticClass: "applicantStatus" }, [
+                          _c("strong", [
+                            _vm._v(
+                              _vm._s(
+                                _vm.capitalizeFirstLetter(applicant.status)
+                              )
+                            ),
+                          ]),
+                        ]),
+                        _vm._v(" "),
                         _c("td", [
                           applicant.employe
                             ? _c("span", [
                                 _vm._v(
-                                  "\n                    Phone1:" +
-                                    _vm._s(applicant.employe.mobile_phone)
+                                  "\n                    Phone1: " +
+                                    _vm._s(
+                                      applicant.employe.mobile_phone ||
+                                        "Not-Available"
+                                    )
                                 ),
                                 _c("br"),
                                 _vm._v(
-                                  "\n                    Phone2:" +
-                                    _vm._s(applicant.employe.mobile_phone2) +
+                                  "\n                    Phone2: " +
+                                    _vm._s(
+                                      applicant.employe.mobile_phone2 ||
+                                        "Not-Available"
+                                    ) +
                                     "\n                  "
                                 ),
                               ])
@@ -22920,7 +22958,7 @@ var render = function () {
                                   applicant.employe.experience,
                                   function (experience, i) {
                                     return _c("span", { key: i }, [
-                                      i == 0
+                                      experience.job_category && i == 0
                                         ? _c("span", [
                                             _vm._v(
                                               "\n                        " +
@@ -23097,16 +23135,6 @@ var render = function () {
                                 0
                               )
                             : _vm._e(),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "applicantStatus" }, [
-                          _vm._v(
-                            "\n                  " +
-                              _vm._s(
-                                _vm.capitalizeFirstLetter(applicant.status)
-                              ) +
-                              "\n                "
-                          ),
                         ]),
                         _vm._v(" "),
                         _vm._m(8, true),

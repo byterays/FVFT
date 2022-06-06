@@ -256,7 +256,6 @@
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="col-md-12">
           <div class="btn-group">
@@ -361,21 +360,21 @@
                     </label>
                   </th>
                   <th>S.N</th>
-                  <th>Candidate</th>
-                  <th>Contact</th>
-                  <th>Job</th>
+                  <th style="min-width:200px">Candidate</th>
+                    <th>Status</th>
+                    <th style="min-width:200px">Contact</th>
+                  <th style="min-width:200px">Job</th>
                   <th>Category</th>
-                  <th>Applied On</th>
+                  <th style="min-width:200px">Applied On</th>
                   <th>Country</th>
-                  <th>Profile Score</th>
-                  <th>Experience</th>
-                  <th>Education</th>
-                  <th>Training</th>
-                  <th>Language</th>
-                  <th>Skill</th>
-                  <th>Preferred Country</th>
-                  <th>Preferred Job</th>
-                  <th>Status</th>
+                  <th style="min-width:150px">Profile Score</th>
+                  <th style="min-width:200px">Experience</th>
+                  <th style="min-width:200px">Education</th>
+                  <th style="min-width:200px">Training</th>
+                  <th style="min-width:150px">Language</th>
+                  <th style="min-width:200px">Skill</th>
+                  <th style="min-width:200px">Preferred Country</th>
+                  <th style="min-width:200px">Preferred Job</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -395,17 +394,20 @@
                     <!--<input type="checkbox" class="form-check rowCheck" name="applicationID[]" value="" data-id="">-->
                   </td>
                   <td>{{ index + 1 }}</td>
-                  <td style="width: 600px">
+                  <td>
                     <span v-if="applicant.employe">
                       {{ applicant.employe.full_name }}<br />
                       Gender/Age: {{ applicant.employe.gender }}, 23<br />
-                      Email:{{ applicant.employe.user.email }}
+                      Email: {{ applicant.employe.user.email }}
                     </span>
                   </td>
+                    <td class="applicantStatus">
+                        <strong>{{ capitalizeFirstLetter(applicant.status) }}</strong>
+                    </td>
                   <td>
                     <span v-if="applicant.employe">
-                      Phone1:{{ applicant.employe.mobile_phone }}<br />
-                      Phone2:{{ applicant.employe.mobile_phone2 }}
+                      Phone1: {{ applicant.employe.mobile_phone || 'Not-Available' }}<br />
+                      Phone2: {{ applicant.employe.mobile_phone2 || 'Not-Available' }}
                     </span>
                   </td>
                   <td>
@@ -438,7 +440,7 @@
                         v-for="(experience, i) in applicant.employe.experience"
                         :key="i"
                       >
-                        <span v-if="i == 0">
+                        <span v-if="experience.job_category && i == 0">
                           {{ experience.job_category.functional_area }},
                           {{
                             experience.working_year +
@@ -542,10 +544,6 @@
                         </span>
                       </span>
                     </span>
-                  </td>
-
-                  <td class="applicantStatus">
-                    {{ capitalizeFirstLetter(applicant.status) }}
                   </td>
                   <td>
                     <a href="" class="text-primary my-auto"

@@ -28,19 +28,13 @@
                     @include('themes.fvft.candidates.components.sidebar')
                 </div>
                 <div class="col-xl-9 col-lg-12 col-md-12">
+
                     @include('partial/candidates/tabs', ['title' => 'Edit My Profile - Contact Information'])
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            @include(
-                                'themes.fvft.candidates.components.profile.profile-completion',
-                                ['employee' => $employe]
-                            )
-                        </div>
-                    </div>
+
                     <form action="{{ route('candidate.profile.post_contact_information') }}" method="POST" id="candidateForm">
                         @csrf
 
-                        <div class="row mt-5">
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="card mb-2">
                                     <div class="card-header">

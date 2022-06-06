@@ -59,15 +59,9 @@
                     @include('themes.fvft.candidates.components.sidebar')
                 </div>
                 <div class="col-xl-9 col-lg-12 col-md-12">
-                    <div class="card mb-0">
-                        <div class="card-body">
-                            <h3 class="card-title">{{ __('Profile Status') }}</h3>
-                            @include(
-                                'themes.fvft.candidates.components.profile.profile-completion',
-                                ['employee' => $employe]
-                            )
-                        </div>
-                    </div>
+
+                    @include('themes.fvft.candidates.components.profile.profile-completion',['employee' => $employe])
+
                     <div class="mt-5">
                         <div class="item-all-cat">
                             <div class="row category-type">

@@ -24,6 +24,8 @@ Route::middleware(['auth', 'is_candidate'])->group(function () {
     Route::get('settings', [DashController::class, 'settings'])->name('candidate.settings');
     Route::get('job-preferences', [DashController::class, 'job_preferences'])->name('candidate.job-preferences');
     Route::post('/follow-company/', [DashController::class, "follow_company"])->name("candidate.follow_company");
+    Route::get('/notifications', [DashController::class, "getNotifications"])->name('candidate.get-notifications');
+
     // Save Profile
     Route::post('/profile', [DashController::class, 'saveProfile'])->name('candidate.save-profile');
     Route::post('/job-preferences', [DashController::class, 'saveJobPreferences'])->name('candidate.save-job-preferences');
