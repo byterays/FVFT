@@ -2692,6 +2692,468 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2702,19 +3164,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       filter_saving: false,
       filter_submitting: false,
       applicants_pg: {},
-      applicants: '',
+      applicants: "",
       // data sets
-      status_count: '',
+      status_count: "",
       job_categories: [],
       countries: [],
       applicant_filters: [],
       // filter
       filter: {
-        query: '',
-        application_status: '',
-        category: '',
-        country: ''
+        query: "",
+        application_status: "",
+        category: "",
+        country: ""
       },
+      limit: '50',
       // selection
       selected: [],
       selectAll: false
@@ -2782,6 +3245,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     advanceFilter: function advanceFilter() {
       this.filter_submitting = true;
     },
+    setLimit: function setLimit(event) {
+      this.showBusySign();
+      this.limit = event.target.value;
+      this.getApplicants(0, this.limit, JSON.stringify(this.filter));
+      this.hideBusySign();
+    },
     setFilter: _.debounce(function () {
       this.getApplicants();
     }, 800),
@@ -2790,16 +3259,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var page, response;
+        var page, limit, response;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 page = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : 0;
-                _context2.next = 3;
-                return _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].getApplicants(page, JSON.stringify(_this2.filter));
+                limit = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : _this2.limit;
+                _context2.next = 4;
+                return _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].getApplicants(page, limit, JSON.stringify(_this2.filter));
 
-              case 3:
+              case 4:
                 response = _context2.sent;
 
                 if (response.data.success === true) {
@@ -2807,7 +3277,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this2.applicants = response.data.data.applicants.data;
                 }
 
-              case 5:
+              case 6:
               case "end":
                 return _context2.stop();
             }
@@ -2816,7 +3286,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     showAdvancedFilter: function showAdvancedFilter() {
-      $("#advancedFilter").modal('show');
+      $("#advancedFilter").modal("show");
     },
     setAdvancedFilterValue: function setAdvancedFilterValue() {},
     bulkStatusUpdate: function bulkStatusUpdate(status) {
@@ -2829,19 +3299,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context3.next = 2;
                 return Swal.fire({
-                  text: 'Are you sure you want to perform bulk operation?',
-                  icon: 'warning',
+                  text: "Are you sure you want to perform bulk operation?",
+                  icon: "warning",
                   showCancelButton: true,
                   confirmButtonText: "Yes",
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33'
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33"
                 }).then(function (result) {
                   if (result.isConfirmed) {
                     _this3.showBusySign();
 
                     var data = new FormData();
-                    data.append('ids', _this3.selected);
-                    data.append('applicantStatus', status);
+                    data.append("ids", _this3.selected);
+                    data.append("applicantStatus", status);
                     _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].updateBulkStatus(data).then(function (response) {
                       if (response.data.success == false) {
                         if (response.data.db_error) {
@@ -2860,7 +3330,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                           });
                         });
                         toastr.success(response.data.msg);
-                        $("input:checkbox").prop('checked', false);
+                        $("input:checkbox").prop("checked", false);
                       }
 
                       _this3.hideBusySign();
@@ -2886,40 +3356,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context4.next = 2;
                 return Swal.fire({
-                  text: 'Are you sure you want to perform bulk download?',
-                  icon: 'warning',
+                  text: "Are you sure you want to perform bulk download?",
+                  icon: "warning",
                   showCancelButton: true,
                   confirmButtonText: "Yes Download!",
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33'
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33"
                 }).then(function (result) {
                   if (result.isConfirmed) {
-                    console.log(_this4.selected);
+                    _this4.showBusySign();
 
-                    _this4.showBusySign(); // const config = {
-                    //     responseType: 'blob',
-                    // };
-
-
-                    var ids = new FormData();
-                    ids.append('ids', _this4.selected);
-                    _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].downloadBulkCv(ids).then(function (response) {
+                    var config = {
+                      responseType: "blob"
+                    };
+                    var data = new FormData();
+                    data.append("ids", _this4.selected);
+                    _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].downloadBulkCv(data, config).then(function (response) {
                       if (response.data.success == false) {
                         if (response.data.error) {
                           toastr.error(response.data.error.ids[0]);
                         }
                       }
 
-                      if (!response.data.success == false) {
+                      if (response.data.success != false) {
                         var blob = new Blob([response.data], {
-                          type: 'application/pdf'
+                          type: "application/pdf"
                         });
-                        var link = document.createElement('a');
+                        var link = document.createElement("a");
                         link.href = window.URL.createObjectURL(blob);
                         link.download = "Applicants.pdf";
                         link.click();
-                        toastr.success('Applicants CV Downloaded');
-                        $("input:checkbox").prop('checked', false);
+                        toastr.success("Applicants CV Downloaded");
+                        $("input:checkbox").prop("checked", false);
                       }
 
                       _this4.hideBusySign();
@@ -2933,6 +3401,118 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee4);
+      }))();
+    },
+    bulkApplicationDelete: function bulkApplicationDelete() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return Swal.fire({
+                  text: "Are you sure you want to perform bulk delete?",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonText: "Yes Delete!",
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33"
+                }).then(function (result) {
+                  if (result.isConfirmed) {
+                    _this5.showBusySign();
+
+                    _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].deleteBulkApplication({
+                      data: {
+                        ids: _this5.selected.join(","),
+                        _method: "DELETE"
+                      }
+                    }).then(function (response) {
+                      if (response.data.success == false) {
+                        if (response.data.error) {
+                          toastr.error(response.data.error);
+                        }
+                      } // $(".rowCheck:checked").each(function(){
+                      //     $(this).parents("tr").remove();
+                      // });
+
+
+                      _this5.getApplicants();
+
+                      toastr.success(response.data.msg);
+                      $("input:checkbox").prop("checked", false);
+
+                      _this5.hideBusySign();
+                    });
+                  }
+                });
+
+              case 2:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
+    scheduleInterview: function scheduleInterview() {
+      var _this6 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+        return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return $(".require").css("display", "none");
+
+              case 2:
+                Swal.fire({
+                  text: "Are you sure you want to perform bulk operation?",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonText: "Yes",
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33"
+                }).then(function (result) {
+                  if (result.isConfirmed) {
+                    _this6.showBusySign();
+
+                    var formData = new FormData($("#scheduleInterViewForm")[0]);
+                    formData.append('ids', _this6.selected);
+                    _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].interviewSchedule(formData).then(function (response) {
+                      if (response.data.success == false) {
+                        if (response.data.errors) {
+                          $.each(response.data.errors, function (key, value) {
+                            $('.' + key).css('display', 'block').html(value);
+                          });
+                        } else if (response.data.error) {
+                          toastr.error(response.data.error);
+                        }
+                      } else if (response.data.success == true) {
+                        toastr.success(response.data.msg);
+                        var statuses = JSON.parse(response.data.statuses);
+                        $.each(statuses, function (key, value) {
+                          $.each(value, function (k, v) {
+                            var tableRow = $('tr[data-id="' + k + '"]');
+                            $(tableRow).find('.applicantStatus').text(v);
+                          });
+                        });
+                        $("#interviewModal").modal('hide');
+
+                        _this6.hideBusySign();
+                      }
+                    });
+                  }
+                });
+
+              case 3:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
       }))();
     }
   }
@@ -3283,8 +3863,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ "./resources/js/services/Api.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  getApplicants: function getApplicants(page, filter) {
-    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get('/company/web-api/getApplicants?page=' + page + '&filter=' + filter);
+  getApplicants: function getApplicants(page, limit, filter) {
+    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get('/company/web-api/getApplicants?page=' + page + '&limit=' + limit + '&filter=' + filter);
   },
   getDataSets: function getDataSets() {
     return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get('/company/web-api/getDataSets');
@@ -3295,8 +3875,14 @@ __webpack_require__.r(__webpack_exports__);
   updateBulkStatus: function updateBulkStatus(formData) {
     return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().post('/company/web-api/bulk-status-update', formData);
   },
-  downloadBulkCv: function downloadBulkCv(formData) {
-    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get('/company/web-api/bulk-cv-download', formData);
+  downloadBulkCv: function downloadBulkCv(formData, config) {
+    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().post('/company/web-api/bulk-cv-download', formData, config);
+  },
+  deleteBulkApplication: function deleteBulkApplication(formData) {
+    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])()["delete"]('/company/web-api/bulk-application-delete', formData);
+  },
+  interviewSchedule: function interviewSchedule(formData) {
+    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().post('/company/web-api/bulk-interview-schedule', formData);
   }
 });
 
@@ -3319,7 +3905,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.item-card .item-card-desc .item-card-text[data-v-14762ddc] {\n    position: absolute;\n    top: 25%;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    text-align: center;\n    color: #fff;\n    z-index: 2;\n    align-items: center;\n    vertical-align: middle;\n}\n.item-card-text h4[data-v-14762ddc] {\n    font-size: 14px;\n    font-weight: 600;\n    text-transform: none;\n}\n.table-bordered[data-v-14762ddc], .text-wrap table[data-v-14762ddc] {\n    border: 1px solid #e8ebf3 !important;\n}\n.item-card-text span[data-v-14762ddc] {\n    font-size: 25px;\n    display: block;\n    margin: 0.5rem;\n    font-weight: 400;\n}\n.scrollable-menu[data-v-14762ddc]{\n    height: auto;\n    max-height: 200px;\n    overflow-y: auto;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.item-card .item-card-desc .item-card-text[data-v-14762ddc] {\n  position: absolute;\n  top: 25%;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  text-align: center;\n  color: #fff;\n  z-index: 2;\n  align-items: center;\n  vertical-align: middle;\n}\n.item-card-text h4[data-v-14762ddc] {\n  font-size: 14px;\n  font-weight: 600;\n  text-transform: none;\n}\n.table-bordered[data-v-14762ddc],\n.text-wrap table[data-v-14762ddc] {\n  border: 1px solid #e8ebf3 !important;\n}\n.item-card-text span[data-v-14762ddc] {\n  font-size: 25px;\n  display: block;\n  margin: 0.5rem;\n  font-weight: 400;\n}\n.scrollable-menu[data-v-14762ddc] {\n  height: auto;\n  max-height: 200px;\n  overflow-y: auto;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -21326,9 +21912,9 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "item-card-text" }, [
                   _c("h4", { staticClass: "mb-0" }, [
-                    _vm._v(" All "),
+                    _vm._v("\n                  All "),
                     _c("br"),
-                    _vm._v(" Applications"),
+                    _vm._v("\n                  Applications"),
                     _c("span", [_vm._v(_vm._s(_vm.status_count["total"]))]),
                   ]),
                 ]),
@@ -21355,7 +21941,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "item-card-text" }, [
                   _c("h4", { staticClass: "mb-0" }, [
-                    _vm._v("Unscreened Applications"),
+                    _vm._v("\n                  Unscreened Applications"),
                     _c("span", [_vm._v(_vm._s(_vm.status_count["pending"]))]),
                   ]),
                 ]),
@@ -21382,7 +21968,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "item-card-text" }, [
                   _c("h4", { staticClass: "mb-0" }, [
-                    _vm._v("Shortlisted Applications"),
+                    _vm._v("\n                  Shortlisted Applications"),
                     _c("span", [
                       _vm._v(_vm._s(_vm.status_count["shortlisted"])),
                     ]),
@@ -21395,7 +21981,7 @@ var render = function () {
         _vm._v(" "),
         _c("div", { staticClass: "col-xl-2 col-lg-2 col-md-2" }, [
           _c("div", { staticClass: "card mb-xl-0" }, [
-            _c("div", { staticClass: "item-card " }, [
+            _c("div", { staticClass: "item-card" }, [
               _c("div", { staticClass: "item-card-desc" }, [
                 _c("a", {
                   attrs: { href: "#" },
@@ -21411,7 +21997,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "item-card-text" }, [
                   _c("h4", { staticClass: "mb-0" }, [
-                    _vm._v("Interviewed Applications"),
+                    _vm._v("\n                  Interviewed Applications"),
                     _c("span", [
                       _vm._v(_vm._s(_vm.status_count["interviewed"])),
                     ]),
@@ -21440,7 +22026,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "item-card-text" }, [
                   _c("h4", { staticClass: "mb-0" }, [
-                    _vm._v("Selected Applications"),
+                    _vm._v("\n                  Selected Applications"),
                     _c("span", [_vm._v(_vm._s(_vm.status_count["accepted"]))]),
                   ]),
                 ]),
@@ -21467,7 +22053,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "item-card-text" }, [
                   _c("h4", { staticClass: "mb-0" }, [
-                    _vm._v("Rejected Applications"),
+                    _vm._v("\n                  Rejected Applications"),
                     _c("span", [_vm._v(_vm._s(_vm.status_count["rejected"]))]),
                   ]),
                 ]),
@@ -21525,7 +22111,7 @@ var render = function () {
                       },
                     },
                   },
-                  [_vm._v("Advanced Search")]
+                  [_vm._v("\n                Advanced Search\n              ")]
                 ),
               ]),
             ]),
@@ -21553,11 +22139,7 @@ var render = function () {
                     "aria-expanded": "false",
                   },
                 },
-                [
-                  _vm._v(
-                    "\n                            Set Application Status\n                        "
-                  ),
-                ]
+                [_vm._v("\n              Set Application Status\n            ")]
               ),
               _vm._v(" "),
               _c(
@@ -21652,11 +22234,7 @@ var render = function () {
                     "aria-expanded": "false",
                   },
                 },
-                [
-                  _vm._v(
-                    "\n                            Bulk Action\n                        "
-                  ),
-                ]
+                [_vm._v("\n              Bulk Action\n            ")]
               ),
               _vm._v(" "),
               _c(
@@ -21668,7 +22246,15 @@ var render = function () {
                 [
                   _c(
                     "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: {
+                        href: "javascript:void(0)",
+                        "data-toggle": "modal",
+                        "data-target": "#interviewModal",
+                        id: "scheduleInterview",
+                      },
+                    },
                     [_vm._v("Schedule Interview")]
                   ),
                   _vm._v(" "),
@@ -21686,7 +22272,15 @@ var render = function () {
                   _vm._v(" "),
                   _c(
                     "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.bulkApplicationDelete()
+                        },
+                      },
+                    },
                     [_vm._v("Delete")]
                   ),
                   _vm._v(" "),
@@ -21919,6 +22513,7 @@ var render = function () {
                                 expression: "selected",
                               },
                             ],
+                            staticClass: "rowCheck",
                             attrs: { type: "checkbox" },
                             domProps: {
                               value: applicant.id,
@@ -21957,20 +22552,20 @@ var render = function () {
                           applicant.employe
                             ? _c("span", [
                                 _vm._v(
-                                  "\n                                    " +
+                                  "\n                    " +
                                     _vm._s(applicant.employe.full_name)
                                 ),
                                 _c("br"),
                                 _vm._v(
-                                  "\n                                    Gender/Age: " +
+                                  "\n                    Gender/Age: " +
                                     _vm._s(applicant.employe.gender) +
                                     ", 23"
                                 ),
                                 _c("br"),
                                 _vm._v(
-                                  "\n                                    Email:" +
+                                  "\n                    Email:" +
                                     _vm._s(applicant.employe.user.email) +
-                                    "\n                                   "
+                                    "\n                  "
                                 ),
                               ])
                             : _vm._e(),
@@ -21980,14 +22575,14 @@ var render = function () {
                           applicant.employe
                             ? _c("span", [
                                 _vm._v(
-                                  "\n                                Phone1:" +
+                                  "\n                    Phone1:" +
                                     _vm._s(applicant.employe.mobile_phone)
                                 ),
                                 _c("br"),
                                 _vm._v(
-                                  "\n                                Phone2:" +
+                                  "\n                    Phone2:" +
                                     _vm._s(applicant.employe.mobile_phone2) +
-                                    "\n                                 "
+                                    "\n                  "
                                 ),
                               ])
                             : _vm._e(),
@@ -22013,9 +22608,9 @@ var render = function () {
                         _vm._v(" "),
                         _c("td", [
                           _vm._v(
-                            "\n                                " +
+                            "\n                  " +
                               _vm._s(applicant.created_at) +
-                              "\n                            "
+                              "\n                "
                           ),
                         ]),
                         _vm._v(" "),
@@ -22048,26 +22643,26 @@ var render = function () {
                                       i == 0
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n                                            " +
+                                              "\n                        " +
                                                 _vm._s(
                                                   experience.job_category
                                                     .functional_area
                                                 ) +
-                                                ", " +
+                                                ",\n                        " +
                                                 _vm._s(
                                                   experience.working_year +
                                                     _vm.getYearForm(
                                                       experience.working_year
                                                     )
                                                 ) +
-                                                ", " +
+                                                ",\n                        " +
                                                 _vm._s(
                                                   experience.working_month +
                                                     _vm.getMonthForm(
                                                       experience.working_month
                                                     )
                                                 ) +
-                                                "\n                                        "
+                                                "\n                      "
                                             ),
                                           ])
                                         : _vm._e(),
@@ -22083,11 +22678,11 @@ var render = function () {
                           applicant.employe.education_level
                             ? _c("span", [
                                 _vm._v(
-                                  "\n                                    " +
+                                  "\n                    " +
                                     _vm._s(
                                       applicant.employe.education_level.title
                                     ) +
-                                    "\n                                "
+                                    "\n                  "
                                 ),
                               ])
                             : _vm._e(),
@@ -22105,9 +22700,9 @@ var render = function () {
                                       i == 0
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n                                            " +
+                                              "\n                        " +
                                                 _vm._s(item.training.title) +
-                                                "\n                                        "
+                                                "\n                      "
                                             ),
                                           ])
                                         : _vm._e(),
@@ -22131,9 +22726,9 @@ var render = function () {
                                       i == 0
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n                                            " +
+                                              "\n                        " +
                                                 _vm._s(item.language.lang) +
-                                                "\n                                        "
+                                                "\n                      "
                                             ),
                                           ])
                                         : _vm._e(),
@@ -22156,9 +22751,9 @@ var render = function () {
                                       i == 0
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n                                            " +
+                                              "\n                        " +
                                                 _vm._s(item.skill.title) +
-                                                "\n                                        "
+                                                "\n                      "
                                             ),
                                           ])
                                         : _vm._e(),
@@ -22182,9 +22777,9 @@ var render = function () {
                                       i == 0
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n                                            " +
+                                              "\n                        " +
                                                 _vm._s(countryPreference.name) +
-                                                "\n                                        "
+                                                "\n                      "
                                             ),
                                           ])
                                         : _vm._e(),
@@ -22208,11 +22803,11 @@ var render = function () {
                                       i == 0
                                         ? _c("span", [
                                             _vm._v(
-                                              "\n                                            " +
+                                              "\n                        " +
                                                 _vm._s(
                                                   categoryPreference.functional_area
                                                 ) +
-                                                "\n                                        "
+                                                "\n                      "
                                             ),
                                           ])
                                         : _vm._e(),
@@ -22226,11 +22821,11 @@ var render = function () {
                         _vm._v(" "),
                         _c("td", { staticClass: "applicantStatus" }, [
                           _vm._v(
-                            "\n                                " +
+                            "\n                  " +
                               _vm._s(
                                 _vm.capitalizeFirstLetter(applicant.status)
                               ) +
-                              "\n                            "
+                              "\n                "
                           ),
                         ]),
                         _vm._v(" "),
@@ -22245,7 +22840,62 @@ var render = function () {
           ]),
         ]),
         _vm._v(" "),
-        _vm._m(9),
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "form-inline" }, [
+            _c("label", { attrs: { for: "" } }, [_vm._v("Applicant Per Page")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.limit,
+                    expression: "limit",
+                  },
+                ],
+                staticClass: "form-control rounded-0 bg-gray text-white",
+                attrs: { name: "limit" },
+                on: {
+                  change: [
+                    function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.limit = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    function ($event) {
+                      return _vm.setLimit($event)
+                    },
+                  ],
+                },
+              },
+              [
+                _c("option", { attrs: { value: "All" } }, [_vm._v("All")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "50" } }, [_vm._v("50")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "100" } }, [_vm._v("100")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "250" } }, [_vm._v("250")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "500" } }, [_vm._v("500")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "1000" } }, [_vm._v("1000")]),
+              ]
+            ),
+          ]),
+        ]),
       ]),
     ]),
     _vm._v(" "),
@@ -22265,13 +22915,13 @@ var render = function () {
         _c(
           "div",
           {
-            staticClass: "modal-dialog  modal-lg",
+            staticClass: "modal-dialog modal-lg",
             staticStyle: { width: "100%" },
             attrs: { role: "document" },
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(10),
+              _vm._m(9),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body pb-0" }, [
                 _c(
@@ -22300,7 +22950,11 @@ var render = function () {
                                     function (applicant_filter) {
                                       return _c("option", [
                                         _vm._v(
-                                          _vm._s(applicant_filter.filter_name)
+                                          "\n                          " +
+                                            _vm._s(
+                                              applicant_filter.filter_name
+                                            ) +
+                                            "\n                        "
                                         ),
                                       ])
                                     }
@@ -22326,7 +22980,7 @@ var render = function () {
                             },
                             [
                               _c("div", { staticClass: "row" }, [
-                                _vm._m(11),
+                                _vm._m(10),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "col-md-6" }, [
                                   _vm.filter_saving
@@ -22351,7 +23005,11 @@ var render = function () {
                                             "btn btn-warning rounded-0",
                                           attrs: { type: "submit" },
                                         },
-                                        [_vm._v("Save Filter")]
+                                        [
+                                          _vm._v(
+                                            "\n                          Save Filter\n                        "
+                                          ),
+                                        ]
                                       ),
                                   _vm._v(" "),
                                   _c(
@@ -22376,7 +23034,7 @@ var render = function () {
                     _vm._v(" "),
                     _c("div", { staticClass: "card" }, [
                       _c("div", { staticClass: "card-body" }, [
-                        _vm._m(12),
+                        _vm._m(11),
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-md-12" }, [
@@ -22410,7 +23068,9 @@ var render = function () {
                                     },
                                     [
                                       _c("i", { staticClass: "fa fa-search" }),
-                                      _vm._v(" Search Now"),
+                                      _vm._v(
+                                        " Search Now\n                      "
+                                      ),
                                     ]
                                   ),
                             ]),
@@ -22419,6 +23079,58 @@ var render = function () {
                       ]),
                     ]),
                   ]
+                ),
+              ]),
+            ]),
+          ]
+        ),
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "interviewModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "interviewModalLabel",
+          "aria-hidden": "true",
+        },
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(12),
+              _vm._v(" "),
+              _vm._m(13),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                  },
+                  [_vm._v("\n            Close\n          ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button", id: "saveScheduleInterview" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.scheduleInterview()
+                      },
+                    },
+                  },
+                  [_vm._v("\n            Schedule Interview\n          ")]
                 ),
               ]),
             ]),
@@ -22503,7 +23215,7 @@ var staticRenderFns = [
       "button",
       {
         staticClass:
-          "btn btn-outline-primary dropdown-toggle rounded-0 mr-2 btn-sm",
+          "\n                btn btn-outline-primary\n                dropdown-toggle\n                rounded-0\n                mr-2\n                btn-sm\n              ",
         attrs: {
           type: "button",
           id: "",
@@ -22513,7 +23225,7 @@ var staticRenderFns = [
       },
       [
         _c("i", { staticClass: "fa fa-filter mr-2" }),
-        _vm._v("All Job Category\n                        "),
+        _vm._v("All Job Category\n            "),
       ]
     )
   },
@@ -22525,7 +23237,7 @@ var staticRenderFns = [
       "button",
       {
         staticClass:
-          "btn btn-outline-primary dropdown-toggle rounded-0 mr-2 btn-sm",
+          "\n                btn btn-outline-primary\n                dropdown-toggle\n                rounded-0\n                mr-2\n                btn-sm\n              ",
         attrs: {
           type: "button",
           "data-toggle": "dropdown",
@@ -22534,7 +23246,7 @@ var staticRenderFns = [
       },
       [
         _c("i", { staticClass: "fa fa-filter mr-2" }),
-        _vm._v("All Countries\n                        "),
+        _vm._v("All Countries\n            "),
       ]
     )
   },
@@ -22556,58 +23268,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("div", { staticClass: "form-inline" }, [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Applicant Per Page")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            staticClass: "form-control rounded-0 bg-gray text-white",
-            attrs: { name: "limit" },
-          },
-          [
-            _c("option", { attrs: { value: "All" } }, [
-              _vm._v("All\n                        "),
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "10" } }, [
-              _vm._v("\n                            10"),
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "50" } }, [
-              _vm._v("50\n                        "),
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "100" } }, [
-              _vm._v("100\n                        "),
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "250" } }, [
-              _vm._v("250\n                        "),
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "500" } }, [
-              _vm._v("500\n                        "),
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "1000" } }, [
-              _vm._v("1000\n                        "),
-            ]),
-          ]
-        ),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header text-center" }, [
       _c(
         "h5",
-        { staticClass: "modal-title ", attrs: { id: "newSkillModalLabel" } },
-        [_vm._v("Advanced Applicants Search")]
+        { staticClass: "modal-title", attrs: { id: "newSkillModalLabel" } },
+        [_vm._v("\n            Advanced Applicants Search\n          ")]
       ),
       _vm._v(" "),
       _c(
@@ -22878,7 +23543,9 @@ var staticRenderFns = [
                   },
                   [
                     _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Application Status"),
+                      _vm._v(
+                        "\n                                Select Application Status\n                              "
+                      ),
                     ]),
                   ]
                 ),
@@ -23093,7 +23760,9 @@ var staticRenderFns = [
                   },
                   [
                     _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Preferred Country"),
+                      _vm._v(
+                        "\n                                Select Preferred Country\n                              "
+                      ),
                     ]),
                   ]
                 ),
@@ -23102,6 +23771,85 @@ var staticRenderFns = [
           ]),
         ]),
       ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "interviewModalLabel" } },
+        [_vm._v("\n            Schedule Interview\n          ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close",
+          },
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-body" }, [
+      _c(
+        "form",
+        { attrs: { action: "#", method: "#", id: "scheduleInterViewForm" } },
+        [
+          _c("div", { staticClass: "form-group" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-4" }, [
+                _c("label", { staticClass: "form-label" }, [
+                  _vm._v("Interview Date"),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-8" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "date", name: "interview_date" },
+                }),
+                _vm._v(" "),
+                _c("span", {
+                  staticClass: "require text-danger interview_date",
+                }),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-4" }, [
+                _c("label", { staticClass: "form-label" }, [
+                  _vm._v("Interview Time"),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-8" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "time", name: "interview_time" },
+                }),
+                _vm._v(" "),
+                _c("span", {
+                  staticClass: "require text-danger interview_time",
+                }),
+              ]),
+            ]),
+          ]),
+        ]
+      ),
     ])
   },
 ]
