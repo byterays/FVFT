@@ -2666,6 +2666,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2792,7 +2818,123 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     showAdvancedFilter: function showAdvancedFilter() {
       $("#advancedFilter").modal('show');
     },
-    setAdvancedFilterValue: function setAdvancedFilterValue() {}
+    setAdvancedFilterValue: function setAdvancedFilterValue() {},
+    bulkStatusUpdate: function bulkStatusUpdate(status) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return Swal.fire({
+                  text: 'Are you sure you want to perform bulk operation?',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: "Yes",
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33'
+                }).then(function (result) {
+                  if (result.isConfirmed) {
+                    _this3.showBusySign();
+
+                    var data = new FormData();
+                    data.append('ids', _this3.selected);
+                    data.append('applicantStatus', status);
+                    _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].updateBulkStatus(data).then(function (response) {
+                      if (response.data.success == false) {
+                        if (response.data.db_error) {
+                          toastr.error(response.data.db_error);
+                        } else if (response.data.error) {
+                          toastr.error(response.data.error);
+                        }
+                      }
+
+                      if (response.data.success == true) {
+                        var statuses = JSON.parse(response.data.statuses);
+                        $.each(statuses, function (k, v) {
+                          $.each(v, function (key, value) {
+                            var tableRow = $('tr[data-id="' + key + '"]');
+                            $(tableRow).find(".applicantStatus").text(value);
+                          });
+                        });
+                        toastr.success(response.data.msg);
+                        $("input:checkbox").prop('checked', false);
+                      }
+
+                      _this3.hideBusySign();
+                    });
+                  }
+                });
+
+              case 2:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    bulkCvDownload: function bulkCvDownload() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return Swal.fire({
+                  text: 'Are you sure you want to perform bulk download?',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: "Yes Download!",
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33'
+                }).then(function (result) {
+                  if (result.isConfirmed) {
+                    console.log(_this4.selected);
+
+                    _this4.showBusySign(); // const config = {
+                    //     responseType: 'blob',
+                    // };
+
+
+                    var ids = new FormData();
+                    ids.append('ids', _this4.selected);
+                    _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].downloadBulkCv(ids).then(function (response) {
+                      if (response.data.success == false) {
+                        if (response.data.error) {
+                          toastr.error(response.data.error.ids[0]);
+                        }
+                      }
+
+                      if (!response.data.success == false) {
+                        var blob = new Blob([response.data], {
+                          type: 'application/pdf'
+                        });
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = "Applicants.pdf";
+                        link.click();
+                        toastr.success('Applicants CV Downloaded');
+                        $("input:checkbox").prop('checked', false);
+                      }
+
+                      _this4.hideBusySign();
+                    });
+                  }
+                });
+
+              case 2:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    }
   }
 });
 
@@ -2849,7 +2991,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
 Vue.component('example-component', (__webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]));
 Vue.component('applicants', (__webpack_require__(/*! ./components/Applicants.vue */ "./resources/js/components/Applicants.vue")["default"]));
-var EventBus = new Vue();
+var EventBus = new Vue(); // mix.postCss('resources/css/style.css', 'public/css');
+
 Vue.mixin({
   methods: {
     getYearForm: function getYearForm(year) {
@@ -2857,6 +3000,15 @@ Vue.mixin({
     },
     getMonthForm: function getMonthForm(month) {
       return month > 1 ? 'months' : 'month';
+    },
+    capitalizeFirstLetter: function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+    showBusySign: function showBusySign() {
+      $('#ajaxLoader').css('display', 'block');
+    },
+    hideBusySign: function hideBusySign() {
+      $('#ajaxLoader').css('display', 'none');
     }
   }
 });
@@ -3139,6 +3291,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   createNewJob: function createNewJob(formData) {
     return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().post('/web-api/job/create', formData);
+  },
+  updateBulkStatus: function updateBulkStatus(formData) {
+    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().post('/company/web-api/bulk-status-update', formData);
+  },
+  downloadBulkCv: function downloadBulkCv(formData) {
+    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get('/company/web-api/bulk-cv-download', formData);
   }
 });
 
@@ -3161,7 +3319,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.item-card .item-card-desc .item-card-text[data-v-14762ddc] {\n    position: absolute;\n    top: 25%;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    text-align: center;\n    color: #fff;\n    z-index: 2;\n    align-items: center;\n    vertical-align: middle;\n}\n.item-card-text h4[data-v-14762ddc] {\n    font-size: 14px;\n    font-weight: 600;\n    text-transform: none;\n}\n.table-bordered[data-v-14762ddc], .text-wrap table[data-v-14762ddc] {\n    border: 1px solid #e8ebf3 !important;\n}\n.item-card-text span[data-v-14762ddc] {\n    font-size: 25px;\n    display: block;\n    margin: 0.5rem;\n    font-weight: 400;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.item-card .item-card-desc .item-card-text[data-v-14762ddc] {\n    position: absolute;\n    top: 25%;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    text-align: center;\n    color: #fff;\n    z-index: 2;\n    align-items: center;\n    vertical-align: middle;\n}\n.item-card-text h4[data-v-14762ddc] {\n    font-size: 14px;\n    font-weight: 600;\n    text-transform: none;\n}\n.table-bordered[data-v-14762ddc], .text-wrap table[data-v-14762ddc] {\n    border: 1px solid #e8ebf3 !important;\n}\n.item-card-text span[data-v-14762ddc] {\n    font-size: 25px;\n    display: block;\n    margin: 0.5rem;\n    font-weight: 400;\n}\n.scrollable-menu[data-v-14762ddc]{\n    height: auto;\n    max-height: 200px;\n    overflow-y: auto;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -21402,7 +21560,84 @@ var render = function () {
                 ]
               ),
               _vm._v(" "),
-              _vm._m(6),
+              _c(
+                "div",
+                {
+                  staticClass: "dropdown-menu",
+                  attrs: { "aria-labelledby": "dropdownMenuButton" },
+                },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "javascript:void(0);" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.bulkStatusUpdate("pending")
+                        },
+                      },
+                    },
+                    [_vm._v("Unscreened")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "javascript:void(0);" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.bulkStatusUpdate("shortlisted")
+                        },
+                      },
+                    },
+                    [_vm._v("Shortlisted")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "javascript:void(0);" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.bulkStatusUpdate("INTERVIEWED")
+                        },
+                      },
+                    },
+                    [_vm._v("Interviewed")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "javascript:void(0);" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.bulkStatusUpdate("SELECTEDFORINTERVIEW")
+                        },
+                      },
+                    },
+                    [_vm._v("Selected")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "javascript:void(0);" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.bulkStatusUpdate("REJECTED")
+                        },
+                      },
+                    },
+                    [_vm._v("Rejected")]
+                  ),
+                ]
+              ),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "dropdown" }, [
@@ -21424,7 +21659,52 @@ var render = function () {
                 ]
               ),
               _vm._v(" "),
-              _vm._m(7),
+              _c(
+                "div",
+                {
+                  staticClass: "dropdown-menu",
+                  attrs: { "aria-labelledby": "dropdownMenuButton" },
+                },
+                [
+                  _c(
+                    "a",
+                    { staticClass: "dropdown-item", attrs: { href: "#" } },
+                    [_vm._v("Schedule Interview")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    { staticClass: "dropdown-item", attrs: { href: "#" } },
+                    [_vm._v("Send Email")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    { staticClass: "dropdown-item", attrs: { href: "#" } },
+                    [_vm._v("Send Message")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    { staticClass: "dropdown-item", attrs: { href: "#" } },
+                    [_vm._v("Delete")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.bulkCvDownload()
+                        },
+                      },
+                    },
+                    [_vm._v("Download CV")]
+                  ),
+                ]
+              ),
             ]),
           ]),
         ]),
@@ -21434,13 +21714,16 @@ var render = function () {
         _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "btn-group" }, [
             _c("div", { staticClass: "dropdown" }, [
-              _vm._m(8),
+              _vm._m(6),
               _vm._v(" "),
               _c(
                 "div",
                 {
-                  staticClass: "dropdown-menu",
-                  attrs: { "aria-labelledby": "dropdownMenuButton" },
+                  staticClass: "dropdown-menu scrollable-menu",
+                  attrs: {
+                    role: "menu",
+                    "aria-labelledby": "dropdownMenuButton",
+                  },
                 },
                 [
                   _c(
@@ -21481,13 +21764,16 @@ var render = function () {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "dropdown" }, [
-              _vm._m(9),
+              _vm._m(7),
               _vm._v(" "),
               _c(
                 "div",
                 {
-                  staticClass: "dropdown-menu",
-                  attrs: { "aria-labelledby": "dropdownMenuButton" },
+                  staticClass: "dropdown-menu scrollable-menu",
+                  attrs: {
+                    role: "menu",
+                    "aria-labelledby": "dropdownMenuButton",
+                  },
                 },
                 [
                   _c(
@@ -21619,251 +21905,338 @@ var render = function () {
                 _c(
                   "tbody",
                   _vm._l(_vm.applicants, function (applicant, index) {
-                    return _c("tr", { key: index }, [
-                      _c("td", [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.selected,
-                              expression: "selected",
+                    return _c(
+                      "tr",
+                      { key: index, attrs: { "data-id": applicant.id } },
+                      [
+                        _c("td", [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selected,
+                                expression: "selected",
+                              },
+                            ],
+                            attrs: { type: "checkbox" },
+                            domProps: {
+                              value: applicant.id,
+                              checked: Array.isArray(_vm.selected)
+                                ? _vm._i(_vm.selected, applicant.id) > -1
+                                : _vm.selected,
                             },
-                          ],
-                          attrs: { type: "checkbox" },
-                          domProps: {
-                            value: applicant.id,
-                            checked: Array.isArray(_vm.selected)
-                              ? _vm._i(_vm.selected, applicant.id) > -1
-                              : _vm.selected,
-                          },
-                          on: {
-                            change: function ($event) {
-                              var $$a = _vm.selected,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = applicant.id,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 && (_vm.selected = $$a.concat([$$v]))
+                            on: {
+                              change: function ($event) {
+                                var $$a = _vm.selected,
+                                  $$el = $event.target,
+                                  $$c = $$el.checked ? true : false
+                                if (Array.isArray($$a)) {
+                                  var $$v = applicant.id,
+                                    $$i = _vm._i($$a, $$v)
+                                  if ($$el.checked) {
+                                    $$i < 0 &&
+                                      (_vm.selected = $$a.concat([$$v]))
+                                  } else {
+                                    $$i > -1 &&
+                                      (_vm.selected = $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1)))
+                                  }
                                 } else {
-                                  $$i > -1 &&
-                                    (_vm.selected = $$a
-                                      .slice(0, $$i)
-                                      .concat($$a.slice($$i + 1)))
+                                  _vm.selected = $$c
                                 }
-                              } else {
-                                _vm.selected = $$c
-                              }
+                              },
                             },
-                          },
-                        }),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(index + 1))]),
-                      _vm._v(" "),
-                      _c("td", { staticStyle: { width: "600px" } }, [
-                        applicant.employe
-                          ? _c("span", [
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(applicant.employe.full_name)
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                                    Gender/Age: " +
-                                  _vm._s(applicant.employe.gender) +
-                                  ", 23"
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                                    Email:" +
-                                  _vm._s(applicant.employe.user.email) +
-                                  "\n                                   "
-                              ),
-                            ])
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        applicant.employe
-                          ? _c("span", [
-                              _vm._v(
-                                "\n                                Phone1:" +
-                                  _vm._s(applicant.employe.mobile_phone)
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                                Phone2:" +
-                                  _vm._s(applicant.employe.mobile_phone2) +
-                                  "\n                                 "
-                              ),
-                            ])
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        applicant.job
-                          ? _c("span", [_vm._v(_vm._s(applicant.job.title))])
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        applicant.job
-                          ? _c("span", [
-                              _vm._v(
-                                _vm._s(
-                                  applicant.job.job_category.functional_area
-                                )
-                              ),
-                            ])
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(applicant.created_at) +
-                            "\n                            "
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        applicant.employe
-                          ? _c("span", [
-                              _vm._v(_vm._s(applicant.employe.country.name)),
-                            ])
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        applicant.employe
-                          ? _c("span", [
-                              _vm._v(
-                                _vm._s(applicant.employe.profile_score) + " %"
-                              ),
-                            ])
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        applicant.employe && applicant.employe.experience
-                          ? _c(
-                              "span",
-                              _vm._l(
-                                applicant.employe.experience,
-                                function (experience, i) {
-                                  return _c("span", { key: i }, [
-                                    i == 0
-                                      ? _c("span", [
-                                          _vm._v(
-                                            "\n                                            " +
-                                              _vm._s(
-                                                experience.job_category
-                                                  .functional_area
-                                              ) +
-                                              ", " +
-                                              _vm._s(
-                                                experience.working_year +
-                                                  _vm.getYearForm(
-                                                    experience.working_year
-                                                  )
-                                              ) +
-                                              ", " +
-                                              _vm._s(
-                                                experience.working_month +
-                                                  _vm.getMonthForm(
-                                                    experience.working_month
-                                                  )
-                                              ) +
-                                              "\n                                        "
-                                          ),
-                                        ])
-                                      : _vm._e(),
-                                  ])
-                                }
-                              ),
-                              0
-                            )
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        applicant.employe.education_level
-                          ? _c("span", [
-                              _vm._v(
-                                "\n                                    " +
+                          }),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(index + 1))]),
+                        _vm._v(" "),
+                        _c("td", { staticStyle: { width: "600px" } }, [
+                          applicant.employe
+                            ? _c("span", [
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(applicant.employe.full_name)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                    Gender/Age: " +
+                                    _vm._s(applicant.employe.gender) +
+                                    ", 23"
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                    Email:" +
+                                    _vm._s(applicant.employe.user.email) +
+                                    "\n                                   "
+                                ),
+                              ])
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe
+                            ? _c("span", [
+                                _vm._v(
+                                  "\n                                Phone1:" +
+                                    _vm._s(applicant.employe.mobile_phone)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                                Phone2:" +
+                                    _vm._s(applicant.employe.mobile_phone2) +
+                                    "\n                                 "
+                                ),
+                              ])
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.job
+                            ? _c("span", [_vm._v(_vm._s(applicant.job.title))])
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.job
+                            ? _c("span", [
+                                _vm._v(
                                   _vm._s(
-                                    applicant.employe.education_level.title
-                                  ) +
-                                  "\n                                "
-                              ),
-                            ])
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        applicant.employe &&
-                        applicant.employe.employee_trainings
-                          ? _c(
-                              "span",
-                              _vm._l(
-                                applicant.employe.employee_trainings,
-                                function (item, i) {
-                                  return _c("span", { key: i }, [
-                                    i == 0
-                                      ? _c("span", [
-                                          _vm._v(
-                                            "\n                                            " +
-                                              _vm._s(item.training.title) +
-                                              "\n                                        "
-                                          ),
-                                        ])
-                                      : _vm._e(),
-                                  ])
-                                }
-                              ),
-                              0
-                            )
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        applicant.employe && applicant.employe.employee_language
-                          ? _c(
-                              "span",
-                              _vm._l(
-                                applicant.employe.employee_language,
-                                function (item, i) {
-                                  return _c("span", { key: i }, [
-                                    i == 0
-                                      ? _c("span", [
-                                          _vm._v(
-                                            "\n                                            " +
-                                              _vm._s(item.language.lang) +
-                                              "\n                                        "
-                                          ),
-                                        ])
-                                      : _vm._e(),
-                                  ])
-                                }
-                              ),
-                              0
-                            )
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "applicantStatus" }),
-                      _vm._v(" "),
-                      _vm._m(10, true),
-                    ])
+                                    applicant.job.job_category.functional_area
+                                  )
+                                ),
+                              ])
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(applicant.created_at) +
+                              "\n                            "
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe
+                            ? _c("span", [
+                                _vm._v(_vm._s(applicant.employe.country.name)),
+                              ])
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe
+                            ? _c("span", [
+                                _vm._v(
+                                  _vm._s(applicant.employe.profile_score) + " %"
+                                ),
+                              ])
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe && applicant.employe.experience
+                            ? _c(
+                                "span",
+                                _vm._l(
+                                  applicant.employe.experience,
+                                  function (experience, i) {
+                                    return _c("span", { key: i }, [
+                                      i == 0
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                                            " +
+                                                _vm._s(
+                                                  experience.job_category
+                                                    .functional_area
+                                                ) +
+                                                ", " +
+                                                _vm._s(
+                                                  experience.working_year +
+                                                    _vm.getYearForm(
+                                                      experience.working_year
+                                                    )
+                                                ) +
+                                                ", " +
+                                                _vm._s(
+                                                  experience.working_month +
+                                                    _vm.getMonthForm(
+                                                      experience.working_month
+                                                    )
+                                                ) +
+                                                "\n                                        "
+                                            ),
+                                          ])
+                                        : _vm._e(),
+                                    ])
+                                  }
+                                ),
+                                0
+                              )
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe.education_level
+                            ? _c("span", [
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(
+                                      applicant.employe.education_level.title
+                                    ) +
+                                    "\n                                "
+                                ),
+                              ])
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe &&
+                          applicant.employe.employee_trainings
+                            ? _c(
+                                "span",
+                                _vm._l(
+                                  applicant.employe.employee_trainings,
+                                  function (item, i) {
+                                    return _c("span", { key: i }, [
+                                      i == 0
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                                            " +
+                                                _vm._s(item.training.title) +
+                                                "\n                                        "
+                                            ),
+                                          ])
+                                        : _vm._e(),
+                                    ])
+                                  }
+                                ),
+                                0
+                              )
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe &&
+                          applicant.employe.employee_language
+                            ? _c(
+                                "span",
+                                _vm._l(
+                                  applicant.employe.employee_language,
+                                  function (item, i) {
+                                    return _c("span", { key: i }, [
+                                      i == 0
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                                            " +
+                                                _vm._s(item.language.lang) +
+                                                "\n                                        "
+                                            ),
+                                          ])
+                                        : _vm._e(),
+                                    ])
+                                  }
+                                ),
+                                0
+                              )
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe && applicant.employe.employee_skills
+                            ? _c(
+                                "span",
+                                _vm._l(
+                                  applicant.employe.employee_skills,
+                                  function (item, i) {
+                                    return _c("span", { key: i }, [
+                                      i == 0
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                                            " +
+                                                _vm._s(item.skill.title) +
+                                                "\n                                        "
+                                            ),
+                                          ])
+                                        : _vm._e(),
+                                    ])
+                                  }
+                                ),
+                                0
+                              )
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe &&
+                          applicant.employe.country_preference
+                            ? _c(
+                                "span",
+                                _vm._l(
+                                  applicant.employe.country_preference,
+                                  function (countryPreference, i) {
+                                    return _c("span", { key: i }, [
+                                      i == 0
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                                            " +
+                                                _vm._s(countryPreference.name) +
+                                                "\n                                        "
+                                            ),
+                                          ])
+                                        : _vm._e(),
+                                    ])
+                                  }
+                                ),
+                                0
+                              )
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe &&
+                          applicant.employe.job_category_preference
+                            ? _c(
+                                "span",
+                                _vm._l(
+                                  applicant.employe.job_category_preference,
+                                  function (categoryPreference, i) {
+                                    return _c("span", { key: i }, [
+                                      i == 0
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                                            " +
+                                                _vm._s(
+                                                  categoryPreference.functional_area
+                                                ) +
+                                                "\n                                        "
+                                            ),
+                                          ])
+                                        : _vm._e(),
+                                    ])
+                                  }
+                                ),
+                                0
+                              )
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "applicantStatus" }, [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(
+                                _vm.capitalizeFirstLetter(applicant.status)
+                              ) +
+                              "\n                            "
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(8, true),
+                      ]
+                    )
                   }),
                   0
                 ),
@@ -21872,7 +22245,7 @@ var render = function () {
           ]),
         ]),
         _vm._v(" "),
-        _vm._m(11),
+        _vm._m(9),
       ]),
     ]),
     _vm._v(" "),
@@ -21898,7 +22271,7 @@ var render = function () {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(12),
+              _vm._m(10),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body pb-0" }, [
                 _c(
@@ -21953,7 +22326,7 @@ var render = function () {
                             },
                             [
                               _c("div", { staticClass: "row" }, [
-                                _vm._m(13),
+                                _vm._m(11),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "col-md-6" }, [
                                   _vm.filter_saving
@@ -22003,7 +22376,7 @@ var render = function () {
                     _vm._v(" "),
                     _c("div", { staticClass: "card" }, [
                       _c("div", { staticClass: "card-body" }, [
-                        _vm._m(14),
+                        _vm._m(12),
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-md-12" }, [
@@ -22121,72 +22494,6 @@ var staticRenderFns = [
         attrs: { src: "/images/defaultimage.jpg", alt: "img" },
       }),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "dropdown-menu",
-        attrs: { "aria-labelledby": "dropdownMenuButton" },
-      },
-      [
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Unscreened"),
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Shortlisted"),
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Interviewed"),
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Selected"),
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Rejected"),
-        ]),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "dropdown-menu",
-        attrs: { "aria-labelledby": "dropdownMenuButton" },
-      },
-      [
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Schedule Interview"),
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Send Email"),
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Send Message"),
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Delete"),
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Download CV"),
-        ]),
-      ]
-    )
   },
   function () {
     var _vm = this

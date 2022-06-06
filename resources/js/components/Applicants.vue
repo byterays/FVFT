@@ -121,11 +121,11 @@
                                 Set Application Status
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Unscreened</a>
-                                <a class="dropdown-item" href="#">Shortlisted</a>
-                                <a class="dropdown-item" href="#">Interviewed</a>
-                                <a class="dropdown-item" href="#">Selected</a>
-                                <a class="dropdown-item" href="#">Rejected</a>
+                                <a class="dropdown-item" href="javascript:void(0);" @click="bulkStatusUpdate('pending')">Unscreened</a>
+                                <a class="dropdown-item" href="javascript:void(0);" @click="bulkStatusUpdate('shortlisted')">Shortlisted</a>
+                                <a class="dropdown-item" href="javascript:void(0);" @click="bulkStatusUpdate('INTERVIEWED')">Interviewed</a>
+                                <a class="dropdown-item" href="javascript:void(0);" @click="bulkStatusUpdate('SELECTEDFORINTERVIEW')">Selected</a>
+                                <a class="dropdown-item" href="javascript:void(0);" @click="bulkStatusUpdate('REJECTED')">Rejected</a>
                             </div>
                         </div>
 
@@ -138,7 +138,7 @@
                                 <a class="dropdown-item" href="#">Send Email</a>
                                 <a class="dropdown-item" href="#">Send Message</a>
                                 <a class="dropdown-item" href="#">Delete</a>
-                                <a class="dropdown-item" href="#">Download CV</a>
+                                <a class="dropdown-item" href="javascript:void(0)" @click="bulkCvDownload()">Download CV</a>
                             </div>
                         </div>
                     </div>
@@ -155,7 +155,7 @@
                             <button class="btn btn-outline-primary dropdown-toggle rounded-0 mr-2 btn-sm" type="button" id="" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-filter mr-2"></i>All Job Category
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="#" @click.prevent="setCategoryFilter('')">All Categories</a>
                                 <a v-for="(category, i) in job_categories" :key="i" class="dropdown-item" href="#" @click.prevent="setCategoryFilter(category.id)">{{ category.functional_area }}</a>
                             </div>
@@ -165,7 +165,7 @@
                             <button class="btn btn-outline-primary dropdown-toggle rounded-0 mr-2 btn-sm" type="button" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-filter mr-2"></i>All Countries
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="#" @click.prevent="setCountryFilter('')">All Countries</a>
                                 <a v-for="(country, i) in countries" :key="i" class="dropdown-item" href="#" @click.prevent="setCountryFilter(country.id)">{{ country.name }}</a>
                             </div>
@@ -212,7 +212,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(applicant, index) in applicants" :key="index">
+                            <tr v-for="(applicant, index) in applicants" :key="index" :data-id="applicant.id">
                                 <td>
                                     <input type="checkbox" :value="applicant.id" v-model="selected">
                                     <!--<input type="checkbox" class="form-check rowCheck" name="applicationID[]" value="" data-id="">-->
@@ -277,11 +277,37 @@
                                         </span>
                                     </span>
                                 </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>
+                                    <span v-if="applicant.employe && applicant.employe.employee_skills">
+                                        <span v-for="(item, i) in applicant.employe.employee_skills" :key="i">
+                                            <span v-if="i==0">
+                                                {{ item.skill.title }}
+                                            </span>
+                                        </span>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span v-if="applicant.employe && applicant.employe.country_preference">
+                                        <span v-for="(countryPreference, i) in applicant.employe.country_preference" :key="i">
+                                            <span v-if="i==0">
+                                                {{ countryPreference.name }}
+                                            </span>
+                                        </span>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span v-if="applicant.employe && applicant.employe.job_category_preference">
+                                        <span v-for="(categoryPreference, i) in applicant.employe.job_category_preference" :key="i">
+                                            <span v-if="i==0">
+                                                {{ categoryPreference.functional_area }}
+                                            </span>
+                                        </span>
+                                    </span>
+                                </td>
 
-                                <td class="applicantStatus"></td>
+                                <td class="applicantStatus">
+                                    {{ capitalizeFirstLetter(applicant.status) }}
+                                </td>
                                 <td>
                                     <a href=""
                                        class="text-primary my-auto"><i class="fa fa-edit"></i></a>
@@ -663,7 +689,7 @@
             advanceFilter(){
                 this.filter_submitting = true;
             },
-            setFilter: _.debounce(function () {
+            setFilter: _.debounce(function () { 
                 this.getApplicants()
             }, 800),
 
@@ -680,6 +706,89 @@
             },
             setAdvancedFilterValue(){
 
+            },
+            async bulkStatusUpdate(status){
+                await Swal.fire({
+                    text: 'Are you sure you want to perform bulk operation?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                }).then((result) => {
+                    if(result.isConfirmed){
+                        this.showBusySign();
+                        let data = new FormData();
+                        data.append('ids', this.selected);
+                        data.append('applicantStatus', status);
+                        CompanyService.updateBulkStatus(data)
+                        .then((response) => {
+                            if(response.data.success == false){
+                                if(response.data.db_error){
+                                    toastr.error(response.data.db_error);
+                                } else if(response.data.error){
+                                    toastr.error(response.data.error);
+                                }
+                            }
+                            if(response.data.success == true){
+                                var statuses = JSON.parse(response.data.statuses);
+                                $.each(statuses, function(k,v){
+                                    $.each(v, function(key, value){
+                                        var tableRow = $('tr[data-id="'+key+'"]');
+                                        $(tableRow).find(".applicantStatus").text(value);
+                                    });
+                                });
+                                toastr.success(response.data.msg);
+                                $("input:checkbox").prop('checked', false);
+                            }
+                            this.hideBusySign();
+                        });
+                    }
+                });
+                
+            },
+
+            async bulkCvDownload(){
+                await Swal.fire({
+                          text: 'Are you sure you want to perform bulk download?',
+                          icon: 'warning',
+                          showCancelButton: true,
+                          confirmButtonText: "Yes Download!",
+                          confirmButtonColor: '#3085d6',
+                          cancelButtonColor: '#d33',
+                    }).then((result) => {
+                        if(result.isConfirmed){
+                            console.log(this.selected);
+                            this.showBusySign();
+                            // const config = {
+                            //     responseType: 'blob',
+                            // };
+                            let ids = new FormData();
+                            ids.append('ids', this.selected);
+                            
+                            CompanyService.downloadBulkCv(ids)
+                            .then((response) => {
+                                 if(response.data.success==false){
+                                     if(response.data.error){
+                                         toastr.error(response.data.error.ids[0]);      
+                                     }
+                                 }
+                                 if(!response.data.success==false){
+                                    var blob = new Blob([response.data],{
+                                     type: 'application/pdf'
+                                    });
+                                    var link = document.createElement('a');
+                                    link.href = window.URL.createObjectURL(blob);
+                                    link.download = "Applicants.pdf";
+                                    link.click();
+                                    toastr.success('Applicants CV Downloaded');
+                                    $("input:checkbox").prop('checked', false);
+                                 }
+                                 
+                                 this.hideBusySign();
+                            });
+                        }
+                    });
             }
         }
     }
@@ -714,5 +823,10 @@
         display: block;
         margin: 0.5rem;
         font-weight: 400;
+    }
+    .scrollable-menu{
+        height: auto;
+        max-height: 200px;
+        overflow-y: auto;
     }
 </style>

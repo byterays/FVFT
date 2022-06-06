@@ -61,6 +61,8 @@ Route::middleware(['auth', 'is_company'])->group(function () {
     Route::group(['prefix' => 'web-api'], function(){
         Route::get('getApplicants', [NewApplicantController::class, "getApplicants"]);
         Route::get('getDataSets', [NewApplicantController::class, "getDataSets"]);
+        Route::post('bulk-status-update', [NewApplicantController::class, "bulkUpdateApplicationStatus"]);
+        Route::get('bulk-cv-download', [NewApplicantController::class, "bulkCvDownload"]);
     });
 
 });
