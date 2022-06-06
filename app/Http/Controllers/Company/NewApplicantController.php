@@ -140,7 +140,13 @@ class NewApplicantController extends Controller
 
         }
 
-        $applicants = $query->paginate(50);
+        if ($request->limit != 'All') {
+            $applicants = $query->paginate($request->limit ?? 2);
+        } else {
+            $applicants = $query->paginate($query->count());
+        }
+
+        // $applicants = $query->paginate(2);
 
         return $this->sendResponse(compact('applicants'),'success','',true);
     }
@@ -236,7 +242,6 @@ class NewApplicantController extends Controller
 
     public function bulkCvDownload(Request $request)
     {
-        dd($request->all());
         $validator = Validator::make($request->all(), [
             "ids" => ["required"],
         ]);
@@ -287,6 +292,7 @@ class NewApplicantController extends Controller
 
     public function bulkApplicationDelete(Request $request)
     {
+        // dd($request->ids);
         try {
             DB::beginTransaction();
             $ids = $request->ids;

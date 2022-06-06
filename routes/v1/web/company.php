@@ -1,13 +1,12 @@
 <?php
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Company\JobController;
-
+use App\Http\Controllers\Company\ApplicantController;
 use App\Http\Controllers\Company\AuthController;
 use App\Http\Controllers\Company\DashController;
+use App\Http\Controllers\Company\JobController;
 use App\Http\Controllers\Company\JobsController;
-use App\Http\Controllers\Company\NewJobController;
-use App\Http\Controllers\Company\ApplicantController;
 use App\Http\Controllers\Company\NewApplicantController;
+use App\Http\Controllers\Company\NewJobController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [AuthController::class, 'login'])->name('company.login');
 Route::post('/register', [AuthController::class, 'register'])->name('company.register');
@@ -27,7 +26,6 @@ Route::middleware(['auth', 'is_company'])->group(function () {
     Route::get('/settings', [DashController::class, 'settings'])->name('company.settings');
     Route::post('/save-settings', [DashController::class, 'saveSettings'])->name('company.saveSettings');
 
-
     Route::get('add-new-job', [JobController::class, "addNewJob"])->name("company.addNewJob");
     Route::post('save-new-job', [JobController::class, "saveNewJob"])->name("company.saveNewJob");
     Route::get('/edit/job/{id}', [JobController::class, 'edit'])->name('company.editjob');
@@ -35,7 +33,7 @@ Route::middleware(['auth', 'is_company'])->group(function () {
     Route::post('clone-job/{id}', [JobController::class, 'cloneJob'])->name('company.cloneJob');
     Route::get('view-job/{id}', [JobController::class, 'viewjob'])->name('company.viewjob');
 
-    Route::group(['prefix' => 'applicants/', 'as' => 'company.applicant.'], function(){
+    Route::group(['prefix' => 'applicants/', 'as' => 'company.applicant.'], function () {
         Route::get('', [ApplicantController::class, 'applicants'])->name('index');
         Route::get('applicant-detail/{id}', [ApplicantController::class, 'applicant_detail'])->name('detail');
         Route::get('edit/{id}', [ApplicantController::class, 'edit_application'])->name('editApplication');
@@ -45,7 +43,7 @@ Route::middleware(['auth', 'is_company'])->group(function () {
         Route::get('advanced-search', [NewApplicantController::class, "advancedSearch"])->name("advancedSearch");
     });
 
-    Route::group(['prefix' => 'job/', 'as' => 'company.newjob.'], function(){
+    Route::group(['prefix' => 'job/', 'as' => 'company.newjob.'], function () {
         Route::get('job_detail', [NewJobController::class, "get_job_detail"])->name('get_job_detail');
         Route::post('job_detail', [NewJobController::class, "postJobDetail"])->name('postJobDetail');
         Route::get('get_applicant_form', [NewJobController::class, "get_applicant_form"])->name('get_applicant_form');
@@ -57,11 +55,13 @@ Route::middleware(['auth', 'is_company'])->group(function () {
         Route::post('post_approval', [NewJobController::class, "post_approval_form"])->name('post_approval_form');
     });
 
-    Route::group(['prefix' => 'web-api'], function(){
+    Route::group(['prefix' => 'web-api'], function () {
         Route::get('getApplicants', [NewApplicantController::class, "getApplicants"]);
         Route::get('getDataSets', [NewApplicantController::class, "getDataSets"]);
         Route::post('bulk-status-update', [NewApplicantController::class, "bulkUpdateApplicationStatus"]);
-        Route::get('bulk-cv-download', [NewApplicantController::class, "bulkCvDownload"]);
+        Route::post('bulk-cv-download', [NewApplicantController::class, "bulkCvDownload"]);
+        Route::delete('bulk-application-delete', [NewApplicantController::class, "bulkApplicationDelete"]);
+        Route::post('bulk-interview-schedule', [NewApplicantController::class, "bulkScheduleInterview"]);
     });
 
 });
