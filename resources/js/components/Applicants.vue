@@ -563,8 +563,10 @@
         <div class="col-md-12">
           <div class="form-inline">
             <label for="">Applicant Per Page</label>
-            <select @change="setLimit($event)"
-              name="limit" v-model="limit"
+            <select
+              @change="setLimit($event)"
+              name="limit"
+              v-model="limit"
               class="form-control rounded-0 bg-gray text-white"
             >
               <option value="All">All</option>
@@ -614,10 +616,16 @@
                         <select
                           name="predefined_filter"
                           class="form-control"
-                          @change="setAdvancedFilterValue"
+                          @change="setAdvancedFilterValue($event)"
                         >
                           <option value="">Select Filter</option>
-                          <option v-for="applicant_filter in applicant_filters">
+                          <option
+                            v-for="(
+                              applicant_filter, index
+                            ) in applicant_filters"
+                            :key="index"
+                            :value="applicant_filter.id"
+                          >
                             {{ applicant_filter.filter_name }}
                           </option>
                         </select>
@@ -685,6 +693,15 @@
                                 id="jobTitle"
                               >
                                 <option value="">All Job Categories</option>
+                                <option
+                                  v-for="(
+                                    job_category, index
+                                  ) in job_categories"
+                                  :key="index"
+                                  :value="job_category.id"
+                                >
+                                  {{ job_category.functional_area }}
+                                </option>
                               </select>
                             </div>
                           </div>
@@ -723,6 +740,7 @@
                                 class="form-control from_date"
                                 placeholder="25-01-2022"
                                 id="from_date"
+                                readonly
                               />
                             </div>
                           </div>
@@ -739,6 +757,7 @@
                                 class="form-control to_date"
                                 placeholder="25-02-2022"
                                 id="to_date"
+                                readonly
                               />
                             </div>
                           </div>
@@ -759,6 +778,13 @@
                                   id="Experience"
                                 >
                                   <option value="">Select Experience</option>
+                                  <option
+                                    v-for="(i, index) in 10"
+                                    :key="index"
+                                    :value="i"
+                                  >
+                                    {{ i }}
+                                  </option>
                                 </select>
                                 <label for="" class="w-40 my-auto"
                                   >Years Min</label
@@ -780,6 +806,15 @@
                                 id="EducationLevel"
                               >
                                 <option value="">Select Education Level</option>
+                                <option
+                                  v-for="(
+                                    education_level, index
+                                  ) in education_levels"
+                                  :key="index"
+                                  :value="education_level.id"
+                                >
+                                  {{ education_level.title }}
+                                </option>
                               </select>
                             </div>
                           </div>
@@ -797,6 +832,13 @@
                                 multiple
                               >
                                 <option value="">Select Skills</option>
+                                <option
+                                  v-for="(skill, index) in skills"
+                                  :key="index"
+                                  :value="skill.id"
+                                >
+                                  {{ skill.title }}
+                                </option>
                               </select>
                             </div>
                           </div>
@@ -819,6 +861,17 @@
                               >
                                 <option value="">
                                   Select Application Status
+                                </option>
+                                <option
+                                  v-for="(
+                                    application_status, index
+                                  ) in applicationStatus"
+                                  :key="index"
+                                  :value="application_status"
+                                >
+                                  {{
+                                    capitalizeFirstLetter(application_status)
+                                  }}
                                 </option>
                               </select>
                             </div>
@@ -864,6 +917,13 @@
                                       id="MinAge"
                                     >
                                       <option value="">Min</option>
+                                      <option
+                                        v-for="(n, index) in minAge"
+                                        :key="index"
+                                        :value="n"
+                                      >
+                                        {{ n }}
+                                      </option>
                                     </select>
                                     <label for="" class="my-auto ml-1"
                                       >years to</label
@@ -879,6 +939,13 @@
                                       id="MaxAge"
                                     >
                                       <option value="">Max</option>
+                                      <option
+                                        v-for="(n, index) in maxAge"
+                                        :key="index"
+                                        :value="n"
+                                      >
+                                        {{ n }}
+                                      </option>
                                     </select>
                                     <label for="" class="my-auto ml-1"
                                       >years</label
@@ -902,6 +969,13 @@
                                 id="Trainings"
                               >
                                 <option value="">Select Trainings</option>
+                                <option
+                                  v-for="(training, index) in trainings"
+                                  :key="index"
+                                  :value="training.id"
+                                >
+                                  {{ training.title }}
+                                </option>
                               </select>
                             </div>
                           </div>
@@ -919,6 +993,13 @@
                                 id="Languages"
                               >
                                 <option value="">Select Languages</option>
+                                <option
+                                  v-for="(language, index) in languages"
+                                  :key="index"
+                                  :value="language.id"
+                                >
+                                  {{ language.lang }}
+                                </option>
                               </select>
                             </div>
                           </div>
@@ -938,6 +1019,15 @@
                                 id="PreferredJobs"
                               >
                                 <option value="">Select Preferred Job</option>
+                                <option
+                                  v-for="(
+                                    preferredCategory, index
+                                  ) in preferredCategories"
+                                  :key="index"
+                                  :value="preferredCategory.id"
+                                >
+                                  {{ preferredCategory.functional_area }}
+                                </option>
                               </select>
                             </div>
                           </div>
@@ -958,6 +1048,15 @@
                               >
                                 <option value="">
                                   Select Preferred Country
+                                </option>
+                                <option
+                                  v-for="(
+                                    preferredCountry, index
+                                  ) in preferredCountries"
+                                  :key="index"
+                                  :value="preferredCountry.id"
+                                >
+                                  {{ preferredCountry.name }}
                                 </option>
                               </select>
                             </div>
@@ -1094,8 +1193,15 @@ export default {
       // data sets
       status_count: "",
       job_categories: [],
+      education_levels: [],
+      skills: [],
       countries: [],
+      trainings: [],
+      languages: [],
+      preferredCategories: [],
+      preferredCountries: [],
       applicant_filters: [],
+      applicationStatus: [],
 
       // filter
       filter: {
@@ -1105,7 +1211,8 @@ export default {
         country: "",
       },
 
-      limit: '50',
+      limit: "50",
+      filterId: "",
 
       // selection
       selected: [],
@@ -1113,6 +1220,49 @@ export default {
     };
   },
   mounted() {
+    $(document).ready(function () {
+      $("#from_date")
+        .datepicker({
+          format: "yyyy-mm-dd",
+          autoclose: true,
+          todayHighlight: true,
+          endDate: "0d",
+        })
+        .on("changeDate", function (selected) {
+          var minDate = new Date(selected.date.valueOf());
+          $("#to_date").datepicker("setStartDate", minDate);
+        });
+
+      $("#to_date")
+        .datepicker({
+          format: "yyyy-mm-dd",
+          autoclose: true,
+          todayHighlight: true,
+          // endDate: '0d',
+        })
+        .on("changeDate", function (selected) {
+          var minDate = new Date(selected.date.valueOf());
+          $("#from_date").datepicker("setEndDate", minDate);
+        });
+
+      $("#profileScoreSlider").find("span:nth-child(3)").remove();
+    });
+    $("#profileScoreSlider").slider({
+      range: true,
+      min: 0,
+      max: 100,
+      values: [0],
+      slide: function (event, ui) {
+        $("#profileScore").val(ui.values[1] + "%");
+        $("#rangeValue")
+          .text(ui.values[1] + "%")
+          .css({
+            left: ui.values[1] + "%",
+          });
+      },
+    });
+
+    $("#profileScore").val($("#profileScoreSlider").slider("values", 1) + "%");
     this.getDataSets();
     this.getApplicants();
   },
@@ -1130,9 +1280,16 @@ export default {
       const response = await CompanyService.getDataSets();
       if (response.data.success === true) {
         this.job_categories = response.data.data.job_categories;
+        this.education_levels = response.data.data.education_levels;
+        this.skills = response.data.data.skills;
+        this.trainings = response.data.data.trainings;
+        this.languages = response.data.data.languages;
+        this.preferredCategories = response.data.data.preferredCategories;
+        this.preferredCountries = response.data.data.preferredCountries;
         this.countries = response.data.data.countries;
         this.status_count = response.data.data.status_count;
         this.applicant_filters = response.data.data.applicant_filters;
+        this.applicationStatus = response.data.data.applicationStatus;
       }
     },
     setStatusFilter(status) {
@@ -1153,11 +1310,11 @@ export default {
     advanceFilter() {
       this.filter_submitting = true;
     },
-    setLimit(event){
-        this.showBusySign();
-        this.limit = event.target.value;
-        this.getApplicants(0, this.limit, JSON.stringify(this.filter));
-        this.hideBusySign();
+    setLimit(event) {
+      this.showBusySign();
+      this.limit = event.target.value;
+      this.getApplicants(0, this.limit, JSON.stringify(this.filter));
+      this.hideBusySign();
     },
     setFilter: _.debounce(function () {
       this.getApplicants();
@@ -1165,7 +1322,8 @@ export default {
 
     async getApplicants(page = 0, limit = this.limit) {
       let response = await CompanyService.getApplicants(
-        page, limit,
+        page,
+        limit,
         JSON.stringify(this.filter)
       );
       if (response.data.success === true) {
@@ -1177,7 +1335,58 @@ export default {
     showAdvancedFilter() {
       $("#advancedFilter").modal("show");
     },
-    setAdvancedFilterValue() {},
+    setAdvancedFilterValue(event) {
+      this.filterId = event.target.value;
+      if (this.filterId == "") {
+      } else {
+        CompanyService.getApplicantFilterData({
+          params: { applicantFilterId: this.filterId },
+        }).then((response) => {;
+          if (response.data.success == false) {
+            toastr.error(response.data.error);
+          } else if (response.data.success == true) {
+            var jsonData = JSON.parse(
+              response.data.applicantFilter.filter_value
+            )[0];
+            $("#jobTitle").select2('val',jsonData.job_title);;
+            $("#gender").val(jsonData.gender).trigger("change");
+            $("#from_date").val(jsonData.from_date);
+            $("#to_date").val(jsonData.to_date);
+            $("#Experience").select2("val", jsonData.experience);
+            $("#EducationLevel").select2("val", jsonData.education_level);
+            $("#Skills").val(JSON.parse(jsonData.skills)).trigger("change");
+            $("#ApplicationStatus")
+              .val(jsonData.application_status)
+              .trigger("change");
+            $("#profileScore").val(jsonData.profile_score);
+            $("#rangeValue").text(jsonData.profile_score).css({
+              left: jsonData.profile_score,
+            });
+            $(".ui-slider-range.ui-corner-all.ui-widget-header").css({
+              width: jsonData.profile_score,
+            });
+            $(".ui-slider-handle.ui-corner-all.ui-state-default").css({
+              left: jsonData.profile_score,
+            });
+            $("#MinAge").val(jsonData.min_age).trigger("change");
+            $("#MaxAge").val(jsonData.max_age).trigger("change");
+            $("#Trainings")
+              .val(JSON.parse(jsonData.trainings))
+              .trigger("change");
+            $("#Languages")
+              .val(JSON.parse(jsonData.languages))
+              .trigger("change");
+            $("#PreferredJobs")
+              .val(JSON.parse(jsonData.preferred_jobs))
+              .trigger("change");
+            $("#PreferredCountries")
+              .val(JSON.parse(jsonData.preferred_countries))
+              .trigger("change");
+            $("#filterName").val(response.data.applicantFilter.filter_name);
+          }
+        });
+      }
+    },
     async bulkStatusUpdate(status) {
       await Swal.fire({
         text: "Are you sure you want to perform bulk operation?",
@@ -1299,36 +1508,102 @@ export default {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
       }).then((result) => {
-          if(result.isConfirmed){
-              this.showBusySign();
-              let formData = new FormData($("#scheduleInterViewForm")[0]);
-              formData.append('ids', this.selected);
-              CompanyService.interviewSchedule(formData)
-              .then((response) => {
-                  if(response.data.success == false){
-                      if(response.data.errors){
-                        $.each(response.data.errors, function(key, value){
-                            $('.'+key).css('display', 'block').html(value);
-                        });
-                      } else if(response.data.error){
-                          toastr.error(response.data.error);
-                      }
-                  } else if(response.data.success == true){
-                      toastr.success(response.data.msg);
-                      var statuses = JSON.parse(response.data.statuses);
-                      $.each(statuses, function(key, value){
-                          $.each(value, function(k, v){
-                              var tableRow = $('tr[data-id="'+k+'"]');
-                              $(tableRow).find('.applicantStatus').text(v);
-                          });
-                      });
-                      $("#interviewModal").modal('hide');
-                      this.hideBusySign();
-                  }
-              })
-          }
-
+        if (result.isConfirmed) {
+          this.showBusySign();
+          let formData = new FormData($("#scheduleInterViewForm")[0]);
+          formData.append("ids", this.selected);
+          CompanyService.interviewSchedule(formData).then((response) => {
+            if (response.data.success == false) {
+              if (response.data.errors) {
+                $.each(response.data.errors, function (key, value) {
+                  $("." + key)
+                    .css("display", "block")
+                    .html(value);
+                });
+              } else if (response.data.error) {
+                toastr.error(response.data.error);
+              }
+            } else if (response.data.success == true) {
+              toastr.success(response.data.msg);
+              var statuses = JSON.parse(response.data.statuses);
+              $.each(statuses, function (key, value) {
+                $.each(value, function (k, v) {
+                  var tableRow = $('tr[data-id="' + k + '"]');
+                  $(tableRow).find(".applicantStatus").text(v);
+                });
+              });
+              $("#interviewModal").modal("hide");
+              this.hideBusySign();
+            }
+          });
+        }
       });
+    },
+
+    async getApplicantFilter(event) {
+      this.filterId = event.target.value;
+      if (this.filterId == "") {
+      } else {
+        await CompanyService.getApplicantFilterData({
+          data: { applicantFilterId: this.filterId },
+        }).then((response) => {
+          if (response.data.success == false) {
+            toastr.error(response.data.error);
+          } else if (response.data.success == true) {
+            var jsonData = JSON.parse(
+              response.data.applicantFilter.filter_value
+            )[0];
+            $("#jobTitle").select2("val", jsonData.job_title);
+            $("#gender").val(jsonData.gender).trigger("change");
+            $("#from_date").val(jsonData.from_date);
+            $("#to_date").val(jsonData.to_date);
+            $("#Experience").select2("val", jsonData.experience);
+            $("#EducationLevel").select2("val", jsonData.education_level);
+            $("#Skills").val(JSON.parse(jsonData.skills)).trigger("change");
+            $("#ApplicationStatus")
+              .val(jsonData.application_status)
+              .trigger("change");
+            $("#profileScore").val(jsonData.profile_score);
+            $("#rangeValue").text(jsonData.profile_score).css({
+              left: jsonData.profile_score,
+            });
+            $(".ui-slider-range.ui-corner-all.ui-widget-header").css({
+              width: jsonData.profile_score,
+            });
+            $(".ui-slider-handle.ui-corner-all.ui-state-default").css({
+              left: jsonData.profile_score,
+            });
+            $("#MinAge").val(jsonData.min_age).trigger("change");
+            $("#MaxAge").val(jsonData.max_age).trigger("change");
+            $("#Trainings")
+              .val(JSON.parse(jsonData.trainings))
+              .trigger("change");
+            $("#Languages")
+              .val(JSON.parse(jsonData.languages))
+              .trigger("change");
+            $("#PreferredJobs")
+              .val(JSON.parse(jsonData.preferred_jobs))
+              .trigger("change");
+            $("#PreferredCountries")
+              .val(JSON.parse(jsonData.preferred_countries))
+              .trigger("change");
+            $("#filterName").val(response.data.applicantFilter.filter_name);
+          }
+        });
+      }
+    },
+  },
+
+  computed: {
+    minAge() {
+      let arr = [];
+      for (var i = 18; i <= 25; i++) arr[i] = i;
+      return arr;
+    },
+    maxAge() {
+      let maxage = [];
+      for (var i = 18; i <= 50; i++) maxage[i] = i;
+      return maxage;
     },
   },
 };

@@ -26,4 +26,7 @@ export default {
     interviewSchedule(formData){
         return Api().post('/company/web-api/bulk-interview-schedule', formData);
     },
+    getApplicantFilterData(filterId){
+        return Api().get('/company/web-api/get-applicant-filter', filterId);
+    },
 }
