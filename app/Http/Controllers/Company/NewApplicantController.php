@@ -99,7 +99,8 @@ class NewApplicantController extends Controller
         $query->with([
             'employe', 'employe.country:id,name', 'employe.user',
             'job', 'job.job_category', 'employe.experience.country:id,name', 'employe.experience.job_category:id,functional_area',
-            'employe.education_level:id,title', 'employe.employeeTrainings.training:id,title', 'employe.employeeLanguage.language:id,lang'
+            'employe.education_level:id,title', 'employe.employeeTrainings.training:id,title', 'employe.employeeLanguage.language:id,lang',
+            'employe.employeeSkills.skill:id,title', 'employe.countryPreference:id,name', 'employe.jobCategoryPreference:id,functional_area'        
         ]);
 
         // filter
@@ -227,7 +228,7 @@ class NewApplicantController extends Controller
             }
             DB::commit();
             return response()->json(['msg' => "Application Status Updated", 'success' => true, 'statuses' => json_encode($statuses)]);
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => $e->getMessage(), 'success' => false]);
         }
@@ -235,6 +236,7 @@ class NewApplicantController extends Controller
 
     public function bulkCvDownload(Request $request)
     {
+        dd($request->all());
         $validator = Validator::make($request->all(), [
             "ids" => ["required"],
         ]);
@@ -278,7 +280,7 @@ class NewApplicantController extends Controller
             $pdf->save($path . $fileName);
             $pdf = public_path('uploads/cv/' . $fileName);
             return response()->download($pdf);
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage(), 'success' => false]);
         }
     }
