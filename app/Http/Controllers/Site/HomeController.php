@@ -8,6 +8,8 @@ use App\Models\Industry;
 use App\Models\Job;
 use App\Models\JobCategory;
 use App\Models\News;
+use App\Traits\Site\CandidateMethods;
+use App\Traits\Site\CompanyMethods;
 use DB;
 use Illuminate\Http\Request;
 use App\Traits\Site\ThemeMethods;
@@ -17,7 +19,7 @@ use App\Models\Employe;
 
 class HomeController extends Controller
 {
-    use ThemeMethods;
+    use ThemeMethods, CompanyMethods, CandidateMethods;
     public function home()
     {
         $news = News::where('is_active', 1)->orderBy('id', 'desc')->limit(10)->get();
@@ -74,5 +76,19 @@ class HomeController extends Controller
         if($notification->data['link'] != ''){
             return redirect($notification->data['link']);
         }
+    }
+
+
+    public function readNotifications($type, $notification_id)
+    {
+        $user = \Auth::user();
+        if ($type == 'single'){
+            $notification = $user->notifications()->where('id',$notification_id)->first();
+            $notification->markAsRead();
+        }elseif($type == 'unread'){
+            $user->unreadNotifications->markAsRead();
+        }
+
+        return redirect()->back();
     }
 }

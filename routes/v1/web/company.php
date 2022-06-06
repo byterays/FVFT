@@ -18,8 +18,7 @@ Route::middleware(['auth', 'is_company'])->group(function () {
     Route::post('/remove-image', [DashController::class, 'removeImage'])->name('company.remove_image');
     Route::put('/update/{id}', [DashController::class, 'updateProfile'])->name('company.update_profile');
     Route::get('/view-my-profile', [DashController::class, 'show'])->name('company.view_profile');
-    Route::get('/notifications', [DashController::class, "getNotifications"])->name('company.get_notifications');
-    Route::get('/notifications-read/{type}/{id}', [DashController::class, "readNotifications"])->name('company.read_notifications');
+    Route::get('/notifications', [DashController::class, "getNotifications"])->name('company.get-notifications');
 
     Route::get('/jobs', [JobsController::class, 'index'])->name('company.jobs');
     // Route::get('/jobs', [DashController::class, 'jobs'])->name('company.jobs');

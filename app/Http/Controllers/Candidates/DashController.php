@@ -137,13 +137,13 @@ class DashController extends Controller
                 [
                     'title' => 'Message',
                     'link' => '#',
-                    'totalcount' => 2,
+                    'totalcount' => '',
                     'icon' => '/uploads/site/svgs/mail.svg',
                 ],
                 [
                     'title' => 'Notification',
-                    'link' => '#',
-                    'totalcount' => 2,
+                    'link' => route('candidate.get-notifications'),
+                    'totalcount' => Auth::user()->unReadNotifications->count() ?: '',
                     'icon' => '/uploads/site/svgs/megaphone.svg',
                 ],
             ],
@@ -606,5 +606,10 @@ class DashController extends Controller
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $items = $items instanceof Collection ? $items : Collection::make($items);
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
+
+    public function getNotifications()
+    {
+        return $this->client_view('candidates.notifications', []);
     }
 }
