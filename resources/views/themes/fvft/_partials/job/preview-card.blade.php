@@ -37,9 +37,7 @@
                         <a class="mr-4">
                             <span>
                                 @if (!blank(data_get($job, 'country')))
-                                    <img class="mb-1"
-                                         src="{{ asset('https://flagcdn.com/16x12/' . strtolower(data_get($job, 'country.iso2')) . '.png') }}"
-                                         alt="">
+                                    <img class="mb-1" src="{{ asset('https://flagcdn.com/16x12/' . strtolower(data_get($job, 'country.iso2')) . '.png') }}" alt="">
                                     {{ data_get($job, 'country.name') }}
                                 @endif
                             </span>

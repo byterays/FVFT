@@ -52,7 +52,6 @@
                                         @foreach ($jobs as $item)
                                             @include('themes.fvft._partials.job.preview-card', ['job' => $item])
                                         @endforeach
-
                                     </div>
                                     <div class="tab-pane " id="tab-12">
                                         <div class="row">
