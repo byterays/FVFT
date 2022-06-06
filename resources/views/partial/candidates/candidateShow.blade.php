@@ -67,7 +67,7 @@
                                         //     ->where('id', $employ_experience['job_category_id']);
                                         // $country_name = DB::table('countries')
                                         //     ->where('id', $employ_experience['country_id']);
-                                        
+
                                         // $job_title = $job->exists() ? $job->first()->title : '';
                                         // $country_title = $country_name->exists() ? $country_name->first()->name : '';
                                         // $job_category_title = $job_category->exists() ? $job_category->first()->functional_area : '';
