@@ -7,7 +7,7 @@
                         <hr class="home_hr">
                     </div>
                     <div class="col-md-4 my-auto">
-                        <h1>{{ strtoupper(__('Jobs By Category')) }}</h1>
+                        <h1>{{ __('Jobs By Category') }}</h1>
                     </div>
                     <div class="col-md-4">
                         <hr class="home_hr">

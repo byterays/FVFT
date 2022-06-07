@@ -117,7 +117,7 @@
                                     <select name="category_id" class="form-control select2-show-search"
                                         data-placeholder="Select Job Category">
                                         <option value="">{{ __('Select Job Category') }}</option>
-                                        @foreach ($job_categories as $category)
+                                        @foreach ($all_job_categories as $category)
                                             <option value="{{ $category->id }}"
                                                 {{ setParameter($job, 'job_categories_id') == $category->id ? 'selected' : '' }}>
                                                 {{ $category->functional_area }}
