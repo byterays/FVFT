@@ -100,7 +100,7 @@ class ApplicantFilterController extends Controller
             })->When(!blank($request->min_age) AND !blank($request->max_age), function($q) use($request){
                 $q->orWhere('min_age', $request->min_age)->orWhere('max_age', $request->max_age);
             })->when(!blank($request->preferred_countries), function($q) use($request){
-                $q->orWhereIn('job_categories_id', $request->preferred_countries);
+                $q->orWhereIn('country_id', $request->preferred_countries);
             });
         })->with(['employe', 'job'])->paginate(4);
         $sn = ($applicants->perPage() * ($applicants->currentPage() - 1)) + 1;

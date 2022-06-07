@@ -309,18 +309,18 @@
             "closeButton": true,
             "debug": false,
             "newestOnTop": false,
-            "progressBar": false,
+            "progressBar": true,
             "preventDuplicates": true,
             "onclick": onClick,
             "showDuration": "300",
-            "hideDuration": "1000",
+            "hideDuration": "400",
             "timeOut": 0,
             "extendedTimeOut": 0,
             "showEasing": "swing",
             "hideEasing": "linear",
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut",
-            "positionClass": "toast-bottom-full-width",
+            "positionClass": "toast-top-full-width",
         };
 
         @if (Session::has('message'))

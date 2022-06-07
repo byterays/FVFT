@@ -3251,6 +3251,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3279,8 +3289,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         query: "",
         application_status: "",
         category: "",
-        country: ""
+        country: "",
+        formData: {}
       },
+      // advanced filter
+      // advanced_filter: {
+      //   job_title: "",
+      //   gender: "",
+      //   from_date: "",
+      //   to_date: "",
+      //   experience: "",
+      //   education_level: "",
+      //   skills: "",
+      //   application_status: "",
+      //   profile_score: "",
+      //   min_age: "",
+      // },
       limit: "50",
       filterId: "",
       // selection
@@ -3386,10 +3410,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.getApplicants();
     },
     saveFilter: function saveFilter() {
-      this.filter_saving = true;
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var formData;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this2.filter_saving = true;
+                formData = new FormData($("#FilterForm")[0]);
+                _context2.next = 4;
+                return _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].saveAdvancedFilter(formData).then(function (response) {
+                  if (response.data.success == false) {
+                    if (response.data.errors) {
+                      toastr.error(response.data.errors.filter_name[0]);
+                      $(".filter_name").html(response.data.errors.filter_name[0]);
+                    } else if (response.data.db_error) {
+                      toastr.error(response.data.db_error);
+                    }
+                  } else if (response.data.success == true) {
+                    toastr.success(response.data.msg);
+
+                    _this2.resetAdvancedSearchForm();
+                  }
+                });
+
+              case 4:
+                _this2.filter_saving = false;
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     },
     advanceFilter: function advanceFilter() {
       this.filter_submitting = true;
+      var data = {};
+      $("#FilterForm").serializeArray().map(function (x) {
+        data[x.name] = x.value;
+      });
+      this.filter.formData = data;
+      this.getApplicants();
+      this.filter_submitting = false;
     },
     setLimit: function setLimit(event) {
       this.showBusySign();
@@ -3402,55 +3468,74 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }, 800),
     getApplicants: function getApplicants() {
       var _arguments = arguments,
-          _this2 = this;
+          _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var _this3$limit;
+
         var page, limit, response;
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 page = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : 0;
-                limit = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : _this2.limit;
-                _context2.next = 4;
-                return _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].getApplicants(page, limit, JSON.stringify(_this2.filter));
+                limit = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : (_this3$limit = _this3.limit) !== null && _this3$limit !== void 0 ? _this3$limit : 50;
+                _context3.next = 4;
+                return _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].getApplicants(page, limit, JSON.stringify(_this3.filter));
 
               case 4:
-                response = _context2.sent;
+                response = _context3.sent;
 
                 if (response.data.success === true) {
-                  _this2.applicants_pg = response.data.data.applicants;
-                  _this2.applicants = response.data.data.applicants.data;
+                  _this3.applicants_pg = response.data.data.applicants;
+                  _this3.applicants = response.data.data.applicants.data;
                 }
 
               case 6:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
     showAdvancedFilter: function showAdvancedFilter() {
       $("#advancedFilter").modal("show");
     },
+    resetAdvancedSearchForm: function resetAdvancedSearchForm() {
+      $("#FilterForm")[0].reset();
+      $(".select2-show-search").val(null).trigger("change");
+      $(".select2").val(null).trigger("change");
+      $("#profileScore").val("0%");
+      $("#rangeValue").text("0%").css({
+        left: "0%"
+      });
+      $(".ui-slider-range.ui-corner-all.ui-widget-header").css({
+        width: "0%"
+      });
+      $(".ui-slider-handle.ui-corner-all.ui-state-default").css({
+        left: "0%"
+      });
+      $(".require").css("display", "none");
+      $("#filterName").val("");
+    },
     setAdvancedFilterValue: function setAdvancedFilterValue(event) {
+      this.showBusySign();
       this.filterId = event.target.value;
 
-      if (this.filterId == "") {} else {
+      if (this.filterId == "") {
+        this.resetAdvancedSearchForm();
+      } else {
         _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].getApplicantFilterData({
           params: {
             applicantFilterId: this.filterId
           }
         }).then(function (response) {
-          ;
-
           if (response.data.success == false) {
             toastr.error(response.data.error);
           } else if (response.data.success == true) {
             var jsonData = JSON.parse(response.data.applicantFilter.filter_value)[0];
-            $("#jobTitle").select2('val', jsonData.job_title);
-            ;
+            $("#jobTitle").select2("val", jsonData.job_title);
             $("#gender").val(jsonData.gender).trigger("change");
             $("#from_date").val(jsonData.from_date);
             $("#to_date").val(jsonData.to_date);
@@ -3478,16 +3563,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         });
       }
+
+      this.hideBusySign();
     },
     bulkStatusUpdate: function bulkStatusUpdate(status) {
-      var _this3 = this;
+      var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context3.next = 2;
+                _context4.next = 2;
                 return Swal.fire({
                   text: "Are you sure you want to perform bulk operation?",
                   icon: "warning",
@@ -3497,10 +3584,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   cancelButtonColor: "#d33"
                 }).then(function (result) {
                   if (result.isConfirmed) {
-                    _this3.showBusySign();
+                    _this4.showBusySign();
 
                     var data = new FormData();
-                    data.append("ids", _this3.selected);
+                    data.append("ids", _this4.selected);
                     data.append("applicantStatus", status);
                     _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].updateBulkStatus(data).then(function (response) {
                       if (response.data.success == false) {
@@ -3516,35 +3603,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                         $.each(statuses, function (k, v) {
                           $.each(v, function (key, value) {
                             var tableRow = $('tr[data-id="' + key + '"]');
-                            $(tableRow).find(".applicantStatus").text(value);
+                            $(tableRow).find(".applicantStatus").html('<strong>' + value + '</strong>');
                           });
                         });
                         toastr.success(response.data.msg);
                         $("input:checkbox").prop("checked", false);
+                        _this4.selected = [];
+                        _this4.selectAll = false; // $("#applicationStatusButton").attr('disabled', true);
+                        // $("#bulkActionButton").attr('disabled', true);
                       }
 
-                      _this3.hideBusySign();
+                      _this4.hideBusySign();
                     });
                   }
                 });
 
               case 2:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }))();
     },
     bulkCvDownload: function bulkCvDownload() {
-      var _this4 = this;
+      var _this5 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context4.next = 2;
+                _context5.next = 2;
                 return Swal.fire({
                   text: "Are you sure you want to perform bulk download?",
                   icon: "warning",
@@ -3554,13 +3644,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   cancelButtonColor: "#d33"
                 }).then(function (result) {
                   if (result.isConfirmed) {
-                    _this4.showBusySign();
+                    _this5.showBusySign();
 
                     var config = {
                       responseType: "blob"
                     };
                     var data = new FormData();
-                    data.append("ids", _this4.selected);
+                    data.append("ids", _this5.selected);
                     _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].downloadBulkCv(data, config).then(function (response) {
                       if (response.data.success == false) {
                         if (response.data.error) {
@@ -3578,60 +3668,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                         link.click();
                         toastr.success("Applicants CV Downloaded");
                         $("input:checkbox").prop("checked", false);
+                        _this5.selected = [];
+                        _this5.selectAll = false;
                       }
-
-                      _this4.hideBusySign();
-                    });
-                  }
-                });
-
-              case 2:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }))();
-    },
-    bulkApplicationDelete: function bulkApplicationDelete() {
-      var _this5 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                _context5.next = 2;
-                return Swal.fire({
-                  text: "Are you sure you want to perform bulk delete?",
-                  icon: "warning",
-                  showCancelButton: true,
-                  confirmButtonText: "Yes Delete!",
-                  confirmButtonColor: "#3085d6",
-                  cancelButtonColor: "#d33"
-                }).then(function (result) {
-                  if (result.isConfirmed) {
-                    _this5.showBusySign();
-
-                    _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].deleteBulkApplication({
-                      data: {
-                        ids: _this5.selected.join(","),
-                        _method: "DELETE"
-                      }
-                    }).then(function (response) {
-                      if (response.data.success == false) {
-                        if (response.data.error) {
-                          toastr.error(response.data.error);
-                        }
-                      } // $(".rowCheck:checked").each(function(){
-                      //     $(this).parents("tr").remove();
-                      // });
-
-
-                      _this5.getApplicants();
-
-                      toastr.success(response.data.msg);
-                      $("input:checkbox").prop("checked", false);
 
                       _this5.hideBusySign();
                     });
@@ -3646,7 +3685,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee5);
       }))();
     },
-    scheduleInterview: function scheduleInterview() {
+    bulkApplicationDelete: function bulkApplicationDelete() {
       var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
@@ -3655,6 +3694,61 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context6.prev = _context6.next) {
               case 0:
                 _context6.next = 2;
+                return Swal.fire({
+                  text: "Are you sure you want to perform bulk delete?",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonText: "Yes Delete!",
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33"
+                }).then(function (result) {
+                  if (result.isConfirmed) {
+                    _this6.showBusySign();
+
+                    _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].deleteBulkApplication({
+                      data: {
+                        ids: _this6.selected.join(","),
+                        _method: "DELETE"
+                      }
+                    }).then(function (response) {
+                      if (response.data.success == false) {
+                        if (response.data.error) {
+                          toastr.error(response.data.error);
+                        }
+                      } // $(".rowCheck:checked").each(function(){
+                      //     $(this).parents("tr").remove();
+                      // });
+
+
+                      _this6.getApplicants();
+
+                      toastr.success(response.data.msg);
+                      $("input:checkbox").prop("checked", false);
+                      _this6.selected = [];
+                      _this6.selectAll = false;
+
+                      _this6.hideBusySign();
+                    });
+                  }
+                });
+
+              case 2:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+    scheduleInterview: function scheduleInterview() {
+      var _this7 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+        return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _context7.next = 2;
                 return $(".require").css("display", "none");
 
               case 2:
@@ -3667,10 +3761,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   cancelButtonColor: "#d33"
                 }).then(function (result) {
                   if (result.isConfirmed) {
-                    _this6.showBusySign();
+                    _this7.showBusySign();
 
                     var formData = new FormData($("#scheduleInterViewForm")[0]);
-                    formData.append("ids", _this6.selected);
+                    formData.append("ids", _this7.selected);
                     _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].interviewSchedule(formData).then(function (response) {
                       if (response.data.success == false) {
                         if (response.data.errors) {
@@ -3690,79 +3784,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                           });
                         });
                         $("#interviewModal").modal("hide");
+                        _this7.selected = [];
+                        _this7.selectAll = false;
 
-                        _this6.hideBusySign();
+                        _this7.hideBusySign();
                       }
                     });
                   }
                 });
 
               case 3:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6);
-      }))();
-    },
-    getApplicantFilter: function getApplicantFilter(event) {
-      var _this7 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
-        return _regeneratorRuntime().wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                _this7.filterId = event.target.value;
-
-                if (!(_this7.filterId == "")) {
-                  _context7.next = 4;
-                  break;
-                }
-
-                _context7.next = 6;
-                break;
-
-              case 4:
-                _context7.next = 6;
-                return _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].getApplicantFilterData({
-                  data: {
-                    applicantFilterId: _this7.filterId
-                  }
-                }).then(function (response) {
-                  if (response.data.success == false) {
-                    toastr.error(response.data.error);
-                  } else if (response.data.success == true) {
-                    var jsonData = JSON.parse(response.data.applicantFilter.filter_value)[0];
-                    $("#jobTitle").select2("val", jsonData.job_title);
-                    $("#gender").val(jsonData.gender).trigger("change");
-                    $("#from_date").val(jsonData.from_date);
-                    $("#to_date").val(jsonData.to_date);
-                    $("#Experience").select2("val", jsonData.experience);
-                    $("#EducationLevel").select2("val", jsonData.education_level);
-                    $("#Skills").val(JSON.parse(jsonData.skills)).trigger("change");
-                    $("#ApplicationStatus").val(jsonData.application_status).trigger("change");
-                    $("#profileScore").val(jsonData.profile_score);
-                    $("#rangeValue").text(jsonData.profile_score).css({
-                      left: jsonData.profile_score
-                    });
-                    $(".ui-slider-range.ui-corner-all.ui-widget-header").css({
-                      width: jsonData.profile_score
-                    });
-                    $(".ui-slider-handle.ui-corner-all.ui-state-default").css({
-                      left: jsonData.profile_score
-                    });
-                    $("#MinAge").val(jsonData.min_age).trigger("change");
-                    $("#MaxAge").val(jsonData.max_age).trigger("change");
-                    $("#Trainings").val(JSON.parse(jsonData.trainings)).trigger("change");
-                    $("#Languages").val(JSON.parse(jsonData.languages)).trigger("change");
-                    $("#PreferredJobs").val(JSON.parse(jsonData.preferred_jobs)).trigger("change");
-                    $("#PreferredCountries").val(JSON.parse(jsonData.preferred_countries)).trigger("change");
-                    $("#filterName").val(response.data.applicantFilter.filter_name);
-                  }
-                });
-
-              case 6:
               case "end":
                 return _context7.stop();
             }
@@ -4161,6 +4192,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   getApplicantFilterData: function getApplicantFilterData(filterId) {
     return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get('/company/web-api/get-applicant-filter', filterId);
+  },
+  saveAdvancedFilter: function saveAdvancedFilter(formData) {
+    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().post('/company/web-api/save-advaced-filter', formData);
   }
 });
 
@@ -22415,6 +22449,7 @@ var render = function () {
                     disabled: !_vm.selected.length,
                     "data-toggle": "dropdown",
                     "aria-expanded": "false",
+                    id: "applicationStatusButton",
                   },
                 },
                 [_vm._v("\n              Set Application Status\n            ")]
@@ -22510,6 +22545,7 @@ var render = function () {
                     disabled: !_vm.selected.length,
                     "data-toggle": "dropdown",
                     "aria-expanded": "false",
+                    id: "bulkActionButton",
                   },
                 },
                 [_vm._v("\n              Bulk Action\n            ")]
@@ -22887,7 +22923,7 @@ var render = function () {
                           applicant.employe
                             ? _c("span", [
                                 _vm._v(
-                                  "\n                    Phone1: " +
+                                  "\n                    Phone1:\n                    " +
                                     _vm._s(
                                       applicant.employe.mobile_phone ||
                                         "Not-Available"
@@ -22895,7 +22931,7 @@ var render = function () {
                                 ),
                                 _c("br"),
                                 _vm._v(
-                                  "\n                    Phone2: " +
+                                  "\n                    Phone2:\n                    " +
                                     _vm._s(
                                       applicant.employe.mobile_phone2 ||
                                         "Not-Available"
@@ -23288,67 +23324,61 @@ var render = function () {
                             _c("div", { staticClass: "col-md-6 d-flex" }),
                           ]),
                           _vm._v(" "),
-                          _c(
-                            "form",
-                            {
-                              attrs: { action: "" },
-                              on: {
-                                submit: function ($event) {
-                                  $event.preventDefault()
-                                  return _vm.saveFilter.apply(null, arguments)
-                                },
-                              },
-                            },
-                            [
-                              _c("div", { staticClass: "row" }, [
-                                _vm._m(10),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-md-6" }, [
-                                  _vm.filter_saving
-                                    ? _c(
-                                        "button",
-                                        {
-                                          staticClass:
-                                            "btn btn-warning rounded-0",
-                                          attrs: { type: "button" },
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass:
-                                              "fa fa-spinner fa-spin",
-                                          }),
-                                        ]
-                                      )
-                                    : _c(
-                                        "button",
-                                        {
-                                          staticClass:
-                                            "btn btn-warning rounded-0",
-                                          attrs: { type: "submit" },
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                          Save Filter\n                        "
-                                          ),
-                                        ]
-                                      ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "a",
+                          _c("div", { staticClass: "row" }, [
+                            _vm._m(10),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-6" }, [
+                              _vm.filter_saving
+                                ? _c(
+                                    "button",
                                     {
-                                      staticClass:
-                                        "btn btn-outline-warning rounded-0",
-                                      attrs: {
-                                        href: "javascript:void(0);",
-                                        id: "ResetFilter",
+                                      staticClass: "btn btn-warning rounded-0",
+                                      attrs: { type: "button" },
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fa fa-spinner fa-spin",
+                                      }),
+                                    ]
+                                  )
+                                : _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-warning rounded-0",
+                                      attrs: { type: "submit" },
+                                      on: {
+                                        click: function ($event) {
+                                          $event.preventDefault()
+                                          return _vm.saveFilter()
+                                        },
                                       },
                                     },
-                                    [_vm._v("Reset Filter")]
+                                    [
+                                      _vm._v(
+                                        "\n                        Save Filter\n                      "
+                                      ),
+                                    ]
                                   ),
-                                ]),
-                              ]),
-                            ]
-                          ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "btn btn-outline-warning rounded-0",
+                                  attrs: {
+                                    href: "javascript:void(0);",
+                                    id: "ResetFilter",
+                                  },
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.resetAdvancedSearchForm()
+                                    },
+                                  },
+                                },
+                                [_vm._v("Reset Filter")]
+                              ),
+                            ]),
+                          ]),
                         ]),
                       ]),
                     ]),
@@ -24221,6 +24251,8 @@ var staticRenderFns = [
           required: "",
         },
       }),
+      _vm._v(" "),
+      _c("div", { staticClass: "require text-danger filter_name" }),
       _vm._v(" "),
       _c("span", { staticStyle: { color: "#1650e2" } }, [
         _vm._v("Save this setting for future use."),
