@@ -88,24 +88,29 @@ class NewApplicantController extends Controller
 
     public function getApplicants(Request $request)
     {
-        // dd($request->filter);
+        // dd($request->all());
         $input = json_decode($request->filter, true);
-        // dd($input['formData']);
+        $formData = !blank($input['formData']) ? json_decode($input['formData']) : '';
+        // dd($input);
         $query = JobApplication::query();
-        if (!blank($input['formData'])) {
-            $query->whereHas('job', function ($query) use ($input) {
-                return $query->when(!blank($input['formData']['job_title']), function ($q) use ($input) {
-                    $q->orWhere('job_categories_id', $input['formData']['job_title']);
-                })->when(!blank($input['formData']['preferred_jobs']), function ($q) use ($input) {
-                    $q->orWhereIn('job_categories_id', $input['formData']['preferred_jobs']);
-                })->when(!blank($input['formData']['min_age']) and blank($input['formData']['max_age']), function ($q) use ($input) {
-                    $q->orWhere('min_age', $input['formData']['min_age']);
-                })->when(!blank($input['formData']['max_age']) and blank($input['formData']['min_age']), function ($q) use ($input) {
-                    $q->orWhere('max_age', $input['formData']['max_age']);
-                })->when(!blank($input['formData']['min_age']) and !blank($input['formData']['max_age']), function ($q) use ($input) {
-                    $q->orWhere('min_age', $input['formData']['min_age'])->orWhere('max_age', $input['formData']['max_age']);
-                })->when(!blank($input['formData']['preferred_countries']), function ($q) use ($input) {
-                    $q->orWhereIn('country_id', $input['formData']['preferred_countries']);
+        
+        if (!blank($formData)) {
+            $query = JobApplication::when(!blank($formData->application_status), function($q) use($formData){
+                $q->where('status', $formData->application_status);
+            });
+            $query->whereHas('job', function ($query) use ($formData) {
+                return $query->when(!blank($formData->job_title), function ($q) use ($formData) {
+                    $q->orWhere('job_categories_id', $formData->job_title);
+                })->when(!blank($formData->preferred_jobs), function ($q) use ($formData) {
+                    $q->orWhereIn('job_categories_id', $formData->preferred_jobs);
+                })->when(!blank($formData->min_age) and blank($formData->max_age), function ($q) use ($formData) {
+                    $q->orWhere('min_age', $formData->min_age);
+                })->when(!blank($formData->max_age) and blank($formData->min_age), function ($q) use ($formData) {
+                    $q->orWhere('max_age', $formData->max_age);
+                })->when(!blank($formData->min_age) and !blank($formData->max_age), function ($q) use ($formData) {
+                    $q->orWhere('min_age', $formData->min_age)->orWhere('max_age', $formData->max_age);
+                })->when(!blank($formData->preferred_countries), function ($q) use ($formData) {
+                    $q->orWhereIn('country_id', $formData->preferred_countries);
                 });
                 return $query->whereHas('company', function ($query2) {
                     $query2->where('user_id', Auth()->user()->id);
@@ -161,16 +166,32 @@ class NewApplicantController extends Controller
                 });
             }
 
-            if (!blank($input['formData'])) {
-                $query->when(!blank($input['formData']['from_date']) and blank($input['formData']['to_date']), function ($q) use ($input) {
-                    $q->where(DB::raw('CAST(created_at as date)'), $input['formData']['from_date']);
-                })->when(!blank($input['formData']['to_date']) and blank($input['formData']['from_date']), function ($q) use ($input) {
-                    $q->where(DB::raw('CAST(created_at as date)'), $input['formData']['to_date']);
-                })->when(!blank($input['formData']['from_date']) and !blank($input['formData']['to_date']), function ($q) use ($input) {
-                    $q->orWhereBetween(DB::raw('CAST(created_at as date)'), [$input['formData']['from_date'], $input['formData']['to_date']]);
-                })->whereHas('employe', function ($query2) use ($input) {
-                    return $query2->when(!blank($input['formData']['gender']), function ($q) use ($input) {
-                        $q->where('gender', $input['formData']['gender']);
+            if (!blank($formData)) {
+                $query->when(!blank($formData->from_date) and blank($formData->to_date), function ($q) use ($formData) {
+                    $q->where(DB::raw('CAST(created_at as date)'), $formData->from_date);
+                })->when(!blank($formData->to_date) and blank($formData->from_date), function ($q) use ($formData) {
+                    $q->where(DB::raw('CAST(created_at as date)'), $formData->to_date);
+                })->when(!blank($formData->from_date) and !blank($formData->to_date), function ($q) use ($formData) {
+                    $q->orWhereBetween(DB::raw('CAST(created_at as date)'), [$formData->from_date, $formData->to_date]);
+                })->whereHas('employe', function ($query2) use ($formData) {
+                    return $query2->when(!blank($formData->gender), function ($q) use ($formData) {
+                        $q->where('gender', $formData->gender);
+                    })
+                    // ->when(!blank($formData->profile_score), function($q) use ($formData){
+                    //     $q->having('profile_score', $formData->profile_score);
+                    // })
+                    ->whereHas('employeeSkills', function($query3) use($formData){
+                        $query3->whereHas('skill', function($query4) use($formData){
+                            $query4->orWhereIn('id', $formData->skills);
+                        });
+                    })->whereHas('employeeTrainings', function($query6) use($formData){
+                        $query6->whereHas('training', function($query7) use($formData){
+                            $query7->orWhereIn('id', $formData->trainings);
+                        });
+                    })->whereHas('employeeLanguage', function($query8) use($formData){
+                        $query8->whereHas('language', function($query9) use($formData){
+                            $query9->orWhereIn('id', $formData->languages);
+                        });
                     });
                 });
             }

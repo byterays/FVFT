@@ -553,10 +553,10 @@
                     </span>
                   </td>
                   <td>
-                    <a href="" class="text-primary my-auto"
+                    <a href="javascript:void(0)" @click="redirectTo('company/applicants/edit/', applicant.id)" class="text-primary my-auto"
                       ><i class="fa fa-edit"></i
                     ></a>
-                    <a href="" class="text-primary my-auto"
+                    <a href="javascript:void(0);" @click="redirectTo('company/applicants/applicant-detail/', applicant.employe.id)" class="text-primary my-auto"
                       ><i class="fa fa-eye"></i
                     ></a>
                   </td>
@@ -1346,14 +1346,29 @@ export default {
       this.filter_saving = false;
     },
     advanceFilter() {
+      this.showBusySign();
       this.filter_submitting = true;
-      var data = {};
-      $("#FilterForm").serializeArray().map(function(x){
-        data[x.name] = x.value;
-      });
-      this.filter.formData = data;
+      var myFormData = new FormData($("#FilterForm")[0]);
+      var formValue = Object.fromEntries(myFormData.entries());
+      formValue.preferred_jobs = myFormData.getAll('preferred_jobs[]');
+      formValue.skills = myFormData.getAll('skills[]');
+      formValue.trainings = myFormData.getAll('trainings[]');
+      formValue.languages = myFormData.getAll('languages[]');
+      formValue.preferred_countries = myFormData.getAll('preferred_countries[]');
+      // console.log(JSON.stringify(formValue, null, 2));
+      // var data = {};
+      // $("#FilterForm").serializeArray().map(function(x){
+      //   data[x.name] = x.value;
+      // });
+      this.filter.formData = JSON.stringify(formValue, null, 2);
+      // console.log(this.filter.formData);
       this.getApplicants();
+      resetAdvancedSearchForm();
+      $("#advancedFilter").modal("hide");
+
+      // this.getApplicants(0, 50, JSON.stringify(this.filter), myFormData);
       this.filter_submitting = false;
+      this.hideBusySign();
     },
     setLimit(event) {
       this.showBusySign();
@@ -1614,6 +1629,11 @@ export default {
         }
       });
     },
+    redirectTo(url, id){
+      var current_url = window.location.origin;
+      var url = current_url + '/' + url + id;
+      location.href = url;
+    }
   },
 
   computed: {

@@ -3448,14 +3448,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     advanceFilter: function advanceFilter() {
+      this.showBusySign();
       this.filter_submitting = true;
-      var data = {};
-      $("#FilterForm").serializeArray().map(function (x) {
-        data[x.name] = x.value;
-      });
-      this.filter.formData = data;
+      var myFormData = new FormData($("#FilterForm")[0]);
+      var formValue = Object.fromEntries(myFormData.entries());
+      formValue.preferred_jobs = myFormData.getAll('preferred_jobs[]');
+      formValue.skills = myFormData.getAll('skills[]');
+      formValue.trainings = myFormData.getAll('trainings[]');
+      formValue.languages = myFormData.getAll('languages[]');
+      formValue.preferred_countries = myFormData.getAll('preferred_countries[]'); // console.log(JSON.stringify(formValue, null, 2));
+      // var data = {};
+      // $("#FilterForm").serializeArray().map(function(x){
+      //   data[x.name] = x.value;
+      // });
+
+      this.filter.formData = JSON.stringify(formValue, null, 2); // console.log(this.filter.formData);
+
       this.getApplicants();
+      resetAdvancedSearchForm();
+      $("#advancedFilter").modal("hide"); // this.getApplicants(0, 50, JSON.stringify(this.filter), myFormData);
+
       this.filter_submitting = false;
+      this.hideBusySign();
     },
     setLimit: function setLimit(event) {
       this.showBusySign();
@@ -3800,6 +3814,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee7);
       }))();
+    },
+    redirectTo: function redirectTo(url, id) {
+      var current_url = window.location.origin;
+      var url = current_url + '/' + url + id;
+      location.href = url;
     }
   },
   computed: {
@@ -4169,7 +4188,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ "./resources/js/services/Api.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  getApplicants: function getApplicants(page, limit, filter) {
+  getApplicants: function getApplicants(page, limit, filter, formData) {
+    // return Api().get('/company/web-api/getApplicants', {params: {page: page, limit: limit, filter: filter, form_data: formData}});
     return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get('/company/web-api/getApplicants?page=' + page + '&limit=' + limit + '&filter=' + filter);
   },
   getDataSets: function getDataSets() {
@@ -23173,7 +23193,41 @@ var render = function () {
                             : _vm._e(),
                         ]),
                         _vm._v(" "),
-                        _vm._m(8, true),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "text-primary my-auto",
+                              attrs: { href: "javascript:void(0)" },
+                              on: {
+                                click: function ($event) {
+                                  return _vm.redirectTo(
+                                    "company/applicants/edit/",
+                                    applicant.id
+                                  )
+                                },
+                              },
+                            },
+                            [_c("i", { staticClass: "fa fa-edit" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "text-primary my-auto",
+                              attrs: { href: "javascript:void(0);" },
+                              on: {
+                                click: function ($event) {
+                                  return _vm.redirectTo(
+                                    "company/applicants/applicant-detail/",
+                                    applicant.employe.id
+                                  )
+                                },
+                              },
+                            },
+                            [_c("i", { staticClass: "fa fa-eye" })]
+                          ),
+                        ]),
                       ]
                     )
                   }),
@@ -23265,7 +23319,7 @@ var render = function () {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(9),
+              _vm._m(8),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body pb-0" }, [
                 _c(
@@ -23325,7 +23379,7 @@ var render = function () {
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "row" }, [
-                            _vm._m(10),
+                            _vm._m(9),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-md-6" }, [
                               _vm.filter_saving
@@ -23390,7 +23444,7 @@ var render = function () {
                             _c("div", { staticClass: "col-md-6" }, [
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(11),
+                                  _vm._m(10),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c(
@@ -23439,13 +23493,13 @@ var render = function () {
                                 ]),
                               ]),
                               _vm._v(" "),
-                              _vm._m(12),
+                              _vm._m(11),
                               _vm._v(" "),
-                              _vm._m(13),
+                              _vm._m(12),
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(14),
+                                  _vm._m(13),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c("div", { staticClass: "d-flex" }, [
@@ -23503,7 +23557,7 @@ var render = function () {
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(15),
+                                  _vm._m(14),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c(
@@ -23555,7 +23609,7 @@ var render = function () {
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(16),
+                                  _vm._m(15),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c(
@@ -23604,7 +23658,7 @@ var render = function () {
                             _c("div", { staticClass: "col-md-6" }, [
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(17),
+                                  _vm._m(16),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c(
@@ -23658,11 +23712,11 @@ var render = function () {
                                 ]),
                               ]),
                               _vm._v(" "),
-                              _vm._m(18),
+                              _vm._m(17),
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(19),
+                                  _vm._m(18),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c("div", { staticClass: "row" }, [
@@ -23780,7 +23834,7 @@ var render = function () {
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(20),
+                                  _vm._m(19),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c(
@@ -23829,7 +23883,7 @@ var render = function () {
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(21),
+                                  _vm._m(20),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c(
@@ -23878,7 +23932,7 @@ var render = function () {
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(22),
+                                  _vm._m(21),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c(
@@ -23929,7 +23983,7 @@ var render = function () {
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(23),
+                                  _vm._m(22),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c(
@@ -24052,9 +24106,9 @@ var render = function () {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(24),
+              _vm._m(23),
               _vm._v(" "),
-              _vm._m(25),
+              _vm._m(24),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
                 _c(
@@ -24196,20 +24250,6 @@ var staticRenderFns = [
         _vm._v("All Countries\n            "),
       ]
     )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("a", { staticClass: "text-primary my-auto", attrs: { href: "" } }, [
-        _c("i", { staticClass: "fa fa-edit" }),
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "text-primary my-auto", attrs: { href: "" } }, [
-        _c("i", { staticClass: "fa fa-eye" }),
-      ]),
-    ])
   },
   function () {
     var _vm = this
