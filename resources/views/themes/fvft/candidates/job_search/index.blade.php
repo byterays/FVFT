@@ -44,8 +44,7 @@
 
     </style>
     <section>
-        <div class="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg"
-            style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
+        <div class="bannerimg cover-image bg-background3" data-image-src="/uploads/site/banner.png">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
                     <h1 class="">{{ __('Job Search') }}</h1>
@@ -65,13 +64,6 @@
                     @include('themes.fvft.candidates.components.sidebar')
                 </div>
                 <div class="col-xl-9 col-lg-12 col-md-12">
-                    <div class="row">
-                        <div class="card mb-2">
-                            <div class="card-header">
-                                <h3 class="card-title">{{ __('Job Search') }}</h3>
-                            </div>
-                        </div>
-                    </div>
                     @include('partial.candidates.job_search.tabs')
                     @if (!request()->has('is_active') && !request()->is_active == 'about')
                         <div class="row">

@@ -32,7 +32,6 @@ class CandidateController extends Controller
         $this->industries = Industry::get();
     }
     function list() {
-
         return $this->view('admin.pages.candidates.list', [
             // 'candidates' => DB::table('employes')->paginate(10)
             'candidates' => Employe::paginate(10),
@@ -574,19 +573,21 @@ class CandidateController extends Controller
     }
     public function delete($id)
     {
-        try {
-            DB::table('employes')->delete($id);
-            return redirect()
-                ->route('admin.candidates.list')
-                ->with(['delete' => [
-                    'status' => 'success',
-                ]]);
-        } catch (\Throwable$th) {
-            return redirect()
-                ->route('admin.candidates.list')
-                ->with(['delete' => [
-                    'status' => 'failed',
-                ]]);
+        try{
+            DB::beginTransaction();
+            $employe = Employe::find($id);
+            if(!blank($employe) && (blank($employe->job_applications) AND blank($employe->experience) AND blank($employe->employeeSkills) AND blank($employe->employeeTrainings) AND blank($employe->employeeLanguage) AND blank($employe->countryPreference) AND blank($employe->jobCategoryPreference) AND blank($employe->industryPreference))){
+                $employe->followings()->delete();
+                $employe->delete();
+            } else {
+                return redirect()->back()->with(notifyMsg('error', 'Failed To Delete Candidate'));
+            }
+            
+            DB::commit();
+            return redirect()->back()->with(notifyMsg('success', 'Candidate deleted successfully'));
+        } catch(\Exception $e){
+            DB::rollBack();
+            return redirect()->back()->with(notifyMsg('error', $e->getMessage()));
         }
     }
 }

@@ -32,7 +32,7 @@ class CreateEmployesTable extends Migration
             $table->integer('expected_salary')->nullable();
             $table->integer('salary_currency')->nullable();
             $table->string('address', 50)->nullable();
-            $table->boolean('is_active')->default(1);
+            $table->boolean('is_active')->default(0);
             $table->boolean('is_verified')->default(0);
             $table->timestamp('created_at')->useCurrentOnUpdate()->useCurrent();
             $table->timestamp('updated_at')->nullable();

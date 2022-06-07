@@ -15,7 +15,7 @@ use App\Http\Controllers\Candidates\UsefulInformationController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register'])->name('candidate.register');
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'is_candidate'])->group(function () {
     Route::get('/', [DashController::class, 'dashboard'])->name('candidate.dashboard');
     Route::get('/jobs', [DashController::class, 'jobs'])->name('candidate.jobs');
     Route::get('/profile', [DashController::class, 'profile'])->name('candidate.profile');
@@ -24,6 +24,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings', [DashController::class, 'settings'])->name('candidate.settings');
     Route::get('job-preferences', [DashController::class, 'job_preferences'])->name('candidate.job-preferences');
     Route::post('/follow-company/', [DashController::class, "follow_company"])->name("candidate.follow_company");
+    Route::get('/notifications', [DashController::class, "getNotifications"])->name('candidate.get-notifications');
+
     // Save Profile
     Route::post('/profile', [DashController::class, 'saveProfile'])->name('candidate.save-profile');
     Route::post('/job-preferences', [DashController::class, 'saveJobPreferences'])->name('candidate.save-job-preferences');

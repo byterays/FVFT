@@ -2,29 +2,29 @@
 
 namespace App\Http\Controllers\Candidates;
 
-use PDF;
-use App\Models\Job;
-use App\Models\Skill;
-use App\Models\State;
-use App\Models\Country;
+use App\Http\Controllers\Controller;
+use App\Models\Company;
+use App\Models\EducationLevel;
 use App\Models\Employe;
+use App\Models\EmployeeSkill;
+use App\Models\EmployeeTraining;
+use App\Models\EmployJobPreference;
+use App\Models\ExperienceLevel;
 use App\Models\Industry;
+use App\Models\Job;
 use App\Models\JobShift;
 use App\Models\Language;
+use App\Models\Skill;
+use App\Models\State;
 use App\Models\Training;
-use Illuminate\Http\Request;
-use App\Models\EmployeeSkill;
-use Illuminate\Support\Facades\Response;
-use App\Models\EducationLevel;
-use App\Models\ExperienceLevel;
-use App\Models\EmployeeTraining;
-use App\Traits\Site\ThemeMethods;
-use Illuminate\Support\Facades\DB;
-use App\Models\EmployJobPreference;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Traits\Site\CandidateMethods;
+use App\Traits\Site\ThemeMethods;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
+use PDF;
 
 class ProfileController extends Controller
 {
@@ -217,18 +217,18 @@ class ProfileController extends Controller
                 DB::beginTransaction();
                 $employe = Employe::where('user_id', $request->user_id)->first();
                 $fields = [];
-                if (!empty($request->training)) {
-                    foreach ($request->training as $key => $training) {
-                        $trainingData[] = $training;
-                    }
-                    $fields['trainings'] = json_encode($trainingData);
-                }
-                if (!empty($request->skill)) {
-                    foreach ($request->skill as $key => $skill) {
-                        $skillData[] = $skill;
-                    }
-                    $fields['skills'] = json_encode($skillData);
-                }
+//                if (!empty($request->training)) {
+//                    foreach ($request->training as $key => $training) {
+//                        $trainingData[] = $training;
+//                    }
+//                    $fields['trainings'] = json_encode($trainingData);
+//                }
+//                if (!empty($request->skill)) {
+//                    foreach ($request->skill as $key => $skill) {
+//                        $skillData[] = $skill;
+//                    }
+//                    $fields['skills'] = json_encode($skillData);
+//                }
                 if (!empty($request->language)) {
                     $languageData = [];
                     foreach ($request->language as $key => $language) {
@@ -323,37 +323,37 @@ class ProfileController extends Controller
         try {
             DB::beginTransaction();
 //            if (in_array(!null, $request->categories) || in_array(!null, $request->countries) || in_array(!null, $request->industry)) {
-                // $preferences = EmployJobPreference::where('employ_id', $this->employe()->id);
-                // if ($preferences->exists()) {
-                //     $preferences->delete();
-                // }
+            // $preferences = EmployJobPreference::where('employ_id', $this->employe()->id);
+            // if ($preferences->exists()) {
+            //     $preferences->delete();
+            // }
 
-                $this->employe()->update([
-                    'job_notify' => $request->has('job_notify') ? 1 : 0,
-                ]);
-                if(!blank($request->categories)){
-                    $this->employe()->jobCategoryPreference()->sync(collect($request->categories)->filter());
-                    if(count($this->employe()->jobCategoryPreference) > 5){
-                        DB::rollBack();
-                        return response()->json(['limit_error' => 'Category limit reached in job preference. Only 5 allowed']);
-                    }
+            $this->employe()->update([
+                'job_notify' => $request->has('job_notify') ? 1 : 0,
+            ]);
+            if (!blank($request->categories)) {
+                $this->employe()->jobCategoryPreference()->sync(collect($request->categories)->filter());
+                if (count($this->employe()->jobCategoryPreference) > 5) {
+                    DB::rollBack();
+                    return response()->json(['limit_error' => 'Category limit reached in job preference. Only 5 allowed']);
                 }
+            }
 
-                if(!blank($request->countries)){
-                    $this->employe()->countryPreference()->sync(collect($request->countries)->filter());
-                    if(count($this->employe()->countryPreference) > 5){
-                        DB::rollBack();
-                        return response()->json(['limit_error' => 'Country limit reached in job preference. Only 5 allowed']);
-                    }
+            if (!blank($request->countries)) {
+                $this->employe()->countryPreference()->sync(collect($request->countries)->filter());
+                if (count($this->employe()->countryPreference) > 5) {
+                    DB::rollBack();
+                    return response()->json(['limit_error' => 'Country limit reached in job preference. Only 5 allowed']);
                 }
+            }
 
-                if(!blank($request->industry)){
-                    $this->employe()->industryPreference()->sync(collect($request->industry)->filter());
-                    if(count($this->employe()->industryPreference) > 5){
-                        DB::rollBack();
-                        return response()->json(['limit_error' => 'Industry limit reached in job preference. Only 5 allowed']);
-                    }
+            if (!blank($request->industry)) {
+                $this->employe()->industryPreference()->sync(collect($request->industry)->filter());
+                if (count($this->employe()->industryPreference) > 5) {
+                    DB::rollBack();
+                    return response()->json(['limit_error' => 'Industry limit reached in job preference. Only 5 allowed']);
                 }
+            }
 
 //            }
 
@@ -368,18 +368,18 @@ class ProfileController extends Controller
     public function get_preview()
     {
         $employ = Employe::where('user_id', Auth::user()->id)
-        ->with([
-            'user:id,email',
-            'country:id,name',
-            'state:id,name',
-            'city:id,name',
-            'education_level:id,title',
-            'employeeSkills.skill:id,title',
-            'employeeLanguage.language:id,lang',
-            'experience.country:id,name',
-            'experience.job_category:id,functional_area',
-            // 'experience.industry:id,title',
-            // 'experience.job:id,title'
+            ->with([
+                'user:id,email',
+                'country:id,name',
+                'state:id,name',
+                'city:id,name',
+                'education_level:id,title',
+                'employeeSkills.skill:id,title',
+                'employeeLanguage.language:id,lang',
+                'experience.country:id,name',
+                'experience.job_category:id,functional_area',
+                // 'experience.industry:id,title',
+                // 'experience.job:id,title'
             ])->first();
         return $this->client_view('candidates.profile.get_preview', [
             'employ' => $employ,
@@ -463,7 +463,7 @@ class ProfileController extends Controller
         $employ = $this->employe();
         return $this->client_view('candidates.profile.get_cv', [
             'employ' => $employ,
-            
+
         ]);
     }
 
@@ -471,37 +471,59 @@ class ProfileController extends Controller
     {
         $q = Job::query();
         $category_id = [];
-        $job_title = [];
+        $industry_id = [];
         $country_id = [];
+        $company_id = [];
         $preference = EmployJobPreference::where('employ_id', $this->employe()->id)->get();
         $category_id = array_merge(
             $category_id,
-            $preference
-                ->whereNotNull('job_category_id')
-                ->pluck('job_category_id')
-                ->toArray(),
-        );
-        $job_title = array_merge(
-            $job_title,
-            $preference
-                ->whereNotNull('job_title')
-                ->pluck('job_title')
-                ->toArray(),
+            $this->employe()->jobCategoryPreference->pluck('id')->toArray(),
         );
         $country_id = array_merge(
             $country_id,
-            $preference
-                ->whereNotNull('country_id')
-                ->pluck('country_id')
-                ->toArray(),
+            $this->employe()->countryPreference->pluck('id')->toArray()
         );
+        $industry_id = array_merge(
+            $industry_id,
+            $this->employe()->industryPreference->pluck('id')->toArray()
+        );
+        $company_id = array_merge(
+            $company_id,
+            Company::whereIn('industry_id', (array)$industry_id)->pluck('id')->toArray()
+        );
+
+
+        // $category_id = array_merge(
+        //     $category_id,
+        //     $preference
+        //         ->whereNotNull('job_category_id')
+        //         ->pluck('job_category_id')
+        //         ->toArray(),
+        // );
+        // $job_title = array_merge(
+        //     $job_title,
+        //     $preference
+        //         ->whereNotNull('job_title')
+        //         ->pluck('job_title')
+        //         ->toArray(),
+        // );
+        // $country_id = array_merge(
+        //     $country_id,
+        //     $preference
+        //         ->whereNotNull('country_id')
+        //         ->pluck('country_id')
+        //         ->toArray(),
+        // );
+        // $q->whereIn('job_categories_id', $category_id)
+        //     ->orWhereIn('country_id', $country_id)
+        //     ->when($job_title, function ($q3) use ($job_title) {
+        //         foreach ($job_title as $title) {
+        //             $q3->orWhere('title', 'LIKE', '%' . $title . '%');
+        //         }
+        //     });
         $q->whereIn('job_categories_id', $category_id)
             ->orWhereIn('country_id', $country_id)
-            ->when($job_title, function ($q3) use ($job_title) {
-                foreach ($job_title as $title) {
-                    $q3->orWhere('title', 'LIKE', '%' . $title . '%');
-                }
-            });
+            ->orWhereIn('company_id', $company_id);
         $jobs = $q->take(5)->get('title');
         $employ = $this->employe([
             'user:id,email',
@@ -532,39 +554,39 @@ class ProfileController extends Controller
 
     public function uploadCv(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'cv' => ['required', 'mimes:pdf', 'max:4096'],
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['status' => false, 'error' => $validator->errors()]);
         }
-        if($validator->passes()){
-            try{
+        if ($validator->passes()) {
+            try {
                 DB::beginTransaction();
                 $destination = 'uploads/candidate/cv/';
                 $employ = $this->employe();
-                if(!file_exists($destination)){
+                if (!file_exists($destination)) {
                     mkdir($destination, 0777, true);
                 }
-                if($request->hasFile('cv')){
+                if ($request->hasFile('cv')) {
                     $oldCv = $employ->cv;
                     $cv = $request->file('cv');
-                    $cvName = time() .'.'.$cv->getClientOriginalExtension();
+                    $cvName = time() . '.' . $cv->getClientOriginalExtension();
                     $employ->update([
-                        'cv' => $destination.$cvName,
+                        'cv' => $destination . $cvName,
                     ]);
                     $cv->move($destination, $cvName);
                 }
                 DB::commit();
-                if($request->hasFile('cv')){
-                    if($oldCv != null AND file_exists($oldCv)){
+                if ($request->hasFile('cv')) {
+                    if ($oldCv != null and file_exists($oldCv)) {
                         unlink($oldCv);
                     }
                 }
-                return response()->json(['success'=>true,'msg'=>'Cv uploaded successfully']);
-            } catch(\Exception $e){
+                return response()->json(['success' => true, 'msg' => 'Cv uploaded successfully']);
+            } catch (\Exception$e) {
                 DB::rollBack();
-                return response()->json(['status'=>false,'db_error'=>$e->getMessage()]);
+                return response()->json(['status' => false, 'db_error' => $e->getMessage()]);
             }
         }
     }
@@ -572,55 +594,55 @@ class ProfileController extends Controller
     public function downloadUploadedCv(Request $request)
     {
         $employe = $this->employe();
-        if($employe->cv != null && file_exists($employe->cv)){
+        if ($employe->cv != null && file_exists($employe->cv)) {
             $pdf = public_path($employe->cv);
             $headers = array(
                 'Content-Type: application/pdf',
             );
-            $filename = $employe->full_name.'.pdf';
-            if($request->type == 'preview'){
+            $filename = $employe->full_name . '.pdf';
+            if ($request->type == 'preview') {
                 return Response::make(file_get_contents($pdf), 200, [
                     'Content-Type' => 'application/pdf',
-                    'Content-Disposition' => 'inline; filename="'.$filename.'"'
+                    'Content-Disposition' => 'inline; filename="' . $filename . '"',
                 ]);
             }
-            return Response::download($pdf, $employe->full_name.'.pdf', $headers);
+            return Response::download($pdf, $employe->full_name . '.pdf', $headers);
         }
     }
 
     public function updateCandidateProfile(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'avatar' => ['required', 'mimes:jpeg,jpg,png,svg', 'max:4096'],
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['status' => false, 'error' => $validator->errors()]);
         }
-        if($validator->passes()){
-            try{    
+        if ($validator->passes()) {
+            try {
                 DB::beginTransaction();
                 $destination = 'uploads/candidates/profiles/';
                 $employ = $this->employe();
-                if(!file_exists($destination)){
+                if (!file_exists($destination)) {
                     mkdir($destination, 0777, true);
                 }
-                if($request->hasFile('avatar')){
+                if ($request->hasFile('avatar')) {
                     $oldAvatar = $employ->avatar;
                     $avatar = $request->file('avatar');
-                    $avatarName = time(). '.'.$avatar->getClientOriginalExtension();
+                    $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
                     $employ->update([
-                        'avatar' => $destination.$avatarName,
+                        'avatar' => $destination . $avatarName,
                     ]);
                     $avatar->move($destination, $avatarName);
                 }
                 DB::commit();
-                if($request->hasFile('avatar')){
-                    if($oldAvatar != null AND file_exists($oldAvatar)){
+                if ($request->hasFile('avatar')) {
+                    if ($oldAvatar != null and file_exists($oldAvatar)) {
                         unlink($oldAvatar);
                     }
                 }
                 return response()->json(['success' => true, 'msg' => 'Profile Picture changed successfully', 'avatar' => $employ->avatar]);
-            } catch(\Exception $e){
+            } catch (\Exception$e) {
                 DB::rollBack();
                 return response()->json(['status' => false, 'db_error' => $e->getMessage()]);
             }
@@ -631,11 +653,10 @@ class ProfileController extends Controller
     {
         $employ = $this->employe();
         $employeCv = $employ->cv;
-        if(!blank($employeCv) AND file_exists($employeCv)){
+        if (!blank($employeCv) and file_exists($employeCv)) {
             unlink($employeCv);
         }
         $employ->update(['cv' => null]);
         return redirect()->back()->with(notifyMsg('success', 'Cv removed!'));
     }
 }
-

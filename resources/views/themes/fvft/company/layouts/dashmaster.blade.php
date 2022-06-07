@@ -26,7 +26,7 @@
                     @include('themes.fvft.company.components.sidebar')
                 </div>
                 <div class="col-xl-9 col-lg-12 col-md-12">
-                    <div class="card mb-0">
+                    <div class="card mb-0 bg-transparent">
                         @if($GLOBALS['this_action'] != '')
                         <div class="card-header">
                             <h3 class="card-title">{{ $GLOBALS['this_action'] }}</h3>

@@ -15,7 +15,6 @@
 
 	$("#CandidateProfileImage").change(function(){
 		if($(this).val() != ''){
-			console.log('hi');
 			uploadCandidateImage(this);
 		}
 	});

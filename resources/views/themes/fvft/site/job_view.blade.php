@@ -117,7 +117,8 @@
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     @if ($savedJob->exists())
-                                                                        <a href="javascript:void(0);" onclick="savejob({{ $job->id }})"
+                                                                        <a href="javascript:void(0);"
+                                                                            onclick="savejob({{ $job->id }})"
                                                                             class="saveJobButton ico-grid-font btn btn-warning btn-block">
                                                                             <i class="fa fa-heart"></i> Saved
                                                                         </a>
@@ -445,6 +446,7 @@
     @include('themes.fvft.site.components.footer')
 @endsection
 @section('script')
+    <script src="{{ asset('js/client.min.js') }}"></script>
     <script>
         @if (auth()->check() && auth()->user()->user_type == 'candidate')
             function savejob(job_id) {
@@ -477,5 +479,33 @@
                 });
             }
         @endif
+
+
+        $(document).ready(function() {
+            let client = new ClientJS();
+            let fingerprint = client.getFingerprint();
+            let userAgent = client.getUserAgent();
+            let browser = client.getBrowser();
+            let timez = client.getTimeZone();
+
+            $.ajax({
+                url: "{{ route('storeJobView') }}",
+                type: 'POST',
+                data: {
+                    'job_id': "{{ $job->id }}",
+                    'fingerprint': fingerprint,
+                    'useragent': userAgent,
+                    'browser': browser,
+                    'timezone': timez,
+                },
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response.message);
+                },
+                error: function() {
+                    console.log('Failure');
+                },
+            });
+        });
     </script>
 @endsection

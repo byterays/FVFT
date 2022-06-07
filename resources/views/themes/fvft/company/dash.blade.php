@@ -77,8 +77,7 @@
                             </div>
                             <div class="item-all-text mt-3">
                                 <h5 class="mb-0 text-body">{{ __($profile_data['title']) }}
-                                    <span
-                                        class="notification-badge badge badge-warning">{{ $profile_data['totalcount'] ?? 0 }}</span>
+                                    <span class="notification-badge badge badge-danger">{{ $profile_data['totalcount'] ?? 0 }}</span>
                                 </h5>
                             </div>
                         </div>

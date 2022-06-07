@@ -1,5 +1,7 @@
 <section>
-    <div class="bannerimg cover-image bg-background3" data-image-src="{{env("APP_URL").$page["img_url"]}}" style="background: url(&quot;{{env("APP_URL").$page["img_url"]}}&quot;) center center;">
+    <div class="bannerimg cover-image bg-background3"
+         data-image-src="{{ !blank($page["img_url"]) ? env("APP_URL").$page["img_url"] : asset('/uploads/site/banner.png') }}">
+
         <div class="header-text mb-0">
             <div class="container">
                 <div class="text-center text-white">

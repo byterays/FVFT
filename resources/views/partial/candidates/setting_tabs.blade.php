@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="{{ asset('css/tabs.css') }}">
-<?php 
+{{--<link rel="stylesheet" href="{{ asset('css/tabs.css') }}">--}}
+<?php
 use Illuminate\Support\Facades\Route;
 
 
@@ -12,13 +12,33 @@ $_deleteAccount = $RouteName == $setting_route.'account_setting.get_account_sett
 $_support = $RouteName == $setting_route.'support.index';
 
 $_jobsetting = $RouteName == $setting_route.'job_setting.get_job_alert';
+
+$route = 'candidate.';
+$RouteName = Route::currentRouteName();
+$_deleteAccount = $RouteName == $route.'account_setting.get_account_setting';
 ?>
-<ul class="nav nav-tabs nav-justified navtab-wizard tabItems bg-muted"
-    style="border-bottom: 0px solid #e8ebf3 !important; ">
-    <li class="nav-item {{ $_editProfile || $_changePassword || $_deleteAccount ? 'active' : '' }}"><a href="{{ route('candidate.account_setting.get_change_password') }}" class="nav-link font-bold">{{ strtoupper(__('Account Setting')) }}</a>
-    </li>
-    <li class="nav-item {{ $_jobsetting ? 'active' : '' }}"><a href="{{ route('candidate.job_setting.get_job_alert') }}"
-            class="nav-link font-bold">{{ strtoupper(__('Job Alert Setting')) }}</a></li>
-    {{-- <li class="nav-item {{ !$_support ?: 'active' }}"><a href="{{ route('candidate.support.index') }}" class="nav-link font-bold">{{ strtoupper(__('Support')) }}</a></li> --}}
-    <li class="nav-item"><a href="#" class="nav-link font-bold"></a></li>
-</ul>
+<div class="card mt-3 mb-0">
+    <div class="card-body">
+        <h3 class="card-title">{{ __( $title ?? 'Settings') }}</h3>
+        <div class="settings-tab">
+            <ul class="tabs-menu nav">
+                <li>
+                    <a href="{{ route('candidate.account_setting.get_change_password') }}" class="{{ $_editProfile || $_changePassword ? 'active' : '' }}">
+                        <i class="icon icon-user mr-2"></i>{{ __('Account Setting') }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('candidate.job_setting.get_job_alert') }}" class="{{ $_jobsetting ? 'active' : '' }}">
+                        <i class="icon icon-bubble mr-2"></i>{{ __('Job Alert Setting') }}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('candidate.account_setting.get_account_setting') }}" class="{{ !$_deleteAccount ?: 'active' }}">
+                        <i class="icon icon-ban mr-2"></i>{{ __('Deactivate Account') }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+

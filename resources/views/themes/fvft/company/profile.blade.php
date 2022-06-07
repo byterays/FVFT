@@ -39,7 +39,7 @@
     </form>
 @endsection
 @section('js')
-    <script src="{{ asset('/') }}themes/fvft/assets/plugins/fileuploads/js/dropify.js"></script>
-    <script src="/themes/fvft/assets/plugins/fileuploads/js/dropfy-custom.js"></script>
+    {{--<script src="{{ asset('/') }}themes/fvft/assets/plugins/fileuploads/js/dropify.js"></script>--}}
+    <script src="{{ asset('themes/fvft/assets/plugins/fileuploads/js/dropfy-custom.js') }}"></script>
     @include('partial/companies/script')
 @endsection

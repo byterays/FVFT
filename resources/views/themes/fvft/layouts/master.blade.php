@@ -48,6 +48,7 @@
     <link rel="stylesheet" href="{{ asset('css/nepali.datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/form_step.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
         .toast-top-container {
             position: absolute;
@@ -69,6 +70,35 @@
             border-top: 1px solid black;
         }
 
+
+        .toast {
+            opacity: 1 !important;
+        }
+
+        #ajaxLoader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, .8) url('{{ asset('themes/fvft/assets/images/loader.svg') }}') no-repeat 50%
+        }
+
+        .fog_div {
+            display: none;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            height: 100%;
+            width: 100%;
+            z-index: 100;
+            background-color: rgba(30, 30, 30, 0.5);
+        }
+
+        #ajaxLoader.show {
+            display: block;
+
+        }
         .toast{
             opacity: 1 !important;
         }
@@ -81,9 +111,12 @@
 </head>
 
 <body class="main-body">
-    <div id="app">
-        @yield('main')
+    <div id="ajaxLoader" class="fog_div">
+        <div></div>
     </div>
+    {{--<div id="app">--}}
+        @yield('main')
+    {{--</div>--}}
     <!-- Back to top -->
     <a href="#top" id="back-to-top"><i class="fa fa-arrow-up"></i></a>
 
@@ -320,8 +353,17 @@
             });
         @endif
 
+
         function onClick() {
             toastr.clear()
+        }
+
+        function busySign() {
+            $('#ajaxLoader').css('display', 'block');
+        }
+
+        function hideBusySign() {
+            $('#ajaxLoader').css('display', 'none');
         }
     </script>
     @yield('script')

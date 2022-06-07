@@ -19,6 +19,7 @@ class IsCompany
         if (auth()->user()->user_type == "company") {
             return $next($request);
         }
-        return redirect()->route('company.login')->with('error', "You don't have company access.");
+        return abort(403, 'This page can not be accessed.');
+//        return redirect()->route('company.login')->with('error', "You don't have company access.");
     }
 }

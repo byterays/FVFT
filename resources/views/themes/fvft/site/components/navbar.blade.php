@@ -82,7 +82,7 @@
                             <a href="/company/jobs">{{ __('My Jobs') }}</a>
                         </li>
                         <li>
-                            <a href="/company/applicants">{{ __('Applicants') }}</a>
+                            <a href="{{ route('company.applicant.indexpage') }}">{{ __('Applicants') }}</a>
                         </li>
 
                         <li>
@@ -128,7 +128,7 @@
             <span>
                 <a class="btn btn-danger rounded-0  mt-1"
                     href="{{ url('lang/' . ($current_locale == 'en' ? 'np' : 'en')) }}">
-                    {{ $current_locale == 'en' ? 'Nepali' : 'English' }}
+                    {{ $current_locale == 'en' ? 'नेपाली' : 'English' }}
                 </a>
             </span>
         </li>

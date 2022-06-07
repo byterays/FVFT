@@ -32,7 +32,7 @@
                 <div class="col-xl-9 col-lg-12 col-md-12">
                     @include('partial/candidates/tabs', ['title' => 'Edit My Profile - Preview'])
 
-                    <div class="row mt-5">
+                    <div class="row">
                         <div class="col-md-12">
                             <div class="card mb-2">
                                 <div class="card-header">
@@ -46,11 +46,6 @@
                                             <h3 class="mt-6 ml-5 text-center">{{ $employ->full_name }}</h3>
                                         </div>
                                     </div>
-                                    @include(
-                                        'themes.fvft.candidates.components.profile.profile-completion',
-                                        ['employee' => $employe]
-                                    )
-
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">

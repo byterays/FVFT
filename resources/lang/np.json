@@ -19,7 +19,11 @@
     "Jobs": "जब",
     "Find The Best Job For Your Future": "आफ्नो उज्ज्वल भविष्यको लागि सहि जब खोज्नुहोस्",
     "Find The Best Foreign JOB For Your Future": "आफ्नो भविष्यको लागि उत्तम बैदेशिक राेजगार खोज्नुहोस्।",
+<<<<<<< HEAD
+    "Your dream job can be found in your preferred country. Before applying for the job, you must register and fill out your profile.": "आफ्नाे मनपर्ने देशमा तपाईंले चाहेकाे जब खाेज्नुहाेस। जबको लागि आवेदन दिनु अघि, रजिस्टर गरि आफ्नो प्रोफाइलमा पुरा विवरण भर्नु हाेला ।",
+=======
     "Your dream job can be found in your preferred country. Before applying for the job, you must register and fill out your profile.": " आफ्नाे मनपर्ने देशमा तपाईंले चाहेकाे जब खाेज्नुहाेस। जबको लागि आवेदन दिनु अघि, रजिस्टर गरि आफ्नो प्रोफाइलमा पुरा विवरण भर्नु हाेला ।",
+>>>>>>> 7244ea879327c184b541c66febcb7bf83bc617b2
     "Search Job|Search Jobs": "जब खोज्नुहोस्|जब खोज्नुहोस्",
     "Search Job": "जब खोज्नुहोस्",
     "Search Jobs": "जब खोज्नुहोस्",
@@ -82,7 +86,7 @@
     "Apply Now": "आवेदन दिनुहोस्",
     "Share": "सेयर गर्नुहाेस",
     "View Details": "विवरण हेर्नुहाेस",
-    "Save Job": "जब सुरक्षित गर्नुहाेस ",
+    "Save Job": "सुरक्षित गर्नुहाेस ",
     "Saved Job": "सुरक्षित जब",
     "Saved Jobs": "सुरक्षित जब",
     "Saved": "सुरक्षित",

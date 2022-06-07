@@ -29,17 +29,9 @@
                 </div>
                 <div class="col-xl-9 col-lg-12 col-md-12">
                     @include('partial/candidates/tabs', ['title' => 'Edit My Profile - Preferred Jobs'])
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            @include(
-                                'themes.fvft.candidates.components.profile.profile-completion',
-                                ['employee' => $employe]
-                            )
-                        </div>
-                    </div>
                     <form action="{{ route('candidate.profile.post_preferred_jobs') }}" method="POST" id="preferenceForm">
                         @csrf
-                        <div class="row mt-5">
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="card mb-2">
                                     <div class="card-header">
@@ -81,7 +73,7 @@
                                                                             class="form-control select2-show-search">
                                                                         <option value="">{{ __('Select Job Category') }}
                                                                         </option>
-                                                                        @foreach ($job_categories as $job_category)
+                                                                        @foreach ($all_job_categories as $job_category)
                                                                             <option value="{{ $job_category->id }}">
                                                                                 {{ $job_category->functional_area }}</option>
                                                                         @endforeach
@@ -291,21 +283,13 @@
                             <select name="industry[]" class="form-control select2-show-search" data-placeholder="Select Industry">
                                 <option value="">{{ __('Select Industry') }}</option>
                                 @foreach($job_industries as $job_industry)
-                <option value="{{ $job_industry->id }}">{{ $job_industry->title }}</option>
+                                <option value="{{ $job_industry->id }}">{{ $job_industry->title }}</option>
                                 @endforeach
-<<<<<<< HEAD
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <button type="button" class="btn btn-sm btn-danger" onclick="removeRow('jobRow_` + jt_count + `')">
-                                 Remove
-=======
-                </select>
-            </div>
-            <div class="col-md-2">
-                <button type="button" class="btn btn-block" onclick="removeRow('jobRow_` + jt_count + `')">
+                            <button type="button" class="btn btn-block" onclick="removeRow('jobRow_` + jt_count + `')">
                                 <i class="fa fa-close mr-1 text-danger"></i> Remove
->>>>>>> c3653110151c77bc87e18957ff10de232d754bd1
                             </button>
                         </div>
                     </div>`;
@@ -320,7 +304,7 @@
                             <select name="categories[]" data-placeholder="Select Job Category"
                                 class="form-control select2-show-search">
                                 <option value="">{{ __('Select Job Category') }}</option>
-                                @foreach ($job_categories as $job_category)
+                                @foreach ($all_job_categories as $job_category)
                 <option value="{{ $job_category->id }}">
                                         {{ $job_category->functional_area }}</option>
                                 @endforeach
