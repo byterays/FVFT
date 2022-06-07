@@ -181,6 +181,7 @@
                 :disabled="!selected.length"
                 data-toggle="dropdown"
                 aria-expanded="false"
+                id="applicationStatusButton"
               >
                 Set Application Status
               </button>
@@ -225,6 +226,7 @@
                 :disabled="!selected.length"
                 data-toggle="dropdown"
                 aria-expanded="false"
+                id="bulkActionButton"
               >
                 Bulk Action
               </button>
@@ -344,7 +346,12 @@
             <!--<label for="" class="my-auto">Select All 2 Applicants On This Job</label>-->
             <!--</div>-->
           </div>
-          <div class="table-responsive">
+            <div class="text-center mt-4" v-if="!applicants.length">
+                <hr>
+                <img src="/images/flat-icons/empty-box.png" alt="" style="width: 200px;opacity: .5;"><br>
+                <p>No applicants.</p>
+            </div>
+          <div v-else class="table-responsive">
             <table class="table table-bordered border-top mb-0">
               <thead>
                 <tr>
@@ -360,21 +367,21 @@
                     </label>
                   </th>
                   <th>S.N</th>
-                  <th style="min-width:200px">Candidate</th>
-                    <th>Status</th>
-                    <th style="min-width:200px">Contact</th>
-                  <th style="min-width:200px">Job</th>
+                  <th style="min-width: 200px">Candidate</th>
+                  <th>Status</th>
+                  <th style="min-width: 200px">Contact</th>
+                  <th style="min-width: 200px">Job</th>
                   <th>Category</th>
-                  <th style="min-width:200px">Applied On</th>
+                  <th style="min-width: 200px">Applied On</th>
                   <th>Country</th>
-                  <th style="min-width:150px">Profile Score</th>
-                  <th style="min-width:200px">Experience</th>
-                  <th style="min-width:200px">Education</th>
-                  <th style="min-width:200px">Training</th>
-                  <th style="min-width:150px">Language</th>
-                  <th style="min-width:200px">Skill</th>
-                  <th style="min-width:200px">Preferred Country</th>
-                  <th style="min-width:200px">Preferred Job</th>
+                  <th style="min-width: 150px">Profile Score</th>
+                  <th style="min-width: 200px">Experience</th>
+                  <th style="min-width: 200px">Education</th>
+                  <th style="min-width: 200px">Training</th>
+                  <th style="min-width: 150px">Language</th>
+                  <th style="min-width: 200px">Skill</th>
+                  <th style="min-width: 200px">Preferred Country</th>
+                  <th style="min-width: 200px">Preferred Job</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -401,13 +408,18 @@
                       Email: {{ applicant.employe.user.email }}
                     </span>
                   </td>
-                    <td class="applicantStatus">
-                        <strong>{{ capitalizeFirstLetter(applicant.status) }}</strong>
-                    </td>
+                  <td class="applicantStatus">
+                    <strong>{{
+                      capitalizeFirstLetter(applicant.status)
+                    }}</strong>
+                  </td>
                   <td>
                     <span v-if="applicant.employe">
-                      Phone1: {{ applicant.employe.mobile_phone || 'Not-Available' }}<br />
-                      Phone2: {{ applicant.employe.mobile_phone2 || 'Not-Available' }}
+                      Phone1:
+                      {{ applicant.employe.mobile_phone || "Not-Available"
+                      }}<br />
+                      Phone2:
+                      {{ applicant.employe.mobile_phone2 || "Not-Available" }}
                     </span>
                   </td>
                   <td>
@@ -558,7 +570,7 @@
             </table>
           </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12" v-if="applicants.length">
           <div class="form-inline">
             <label for="">Applicant Per Page</label>
             <select
@@ -630,45 +642,48 @@
                       </div>
                       <div class="col-md-6 d-flex"></div>
                     </div>
-                    <form action="" @submit.prevent="saveFilter">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <input
-                            type="text"
-                            name="filter_name"
-                            class="form-control"
-                            id="filterName"
-                            placeholder="Filter Name"
-                            required
-                          />
-                          <span class="" style="color: #1650e2"
-                            >Save this setting for future use.</span
-                          >
-                        </div>
-                        <div class="col-md-6">
-                          <button
-                            v-if="filter_saving"
-                            type="button"
-                            class="btn btn-warning rounded-0"
-                          >
-                            <i class="fa fa-spinner fa-spin"></i>
-                          </button>
-                          <button
-                            v-else
-                            type="submit"
-                            class="btn btn-warning rounded-0"
-                          >
-                            Save Filter
-                          </button>
-                          <a
-                            href="javascript:void(0);"
-                            class="btn btn-outline-warning rounded-0"
-                            id="ResetFilter"
-                            >Reset Filter</a
-                          >
-                        </div>
+                    <!-- <form action="" @submit.prevent="saveFilter"> -->
+                    <div class="row">
+                      <div class="col-md-6">
+                        <input
+                          type="text"
+                          name="filter_name"
+                          class="form-control"
+                          id="filterName"
+                          placeholder="Filter Name"
+                          required
+                        />
+                        <div class="require text-danger filter_name"></div>
+                        <span class="" style="color: #1650e2"
+                          >Save this setting for future use.</span
+                        >
                       </div>
-                    </form>
+                      <div class="col-md-6">
+                        <button
+                          v-if="filter_saving"
+                          type="button"
+                          class="btn btn-warning rounded-0"
+                        >
+                          <i class="fa fa-spinner fa-spin"></i>
+                        </button>
+                        <button
+                          v-else
+                          type="submit"
+                          @click.prevent="saveFilter()"
+                          class="btn btn-warning rounded-0"
+                        >
+                          Save Filter
+                        </button>
+                        <a
+                          href="javascript:void(0);"
+                          @click="resetAdvancedSearchForm()"
+                          class="btn btn-outline-warning rounded-0"
+                          id="ResetFilter"
+                          >Reset Filter</a
+                        >
+                      </div>
+                    </div>
+                    <!-- </form> -->
                   </div>
                 </div>
               </div>
@@ -1207,7 +1222,22 @@ export default {
         application_status: "",
         category: "",
         country: "",
+        formData: {},
       },
+
+      // advanced filter
+      // advanced_filter: {
+      //   job_title: "",
+      //   gender: "",
+      //   from_date: "",
+      //   to_date: "",
+      //   experience: "",
+      //   education_level: "",
+      //   skills: "",
+      //   application_status: "",
+      //   profile_score: "",
+      //   min_age: "",
+      // },
 
       limit: "50",
       filterId: "",
@@ -1302,11 +1332,33 @@ export default {
       this.filter.country = status;
       this.getApplicants();
     },
-    saveFilter() {
+    async saveFilter() {
       this.filter_saving = true;
+      var formData = new FormData($("#FilterForm")[0]);
+      await CompanyService.saveAdvancedFilter(formData).then((response) => {
+        if (response.data.success == false) {
+          if (response.data.errors) {
+            toastr.error(response.data.errors.filter_name[0]);
+            $(".filter_name").html(response.data.errors.filter_name[0]);
+          } else if (response.data.db_error) {
+            toastr.error(response.data.db_error);
+          }
+        } else if (response.data.success == true) {
+          toastr.success(response.data.msg);
+          this.resetAdvancedSearchForm();
+        }
+      });
+      this.filter_saving = false;
     },
     advanceFilter() {
       this.filter_submitting = true;
+      var data = {};
+      $("#FilterForm").serializeArray().map(function(x){
+        data[x.name] = x.value;
+      });
+      this.filter.formData = data;
+      this.getApplicants();
+      this.filter_submitting = false;
     },
     setLimit(event) {
       this.showBusySign();
@@ -1318,11 +1370,11 @@ export default {
       this.getApplicants();
     }, 800),
 
-    async getApplicants(page = 0, limit = this.limit) {
+    async getApplicants(page = 0, limit = this.limit ?? 50) {
       let response = await CompanyService.getApplicants(
         page,
         limit,
-        JSON.stringify(this.filter)
+        JSON.stringify(this.filter),
       );
       if (response.data.success === true) {
         this.applicants_pg = response.data.data.applicants;
@@ -1333,217 +1385,31 @@ export default {
     showAdvancedFilter() {
       $("#advancedFilter").modal("show");
     },
+    resetAdvancedSearchForm() {
+      $("#FilterForm")[0].reset();
+      $(".select2-show-search").val(null).trigger("change");
+      $(".select2").val(null).trigger("change");
+      $("#profileScore").val("0%");
+      $("#rangeValue").text("0%").css({
+        left: "0%",
+      });
+      $(".ui-slider-range.ui-corner-all.ui-widget-header").css({
+        width: "0%",
+      });
+      $(".ui-slider-handle.ui-corner-all.ui-state-default").css({
+        left: "0%",
+      });
+      $(".require").css("display", "none");
+      $("#filterName").val("");
+    },
     setAdvancedFilterValue(event) {
+      this.showBusySign();
       this.filterId = event.target.value;
       if (this.filterId == "") {
+        this.resetAdvancedSearchForm();
       } else {
         CompanyService.getApplicantFilterData({
           params: { applicantFilterId: this.filterId },
-        }).then((response) => {;
-          if (response.data.success == false) {
-            toastr.error(response.data.error);
-          } else if (response.data.success == true) {
-            var jsonData = JSON.parse(
-              response.data.applicantFilter.filter_value
-            )[0];
-            $("#jobTitle").select2('val',jsonData.job_title);;
-            $("#gender").val(jsonData.gender).trigger("change");
-            $("#from_date").val(jsonData.from_date);
-            $("#to_date").val(jsonData.to_date);
-            $("#Experience").select2("val", jsonData.experience);
-            $("#EducationLevel").select2("val", jsonData.education_level);
-            $("#Skills").val(JSON.parse(jsonData.skills)).trigger("change");
-            $("#ApplicationStatus")
-              .val(jsonData.application_status)
-              .trigger("change");
-            $("#profileScore").val(jsonData.profile_score);
-            $("#rangeValue").text(jsonData.profile_score).css({
-              left: jsonData.profile_score,
-            });
-            $(".ui-slider-range.ui-corner-all.ui-widget-header").css({
-              width: jsonData.profile_score,
-            });
-            $(".ui-slider-handle.ui-corner-all.ui-state-default").css({
-              left: jsonData.profile_score,
-            });
-            $("#MinAge").val(jsonData.min_age).trigger("change");
-            $("#MaxAge").val(jsonData.max_age).trigger("change");
-            $("#Trainings")
-              .val(JSON.parse(jsonData.trainings))
-              .trigger("change");
-            $("#Languages")
-              .val(JSON.parse(jsonData.languages))
-              .trigger("change");
-            $("#PreferredJobs")
-              .val(JSON.parse(jsonData.preferred_jobs))
-              .trigger("change");
-            $("#PreferredCountries")
-              .val(JSON.parse(jsonData.preferred_countries))
-              .trigger("change");
-            $("#filterName").val(response.data.applicantFilter.filter_name);
-          }
-        });
-      }
-    },
-    async bulkStatusUpdate(status) {
-      await Swal.fire({
-        text: "Are you sure you want to perform bulk operation?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes",
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.showBusySign();
-          let data = new FormData();
-          data.append("ids", this.selected);
-          data.append("applicantStatus", status);
-          CompanyService.updateBulkStatus(data).then((response) => {
-            if (response.data.success == false) {
-              if (response.data.db_error) {
-                toastr.error(response.data.db_error);
-              } else if (response.data.error) {
-                toastr.error(response.data.error);
-              }
-            }
-            if (response.data.success == true) {
-              var statuses = JSON.parse(response.data.statuses);
-              $.each(statuses, function (k, v) {
-                $.each(v, function (key, value) {
-                  var tableRow = $('tr[data-id="' + key + '"]');
-                  $(tableRow).find(".applicantStatus").text(value);
-                });
-              });
-              toastr.success(response.data.msg);
-              $("input:checkbox").prop("checked", false);
-            }
-            this.hideBusySign();
-          });
-        }
-      });
-    },
-
-    async bulkCvDownload() {
-      await Swal.fire({
-        text: "Are you sure you want to perform bulk download?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes Download!",
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.showBusySign();
-          const config = {
-            responseType: "blob",
-          };
-          let data = new FormData();
-          data.append("ids", this.selected);
-
-          CompanyService.downloadBulkCv(data, config).then((response) => {
-            if (response.data.success == false) {
-              if (response.data.error) {
-                toastr.error(response.data.error.ids[0]);
-              }
-            }
-            if (response.data.success != false) {
-              var blob = new Blob([response.data], {
-                type: "application/pdf",
-              });
-              var link = document.createElement("a");
-              link.href = window.URL.createObjectURL(blob);
-              link.download = "Applicants.pdf";
-              link.click();
-              toastr.success("Applicants CV Downloaded");
-              $("input:checkbox").prop("checked", false);
-            }
-
-            this.hideBusySign();
-          });
-        }
-      });
-    },
-
-    async bulkApplicationDelete() {
-      await Swal.fire({
-        text: "Are you sure you want to perform bulk delete?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes Delete!",
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.showBusySign();
-          CompanyService.deleteBulkApplication({
-            data: { ids: this.selected.join(","), _method: "DELETE" },
-          }).then((response) => {
-            if (response.data.success == false) {
-              if (response.data.error) {
-                toastr.error(response.data.error);
-              }
-            }
-            // $(".rowCheck:checked").each(function(){
-            //     $(this).parents("tr").remove();
-            // });
-            this.getApplicants();
-            toastr.success(response.data.msg);
-            $("input:checkbox").prop("checked", false);
-            this.hideBusySign();
-          });
-        }
-      });
-    },
-
-    async scheduleInterview() {
-      await $(".require").css("display", "none");
-      Swal.fire({
-        text: "Are you sure you want to perform bulk operation?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes",
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.showBusySign();
-          let formData = new FormData($("#scheduleInterViewForm")[0]);
-          formData.append("ids", this.selected);
-          CompanyService.interviewSchedule(formData).then((response) => {
-            if (response.data.success == false) {
-              if (response.data.errors) {
-                $.each(response.data.errors, function (key, value) {
-                  $("." + key)
-                    .css("display", "block")
-                    .html(value);
-                });
-              } else if (response.data.error) {
-                toastr.error(response.data.error);
-              }
-            } else if (response.data.success == true) {
-              toastr.success(response.data.msg);
-              var statuses = JSON.parse(response.data.statuses);
-              $.each(statuses, function (key, value) {
-                $.each(value, function (k, v) {
-                  var tableRow = $('tr[data-id="' + k + '"]');
-                  $(tableRow).find(".applicantStatus").text(v);
-                });
-              });
-              $("#interviewModal").modal("hide");
-              this.hideBusySign();
-            }
-          });
-        }
-      });
-    },
-
-    async getApplicantFilter(event) {
-      this.filterId = event.target.value;
-      if (this.filterId == "") {
-      } else {
-        await CompanyService.getApplicantFilterData({
-          data: { applicantFilterId: this.filterId },
         }).then((response) => {
           if (response.data.success == false) {
             toastr.error(response.data.error);
@@ -1589,6 +1455,169 @@ export default {
           }
         });
       }
+      this.hideBusySign();
+    },
+    async bulkStatusUpdate(status) {
+      await Swal.fire({
+        text: "Are you sure you want to perform bulk operation?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.showBusySign();
+          let data = new FormData();
+          data.append("ids", this.selected);
+          data.append("applicantStatus", status);
+          CompanyService.updateBulkStatus(data).then((response) => {
+            if (response.data.success == false) {
+              if (response.data.db_error) {
+                toastr.error(response.data.db_error);
+              } else if (response.data.error) {
+                toastr.error(response.data.error);
+              }
+            }
+            if (response.data.success == true) {
+              var statuses = JSON.parse(response.data.statuses);
+              $.each(statuses, function (k, v) {
+                $.each(v, function (key, value) {
+                  var tableRow = $('tr[data-id="' + key + '"]');
+                  $(tableRow).find(".applicantStatus").html('<strong>' + value + '</strong>');
+                });
+              });
+              toastr.success(response.data.msg);
+              $("input:checkbox").prop("checked", false);
+              this.selected = [];
+              this.selectAll = false;
+              // $("#applicationStatusButton").attr('disabled', true);
+              // $("#bulkActionButton").attr('disabled', true);
+            }
+            this.hideBusySign();
+          });
+        }
+      });
+    },
+
+    async bulkCvDownload() {
+      await Swal.fire({
+        text: "Are you sure you want to perform bulk download?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes Download!",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.showBusySign();
+          const config = {
+            responseType: "blob",
+          };
+          let data = new FormData();
+          data.append("ids", this.selected);
+
+          CompanyService.downloadBulkCv(data, config).then((response) => {
+            if (response.data.success == false) {
+              if (response.data.error) {
+                toastr.error(response.data.error.ids[0]);
+              }
+            }
+            if (response.data.success != false) {
+              var blob = new Blob([response.data], {
+                type: "application/pdf",
+              });
+              var link = document.createElement("a");
+              link.href = window.URL.createObjectURL(blob);
+              link.download = "Applicants.pdf";
+              link.click();
+              toastr.success("Applicants CV Downloaded");
+              $("input:checkbox").prop("checked", false);
+              this.selected = [];
+              this.selectAll = false;
+            }
+
+            this.hideBusySign();
+          });
+        }
+      });
+    },
+
+    async bulkApplicationDelete() {
+      await Swal.fire({
+        text: "Are you sure you want to perform bulk delete?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes Delete!",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.showBusySign();
+          CompanyService.deleteBulkApplication({
+            data: { ids: this.selected.join(","), _method: "DELETE" },
+          }).then((response) => {
+            if (response.data.success == false) {
+              if (response.data.error) {
+                toastr.error(response.data.error);
+              }
+            }
+            // $(".rowCheck:checked").each(function(){
+            //     $(this).parents("tr").remove();
+            // });
+            this.getApplicants();
+            toastr.success(response.data.msg);
+            $("input:checkbox").prop("checked", false);
+            this.selected = [];
+            this.selectAll = false;
+            this.hideBusySign();
+          });
+        }
+      });
+    },
+
+    async scheduleInterview() {
+      await $(".require").css("display", "none");
+      Swal.fire({
+        text: "Are you sure you want to perform bulk operation?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.showBusySign();
+          let formData = new FormData($("#scheduleInterViewForm")[0]);
+          formData.append("ids", this.selected);
+          CompanyService.interviewSchedule(formData).then((response) => {
+            if (response.data.success == false) {
+              if (response.data.errors) {
+                $.each(response.data.errors, function (key, value) {
+                  $("." + key)
+                    .css("display", "block")
+                    .html(value);
+                });
+              } else if (response.data.error) {
+                toastr.error(response.data.error);
+              }
+            } else if (response.data.success == true) {
+              toastr.success(response.data.msg);
+              var statuses = JSON.parse(response.data.statuses);
+              $.each(statuses, function (key, value) {
+                $.each(value, function (k, v) {
+                  var tableRow = $('tr[data-id="' + k + '"]');
+                  $(tableRow).find(".applicantStatus").text(v);
+                });
+              });
+              $("#interviewModal").modal("hide");
+              this.selected = [];
+              this.selectAll = false;
+              this.hideBusySign();
+            }
+          });
+        }
+      });
     },
   },
 

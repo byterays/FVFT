@@ -64,6 +64,7 @@ Route::middleware(['auth', 'is_company'])->group(function () {
         Route::delete('bulk-application-delete', [NewApplicantController::class, "bulkApplicationDelete"]);
         Route::post('bulk-interview-schedule', [NewApplicantController::class, "bulkScheduleInterview"]);
         Route::get('get-applicant-filter', [ApplicantFilterController::class, "getApplicantFilter"]);
+        Route::post('save-advaced-filter', [ApplicantFilterController::class, "saveFilter"]);
     });
 
 });

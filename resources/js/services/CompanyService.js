@@ -29,4 +29,7 @@ export default {
     getApplicantFilterData(filterId){
         return Api().get('/company/web-api/get-applicant-filter', filterId);
     },
+    saveAdvancedFilter(formData){
+        return Api().post('/company/web-api/save-advaced-filter', formData);
+    },
 }
