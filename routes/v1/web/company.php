@@ -1,12 +1,13 @@
 <?php
-use App\Http\Controllers\Company\ApplicantController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Company\JobController;
 use App\Http\Controllers\Company\AuthController;
 use App\Http\Controllers\Company\DashController;
-use App\Http\Controllers\Company\JobController;
 use App\Http\Controllers\Company\JobsController;
-use App\Http\Controllers\Company\NewApplicantController;
 use App\Http\Controllers\Company\NewJobController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApplicantFilterController;
+use App\Http\Controllers\Company\ApplicantController;
+use App\Http\Controllers\Company\NewApplicantController;
 
 Route::get('/login', [AuthController::class, 'login'])->name('company.login');
 Route::post('/register', [AuthController::class, 'register'])->name('company.register');
@@ -62,6 +63,7 @@ Route::middleware(['auth', 'is_company'])->group(function () {
         Route::post('bulk-cv-download', [NewApplicantController::class, "bulkCvDownload"]);
         Route::delete('bulk-application-delete', [NewApplicantController::class, "bulkApplicationDelete"]);
         Route::post('bulk-interview-schedule', [NewApplicantController::class, "bulkScheduleInterview"]);
+        Route::get('get-applicant-filter', [ApplicantFilterController::class, "getApplicantFilter"]);
     });
 
 });

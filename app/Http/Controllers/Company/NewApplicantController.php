@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Company;
 
-use App\Enum\JobApplicationStatus;
-use App\Traits\Api\ApiMethods;
 use PDF;
 use App\Models\Skill;
 use App\Models\Company;
@@ -13,10 +11,13 @@ use App\Models\Language;
 use App\Models\Training;
 use App\Models\JobCategory;
 use Illuminate\Http\Request;
+use App\Enum\ApplicantStatus;
 use App\Models\JobPreference;
 use App\Models\EducationLevel;
 use App\Models\JobApplication;
+use App\Traits\Api\ApiMethods;
 use App\Models\ApplicantFilter;
+use App\Enum\JobApplicationStatus;
 use Illuminate\Support\Facades\DB;
 use App\Traits\Site\CompanyMethods;
 use App\Http\Controllers\Controller;
@@ -177,6 +178,15 @@ class NewApplicantController extends Controller
         $languages = Language::select("id", "lang")->get();
         $preferredCategories = JobCategory::whereIn("id", $jobPreferredCategories)->select("id", "functional_area")->get();
         $preferredCountries = Country::whereIn("id", $jobPreferredCountries)->select("id", "name")->get();
+        $applicationStatus = [
+            ApplicantStatus::PENDING, 
+            ApplicantStatus::SHORTLISTED,
+            ApplicantStatus::SELECTEDFORINTERVIEW,
+            ApplicantStatus::INTERVIEWED,
+            ApplicantStatus::ACCEPTED,
+            ApplicantStatus::REJECTED,
+            ApplicantStatus::REDLISTED,
+        ];
         $applicant_filters = ApplicantFilter::get();
 
         return $this->sendResponse(
@@ -190,6 +200,7 @@ class NewApplicantController extends Controller
                 'languages',
                 'preferredCategories',
                 'preferredCountries',
+                'applicationStatus',
                 'applicant_filters'
             ),'success','',true);
     }

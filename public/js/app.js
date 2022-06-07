@@ -3152,6 +3152,105 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3166,8 +3265,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // data sets
       status_count: "",
       job_categories: [],
+      education_levels: [],
+      skills: [],
       countries: [],
+      trainings: [],
+      languages: [],
+      preferredCategories: [],
+      preferredCountries: [],
       applicant_filters: [],
+      applicationStatus: [],
       // filter
       filter: {
         query: "",
@@ -3175,13 +3281,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         category: "",
         country: ""
       },
-      limit: '50',
+      limit: "50",
+      filterId: "",
       // selection
       selected: [],
       selectAll: false
     };
   },
   mounted: function mounted() {
+    $(document).ready(function () {
+      $("#from_date").datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayHighlight: true,
+        endDate: "0d"
+      }).on("changeDate", function (selected) {
+        var minDate = new Date(selected.date.valueOf());
+        $("#to_date").datepicker("setStartDate", minDate);
+      });
+      $("#to_date").datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayHighlight: true // endDate: '0d',
+
+      }).on("changeDate", function (selected) {
+        var minDate = new Date(selected.date.valueOf());
+        $("#from_date").datepicker("setEndDate", minDate);
+      });
+      $("#profileScoreSlider").find("span:nth-child(3)").remove();
+    });
+    $("#profileScoreSlider").slider({
+      range: true,
+      min: 0,
+      max: 100,
+      values: [0],
+      slide: function slide(event, ui) {
+        $("#profileScore").val(ui.values[1] + "%");
+        $("#rangeValue").text(ui.values[1] + "%").css({
+          left: ui.values[1] + "%"
+        });
+      }
+    });
+    $("#profileScore").val($("#profileScoreSlider").slider("values", 1) + "%");
     this.getDataSets();
     this.getApplicants();
   },
@@ -3212,9 +3353,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (response.data.success === true) {
                   _this.job_categories = response.data.data.job_categories;
+                  _this.education_levels = response.data.data.education_levels;
+                  _this.skills = response.data.data.skills;
+                  _this.trainings = response.data.data.trainings;
+                  _this.languages = response.data.data.languages;
+                  _this.preferredCategories = response.data.data.preferredCategories;
+                  _this.preferredCountries = response.data.data.preferredCountries;
                   _this.countries = response.data.data.countries;
                   _this.status_count = response.data.data.status_count;
                   _this.applicant_filters = response.data.data.applicant_filters;
+                  _this.applicationStatus = response.data.data.applicationStatus;
                 }
 
               case 4:
@@ -3286,7 +3434,51 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     showAdvancedFilter: function showAdvancedFilter() {
       $("#advancedFilter").modal("show");
     },
-    setAdvancedFilterValue: function setAdvancedFilterValue() {},
+    setAdvancedFilterValue: function setAdvancedFilterValue(event) {
+      this.filterId = event.target.value;
+
+      if (this.filterId == "") {} else {
+        _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].getApplicantFilterData({
+          params: {
+            applicantFilterId: this.filterId
+          }
+        }).then(function (response) {
+          ;
+
+          if (response.data.success == false) {
+            toastr.error(response.data.error);
+          } else if (response.data.success == true) {
+            var jsonData = JSON.parse(response.data.applicantFilter.filter_value)[0];
+            $("#jobTitle").select2('val', jsonData.job_title);
+            ;
+            $("#gender").val(jsonData.gender).trigger("change");
+            $("#from_date").val(jsonData.from_date);
+            $("#to_date").val(jsonData.to_date);
+            $("#Experience").select2("val", jsonData.experience);
+            $("#EducationLevel").select2("val", jsonData.education_level);
+            $("#Skills").val(JSON.parse(jsonData.skills)).trigger("change");
+            $("#ApplicationStatus").val(jsonData.application_status).trigger("change");
+            $("#profileScore").val(jsonData.profile_score);
+            $("#rangeValue").text(jsonData.profile_score).css({
+              left: jsonData.profile_score
+            });
+            $(".ui-slider-range.ui-corner-all.ui-widget-header").css({
+              width: jsonData.profile_score
+            });
+            $(".ui-slider-handle.ui-corner-all.ui-state-default").css({
+              left: jsonData.profile_score
+            });
+            $("#MinAge").val(jsonData.min_age).trigger("change");
+            $("#MaxAge").val(jsonData.max_age).trigger("change");
+            $("#Trainings").val(JSON.parse(jsonData.trainings)).trigger("change");
+            $("#Languages").val(JSON.parse(jsonData.languages)).trigger("change");
+            $("#PreferredJobs").val(JSON.parse(jsonData.preferred_jobs)).trigger("change");
+            $("#PreferredCountries").val(JSON.parse(jsonData.preferred_countries)).trigger("change");
+            $("#filterName").val(response.data.applicantFilter.filter_name);
+          }
+        });
+      }
+    },
     bulkStatusUpdate: function bulkStatusUpdate(status) {
       var _this3 = this;
 
@@ -3478,12 +3670,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this6.showBusySign();
 
                     var formData = new FormData($("#scheduleInterViewForm")[0]);
-                    formData.append('ids', _this6.selected);
+                    formData.append("ids", _this6.selected);
                     _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].interviewSchedule(formData).then(function (response) {
                       if (response.data.success == false) {
                         if (response.data.errors) {
                           $.each(response.data.errors, function (key, value) {
-                            $('.' + key).css('display', 'block').html(value);
+                            $("." + key).css("display", "block").html(value);
                           });
                         } else if (response.data.error) {
                           toastr.error(response.data.error);
@@ -3494,10 +3686,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                         $.each(statuses, function (key, value) {
                           $.each(value, function (k, v) {
                             var tableRow = $('tr[data-id="' + k + '"]');
-                            $(tableRow).find('.applicantStatus').text(v);
+                            $(tableRow).find(".applicantStatus").text(v);
                           });
                         });
-                        $("#interviewModal").modal('hide');
+                        $("#interviewModal").modal("hide");
 
                         _this6.hideBusySign();
                       }
@@ -3512,6 +3704,91 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee6);
       }))();
+    },
+    getApplicantFilter: function getApplicantFilter(event) {
+      var _this7 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+        return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _this7.filterId = event.target.value;
+
+                if (!(_this7.filterId == "")) {
+                  _context7.next = 4;
+                  break;
+                }
+
+                _context7.next = 6;
+                break;
+
+              case 4:
+                _context7.next = 6;
+                return _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].getApplicantFilterData({
+                  data: {
+                    applicantFilterId: _this7.filterId
+                  }
+                }).then(function (response) {
+                  if (response.data.success == false) {
+                    toastr.error(response.data.error);
+                  } else if (response.data.success == true) {
+                    var jsonData = JSON.parse(response.data.applicantFilter.filter_value)[0];
+                    $("#jobTitle").select2("val", jsonData.job_title);
+                    $("#gender").val(jsonData.gender).trigger("change");
+                    $("#from_date").val(jsonData.from_date);
+                    $("#to_date").val(jsonData.to_date);
+                    $("#Experience").select2("val", jsonData.experience);
+                    $("#EducationLevel").select2("val", jsonData.education_level);
+                    $("#Skills").val(JSON.parse(jsonData.skills)).trigger("change");
+                    $("#ApplicationStatus").val(jsonData.application_status).trigger("change");
+                    $("#profileScore").val(jsonData.profile_score);
+                    $("#rangeValue").text(jsonData.profile_score).css({
+                      left: jsonData.profile_score
+                    });
+                    $(".ui-slider-range.ui-corner-all.ui-widget-header").css({
+                      width: jsonData.profile_score
+                    });
+                    $(".ui-slider-handle.ui-corner-all.ui-state-default").css({
+                      left: jsonData.profile_score
+                    });
+                    $("#MinAge").val(jsonData.min_age).trigger("change");
+                    $("#MaxAge").val(jsonData.max_age).trigger("change");
+                    $("#Trainings").val(JSON.parse(jsonData.trainings)).trigger("change");
+                    $("#Languages").val(JSON.parse(jsonData.languages)).trigger("change");
+                    $("#PreferredJobs").val(JSON.parse(jsonData.preferred_jobs)).trigger("change");
+                    $("#PreferredCountries").val(JSON.parse(jsonData.preferred_countries)).trigger("change");
+                    $("#filterName").val(response.data.applicantFilter.filter_name);
+                  }
+                });
+
+              case 6:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }))();
+    }
+  },
+  computed: {
+    minAge: function minAge() {
+      var arr = [];
+
+      for (var i = 18; i <= 25; i++) {
+        arr[i] = i;
+      }
+
+      return arr;
+    },
+    maxAge: function maxAge() {
+      var maxage = [];
+
+      for (var i = 18; i <= 50; i++) {
+        maxage[i] = i;
+      }
+
+      return maxage;
     }
   }
 });
@@ -3881,6 +4158,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   interviewSchedule: function interviewSchedule(formData) {
     return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().post('/company/web-api/bulk-interview-schedule', formData);
+  },
+  getApplicantFilterData: function getApplicantFilterData(filterId) {
+    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get('/company/web-api/get-applicant-filter', filterId);
   }
 });
 
@@ -22966,7 +23246,11 @@ var render = function () {
                                 {
                                   staticClass: "form-control",
                                   attrs: { name: "predefined_filter" },
-                                  on: { change: _vm.setAdvancedFilterValue },
+                                  on: {
+                                    change: function ($event) {
+                                      return _vm.setAdvancedFilterValue($event)
+                                    },
+                                  },
                                 },
                                 [
                                   _c("option", { attrs: { value: "" } }, [
@@ -22975,16 +23259,25 @@ var render = function () {
                                   _vm._v(" "),
                                   _vm._l(
                                     _vm.applicant_filters,
-                                    function (applicant_filter) {
-                                      return _c("option", [
-                                        _vm._v(
-                                          "\n                          " +
-                                            _vm._s(
-                                              applicant_filter.filter_name
-                                            ) +
-                                            "\n                        "
-                                        ),
-                                      ])
+                                    function (applicant_filter, index) {
+                                      return _c(
+                                        "option",
+                                        {
+                                          key: index,
+                                          domProps: {
+                                            value: applicant_filter.id,
+                                          },
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                          " +
+                                              _vm._s(
+                                                applicant_filter.filter_name
+                                              ) +
+                                              "\n                        "
+                                          ),
+                                        ]
+                                      )
                                     }
                                   ),
                                 ],
@@ -23062,7 +23355,603 @@ var render = function () {
                     _vm._v(" "),
                     _c("div", { staticClass: "card" }, [
                       _c("div", { staticClass: "card-body" }, [
-                        _vm._m(11),
+                        _c("div", { staticClass: "search-section mx-auto" }, [
+                          _c("div", { staticClass: "row mt-1" }, [
+                            _c("div", { staticClass: "col-md-6" }, [
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(11),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "form-control select2-show-search",
+                                        attrs: {
+                                          name: "job_title",
+                                          "data-placeholder": "All Job Title",
+                                          id: "jobTitle",
+                                        },
+                                      },
+                                      [
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v("All Job Categories"),
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.job_categories,
+                                          function (job_category, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: {
+                                                  value: job_category.id,
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                " +
+                                                    _vm._s(
+                                                      job_category.functional_area
+                                                    ) +
+                                                    "\n                              "
+                                                ),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(12),
+                              _vm._v(" "),
+                              _vm._m(13),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(14),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c("div", { staticClass: "d-flex" }, [
+                                      _c(
+                                        "select",
+                                        {
+                                          staticClass:
+                                            "form-control select2-show-search w-60",
+                                          attrs: {
+                                            name: "experience",
+                                            "data-placeholder":
+                                              "Select Experience",
+                                            id: "Experience",
+                                          },
+                                        },
+                                        [
+                                          _c(
+                                            "option",
+                                            { attrs: { value: "" } },
+                                            [_vm._v("Select Experience")]
+                                          ),
+                                          _vm._v(" "),
+                                          _vm._l(10, function (i, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: { value: i },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                  " +
+                                                    _vm._s(i) +
+                                                    "\n                                "
+                                                ),
+                                              ]
+                                            )
+                                          }),
+                                        ],
+                                        2
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "w-40 my-auto",
+                                          attrs: { for: "" },
+                                        },
+                                        [_vm._v("Years Min")]
+                                      ),
+                                    ]),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(15),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "form-control select2-show-search",
+                                        attrs: {
+                                          name: "education_level",
+                                          "data-placeholder":
+                                            "Select Education Level",
+                                          id: "EducationLevel",
+                                        },
+                                      },
+                                      [
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v("Select Education Level"),
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.education_levels,
+                                          function (education_level, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: {
+                                                  value: education_level.id,
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                " +
+                                                    _vm._s(
+                                                      education_level.title
+                                                    ) +
+                                                    "\n                              "
+                                                ),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(16),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "form-control select2-show-search",
+                                        attrs: {
+                                          name: "skills[]",
+                                          id: "Skills",
+                                          multiple: "",
+                                        },
+                                      },
+                                      [
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v("Select Skills"),
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.skills,
+                                          function (skill, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: { value: skill.id },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                " +
+                                                    _vm._s(skill.title) +
+                                                    "\n                              "
+                                                ),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-6" }, [
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(17),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "form-control select2-show-search",
+                                        attrs: {
+                                          name: "application_status",
+                                          "data-placeholder":
+                                            "Select Application Status",
+                                          id: "ApplicationStatus",
+                                        },
+                                      },
+                                      [
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v(
+                                            "\n                                Select Application Status\n                              "
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.applicationStatus,
+                                          function (application_status, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: {
+                                                  value: application_status,
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                " +
+                                                    _vm._s(
+                                                      _vm.capitalizeFirstLetter(
+                                                        application_status
+                                                      )
+                                                    ) +
+                                                    "\n                              "
+                                                ),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(18),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(19),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c("div", { staticClass: "row" }, [
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _c("div", { staticClass: "d-flex" }, [
+                                          _c(
+                                            "select",
+                                            {
+                                              staticClass:
+                                                "form-control select2-show-search",
+                                              attrs: {
+                                                name: "min_age",
+                                                "data-placeholder": "Min",
+                                                id: "MinAge",
+                                              },
+                                            },
+                                            [
+                                              _c(
+                                                "option",
+                                                { attrs: { value: "" } },
+                                                [_vm._v("Min")]
+                                              ),
+                                              _vm._v(" "),
+                                              _vm._l(
+                                                _vm.minAge,
+                                                function (n, index) {
+                                                  return _c(
+                                                    "option",
+                                                    {
+                                                      key: index,
+                                                      domProps: { value: n },
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                      " +
+                                                          _vm._s(n) +
+                                                          "\n                                    "
+                                                      ),
+                                                    ]
+                                                  )
+                                                }
+                                              ),
+                                            ],
+                                            2
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "label",
+                                            {
+                                              staticClass: "my-auto ml-1",
+                                              attrs: { for: "" },
+                                            },
+                                            [_vm._v("years to")]
+                                          ),
+                                        ]),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _c("div", { staticClass: "d-flex" }, [
+                                          _c(
+                                            "select",
+                                            {
+                                              staticClass:
+                                                "form-control select2-show-search",
+                                              attrs: {
+                                                name: "max_age",
+                                                "data-placeholder": "Max",
+                                                id: "MaxAge",
+                                              },
+                                            },
+                                            [
+                                              _c(
+                                                "option",
+                                                { attrs: { value: "" } },
+                                                [_vm._v("Max")]
+                                              ),
+                                              _vm._v(" "),
+                                              _vm._l(
+                                                _vm.maxAge,
+                                                function (n, index) {
+                                                  return _c(
+                                                    "option",
+                                                    {
+                                                      key: index,
+                                                      domProps: { value: n },
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                      " +
+                                                          _vm._s(n) +
+                                                          "\n                                    "
+                                                      ),
+                                                    ]
+                                                  )
+                                                }
+                                              ),
+                                            ],
+                                            2
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "label",
+                                            {
+                                              staticClass: "my-auto ml-1",
+                                              attrs: { for: "" },
+                                            },
+                                            [_vm._v("years")]
+                                          ),
+                                        ]),
+                                      ]),
+                                    ]),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(20),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "form-control select2-show-search",
+                                        attrs: {
+                                          name: "trainings[]",
+                                          multiple: "",
+                                          id: "Trainings",
+                                        },
+                                      },
+                                      [
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v("Select Trainings"),
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.trainings,
+                                          function (training, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: {
+                                                  value: training.id,
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                " +
+                                                    _vm._s(training.title) +
+                                                    "\n                              "
+                                                ),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(21),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "form-control select2-show-search",
+                                        attrs: {
+                                          name: "languages[]",
+                                          multiple: "",
+                                          id: "Languages",
+                                        },
+                                      },
+                                      [
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v("Select Languages"),
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.languages,
+                                          function (language, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: {
+                                                  value: language.id,
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                " +
+                                                    _vm._s(language.lang) +
+                                                    "\n                              "
+                                                ),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(22),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "form-control select2-show-search",
+                                        attrs: {
+                                          name: "preferred_jobs[]",
+                                          multiple: "",
+                                          id: "PreferredJobs",
+                                        },
+                                      },
+                                      [
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v("Select Preferred Job"),
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.preferredCategories,
+                                          function (preferredCategory, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: {
+                                                  value: preferredCategory.id,
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                " +
+                                                    _vm._s(
+                                                      preferredCategory.functional_area
+                                                    ) +
+                                                    "\n                              "
+                                                ),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(23),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "form-control select2-show-search",
+                                        attrs: {
+                                          name: "preferred_countries[]",
+                                          multiple: "",
+                                          id: "PreferredCountries",
+                                        },
+                                      },
+                                      [
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v(
+                                            "\n                                Select Preferred Country\n                              "
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.preferredCountries,
+                                          function (preferredCountry, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: {
+                                                  value: preferredCountry.id,
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                " +
+                                                    _vm._s(
+                                                      preferredCountry.name
+                                                    ) +
+                                                    "\n                              "
+                                                ),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                            ]),
+                          ]),
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-md-12" }, [
@@ -23133,9 +24022,9 @@ var render = function () {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(12),
+              _vm._m(24),
               _vm._v(" "),
-              _vm._m(13),
+              _vm._m(25),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
                 _c(
@@ -23342,462 +24231,219 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "search-section mx-auto" }, [
-      _c("div", { staticClass: "row mt-1" }, [
-        _c("div", { staticClass: "col-md-6" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Category"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: {
-                      name: "job_title",
-                      "data-placeholder": "All Job Title",
-                      id: "jobTitle",
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("All Job Categories"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Gender"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: {
-                      name: "gender",
-                      "data-placeholder": "Select Gender",
-                      id: "gender",
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Gender"),
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Male" } }, [
-                      _vm._v("Male"),
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Female" } }, [
-                      _vm._v("Female"),
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Other" } }, [
-                      _vm._v("Other"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Applied Date (From)"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c("input", {
-                  staticClass: "form-control from_date",
-                  attrs: {
-                    type: "text",
-                    name: "from_date",
-                    placeholder: "25-01-2022",
-                    id: "from_date",
-                  },
-                }),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Applied Date (To)"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c("input", {
-                  staticClass: "form-control to_date",
-                  attrs: {
-                    type: "text",
-                    name: "to_date",
-                    placeholder: "25-02-2022",
-                    id: "to_date",
-                  },
-                }),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Experience"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c("div", { staticClass: "d-flex" }, [
-                  _c(
-                    "select",
-                    {
-                      staticClass: "form-control select2-show-search w-60",
-                      attrs: {
-                        name: "experience",
-                        "data-placeholder": "Select Experience",
-                        id: "Experience",
-                      },
-                    },
-                    [
-                      _c("option", { attrs: { value: "" } }, [
-                        _vm._v("Select Experience"),
-                      ]),
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    { staticClass: "w-40 my-auto", attrs: { for: "" } },
-                    [_vm._v("Years Min")]
-                  ),
-                ]),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Education"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: {
-                      name: "education_level",
-                      "data-placeholder": "Select Education Level",
-                      id: "EducationLevel",
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Education Level"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Skills"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: { name: "skills[]", id: "Skills", multiple: "" },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Skills"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Category"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-4 my-auto" }, [
+          _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+            _vm._v("Gender"),
           ]),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-6" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Application Status"),
-                ]),
-              ]),
+        _c("div", { staticClass: "col-md-8" }, [
+          _c(
+            "select",
+            {
+              staticClass: "form-control select2-show-search",
+              attrs: {
+                name: "gender",
+                "data-placeholder": "Select Gender",
+                id: "gender",
+              },
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("Select Gender")]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: {
-                      name: "application_status",
-                      "data-placeholder": "Select Application Status",
-                      id: "ApplicationStatus",
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v(
-                        "\n                                Select Application Status\n                              "
-                      ),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Profile Score"),
-                ]),
-              ]),
+              _c("option", { attrs: { value: "Male" } }, [_vm._v("Male")]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c("input", {
-                  attrs: {
-                    type: "hidden",
-                    name: "profile_score",
-                    id: "profileScore",
-                  },
-                }),
-                _vm._v(" "),
-                _c("div", { attrs: { id: "profileScoreSlider" } }, [
-                  _c(
-                    "span",
-                    {
-                      staticStyle: { left: "0" },
-                      attrs: { id: "rangeValue", tabindex: "0" },
-                    },
-                    [_vm._v("0%")]
-                  ),
-                ]),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Age Range"),
-                ]),
-              ]),
+              _c("option", { attrs: { value: "Female" } }, [_vm._v("Female")]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("div", { staticClass: "d-flex" }, [
-                      _c(
-                        "select",
-                        {
-                          staticClass: "form-control select2-show-search",
-                          attrs: {
-                            name: "min_age",
-                            "data-placeholder": "Min",
-                            id: "MinAge",
-                          },
-                        },
-                        [
-                          _c("option", { attrs: { value: "" } }, [
-                            _vm._v("Min"),
-                          ]),
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "label",
-                        { staticClass: "my-auto ml-1", attrs: { for: "" } },
-                        [_vm._v("years to")]
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("div", { staticClass: "d-flex" }, [
-                      _c(
-                        "select",
-                        {
-                          staticClass: "form-control select2-show-search",
-                          attrs: {
-                            name: "max_age",
-                            "data-placeholder": "Max",
-                            id: "MaxAge",
-                          },
-                        },
-                        [
-                          _c("option", { attrs: { value: "" } }, [
-                            _vm._v("Max"),
-                          ]),
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "label",
-                        { staticClass: "my-auto ml-1", attrs: { for: "" } },
-                        [_vm._v("years")]
-                      ),
-                    ]),
-                  ]),
-                ]),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Training"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: {
-                      name: "trainings[]",
-                      multiple: "",
-                      id: "Trainings",
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Trainings"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Language"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: {
-                      name: "languages[]",
-                      multiple: "",
-                      id: "Languages",
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Languages"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Preferred Job"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: {
-                      name: "preferred_jobs[]",
-                      multiple: "",
-                      id: "PreferredJobs",
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Preferred Job"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Preferred Country"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: {
-                      name: "preferred_countries[]",
-                      multiple: "",
-                      id: "PreferredCountries",
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v(
-                        "\n                                Select Preferred Country\n                              "
-                      ),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
+              _c("option", { attrs: { value: "Other" } }, [_vm._v("Other")]),
+            ]
+          ),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-4 my-auto" }, [
+          _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+            _vm._v("Applied Date (From)"),
           ]),
         ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-8" }, [
+          _c("input", {
+            staticClass: "form-control from_date",
+            attrs: {
+              type: "text",
+              name: "from_date",
+              placeholder: "25-01-2022",
+              id: "from_date",
+              readonly: "",
+            },
+          }),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-4 my-auto" }, [
+          _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+            _vm._v("Applied Date (To)"),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-8" }, [
+          _c("input", {
+            staticClass: "form-control to_date",
+            attrs: {
+              type: "text",
+              name: "to_date",
+              placeholder: "25-02-2022",
+              id: "to_date",
+              readonly: "",
+            },
+          }),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Experience"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Education"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Skills"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Application Status"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-4 my-auto" }, [
+          _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+            _vm._v("Profile Score"),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-8" }, [
+          _c("input", {
+            attrs: {
+              type: "hidden",
+              name: "profile_score",
+              id: "profileScore",
+            },
+          }),
+          _vm._v(" "),
+          _c("div", { attrs: { id: "profileScoreSlider" } }, [
+            _c(
+              "span",
+              {
+                staticStyle: { left: "0" },
+                attrs: { id: "rangeValue", tabindex: "0" },
+              },
+              [_vm._v("0%")]
+            ),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Age Range"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Training"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Language"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Preferred Job"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Preferred Country"),
       ]),
     ])
   },
