@@ -29,17 +29,9 @@
                 </div>
                 <div class="col-xl-9 col-lg-12 col-md-12">
                     @include('partial/candidates/tabs', ['title' => 'Edit My Profile - Preferred Jobs'])
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            @include(
-                                'themes.fvft.candidates.components.profile.profile-completion',
-                                ['employee' => $employe]
-                            )
-                        </div>
-                    </div>
                     <form action="{{ route('candidate.profile.post_preferred_jobs') }}" method="POST" id="preferenceForm">
                         @csrf
-                        <div class="row mt-5">
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="card mb-2">
                                     <div class="card-header">
@@ -81,7 +73,7 @@
                                                                             class="form-control select2-show-search">
                                                                         <option value="">{{ __('Select Job Category') }}
                                                                         </option>
-                                                                        @foreach ($job_categories as $job_category)
+                                                                        @foreach ($all_job_categories as $job_category)
                                                                             <option value="{{ $job_category->id }}">
                                                                                 {{ $job_category->functional_area }}</option>
                                                                         @endforeach
@@ -312,7 +304,7 @@
                             <select name="categories[]" data-placeholder="Select Job Category"
                                 class="form-control select2-show-search">
                                 <option value="">{{ __('Select Job Category') }}</option>
-                                @foreach ($job_categories as $job_category)
+                                @foreach ($all_job_categories as $job_category)
                 <option value="{{ $job_category->id }}">
                                         {{ $job_category->functional_area }}</option>
                                 @endforeach

@@ -21,9 +21,17 @@ class CompanyController extends Controller
         $this->countries = DB::table('countries')->get();
         $this->industries = Industry::get();
     }
-    function list() {
+    function list(Request $request) {
+        $companies = Company::when(!blank($request->status), function ($q) use ($request) {
+            if ($request->status == 'active') {
+                $q->where('is_active', 1);
+            } else if ($request->status == 'inactive') {
+                $q->where('is_active', 0);
+            }
+        })->with('industry')->paginate(10);
         return $this->view('admin.pages.companies.list', [
-            'companies' => Company::with('industry')->paginate(10),
+            'companies' => $companies,
+            // 'companies' => Company::with('industry')->paginate(10),
             // 'companies' => DB::table('companies')->paginate(10)
         ]);
     }
@@ -36,7 +44,7 @@ class CompanyController extends Controller
     }
     public function create()
     {
-        return $this->view('admin.pages.companies.create',[
+        return $this->view('admin.pages.companies.create', [
             'action' => "New",
             'countries' => $this->countries,
             'industries' => $this->industries,
@@ -91,7 +99,7 @@ class CompanyController extends Controller
             return response()->json(['errors' => $validator->errors()]);
         }
 
-        if($validator->passes()){
+        if ($validator->passes()) {
             try {
                 \DB::beginTransaction();
                 $date = date('Y-m-d');
@@ -127,7 +135,7 @@ class CompanyController extends Controller
                 $company->city_id = $request->city_id;
                 $company->company_address = $request->company_address;
                 $company->is_active = $request->is_active != null ? 1 : 0;
-                $company->is_featured = $request->is_featured != null ? 1: 0;
+                $company->is_featured = $request->is_featured != null ? 1 : 0;
                 $company->company_website = $request->company_website;
                 $company->company_fb_page = $request->company_fb_page;
                 $company->ownership = $request->ownership;
@@ -146,7 +154,7 @@ class CompanyController extends Controller
                 $this->__newContactPerson($company->id, $request);
                 \DB::commit();
                 return response()->json(['msg' => 'Company created successfully', 'redirectRoute' => route($this->redirectTo)]);
-            } catch (\Exception $e) {
+            } catch (\Exception$e) {
                 return response()->json(['db_error' => $e->getMessage()]);
             }
         }
@@ -210,7 +218,7 @@ class CompanyController extends Controller
                 $company->city_id = $request->city_id;
                 $company->company_address = $request->company_address;
                 $company->is_active = $request->is_active != null ? 1 : 0;
-                $company->is_featured = $request->is_featured != null ? 1: 0;
+                $company->is_featured = $request->is_featured != null ? 1 : 0;
                 $company->company_website = $request->company_website;
                 $company->company_fb_page = $request->company_fb_page;
                 $company->ownership = $request->ownership;
@@ -229,7 +237,7 @@ class CompanyController extends Controller
                 $this->__saveContactPerson($company->id, $request);
                 \DB::commit();
                 return response()->json(['msg' => 'Company updated successfully', 'redirectRoute' => route($this->redirectTo)]);
-            } catch (\Exception $e) {
+            } catch (\Exception$e) {
                 return response()->json(['db_error' => $e->getMessage()]);
             }
         }
@@ -264,7 +272,6 @@ class CompanyController extends Controller
         $contact_person->dialcode = $request->dialcode;
         $contact_person->save();
     }
-
 
     public function save(Request $request)
     {
@@ -320,7 +327,7 @@ class CompanyController extends Controller
     public function delete($id)
     {
         $company = Company::find($id);
-        if($company != null){
+        if ($company != null) {
             $company->delete();
             return redirect()->back()->with(notifyMsg('success', 'Company deleted successfully'));
         }

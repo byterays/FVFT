@@ -22,7 +22,7 @@ class Job extends Model
         'no_of_male', 'no_of_female', 'any_gender', 'working_hours', 'working_days', 'contract_year',
         'contract_month', 'contract_description', 'min_experience', 'max_experience', 'min_age', 'max_age', 'skills',
         'requirement_intro', 'requirements', 'benefit_intro', 'accomodation', 'food', 'annual_vacation', 'over_time',
-        'pictures', 'description_intro', 'draft_status', 'draft_date', 'publish_date', 'earning_country_salary', 'earning_nepali_salary'];
+        'pictures', 'description_intro', 'draft_status', 'draft_date', 'publish_date', 'earning_country_salary', 'earning_nepali_salary', 'total_views'];
 
     public function company()
     {

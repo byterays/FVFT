@@ -68,6 +68,7 @@ class Employe extends Model
 
     protected $appends = [
         'full_name',
+        'profile_score',
     ];
 
     public function user()
@@ -159,6 +160,11 @@ class Employe extends Model
     public function cv()
     {
         return $this->hasMany(EmployeeCv::class, 'employ_id');
+    }
+
+    public function getProfileScoreAttribute()
+    {
+        return $this->calculateProfileCompletion();
     }
 
 

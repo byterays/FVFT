@@ -9,17 +9,26 @@ $_edit = ($RouteName ==  $route.'get_personal_information' || $RouteName == $rou
 $_cv = $RouteName == $route.'get_cv';
 ?>
 
-<div class="card mb-0">
+
+@include('themes.fvft.candidates.components.profile.profile-completion',['employee' => $employe])
+
+<div class="card mt-3 mb-0">
     <div class="card-body">
         <h3 class="card-title">{{ __($title ?? 'No Title') }}</h3>
-        <ul class="nav nav-tabs nav-justified navtab-wizard tabItems bg-muted"
-            style="border-bottom: 0px solid #e8ebf3 !important; ">
-            <li class="nav-item {{ $_index ? 'active' : '' }}"><a href="{{ route('candidate.profile.index') }}" class="nav-link font-bold">{{ __('My Profile') }}</a>
-            </li>
-            <li class="nav-item {{ $_edit ? 'active' : '' }}"><a href="{{ route('candidate.profile.get_personal_information') }}"
-                                                                 class="nav-link font-bold">{{ __('Edit Profile') }}</a></li>
-            <li class="nav-item {{ $_cv ? 'active' : '' }}"><a href="{{ route('candidate.profile.get_cv') }}" class="nav-link font-bold">{{ __('CV') }}</a></li>
-            {{-- <li class="nav-item"><a href="#tab4" class="nav-link font-bold"></a></li> --}}
-        </ul>
+        <div class="settings-tab">
+            <ul class="tabs-menu nav">
+                <li class="">
+                    <a href="{{ route('candidate.profile.index') }}" class="{{ $_index ? 'active' : '' }}"><i class="icon icon-user mr-2"></i>{{ __('My Profile') }}</a>
+                </li>
+                <li>
+                    <a href="{{ route('candidate.profile.get_personal_information') }}" class="{{ $_edit ? 'active' : '' }}"><i class="icon icon-pencil mr-2"></i>{{ __('Edit Profile') }}</a>
+                </li>
+                <li>
+                    <a href="{{ route('candidate.profile.get_cv') }}" class="{{ $_cv ? 'active' : '' }}"><i class="icon icon-event mr-2"></i>{{ __('CV') }}</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
+
+

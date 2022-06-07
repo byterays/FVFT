@@ -1,8 +1,8 @@
 import Api from './Api';
 
 export default {
-    getApplicants(page,filter){
-        return Api().get('/company/web-api/getApplicants?page=' + page + '&filter=' + filter);
+    getApplicants(page,limit,filter){
+        return Api().get('/company/web-api/getApplicants?page=' + page + '&limit='+ limit + '&filter=' + filter);
     },
 
     getDataSets(){
@@ -11,5 +11,22 @@ export default {
 
     createNewJob(formData){
         return Api().post('/web-api/job/create', formData);
+    },
+
+    updateBulkStatus(formData){
+        return Api().post('/company/web-api/bulk-status-update', formData);
+    },
+
+    downloadBulkCv(formData, config){
+        return Api().post('/company/web-api/bulk-cv-download', formData, config);
+    },
+    deleteBulkApplication(formData){
+        return Api().delete('/company/web-api/bulk-application-delete', formData);
+    },
+    interviewSchedule(formData){
+        return Api().post('/company/web-api/bulk-interview-schedule', formData);
+    },
+    getApplicantFilterData(filterId){
+        return Api().get('/company/web-api/get-applicant-filter', filterId);
     },
 }

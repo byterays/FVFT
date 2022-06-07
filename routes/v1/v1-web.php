@@ -32,6 +32,7 @@ Route::get('/companies', [HomeController::class, 'companies'])->name('site.compa
 Route::get('/company-view/{id}', [HomeController::class, 'company'])->name('site.companydetail');
 Route::get('jobs/', [JobsController::class, 'index'])->name('site.jobs');
 Route::get('job/{id}', [JobsController::class, 'jobindex'])->name('viewJob');
+Route::post('store-job-view', [JobsController::class, 'storeJobView'])->name('storeJobView');
 Route::get('news/', [NewsController::class, 'index'])->name('news.index');
 Route::get('news/{slug}', [NewsController::class, 'getNews'])->name('news.details');
 Route::get('page/{slug}', [PageController::class, 'index'])->name('viewPage');

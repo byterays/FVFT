@@ -215,20 +215,20 @@ class ProfileController extends Controller
         if ($validator->passes()) {
             try {
                 DB::beginTransaction();
-                $employe = Employe  ::where('user_id', $request->user_id)->first();
+                $employe = Employe::where('user_id', $request->user_id)->first();
                 $fields = [];
-                if (!empty($request->training)) {
-                    foreach ($request->training as $key => $training) {
-                        $trainingData[] = $training;
-                    }
-                    $fields['trainings'] = json_encode($trainingData);
-                }
-                if (!empty($request->skill)) {
-                    foreach ($request->skill as $key => $skill) {
-                        $skillData[] = $skill;
-                    }
-                    $fields['skills'] = json_encode($skillData);
-                }
+//                if (!empty($request->training)) {
+//                    foreach ($request->training as $key => $training) {
+//                        $trainingData[] = $training;
+//                    }
+//                    $fields['trainings'] = json_encode($trainingData);
+//                }
+//                if (!empty($request->skill)) {
+//                    foreach ($request->skill as $key => $skill) {
+//                        $skillData[] = $skill;
+//                    }
+//                    $fields['skills'] = json_encode($skillData);
+//                }
                 if (!empty($request->language)) {
                     $languageData = [];
                     foreach ($request->language as $key => $language) {

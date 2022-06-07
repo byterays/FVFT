@@ -1,414 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./node_modules/@babel/runtime/helpers/regeneratorRuntime.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/regeneratorRuntime.js ***!
-  \*******************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var _typeof = (__webpack_require__(/*! ./typeof.js */ "./node_modules/@babel/runtime/helpers/typeof.js")["default"]);
-
-function _regeneratorRuntime() {
-  "use strict";
-  /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
-
-  module.exports = _regeneratorRuntime = function _regeneratorRuntime() {
-    return exports;
-  }, module.exports.__esModule = true, module.exports["default"] = module.exports;
-  var exports = {},
-      Op = Object.prototype,
-      hasOwn = Op.hasOwnProperty,
-      $Symbol = "function" == typeof Symbol ? Symbol : {},
-      iteratorSymbol = $Symbol.iterator || "@@iterator",
-      asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator",
-      toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-
-  function define(obj, key, value) {
-    return Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: !0,
-      configurable: !0,
-      writable: !0
-    }), obj[key];
-  }
-
-  try {
-    define({}, "");
-  } catch (err) {
-    define = function define(obj, key, value) {
-      return obj[key] = value;
-    };
-  }
-
-  function wrap(innerFn, outerFn, self, tryLocsList) {
-    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator,
-        generator = Object.create(protoGenerator.prototype),
-        context = new Context(tryLocsList || []);
-    return generator._invoke = function (innerFn, self, context) {
-      var state = "suspendedStart";
-      return function (method, arg) {
-        if ("executing" === state) throw new Error("Generator is already running");
-
-        if ("completed" === state) {
-          if ("throw" === method) throw arg;
-          return doneResult();
-        }
-
-        for (context.method = method, context.arg = arg;;) {
-          var delegate = context.delegate;
-
-          if (delegate) {
-            var delegateResult = maybeInvokeDelegate(delegate, context);
-
-            if (delegateResult) {
-              if (delegateResult === ContinueSentinel) continue;
-              return delegateResult;
-            }
-          }
-
-          if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) {
-            if ("suspendedStart" === state) throw state = "completed", context.arg;
-            context.dispatchException(context.arg);
-          } else "return" === context.method && context.abrupt("return", context.arg);
-          state = "executing";
-          var record = tryCatch(innerFn, self, context);
-
-          if ("normal" === record.type) {
-            if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue;
-            return {
-              value: record.arg,
-              done: context.done
-            };
-          }
-
-          "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg);
-        }
-      };
-    }(innerFn, self, context), generator;
-  }
-
-  function tryCatch(fn, obj, arg) {
-    try {
-      return {
-        type: "normal",
-        arg: fn.call(obj, arg)
-      };
-    } catch (err) {
-      return {
-        type: "throw",
-        arg: err
-      };
-    }
-  }
-
-  exports.wrap = wrap;
-  var ContinueSentinel = {};
-
-  function Generator() {}
-
-  function GeneratorFunction() {}
-
-  function GeneratorFunctionPrototype() {}
-
-  var IteratorPrototype = {};
-  define(IteratorPrototype, iteratorSymbol, function () {
-    return this;
-  });
-  var getProto = Object.getPrototypeOf,
-      NativeIteratorPrototype = getProto && getProto(getProto(values([])));
-  NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype);
-  var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype);
-
-  function defineIteratorMethods(prototype) {
-    ["next", "throw", "return"].forEach(function (method) {
-      define(prototype, method, function (arg) {
-        return this._invoke(method, arg);
-      });
-    });
-  }
-
-  function AsyncIterator(generator, PromiseImpl) {
-    function invoke(method, arg, resolve, reject) {
-      var record = tryCatch(generator[method], generator, arg);
-
-      if ("throw" !== record.type) {
-        var result = record.arg,
-            value = result.value;
-        return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) {
-          invoke("next", value, resolve, reject);
-        }, function (err) {
-          invoke("throw", err, resolve, reject);
-        }) : PromiseImpl.resolve(value).then(function (unwrapped) {
-          result.value = unwrapped, resolve(result);
-        }, function (error) {
-          return invoke("throw", error, resolve, reject);
-        });
-      }
-
-      reject(record.arg);
-    }
-
-    var previousPromise;
-
-    this._invoke = function (method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return new PromiseImpl(function (resolve, reject) {
-          invoke(method, arg, resolve, reject);
-        });
-      }
-
-      return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
-    };
-  }
-
-  function maybeInvokeDelegate(delegate, context) {
-    var method = delegate.iterator[context.method];
-
-    if (undefined === method) {
-      if (context.delegate = null, "throw" === context.method) {
-        if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel;
-        context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method");
-      }
-
-      return ContinueSentinel;
-    }
-
-    var record = tryCatch(method, delegate.iterator, context.arg);
-    if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel;
-    var info = record.arg;
-    return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel);
-  }
-
-  function pushTryEntry(locs) {
-    var entry = {
-      tryLoc: locs[0]
-    };
-    1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry);
-  }
-
-  function resetTryEntry(entry) {
-    var record = entry.completion || {};
-    record.type = "normal", delete record.arg, entry.completion = record;
-  }
-
-  function Context(tryLocsList) {
-    this.tryEntries = [{
-      tryLoc: "root"
-    }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0);
-  }
-
-  function values(iterable) {
-    if (iterable) {
-      var iteratorMethod = iterable[iteratorSymbol];
-      if (iteratorMethod) return iteratorMethod.call(iterable);
-      if ("function" == typeof iterable.next) return iterable;
-
-      if (!isNaN(iterable.length)) {
-        var i = -1,
-            next = function next() {
-          for (; ++i < iterable.length;) {
-            if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next;
-          }
-
-          return next.value = undefined, next.done = !0, next;
-        };
-
-        return next.next = next;
-      }
-    }
-
-    return {
-      next: doneResult
-    };
-  }
-
-  function doneResult() {
-    return {
-      value: undefined,
-      done: !0
-    };
-  }
-
-  return GeneratorFunction.prototype = GeneratorFunctionPrototype, define(Gp, "constructor", GeneratorFunctionPrototype), define(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) {
-    var ctor = "function" == typeof genFun && genFun.constructor;
-    return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name));
-  }, exports.mark = function (genFun) {
-    return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun;
-  }, exports.awrap = function (arg) {
-    return {
-      __await: arg
-    };
-  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
-    return this;
-  }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) {
-    void 0 === PromiseImpl && (PromiseImpl = Promise);
-    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl);
-    return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) {
-      return result.done ? result.value : iter.next();
-    });
-  }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () {
-    return this;
-  }), define(Gp, "toString", function () {
-    return "[object Generator]";
-  }), exports.keys = function (object) {
-    var keys = [];
-
-    for (var key in object) {
-      keys.push(key);
-    }
-
-    return keys.reverse(), function next() {
-      for (; keys.length;) {
-        var key = keys.pop();
-        if (key in object) return next.value = key, next.done = !1, next;
-      }
-
-      return next.done = !0, next;
-    };
-  }, exports.values = values, Context.prototype = {
-    constructor: Context,
-    reset: function reset(skipTempReset) {
-      if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) {
-        "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined);
-      }
-    },
-    stop: function stop() {
-      this.done = !0;
-      var rootRecord = this.tryEntries[0].completion;
-      if ("throw" === rootRecord.type) throw rootRecord.arg;
-      return this.rval;
-    },
-    dispatchException: function dispatchException(exception) {
-      if (this.done) throw exception;
-      var context = this;
-
-      function handle(loc, caught) {
-        return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught;
-      }
-
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i],
-            record = entry.completion;
-        if ("root" === entry.tryLoc) return handle("end");
-
-        if (entry.tryLoc <= this.prev) {
-          var hasCatch = hasOwn.call(entry, "catchLoc"),
-              hasFinally = hasOwn.call(entry, "finallyLoc");
-
-          if (hasCatch && hasFinally) {
-            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
-            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
-          } else if (hasCatch) {
-            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
-          } else {
-            if (!hasFinally) throw new Error("try statement without catch or finally");
-            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
-          }
-        }
-      }
-    },
-    abrupt: function abrupt(type, arg) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-
-        if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) {
-          var finallyEntry = entry;
-          break;
-        }
-      }
-
-      finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null);
-      var record = finallyEntry ? finallyEntry.completion : {};
-      return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record);
-    },
-    complete: function complete(record, afterLoc) {
-      if ("throw" === record.type) throw record.arg;
-      return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel;
-    },
-    finish: function finish(finallyLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel;
-      }
-    },
-    "catch": function _catch(tryLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-
-        if (entry.tryLoc === tryLoc) {
-          var record = entry.completion;
-
-          if ("throw" === record.type) {
-            var thrown = record.arg;
-            resetTryEntry(entry);
-          }
-
-          return thrown;
-        }
-      }
-
-      throw new Error("illegal catch attempt");
-    },
-    delegateYield: function delegateYield(iterable, resultName, nextLoc) {
-      return this.delegate = {
-        iterator: values(iterable),
-        resultName: resultName,
-        nextLoc: nextLoc
-      }, "next" === this.method && (this.arg = undefined), ContinueSentinel;
-    }
-  }, exports;
-}
-
-module.exports = _regeneratorRuntime, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/typeof.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/typeof.js ***!
-  \*******************************************************/
-/***/ ((module) => {
-
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
-    return typeof obj;
-  } : function (obj) {
-    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(obj);
-}
-
-module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/regenerator/index.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
-  \**********************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-// TODO(Babel 8): Remove this file.
-
-var runtime = __webpack_require__(/*! ../helpers/regeneratorRuntime */ "./node_modules/@babel/runtime/helpers/regeneratorRuntime.js")();
-module.exports = runtime;
-
-// Copied from https://github.com/facebook/regenerator/blob/main/packages/runtime/runtime.js#L736=
-try {
-  regeneratorRuntime = runtime;
-} catch (accidentalStrictMode) {
-  if (typeof globalThis === "object") {
-    globalThis.regeneratorRuntime = runtime;
-  } else {
-    Function("r", "regeneratorRuntime = r")(runtime);
-  }
-}
-
-
-/***/ }),
-
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -2473,16 +2065,629 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _services_CompanyService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/CompanyService */ "./resources/js/services/CompanyService.js");
-/* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../error */ "./resources/js/error.js");
+/* harmony import */ var _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/CompanyService */ "./resources/js/services/CompanyService.js");
+/* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../error */ "./resources/js/error.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return generator._invoke = function (innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; }(innerFn, self, context), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; this._invoke = function (method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); }; } function maybeInvokeDelegate(delegate, context) { var method = delegate.iterator[context.method]; if (undefined === method) { if (context.delegate = null, "throw" === context.method) { if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel; context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method"); } return ContinueSentinel; } var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, define(Gp, "constructor", GeneratorFunctionPrototype), define(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (object) { var keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3052,29 +3257,72 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   name: "Applicants",
   data: function data() {
     return {
-      errors: new _error__WEBPACK_IMPORTED_MODULE_2__.Errors(),
+      errors: new _error__WEBPACK_IMPORTED_MODULE_1__.Errors(),
       filter_saving: false,
       filter_submitting: false,
       applicants_pg: {},
-      applicants: '',
+      applicants: "",
       // data sets
-      status_count: '',
+      status_count: "",
       job_categories: [],
+      education_levels: [],
+      skills: [],
       countries: [],
+      trainings: [],
+      languages: [],
+      preferredCategories: [],
+      preferredCountries: [],
       applicant_filters: [],
+      applicationStatus: [],
       // filter
       filter: {
-        query: '',
-        application_status: '',
-        category: '',
-        country: ''
+        query: "",
+        application_status: "",
+        category: "",
+        country: ""
       },
+      limit: "50",
+      filterId: "",
       // selection
       selected: [],
       selectAll: false
     };
   },
   mounted: function mounted() {
+    $(document).ready(function () {
+      $("#from_date").datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayHighlight: true,
+        endDate: "0d"
+      }).on("changeDate", function (selected) {
+        var minDate = new Date(selected.date.valueOf());
+        $("#to_date").datepicker("setStartDate", minDate);
+      });
+      $("#to_date").datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayHighlight: true // endDate: '0d',
+
+      }).on("changeDate", function (selected) {
+        var minDate = new Date(selected.date.valueOf());
+        $("#from_date").datepicker("setEndDate", minDate);
+      });
+      $("#profileScoreSlider").find("span:nth-child(3)").remove();
+    });
+    $("#profileScoreSlider").slider({
+      range: true,
+      min: 0,
+      max: 100,
+      values: [0],
+      slide: function slide(event, ui) {
+        $("#profileScore").val(ui.values[1] + "%");
+        $("#rangeValue").text(ui.values[1] + "%").css({
+          left: ui.values[1] + "%"
+        });
+      }
+    });
+    $("#profileScore").val($("#profileScoreSlider").slider("values", 1) + "%");
     this.getDataSets();
     this.getApplicants();
   },
@@ -3091,23 +3339,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getDataSets: function getDataSets() {
       var _this = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _services_CompanyService__WEBPACK_IMPORTED_MODULE_1__["default"].getDataSets();
+                return _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].getDataSets();
 
               case 2:
                 response = _context.sent;
 
                 if (response.data.success === true) {
                   _this.job_categories = response.data.data.job_categories;
+                  _this.education_levels = response.data.data.education_levels;
+                  _this.skills = response.data.data.skills;
+                  _this.trainings = response.data.data.trainings;
+                  _this.languages = response.data.data.languages;
+                  _this.preferredCategories = response.data.data.preferredCategories;
+                  _this.preferredCountries = response.data.data.preferredCountries;
                   _this.countries = response.data.data.countries;
                   _this.status_count = response.data.data.status_count;
                   _this.applicant_filters = response.data.data.applicant_filters;
+                  _this.applicationStatus = response.data.data.applicationStatus;
                 }
 
               case 4:
@@ -3136,6 +3391,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     advanceFilter: function advanceFilter() {
       this.filter_submitting = true;
     },
+    setLimit: function setLimit(event) {
+      this.showBusySign();
+      this.limit = event.target.value;
+      this.getApplicants(0, this.limit, JSON.stringify(this.filter));
+      this.hideBusySign();
+    },
     setFilter: _.debounce(function () {
       this.getApplicants();
     }, 800),
@@ -3143,17 +3404,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _arguments = arguments,
           _this2 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var page, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var page, limit, response;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 page = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : 0;
-                _context2.next = 3;
-                return _services_CompanyService__WEBPACK_IMPORTED_MODULE_1__["default"].getApplicants(page, JSON.stringify(_this2.filter));
+                limit = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : _this2.limit;
+                _context2.next = 4;
+                return _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].getApplicants(page, limit, JSON.stringify(_this2.filter));
 
-              case 3:
+              case 4:
                 response = _context2.sent;
 
                 if (response.data.success === true) {
@@ -3161,7 +3423,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this2.applicants = response.data.data.applicants.data;
                 }
 
-              case 5:
+              case 6:
               case "end":
                 return _context2.stop();
             }
@@ -3170,9 +3432,364 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     showAdvancedFilter: function showAdvancedFilter() {
-      $("#advancedFilter").modal('show');
+      $("#advancedFilter").modal("show");
     },
-    setAdvancedFilterValue: function setAdvancedFilterValue() {}
+    setAdvancedFilterValue: function setAdvancedFilterValue(event) {
+      this.filterId = event.target.value;
+
+      if (this.filterId == "") {} else {
+        _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].getApplicantFilterData({
+          params: {
+            applicantFilterId: this.filterId
+          }
+        }).then(function (response) {
+          ;
+
+          if (response.data.success == false) {
+            toastr.error(response.data.error);
+          } else if (response.data.success == true) {
+            var jsonData = JSON.parse(response.data.applicantFilter.filter_value)[0];
+            $("#jobTitle").select2('val', jsonData.job_title);
+            ;
+            $("#gender").val(jsonData.gender).trigger("change");
+            $("#from_date").val(jsonData.from_date);
+            $("#to_date").val(jsonData.to_date);
+            $("#Experience").select2("val", jsonData.experience);
+            $("#EducationLevel").select2("val", jsonData.education_level);
+            $("#Skills").val(JSON.parse(jsonData.skills)).trigger("change");
+            $("#ApplicationStatus").val(jsonData.application_status).trigger("change");
+            $("#profileScore").val(jsonData.profile_score);
+            $("#rangeValue").text(jsonData.profile_score).css({
+              left: jsonData.profile_score
+            });
+            $(".ui-slider-range.ui-corner-all.ui-widget-header").css({
+              width: jsonData.profile_score
+            });
+            $(".ui-slider-handle.ui-corner-all.ui-state-default").css({
+              left: jsonData.profile_score
+            });
+            $("#MinAge").val(jsonData.min_age).trigger("change");
+            $("#MaxAge").val(jsonData.max_age).trigger("change");
+            $("#Trainings").val(JSON.parse(jsonData.trainings)).trigger("change");
+            $("#Languages").val(JSON.parse(jsonData.languages)).trigger("change");
+            $("#PreferredJobs").val(JSON.parse(jsonData.preferred_jobs)).trigger("change");
+            $("#PreferredCountries").val(JSON.parse(jsonData.preferred_countries)).trigger("change");
+            $("#filterName").val(response.data.applicantFilter.filter_name);
+          }
+        });
+      }
+    },
+    bulkStatusUpdate: function bulkStatusUpdate(status) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return Swal.fire({
+                  text: "Are you sure you want to perform bulk operation?",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonText: "Yes",
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33"
+                }).then(function (result) {
+                  if (result.isConfirmed) {
+                    _this3.showBusySign();
+
+                    var data = new FormData();
+                    data.append("ids", _this3.selected);
+                    data.append("applicantStatus", status);
+                    _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].updateBulkStatus(data).then(function (response) {
+                      if (response.data.success == false) {
+                        if (response.data.db_error) {
+                          toastr.error(response.data.db_error);
+                        } else if (response.data.error) {
+                          toastr.error(response.data.error);
+                        }
+                      }
+
+                      if (response.data.success == true) {
+                        var statuses = JSON.parse(response.data.statuses);
+                        $.each(statuses, function (k, v) {
+                          $.each(v, function (key, value) {
+                            var tableRow = $('tr[data-id="' + key + '"]');
+                            $(tableRow).find(".applicantStatus").text(value);
+                          });
+                        });
+                        toastr.success(response.data.msg);
+                        $("input:checkbox").prop("checked", false);
+                      }
+
+                      _this3.hideBusySign();
+                    });
+                  }
+                });
+
+              case 2:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    bulkCvDownload: function bulkCvDownload() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return Swal.fire({
+                  text: "Are you sure you want to perform bulk download?",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonText: "Yes Download!",
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33"
+                }).then(function (result) {
+                  if (result.isConfirmed) {
+                    _this4.showBusySign();
+
+                    var config = {
+                      responseType: "blob"
+                    };
+                    var data = new FormData();
+                    data.append("ids", _this4.selected);
+                    _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].downloadBulkCv(data, config).then(function (response) {
+                      if (response.data.success == false) {
+                        if (response.data.error) {
+                          toastr.error(response.data.error.ids[0]);
+                        }
+                      }
+
+                      if (response.data.success != false) {
+                        var blob = new Blob([response.data], {
+                          type: "application/pdf"
+                        });
+                        var link = document.createElement("a");
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = "Applicants.pdf";
+                        link.click();
+                        toastr.success("Applicants CV Downloaded");
+                        $("input:checkbox").prop("checked", false);
+                      }
+
+                      _this4.hideBusySign();
+                    });
+                  }
+                });
+
+              case 2:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    bulkApplicationDelete: function bulkApplicationDelete() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return Swal.fire({
+                  text: "Are you sure you want to perform bulk delete?",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonText: "Yes Delete!",
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33"
+                }).then(function (result) {
+                  if (result.isConfirmed) {
+                    _this5.showBusySign();
+
+                    _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].deleteBulkApplication({
+                      data: {
+                        ids: _this5.selected.join(","),
+                        _method: "DELETE"
+                      }
+                    }).then(function (response) {
+                      if (response.data.success == false) {
+                        if (response.data.error) {
+                          toastr.error(response.data.error);
+                        }
+                      } // $(".rowCheck:checked").each(function(){
+                      //     $(this).parents("tr").remove();
+                      // });
+
+
+                      _this5.getApplicants();
+
+                      toastr.success(response.data.msg);
+                      $("input:checkbox").prop("checked", false);
+
+                      _this5.hideBusySign();
+                    });
+                  }
+                });
+
+              case 2:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
+    scheduleInterview: function scheduleInterview() {
+      var _this6 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+        return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return $(".require").css("display", "none");
+
+              case 2:
+                Swal.fire({
+                  text: "Are you sure you want to perform bulk operation?",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonText: "Yes",
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33"
+                }).then(function (result) {
+                  if (result.isConfirmed) {
+                    _this6.showBusySign();
+
+                    var formData = new FormData($("#scheduleInterViewForm")[0]);
+                    formData.append("ids", _this6.selected);
+                    _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].interviewSchedule(formData).then(function (response) {
+                      if (response.data.success == false) {
+                        if (response.data.errors) {
+                          $.each(response.data.errors, function (key, value) {
+                            $("." + key).css("display", "block").html(value);
+                          });
+                        } else if (response.data.error) {
+                          toastr.error(response.data.error);
+                        }
+                      } else if (response.data.success == true) {
+                        toastr.success(response.data.msg);
+                        var statuses = JSON.parse(response.data.statuses);
+                        $.each(statuses, function (key, value) {
+                          $.each(value, function (k, v) {
+                            var tableRow = $('tr[data-id="' + k + '"]');
+                            $(tableRow).find(".applicantStatus").text(v);
+                          });
+                        });
+                        $("#interviewModal").modal("hide");
+
+                        _this6.hideBusySign();
+                      }
+                    });
+                  }
+                });
+
+              case 3:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+    getApplicantFilter: function getApplicantFilter(event) {
+      var _this7 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+        return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _this7.filterId = event.target.value;
+
+                if (!(_this7.filterId == "")) {
+                  _context7.next = 4;
+                  break;
+                }
+
+                _context7.next = 6;
+                break;
+
+              case 4:
+                _context7.next = 6;
+                return _services_CompanyService__WEBPACK_IMPORTED_MODULE_0__["default"].getApplicantFilterData({
+                  data: {
+                    applicantFilterId: _this7.filterId
+                  }
+                }).then(function (response) {
+                  if (response.data.success == false) {
+                    toastr.error(response.data.error);
+                  } else if (response.data.success == true) {
+                    var jsonData = JSON.parse(response.data.applicantFilter.filter_value)[0];
+                    $("#jobTitle").select2("val", jsonData.job_title);
+                    $("#gender").val(jsonData.gender).trigger("change");
+                    $("#from_date").val(jsonData.from_date);
+                    $("#to_date").val(jsonData.to_date);
+                    $("#Experience").select2("val", jsonData.experience);
+                    $("#EducationLevel").select2("val", jsonData.education_level);
+                    $("#Skills").val(JSON.parse(jsonData.skills)).trigger("change");
+                    $("#ApplicationStatus").val(jsonData.application_status).trigger("change");
+                    $("#profileScore").val(jsonData.profile_score);
+                    $("#rangeValue").text(jsonData.profile_score).css({
+                      left: jsonData.profile_score
+                    });
+                    $(".ui-slider-range.ui-corner-all.ui-widget-header").css({
+                      width: jsonData.profile_score
+                    });
+                    $(".ui-slider-handle.ui-corner-all.ui-state-default").css({
+                      left: jsonData.profile_score
+                    });
+                    $("#MinAge").val(jsonData.min_age).trigger("change");
+                    $("#MaxAge").val(jsonData.max_age).trigger("change");
+                    $("#Trainings").val(JSON.parse(jsonData.trainings)).trigger("change");
+                    $("#Languages").val(JSON.parse(jsonData.languages)).trigger("change");
+                    $("#PreferredJobs").val(JSON.parse(jsonData.preferred_jobs)).trigger("change");
+                    $("#PreferredCountries").val(JSON.parse(jsonData.preferred_countries)).trigger("change");
+                    $("#filterName").val(response.data.applicantFilter.filter_name);
+                  }
+                });
+
+              case 6:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }))();
+    }
+  },
+  computed: {
+    minAge: function minAge() {
+      var arr = [];
+
+      for (var i = 18; i <= 25; i++) {
+        arr[i] = i;
+      }
+
+      return arr;
+    },
+    maxAge: function maxAge() {
+      var maxage = [];
+
+      for (var i = 18; i <= 50; i++) {
+        maxage[i] = i;
+      }
+
+      return maxage;
+    }
   }
 });
 
@@ -3229,7 +3846,27 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
 Vue.component('example-component', (__webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]));
 Vue.component('applicants', (__webpack_require__(/*! ./components/Applicants.vue */ "./resources/js/components/Applicants.vue")["default"]));
-var EventBus = new Vue();
+var EventBus = new Vue(); // mix.postCss('resources/css/style.css', 'public/css');
+
+Vue.mixin({
+  methods: {
+    getYearForm: function getYearForm(year) {
+      return year > 1 ? 'years' : 'year';
+    },
+    getMonthForm: function getMonthForm(month) {
+      return month > 1 ? 'months' : 'month';
+    },
+    capitalizeFirstLetter: function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+    showBusySign: function showBusySign() {
+      $('#ajaxLoader').css('display', 'block');
+    },
+    hideBusySign: function hideBusySign() {
+      $('#ajaxLoader').css('display', 'none');
+    }
+  }
+});
 var app = new Vue({
   el: '#app'
 });
@@ -3501,14 +4138,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ "./resources/js/services/Api.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  getApplicants: function getApplicants(page, filter) {
-    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get('/company/web-api/getApplicants?page=' + page + '&filter=' + filter);
+  getApplicants: function getApplicants(page, limit, filter) {
+    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get('/company/web-api/getApplicants?page=' + page + '&limit=' + limit + '&filter=' + filter);
   },
   getDataSets: function getDataSets() {
     return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get('/company/web-api/getDataSets');
   },
   createNewJob: function createNewJob(formData) {
     return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().post('/web-api/job/create', formData);
+  },
+  updateBulkStatus: function updateBulkStatus(formData) {
+    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().post('/company/web-api/bulk-status-update', formData);
+  },
+  downloadBulkCv: function downloadBulkCv(formData, config) {
+    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().post('/company/web-api/bulk-cv-download', formData, config);
+  },
+  deleteBulkApplication: function deleteBulkApplication(formData) {
+    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])()["delete"]('/company/web-api/bulk-application-delete', formData);
+  },
+  interviewSchedule: function interviewSchedule(formData) {
+    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().post('/company/web-api/bulk-interview-schedule', formData);
+  },
+  getApplicantFilterData: function getApplicantFilterData(filterId) {
+    return (0,_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get('/company/web-api/get-applicant-filter', filterId);
   }
 });
 
@@ -3531,7 +4183,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.item-card .item-card-desc .item-card-text[data-v-14762ddc] {\n    position: absolute;\n    top: 25%;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    text-align: center;\n    color: #fff;\n    z-index: 2;\n    align-items: center;\n    vertical-align: middle;\n}\n.item-card-text h4[data-v-14762ddc] {\n    font-size: 14px;\n    font-weight: 600;\n    text-transform: none;\n}\n.table-bordered[data-v-14762ddc], .text-wrap table[data-v-14762ddc] {\n    border: 1px solid #e8ebf3 !important;\n}\n.item-card-text span[data-v-14762ddc] {\n    font-size: 25px;\n    display: block;\n    margin: 0.5rem;\n    font-weight: 400;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.item-card .item-card-desc .item-card-text[data-v-14762ddc] {\n  position: absolute;\n  top: 25%;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  text-align: center;\n  color: #fff;\n  z-index: 2;\n  align-items: center;\n  vertical-align: middle;\n}\n.item-card-text h4[data-v-14762ddc] {\n  font-size: 14px;\n  font-weight: 600;\n  text-transform: none;\n}\n.table-bordered[data-v-14762ddc],\n.text-wrap table[data-v-14762ddc] {\n  border: 1px solid #e8ebf3 !important;\n}\n.item-card-text span[data-v-14762ddc] {\n  font-size: 25px;\n  display: block;\n  margin: 0.5rem;\n  font-weight: 400;\n}\n.scrollable-menu[data-v-14762ddc] {\n  height: auto;\n  max-height: 200px;\n  overflow-y: auto;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -21538,9 +22190,9 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "item-card-text" }, [
                   _c("h4", { staticClass: "mb-0" }, [
-                    _vm._v(" All "),
+                    _vm._v("\n                  All "),
                     _c("br"),
-                    _vm._v(" Applications"),
+                    _vm._v("\n                  Applications"),
                     _c("span", [_vm._v(_vm._s(_vm.status_count["total"]))]),
                   ]),
                 ]),
@@ -21567,7 +22219,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "item-card-text" }, [
                   _c("h4", { staticClass: "mb-0" }, [
-                    _vm._v("Unscreened Applications"),
+                    _vm._v("\n                  Unscreened Applications"),
                     _c("span", [_vm._v(_vm._s(_vm.status_count["pending"]))]),
                   ]),
                 ]),
@@ -21594,7 +22246,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "item-card-text" }, [
                   _c("h4", { staticClass: "mb-0" }, [
-                    _vm._v("Shortlisted Applications"),
+                    _vm._v("\n                  Shortlisted Applications"),
                     _c("span", [
                       _vm._v(_vm._s(_vm.status_count["shortlisted"])),
                     ]),
@@ -21607,7 +22259,7 @@ var render = function () {
         _vm._v(" "),
         _c("div", { staticClass: "col-xl-2 col-lg-2 col-md-2" }, [
           _c("div", { staticClass: "card mb-xl-0" }, [
-            _c("div", { staticClass: "item-card " }, [
+            _c("div", { staticClass: "item-card" }, [
               _c("div", { staticClass: "item-card-desc" }, [
                 _c("a", {
                   attrs: { href: "#" },
@@ -21623,7 +22275,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "item-card-text" }, [
                   _c("h4", { staticClass: "mb-0" }, [
-                    _vm._v("Interviewed Applications"),
+                    _vm._v("\n                  Interviewed Applications"),
                     _c("span", [
                       _vm._v(_vm._s(_vm.status_count["interviewed"])),
                     ]),
@@ -21652,7 +22304,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "item-card-text" }, [
                   _c("h4", { staticClass: "mb-0" }, [
-                    _vm._v("Selected Applications"),
+                    _vm._v("\n                  Selected Applications"),
                     _c("span", [_vm._v(_vm._s(_vm.status_count["accepted"]))]),
                   ]),
                 ]),
@@ -21679,7 +22331,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "item-card-text" }, [
                   _c("h4", { staticClass: "mb-0" }, [
-                    _vm._v("Rejected Applications"),
+                    _vm._v("\n                  Rejected Applications"),
                     _c("span", [_vm._v(_vm._s(_vm.status_count["rejected"]))]),
                   ]),
                 ]),
@@ -21737,7 +22389,7 @@ var render = function () {
                       },
                     },
                   },
-                  [_vm._v("Advanced Search")]
+                  [_vm._v("\n                Advanced Search\n              ")]
                 ),
               ]),
             ]),
@@ -21765,14 +22417,87 @@ var render = function () {
                     "aria-expanded": "false",
                   },
                 },
+                [_vm._v("\n              Set Application Status\n            ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "dropdown-menu",
+                  attrs: { "aria-labelledby": "dropdownMenuButton" },
+                },
                 [
-                  _vm._v(
-                    "\n                            Set Application Status\n                        "
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "javascript:void(0);" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.bulkStatusUpdate("pending")
+                        },
+                      },
+                    },
+                    [_vm._v("Unscreened")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "javascript:void(0);" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.bulkStatusUpdate("shortlisted")
+                        },
+                      },
+                    },
+                    [_vm._v("Shortlisted")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "javascript:void(0);" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.bulkStatusUpdate("INTERVIEWED")
+                        },
+                      },
+                    },
+                    [_vm._v("Interviewed")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "javascript:void(0);" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.bulkStatusUpdate("SELECTEDFORINTERVIEW")
+                        },
+                      },
+                    },
+                    [_vm._v("Selected")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "javascript:void(0);" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.bulkStatusUpdate("REJECTED")
+                        },
+                      },
+                    },
+                    [_vm._v("Rejected")]
                   ),
                 ]
               ),
-              _vm._v(" "),
-              _vm._m(6),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "dropdown" }, [
@@ -21787,14 +22512,71 @@ var render = function () {
                     "aria-expanded": "false",
                   },
                 },
+                [_vm._v("\n              Bulk Action\n            ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "dropdown-menu",
+                  attrs: { "aria-labelledby": "dropdownMenuButton" },
+                },
                 [
-                  _vm._v(
-                    "\n                            Bulk Action\n                        "
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: {
+                        href: "javascript:void(0)",
+                        "data-toggle": "modal",
+                        "data-target": "#interviewModal",
+                        id: "scheduleInterview",
+                      },
+                    },
+                    [_vm._v("Schedule Interview")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    { staticClass: "dropdown-item", attrs: { href: "#" } },
+                    [_vm._v("Send Email")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    { staticClass: "dropdown-item", attrs: { href: "#" } },
+                    [_vm._v("Send Message")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.bulkApplicationDelete()
+                        },
+                      },
+                    },
+                    [_vm._v("Delete")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item",
+                      attrs: { href: "javascript:void(0)" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.bulkCvDownload()
+                        },
+                      },
+                    },
+                    [_vm._v("Download CV")]
                   ),
                 ]
               ),
-              _vm._v(" "),
-              _vm._m(7),
             ]),
           ]),
         ]),
@@ -21804,13 +22586,16 @@ var render = function () {
         _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "btn-group" }, [
             _c("div", { staticClass: "dropdown" }, [
-              _vm._m(8),
+              _vm._m(6),
               _vm._v(" "),
               _c(
                 "div",
                 {
-                  staticClass: "dropdown-menu",
-                  attrs: { "aria-labelledby": "dropdownMenuButton" },
+                  staticClass: "dropdown-menu scrollable-menu",
+                  attrs: {
+                    role: "menu",
+                    "aria-labelledby": "dropdownMenuButton",
+                  },
                 },
                 [
                   _c(
@@ -21851,13 +22636,16 @@ var render = function () {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "dropdown" }, [
-              _vm._m(9),
+              _vm._m(7),
               _vm._v(" "),
               _c(
                 "div",
                 {
-                  staticClass: "dropdown-menu",
-                  attrs: { "aria-labelledby": "dropdownMenuButton" },
+                  staticClass: "dropdown-menu scrollable-menu",
+                  attrs: {
+                    role: "menu",
+                    "aria-labelledby": "dropdownMenuButton",
+                  },
                 },
                 [
                   _c(
@@ -21952,35 +22740,59 @@ var render = function () {
                     _vm._v(" "),
                     _c("th", [_vm._v("S.N")]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Candidate")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Candidate"),
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Contact")]),
+                    _c("th", [_vm._v("Status")]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Job")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Contact"),
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Job"),
+                    ]),
                     _vm._v(" "),
                     _c("th", [_vm._v("Category")]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Applied On")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Applied On"),
+                    ]),
                     _vm._v(" "),
                     _c("th", [_vm._v("Country")]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Profile Score")]),
+                    _c("th", { staticStyle: { "min-width": "150px" } }, [
+                      _vm._v("Profile Score"),
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Experience")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Experience"),
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Education")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Education"),
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Training")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Training"),
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Language")]),
+                    _c("th", { staticStyle: { "min-width": "150px" } }, [
+                      _vm._v("Language"),
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Skill")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Skill"),
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Preferred Country")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Preferred Country"),
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("Preferred Job")]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v("Status")]),
+                    _c("th", { staticStyle: { "min-width": "200px" } }, [
+                      _vm._v("Preferred Job"),
+                    ]),
                     _vm._v(" "),
                     _c("th", [_vm._v("Action")]),
                   ]),
@@ -21989,144 +22801,345 @@ var render = function () {
                 _c(
                   "tbody",
                   _vm._l(_vm.applicants, function (applicant, index) {
-                    return _c("tr", { key: index }, [
-                      _c("td", [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.selected,
-                              expression: "selected",
+                    return _c(
+                      "tr",
+                      { key: index, attrs: { "data-id": applicant.id } },
+                      [
+                        _c("td", [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selected,
+                                expression: "selected",
+                              },
+                            ],
+                            staticClass: "rowCheck",
+                            attrs: { type: "checkbox" },
+                            domProps: {
+                              value: applicant.id,
+                              checked: Array.isArray(_vm.selected)
+                                ? _vm._i(_vm.selected, applicant.id) > -1
+                                : _vm.selected,
                             },
-                          ],
-                          attrs: { type: "checkbox" },
-                          domProps: {
-                            value: applicant.id,
-                            checked: Array.isArray(_vm.selected)
-                              ? _vm._i(_vm.selected, applicant.id) > -1
-                              : _vm.selected,
-                          },
-                          on: {
-                            change: function ($event) {
-                              var $$a = _vm.selected,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = applicant.id,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 && (_vm.selected = $$a.concat([$$v]))
+                            on: {
+                              change: function ($event) {
+                                var $$a = _vm.selected,
+                                  $$el = $event.target,
+                                  $$c = $$el.checked ? true : false
+                                if (Array.isArray($$a)) {
+                                  var $$v = applicant.id,
+                                    $$i = _vm._i($$a, $$v)
+                                  if ($$el.checked) {
+                                    $$i < 0 &&
+                                      (_vm.selected = $$a.concat([$$v]))
+                                  } else {
+                                    $$i > -1 &&
+                                      (_vm.selected = $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1)))
+                                  }
                                 } else {
-                                  $$i > -1 &&
-                                    (_vm.selected = $$a
-                                      .slice(0, $$i)
-                                      .concat($$a.slice($$i + 1)))
+                                  _vm.selected = $$c
                                 }
-                              } else {
-                                _vm.selected = $$c
-                              }
+                              },
                             },
-                          },
-                        }),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(index + 1))]),
-                      _vm._v(" "),
-                      _c("td", { staticStyle: { width: "600px" } }, [
-                        applicant.employe
-                          ? _c("span", [
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(applicant.employe.full_name)
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                                    Gender/Age: " +
-                                  _vm._s(applicant.employe.gender) +
-                                  ", 23"
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                                    Email:" +
-                                  _vm._s(applicant.employe.user.email) +
-                                  "\n                                   "
-                              ),
-                            ])
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        applicant.employe
-                          ? _c("span", [
-                              _vm._v(
-                                "\n                                Phone1:" +
-                                  _vm._s(applicant.employe.mobile_phone)
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                                Phone2:" +
-                                  _vm._s(applicant.employe.mobile_phone2) +
-                                  "\n                                 "
-                              ),
-                            ])
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        applicant.job
-                          ? _c("span", [_vm._v(_vm._s(applicant.job.title))])
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        applicant.job
-                          ? _c("span", [
-                              _vm._v(
-                                _vm._s(
-                                  applicant.job.job_category.functional_area
-                                )
-                              ),
-                            ])
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(applicant.created_at) +
-                            "\n                            "
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        applicant.employe
-                          ? _c("span", [
-                              _vm._v(_vm._s(applicant.employe.country.name)),
-                            ])
-                          : _vm._e(),
-                      ]),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "applicantStatus" }),
-                      _vm._v(" "),
-                      _vm._m(10, true),
-                    ])
+                          }),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(index + 1))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe
+                            ? _c("span", [
+                                _vm._v(
+                                  "\n                    " +
+                                    _vm._s(applicant.employe.full_name)
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                    Gender/Age: " +
+                                    _vm._s(applicant.employe.gender) +
+                                    ", 23"
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                    Email: " +
+                                    _vm._s(applicant.employe.user.email) +
+                                    "\n                  "
+                                ),
+                              ])
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "applicantStatus" }, [
+                          _c("strong", [
+                            _vm._v(
+                              _vm._s(
+                                _vm.capitalizeFirstLetter(applicant.status)
+                              )
+                            ),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe
+                            ? _c("span", [
+                                _vm._v(
+                                  "\n                    Phone1: " +
+                                    _vm._s(
+                                      applicant.employe.mobile_phone ||
+                                        "Not-Available"
+                                    )
+                                ),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                    Phone2: " +
+                                    _vm._s(
+                                      applicant.employe.mobile_phone2 ||
+                                        "Not-Available"
+                                    ) +
+                                    "\n                  "
+                                ),
+                              ])
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.job
+                            ? _c("span", [_vm._v(_vm._s(applicant.job.title))])
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.job
+                            ? _c("span", [
+                                _vm._v(
+                                  _vm._s(
+                                    applicant.job.job_category.functional_area
+                                  )
+                                ),
+                              ])
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(applicant.created_at) +
+                              "\n                "
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe
+                            ? _c("span", [
+                                _vm._v(_vm._s(applicant.employe.country.name)),
+                              ])
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe
+                            ? _c("span", [
+                                _vm._v(
+                                  _vm._s(applicant.employe.profile_score) + " %"
+                                ),
+                              ])
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe && applicant.employe.experience
+                            ? _c(
+                                "span",
+                                _vm._l(
+                                  applicant.employe.experience,
+                                  function (experience, i) {
+                                    return _c("span", { key: i }, [
+                                      experience.job_category && i == 0
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                        " +
+                                                _vm._s(
+                                                  experience.job_category
+                                                    .functional_area
+                                                ) +
+                                                ",\n                        " +
+                                                _vm._s(
+                                                  experience.working_year +
+                                                    _vm.getYearForm(
+                                                      experience.working_year
+                                                    )
+                                                ) +
+                                                ",\n                        " +
+                                                _vm._s(
+                                                  experience.working_month +
+                                                    _vm.getMonthForm(
+                                                      experience.working_month
+                                                    )
+                                                ) +
+                                                "\n                      "
+                                            ),
+                                          ])
+                                        : _vm._e(),
+                                    ])
+                                  }
+                                ),
+                                0
+                              )
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe.education_level
+                            ? _c("span", [
+                                _vm._v(
+                                  "\n                    " +
+                                    _vm._s(
+                                      applicant.employe.education_level.title
+                                    ) +
+                                    "\n                  "
+                                ),
+                              ])
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe &&
+                          applicant.employe.employee_trainings
+                            ? _c(
+                                "span",
+                                _vm._l(
+                                  applicant.employe.employee_trainings,
+                                  function (item, i) {
+                                    return _c("span", { key: i }, [
+                                      i == 0
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                        " +
+                                                _vm._s(item.training.title) +
+                                                "\n                      "
+                                            ),
+                                          ])
+                                        : _vm._e(),
+                                    ])
+                                  }
+                                ),
+                                0
+                              )
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe &&
+                          applicant.employe.employee_language
+                            ? _c(
+                                "span",
+                                _vm._l(
+                                  applicant.employe.employee_language,
+                                  function (item, i) {
+                                    return _c("span", { key: i }, [
+                                      i == 0
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                        " +
+                                                _vm._s(item.language.lang) +
+                                                "\n                      "
+                                            ),
+                                          ])
+                                        : _vm._e(),
+                                    ])
+                                  }
+                                ),
+                                0
+                              )
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe && applicant.employe.employee_skills
+                            ? _c(
+                                "span",
+                                _vm._l(
+                                  applicant.employe.employee_skills,
+                                  function (item, i) {
+                                    return _c("span", { key: i }, [
+                                      i == 0
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                        " +
+                                                _vm._s(item.skill.title) +
+                                                "\n                      "
+                                            ),
+                                          ])
+                                        : _vm._e(),
+                                    ])
+                                  }
+                                ),
+                                0
+                              )
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe &&
+                          applicant.employe.country_preference
+                            ? _c(
+                                "span",
+                                _vm._l(
+                                  applicant.employe.country_preference,
+                                  function (countryPreference, i) {
+                                    return _c("span", { key: i }, [
+                                      i == 0
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                        " +
+                                                _vm._s(countryPreference.name) +
+                                                "\n                      "
+                                            ),
+                                          ])
+                                        : _vm._e(),
+                                    ])
+                                  }
+                                ),
+                                0
+                              )
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          applicant.employe &&
+                          applicant.employe.job_category_preference
+                            ? _c(
+                                "span",
+                                _vm._l(
+                                  applicant.employe.job_category_preference,
+                                  function (categoryPreference, i) {
+                                    return _c("span", { key: i }, [
+                                      i == 0
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "\n                        " +
+                                                _vm._s(
+                                                  categoryPreference.functional_area
+                                                ) +
+                                                "\n                      "
+                                            ),
+                                          ])
+                                        : _vm._e(),
+                                    ])
+                                  }
+                                ),
+                                0
+                              )
+                            : _vm._e(),
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(8, true),
+                      ]
+                    )
                   }),
                   0
                 ),
@@ -22135,7 +23148,62 @@ var render = function () {
           ]),
         ]),
         _vm._v(" "),
-        _vm._m(11),
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "form-inline" }, [
+            _c("label", { attrs: { for: "" } }, [_vm._v("Applicant Per Page")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.limit,
+                    expression: "limit",
+                  },
+                ],
+                staticClass: "form-control rounded-0 bg-gray text-white",
+                attrs: { name: "limit" },
+                on: {
+                  change: [
+                    function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.limit = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    function ($event) {
+                      return _vm.setLimit($event)
+                    },
+                  ],
+                },
+              },
+              [
+                _c("option", { attrs: { value: "All" } }, [_vm._v("All")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "50" } }, [_vm._v("50")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "100" } }, [_vm._v("100")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "250" } }, [_vm._v("250")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "500" } }, [_vm._v("500")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "1000" } }, [_vm._v("1000")]),
+              ]
+            ),
+          ]),
+        ]),
       ]),
     ]),
     _vm._v(" "),
@@ -22155,13 +23223,13 @@ var render = function () {
         _c(
           "div",
           {
-            staticClass: "modal-dialog  modal-lg",
+            staticClass: "modal-dialog modal-lg",
             staticStyle: { width: "100%" },
             attrs: { role: "document" },
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(12),
+              _vm._m(9),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body pb-0" }, [
                 _c(
@@ -22178,7 +23246,11 @@ var render = function () {
                                 {
                                   staticClass: "form-control",
                                   attrs: { name: "predefined_filter" },
-                                  on: { change: _vm.setAdvancedFilterValue },
+                                  on: {
+                                    change: function ($event) {
+                                      return _vm.setAdvancedFilterValue($event)
+                                    },
+                                  },
                                 },
                                 [
                                   _c("option", { attrs: { value: "" } }, [
@@ -22187,12 +23259,25 @@ var render = function () {
                                   _vm._v(" "),
                                   _vm._l(
                                     _vm.applicant_filters,
-                                    function (applicant_filter) {
-                                      return _c("option", [
-                                        _vm._v(
-                                          _vm._s(applicant_filter.filter_name)
-                                        ),
-                                      ])
+                                    function (applicant_filter, index) {
+                                      return _c(
+                                        "option",
+                                        {
+                                          key: index,
+                                          domProps: {
+                                            value: applicant_filter.id,
+                                          },
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                          " +
+                                              _vm._s(
+                                                applicant_filter.filter_name
+                                              ) +
+                                              "\n                        "
+                                          ),
+                                        ]
+                                      )
                                     }
                                   ),
                                 ],
@@ -22216,7 +23301,7 @@ var render = function () {
                             },
                             [
                               _c("div", { staticClass: "row" }, [
-                                _vm._m(13),
+                                _vm._m(10),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "col-md-6" }, [
                                   _vm.filter_saving
@@ -22241,7 +23326,11 @@ var render = function () {
                                             "btn btn-warning rounded-0",
                                           attrs: { type: "submit" },
                                         },
-                                        [_vm._v("Save Filter")]
+                                        [
+                                          _vm._v(
+                                            "\n                          Save Filter\n                        "
+                                          ),
+                                        ]
                                       ),
                                   _vm._v(" "),
                                   _c(
@@ -22266,7 +23355,603 @@ var render = function () {
                     _vm._v(" "),
                     _c("div", { staticClass: "card" }, [
                       _c("div", { staticClass: "card-body" }, [
-                        _vm._m(14),
+                        _c("div", { staticClass: "search-section mx-auto" }, [
+                          _c("div", { staticClass: "row mt-1" }, [
+                            _c("div", { staticClass: "col-md-6" }, [
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(11),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "form-control select2-show-search",
+                                        attrs: {
+                                          name: "job_title",
+                                          "data-placeholder": "All Job Title",
+                                          id: "jobTitle",
+                                        },
+                                      },
+                                      [
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v("All Job Categories"),
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.job_categories,
+                                          function (job_category, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: {
+                                                  value: job_category.id,
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                " +
+                                                    _vm._s(
+                                                      job_category.functional_area
+                                                    ) +
+                                                    "\n                              "
+                                                ),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(12),
+                              _vm._v(" "),
+                              _vm._m(13),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(14),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c("div", { staticClass: "d-flex" }, [
+                                      _c(
+                                        "select",
+                                        {
+                                          staticClass:
+                                            "form-control select2-show-search w-60",
+                                          attrs: {
+                                            name: "experience",
+                                            "data-placeholder":
+                                              "Select Experience",
+                                            id: "Experience",
+                                          },
+                                        },
+                                        [
+                                          _c(
+                                            "option",
+                                            { attrs: { value: "" } },
+                                            [_vm._v("Select Experience")]
+                                          ),
+                                          _vm._v(" "),
+                                          _vm._l(10, function (i, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: { value: i },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                  " +
+                                                    _vm._s(i) +
+                                                    "\n                                "
+                                                ),
+                                              ]
+                                            )
+                                          }),
+                                        ],
+                                        2
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "w-40 my-auto",
+                                          attrs: { for: "" },
+                                        },
+                                        [_vm._v("Years Min")]
+                                      ),
+                                    ]),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(15),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "form-control select2-show-search",
+                                        attrs: {
+                                          name: "education_level",
+                                          "data-placeholder":
+                                            "Select Education Level",
+                                          id: "EducationLevel",
+                                        },
+                                      },
+                                      [
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v("Select Education Level"),
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.education_levels,
+                                          function (education_level, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: {
+                                                  value: education_level.id,
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                " +
+                                                    _vm._s(
+                                                      education_level.title
+                                                    ) +
+                                                    "\n                              "
+                                                ),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(16),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "form-control select2-show-search",
+                                        attrs: {
+                                          name: "skills[]",
+                                          id: "Skills",
+                                          multiple: "",
+                                        },
+                                      },
+                                      [
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v("Select Skills"),
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.skills,
+                                          function (skill, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: { value: skill.id },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                " +
+                                                    _vm._s(skill.title) +
+                                                    "\n                              "
+                                                ),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-6" }, [
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(17),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "form-control select2-show-search",
+                                        attrs: {
+                                          name: "application_status",
+                                          "data-placeholder":
+                                            "Select Application Status",
+                                          id: "ApplicationStatus",
+                                        },
+                                      },
+                                      [
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v(
+                                            "\n                                Select Application Status\n                              "
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.applicationStatus,
+                                          function (application_status, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: {
+                                                  value: application_status,
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                " +
+                                                    _vm._s(
+                                                      _vm.capitalizeFirstLetter(
+                                                        application_status
+                                                      )
+                                                    ) +
+                                                    "\n                              "
+                                                ),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(18),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(19),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c("div", { staticClass: "row" }, [
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _c("div", { staticClass: "d-flex" }, [
+                                          _c(
+                                            "select",
+                                            {
+                                              staticClass:
+                                                "form-control select2-show-search",
+                                              attrs: {
+                                                name: "min_age",
+                                                "data-placeholder": "Min",
+                                                id: "MinAge",
+                                              },
+                                            },
+                                            [
+                                              _c(
+                                                "option",
+                                                { attrs: { value: "" } },
+                                                [_vm._v("Min")]
+                                              ),
+                                              _vm._v(" "),
+                                              _vm._l(
+                                                _vm.minAge,
+                                                function (n, index) {
+                                                  return _c(
+                                                    "option",
+                                                    {
+                                                      key: index,
+                                                      domProps: { value: n },
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                      " +
+                                                          _vm._s(n) +
+                                                          "\n                                    "
+                                                      ),
+                                                    ]
+                                                  )
+                                                }
+                                              ),
+                                            ],
+                                            2
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "label",
+                                            {
+                                              staticClass: "my-auto ml-1",
+                                              attrs: { for: "" },
+                                            },
+                                            [_vm._v("years to")]
+                                          ),
+                                        ]),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _c("div", { staticClass: "d-flex" }, [
+                                          _c(
+                                            "select",
+                                            {
+                                              staticClass:
+                                                "form-control select2-show-search",
+                                              attrs: {
+                                                name: "max_age",
+                                                "data-placeholder": "Max",
+                                                id: "MaxAge",
+                                              },
+                                            },
+                                            [
+                                              _c(
+                                                "option",
+                                                { attrs: { value: "" } },
+                                                [_vm._v("Max")]
+                                              ),
+                                              _vm._v(" "),
+                                              _vm._l(
+                                                _vm.maxAge,
+                                                function (n, index) {
+                                                  return _c(
+                                                    "option",
+                                                    {
+                                                      key: index,
+                                                      domProps: { value: n },
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                      " +
+                                                          _vm._s(n) +
+                                                          "\n                                    "
+                                                      ),
+                                                    ]
+                                                  )
+                                                }
+                                              ),
+                                            ],
+                                            2
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "label",
+                                            {
+                                              staticClass: "my-auto ml-1",
+                                              attrs: { for: "" },
+                                            },
+                                            [_vm._v("years")]
+                                          ),
+                                        ]),
+                                      ]),
+                                    ]),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(20),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "form-control select2-show-search",
+                                        attrs: {
+                                          name: "trainings[]",
+                                          multiple: "",
+                                          id: "Trainings",
+                                        },
+                                      },
+                                      [
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v("Select Trainings"),
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.trainings,
+                                          function (training, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: {
+                                                  value: training.id,
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                " +
+                                                    _vm._s(training.title) +
+                                                    "\n                              "
+                                                ),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(21),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "form-control select2-show-search",
+                                        attrs: {
+                                          name: "languages[]",
+                                          multiple: "",
+                                          id: "Languages",
+                                        },
+                                      },
+                                      [
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v("Select Languages"),
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.languages,
+                                          function (language, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: {
+                                                  value: language.id,
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                " +
+                                                    _vm._s(language.lang) +
+                                                    "\n                              "
+                                                ),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(22),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "form-control select2-show-search",
+                                        attrs: {
+                                          name: "preferred_jobs[]",
+                                          multiple: "",
+                                          id: "PreferredJobs",
+                                        },
+                                      },
+                                      [
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v("Select Preferred Job"),
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.preferredCategories,
+                                          function (preferredCategory, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: {
+                                                  value: preferredCategory.id,
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                " +
+                                                    _vm._s(
+                                                      preferredCategory.functional_area
+                                                    ) +
+                                                    "\n                              "
+                                                ),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _vm._m(23),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-8" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "form-control select2-show-search",
+                                        attrs: {
+                                          name: "preferred_countries[]",
+                                          multiple: "",
+                                          id: "PreferredCountries",
+                                        },
+                                      },
+                                      [
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v(
+                                            "\n                                Select Preferred Country\n                              "
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.preferredCountries,
+                                          function (preferredCountry, index) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: index,
+                                                domProps: {
+                                                  value: preferredCountry.id,
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                " +
+                                                    _vm._s(
+                                                      preferredCountry.name
+                                                    ) +
+                                                    "\n                              "
+                                                ),
+                                              ]
+                                            )
+                                          }
+                                        ),
+                                      ],
+                                      2
+                                    ),
+                                  ]),
+                                ]),
+                              ]),
+                            ]),
+                          ]),
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-md-12" }, [
@@ -22300,7 +23985,9 @@ var render = function () {
                                     },
                                     [
                                       _c("i", { staticClass: "fa fa-search" }),
-                                      _vm._v(" Search Now"),
+                                      _vm._v(
+                                        " Search Now\n                      "
+                                      ),
                                     ]
                                   ),
                             ]),
@@ -22309,6 +23996,58 @@ var render = function () {
                       ]),
                     ]),
                   ]
+                ),
+              ]),
+            ]),
+          ]
+        ),
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "interviewModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "interviewModalLabel",
+          "aria-hidden": "true",
+        },
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(24),
+              _vm._v(" "),
+              _vm._m(25),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                  },
+                  [_vm._v("\n            Close\n          ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button", id: "saveScheduleInterview" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.scheduleInterview()
+                      },
+                    },
+                  },
+                  [_vm._v("\n            Schedule Interview\n          ")]
                 ),
               ]),
             ]),
@@ -22390,76 +24129,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "div",
-      {
-        staticClass: "dropdown-menu",
-        attrs: { "aria-labelledby": "dropdownMenuButton" },
-      },
-      [
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Unscreened"),
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Shortlisted"),
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Interviewed"),
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Selected"),
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Rejected"),
-        ]),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "dropdown-menu",
-        attrs: { "aria-labelledby": "dropdownMenuButton" },
-      },
-      [
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Schedule Interview"),
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Send Email"),
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Send Message"),
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Delete"),
-        ]),
-        _vm._v(" "),
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Download CV"),
-        ]),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
       "button",
       {
         staticClass:
-          "btn btn-outline-primary dropdown-toggle rounded-0 mr-2 btn-sm",
+          "\n                btn btn-outline-primary\n                dropdown-toggle\n                rounded-0\n                mr-2\n                btn-sm\n              ",
         attrs: {
           type: "button",
           id: "",
@@ -22469,7 +24142,7 @@ var staticRenderFns = [
       },
       [
         _c("i", { staticClass: "fa fa-filter mr-2" }),
-        _vm._v("All Job Category\n                        "),
+        _vm._v("All Job Category\n            "),
       ]
     )
   },
@@ -22481,7 +24154,7 @@ var staticRenderFns = [
       "button",
       {
         staticClass:
-          "btn btn-outline-primary dropdown-toggle rounded-0 mr-2 btn-sm",
+          "\n                btn btn-outline-primary\n                dropdown-toggle\n                rounded-0\n                mr-2\n                btn-sm\n              ",
         attrs: {
           type: "button",
           "data-toggle": "dropdown",
@@ -22490,7 +24163,7 @@ var staticRenderFns = [
       },
       [
         _c("i", { staticClass: "fa fa-filter mr-2" }),
-        _vm._v("All Countries\n                        "),
+        _vm._v("All Countries\n            "),
       ]
     )
   },
@@ -22512,58 +24185,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12" }, [
-      _c("div", { staticClass: "form-inline" }, [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Applicant Per Page")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            staticClass: "form-control rounded-0 bg-gray text-white",
-            attrs: { name: "limit" },
-          },
-          [
-            _c("option", { attrs: { value: "All" } }, [
-              _vm._v("All\n                        "),
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "10" } }, [
-              _vm._v("\n                            10"),
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "50" } }, [
-              _vm._v("50\n                        "),
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "100" } }, [
-              _vm._v("100\n                        "),
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "250" } }, [
-              _vm._v("250\n                        "),
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "500" } }, [
-              _vm._v("500\n                        "),
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "1000" } }, [
-              _vm._v("1000\n                        "),
-            ]),
-          ]
-        ),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header text-center" }, [
       _c(
         "h5",
-        { staticClass: "modal-title ", attrs: { id: "newSkillModalLabel" } },
-        [_vm._v("Advanced Applicants Search")]
+        { staticClass: "modal-title", attrs: { id: "newSkillModalLabel" } },
+        [_vm._v("\n            Advanced Applicants Search\n          ")]
       ),
       _vm._v(" "),
       _c(
@@ -22605,459 +24231,299 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "search-section mx-auto" }, [
-      _c("div", { staticClass: "row mt-1" }, [
-        _c("div", { staticClass: "col-md-6" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Category"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: {
-                      name: "job_title",
-                      "data-placeholder": "All Job Title",
-                      id: "jobTitle",
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("All Job Categories"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Gender"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: {
-                      name: "gender",
-                      "data-placeholder": "Select Gender",
-                      id: "gender",
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Gender"),
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Male" } }, [
-                      _vm._v("Male"),
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Female" } }, [
-                      _vm._v("Female"),
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Other" } }, [
-                      _vm._v("Other"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Applied Date (From)"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c("input", {
-                  staticClass: "form-control from_date",
-                  attrs: {
-                    type: "text",
-                    name: "from_date",
-                    placeholder: "25-01-2022",
-                    id: "from_date",
-                  },
-                }),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Applied Date (To)"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c("input", {
-                  staticClass: "form-control to_date",
-                  attrs: {
-                    type: "text",
-                    name: "to_date",
-                    placeholder: "25-02-2022",
-                    id: "to_date",
-                  },
-                }),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Experience"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c("div", { staticClass: "d-flex" }, [
-                  _c(
-                    "select",
-                    {
-                      staticClass: "form-control select2-show-search w-60",
-                      attrs: {
-                        name: "experience",
-                        "data-placeholder": "Select Experience",
-                        id: "Experience",
-                      },
-                    },
-                    [
-                      _c("option", { attrs: { value: "" } }, [
-                        _vm._v("Select Experience"),
-                      ]),
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    { staticClass: "w-40 my-auto", attrs: { for: "" } },
-                    [_vm._v("Years Min")]
-                  ),
-                ]),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Education"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: {
-                      name: "education_level",
-                      "data-placeholder": "Select Education Level",
-                      id: "EducationLevel",
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Education Level"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Skills"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: { name: "skills[]", id: "Skills", multiple: "" },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Skills"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Category"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-4 my-auto" }, [
+          _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+            _vm._v("Gender"),
           ]),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-6" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Application Status"),
-                ]),
-              ]),
+        _c("div", { staticClass: "col-md-8" }, [
+          _c(
+            "select",
+            {
+              staticClass: "form-control select2-show-search",
+              attrs: {
+                name: "gender",
+                "data-placeholder": "Select Gender",
+                id: "gender",
+              },
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("Select Gender")]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: {
-                      name: "application_status",
-                      "data-placeholder": "Select Application Status",
-                      id: "ApplicationStatus",
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Application Status"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
+              _c("option", { attrs: { value: "Male" } }, [_vm._v("Male")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "Female" } }, [_vm._v("Female")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "Other" } }, [_vm._v("Other")]),
+            ]
+          ),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-4 my-auto" }, [
+          _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+            _vm._v("Applied Date (From)"),
           ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-8" }, [
+          _c("input", {
+            staticClass: "form-control from_date",
+            attrs: {
+              type: "text",
+              name: "from_date",
+              placeholder: "25-01-2022",
+              id: "from_date",
+              readonly: "",
+            },
+          }),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-4 my-auto" }, [
+          _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+            _vm._v("Applied Date (To)"),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-8" }, [
+          _c("input", {
+            staticClass: "form-control to_date",
+            attrs: {
+              type: "text",
+              name: "to_date",
+              placeholder: "25-02-2022",
+              id: "to_date",
+              readonly: "",
+            },
+          }),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Experience"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Education"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Skills"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Application Status"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-4 my-auto" }, [
+          _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+            _vm._v("Profile Score"),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-8" }, [
+          _c("input", {
+            attrs: {
+              type: "hidden",
+              name: "profile_score",
+              id: "profileScore",
+            },
+          }),
           _vm._v(" "),
+          _c("div", { attrs: { id: "profileScoreSlider" } }, [
+            _c(
+              "span",
+              {
+                staticStyle: { left: "0" },
+                attrs: { id: "rangeValue", tabindex: "0" },
+              },
+              [_vm._v("0%")]
+            ),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Age Range"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Training"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Language"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Preferred Job"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 my-auto" }, [
+      _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
+        _vm._v("Preferred Country"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "interviewModalLabel" } },
+        [_vm._v("\n            Schedule Interview\n          ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close",
+          },
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-body" }, [
+      _c(
+        "form",
+        { attrs: { action: "#", method: "#", id: "scheduleInterViewForm" } },
+        [
           _c("div", { staticClass: "form-group" }, [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Profile Score"),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c("label", { staticClass: "form-label" }, [
+                  _vm._v("Interview Date"),
                 ]),
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-md-8" }, [
                 _c("input", {
-                  attrs: {
-                    type: "hidden",
-                    name: "profile_score",
-                    id: "profileScore",
-                  },
+                  staticClass: "form-control",
+                  attrs: { type: "date", name: "interview_date" },
                 }),
                 _vm._v(" "),
-                _c("div", { attrs: { id: "profileScoreSlider" } }, [
-                  _c(
-                    "span",
-                    {
-                      staticStyle: { left: "0" },
-                      attrs: { id: "rangeValue", tabindex: "0" },
-                    },
-                    [_vm._v("0%")]
-                  ),
-                ]),
+                _c("span", {
+                  staticClass: "require text-danger interview_date",
+                }),
               ]),
             ]),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Age Range"),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c("label", { staticClass: "form-label" }, [
+                  _vm._v("Interview Time"),
                 ]),
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-md-8" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("div", { staticClass: "d-flex" }, [
-                      _c(
-                        "select",
-                        {
-                          staticClass: "form-control select2-show-search",
-                          attrs: {
-                            name: "min_age",
-                            "data-placeholder": "Min",
-                            id: "MinAge",
-                          },
-                        },
-                        [
-                          _c("option", { attrs: { value: "" } }, [
-                            _vm._v("Min"),
-                          ]),
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "label",
-                        { staticClass: "my-auto ml-1", attrs: { for: "" } },
-                        [_vm._v("years to")]
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-6" }, [
-                    _c("div", { staticClass: "d-flex" }, [
-                      _c(
-                        "select",
-                        {
-                          staticClass: "form-control select2-show-search",
-                          attrs: {
-                            name: "max_age",
-                            "data-placeholder": "Max",
-                            id: "MaxAge",
-                          },
-                        },
-                        [
-                          _c("option", { attrs: { value: "" } }, [
-                            _vm._v("Max"),
-                          ]),
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "label",
-                        { staticClass: "my-auto ml-1", attrs: { for: "" } },
-                        [_vm._v("years")]
-                      ),
-                    ]),
-                  ]),
-                ]),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "time", name: "interview_time" },
+                }),
+                _vm._v(" "),
+                _c("span", {
+                  staticClass: "require text-danger interview_time",
+                }),
               ]),
             ]),
           ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Training"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: {
-                      name: "trainings[]",
-                      multiple: "",
-                      id: "Trainings",
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Trainings"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Language"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: {
-                      name: "languages[]",
-                      multiple: "",
-                      id: "Languages",
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Languages"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Preferred Job"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: {
-                      name: "preferred_jobs[]",
-                      multiple: "",
-                      id: "PreferredJobs",
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Preferred Job"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-4 my-auto" }, [
-                _c("label", { staticClass: "form-label", attrs: { for: "" } }, [
-                  _vm._v("Preferred Country"),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control select2-show-search",
-                    attrs: {
-                      name: "preferred_countries[]",
-                      multiple: "",
-                      id: "PreferredCountries",
-                    },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Preferred Country"),
-                    ]),
-                  ]
-                ),
-              ]),
-            ]),
-          ]),
-        ]),
-      ]),
+        ]
+      ),
     ])
   },
 ]
@@ -35461,6 +36927,11 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/nonce */
+/******/ 	(() => {
+/******/ 		__webpack_require__.nc = undefined;
 /******/ 	})();
 /******/ 	
 /************************************************************************/

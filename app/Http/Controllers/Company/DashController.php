@@ -108,13 +108,13 @@ class DashController extends Controller
                 [
                     'title' => 'New Message',
                     'link' => '#',
-                    'totalcount' => 0,
+                    'totalcount' => '',
                     'icon' => '/uploads/site/svgs/mail.svg',
                 ],
                 [
                     'title' => 'Notifications',
-                    'link' => route('company.get_notifications'),
-                    'totalcount' => Auth::user()->unReadNotifications->count(),
+                    'link' => route('company.get-notifications'),
+                    'totalcount' => Auth::user()->unReadNotifications->count() ?: '',
                     'icon' => '/uploads/site/svgs/megaphone.svg',
                 ],
             ],
@@ -537,18 +537,5 @@ class DashController extends Controller
     public function getNotifications()
     {
         return $this->company_view('company.notifications', []);
-    }
-
-    public function readNotifications($type, $notification_id)
-    {
-        $user = \Auth::user();
-        if ($type == 'single'){
-            $notification = $user->notifications()->where('id',$notification_id)->first();
-            $notification->markAsRead();
-        }elseif($type == 'unread'){
-            $user->unreadNotifications->markAsRead();
-        }
-
-        return redirect()->back();
     }
 }

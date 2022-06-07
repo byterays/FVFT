@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Company;
 
-use App\Enum\JobApplicationStatus;
-use App\Traits\Api\ApiMethods;
 use PDF;
 use App\Models\Skill;
 use App\Models\Company;
@@ -13,10 +11,13 @@ use App\Models\Language;
 use App\Models\Training;
 use App\Models\JobCategory;
 use Illuminate\Http\Request;
+use App\Enum\ApplicantStatus;
 use App\Models\JobPreference;
 use App\Models\EducationLevel;
 use App\Models\JobApplication;
+use App\Traits\Api\ApiMethods;
 use App\Models\ApplicantFilter;
+use App\Enum\JobApplicationStatus;
 use Illuminate\Support\Facades\DB;
 use App\Traits\Site\CompanyMethods;
 use App\Http\Controllers\Controller;
@@ -97,8 +98,10 @@ class NewApplicantController extends Controller
         });
 
         $query->with([
-            'employe', 'employe.country', 'employe.user',
-            'job', 'job.job_category',
+            'employe', 'employe.country:id,name', 'employe.user',
+            'job', 'job.job_category', 'employe.experience.country:id,name', 'employe.experience.job_category:id,functional_area',
+            'employe.education_level:id,title', 'employe.employeeTrainings.training:id,title', 'employe.employeeLanguage.language:id,lang',
+            'employe.employeeSkills.skill:id,title', 'employe.countryPreference:id,name', 'employe.jobCategoryPreference:id,functional_area'        
         ]);
 
         // filter
@@ -138,7 +141,13 @@ class NewApplicantController extends Controller
 
         }
 
-        $applicants = $query->paginate(50);
+        if ($request->limit != 'All') {
+            $applicants = $query->paginate($request->limit ?? 2);
+        } else {
+            $applicants = $query->paginate($query->count());
+        }
+
+        // $applicants = $query->paginate(2);
 
         return $this->sendResponse(compact('applicants'),'success','',true);
     }
@@ -169,6 +178,15 @@ class NewApplicantController extends Controller
         $languages = Language::select("id", "lang")->get();
         $preferredCategories = JobCategory::whereIn("id", $jobPreferredCategories)->select("id", "functional_area")->get();
         $preferredCountries = Country::whereIn("id", $jobPreferredCountries)->select("id", "name")->get();
+        $applicationStatus = [
+            ApplicantStatus::PENDING, 
+            ApplicantStatus::SHORTLISTED,
+            ApplicantStatus::SELECTEDFORINTERVIEW,
+            ApplicantStatus::INTERVIEWED,
+            ApplicantStatus::ACCEPTED,
+            ApplicantStatus::REJECTED,
+            ApplicantStatus::REDLISTED,
+        ];
         $applicant_filters = ApplicantFilter::get();
 
         return $this->sendResponse(
@@ -182,6 +200,7 @@ class NewApplicantController extends Controller
                 'languages',
                 'preferredCategories',
                 'preferredCountries',
+                'applicationStatus',
                 'applicant_filters'
             ),'success','',true);
     }
@@ -226,7 +245,7 @@ class NewApplicantController extends Controller
             }
             DB::commit();
             return response()->json(['msg' => "Application Status Updated", 'success' => true, 'statuses' => json_encode($statuses)]);
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => $e->getMessage(), 'success' => false]);
         }
@@ -277,13 +296,14 @@ class NewApplicantController extends Controller
             $pdf->save($path . $fileName);
             $pdf = public_path('uploads/cv/' . $fileName);
             return response()->download($pdf);
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage(), 'success' => false]);
         }
     }
 
     public function bulkApplicationDelete(Request $request)
     {
+        // dd($request->ids);
         try {
             DB::beginTransaction();
             $ids = $request->ids;
