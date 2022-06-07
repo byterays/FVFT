@@ -73,7 +73,7 @@
                                                                             class="form-control select2-show-search">
                                                                         <option value="">{{ __('Select Job Category') }}
                                                                         </option>
-                                                                        @foreach ($job_categories as $job_category)
+                                                                        @foreach ($all_job_categories as $job_category)
                                                                             <option value="{{ $job_category->id }}">
                                                                                 {{ $job_category->functional_area }}</option>
                                                                         @endforeach
@@ -304,7 +304,7 @@
                             <select name="categories[]" data-placeholder="Select Job Category"
                                 class="form-control select2-show-search">
                                 <option value="">{{ __('Select Job Category') }}</option>
-                                @foreach ($job_categories as $job_category)
+                                @foreach ($all_job_categories as $job_category)
                 <option value="{{ $job_category->id }}">
                                         {{ $job_category->functional_area }}</option>
                                 @endforeach

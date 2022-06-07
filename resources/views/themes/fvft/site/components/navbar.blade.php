@@ -128,7 +128,7 @@
             <span>
                 <a class="btn btn-danger rounded-0  mt-1"
                     href="{{ url('lang/' . ($current_locale == 'en' ? 'np' : 'en')) }}">
-                    {{ $current_locale == 'en' ? 'Nepali' : 'English' }}
+                    {{ $current_locale == 'en' ? 'नेपाली' : 'English' }}
                 </a>
             </span>
         </li>

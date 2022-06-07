@@ -346,7 +346,12 @@
             <!--<label for="" class="my-auto">Select All 2 Applicants On This Job</label>-->
             <!--</div>-->
           </div>
-          <div class="table-responsive">
+            <div class="text-center mt-4" v-if="!applicants.length">
+                <hr>
+                <img src="/images/flat-icons/empty-box.png" alt="" style="width: 200px;opacity: .5;"><br>
+                <p>No applicants.</p>
+            </div>
+          <div v-else class="table-responsive">
             <table class="table table-bordered border-top mb-0">
               <thead>
                 <tr>
@@ -565,7 +570,7 @@
             </table>
           </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12" v-if="applicants.length">
           <div class="form-inline">
             <label for="">Applicant Per Page</label>
             <select
