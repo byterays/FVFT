@@ -1368,7 +1368,7 @@ export default {
       this.filter.formData = JSON.stringify(formValue, null, 2);
       // console.log(this.filter.formData);
       this.getApplicants();
-      resetAdvancedSearchForm();
+      this.resetAdvancedSearchForm();
       $("#advancedFilter").modal("hide");
 
       // this.getApplicants(0, 50, JSON.stringify(this.filter), myFormData);
@@ -1399,6 +1399,10 @@ export default {
 
     showAdvancedFilter() {
       $("#advancedFilter").modal("show");
+      this.filter.query = "";
+      this.filter.category = "";
+      this.filter.application_status = "";
+      this.filter.country = "";
     },
     resetAdvancedSearchForm() {
       $("#FilterForm")[0].reset();
