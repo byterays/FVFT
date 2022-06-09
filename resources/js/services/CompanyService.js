@@ -1,7 +1,8 @@
 import Api from './Api';
 
 export default {
-    getApplicants(page,limit,filter){
+    getApplicants(page,limit,filter, formData){
+        // return Api().get('/company/web-api/getApplicants', {params: {page: page, limit: limit, filter: filter, form_data: formData}});
         return Api().get('/company/web-api/getApplicants?page=' + page + '&limit='+ limit + '&filter=' + filter);
     },
 
