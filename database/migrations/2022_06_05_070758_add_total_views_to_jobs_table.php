@@ -14,7 +14,7 @@ class AddTotalViewsToJobsTable extends Migration
     public function up()
     {
         Schema::table('jobs', function (Blueprint $table) {
-            $table->unsignedInteger('total_views')->nullable();
+            $table->unsignedInteger('total_views')->nullable()->default(0);
         });
     }
 
