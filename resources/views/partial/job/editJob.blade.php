@@ -371,7 +371,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="accomodation" class="form-label">Accomodation&nbsp;<span
+                                <label for="accomodation" class="form-label">Accommodation&nbsp;<span
                                         class="req">*</span></label>
                             </div>
                             <div class="col-md-8">
