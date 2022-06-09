@@ -2802,471 +2802,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -22376,9 +21911,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "item-card-text" }, [
                   _c("h4", { staticClass: "mb-0" }, [
-                    _vm._v(
-                      "\n                                    Selected Applications"
-                    ),
+                    _vm._v("Selected Applications"),
                     _c("span", [_vm._v(_vm._s(_vm.status_count["accepted"]))]),
                   ]),
                 ]),
@@ -22405,9 +21938,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "item-card-text" }, [
                   _c("h4", { staticClass: "mb-0" }, [
-                    _vm._v(
-                      "\n                                    Rejected Applications"
-                    ),
+                    _vm._v("Rejected Applications"),
                     _c("span", [_vm._v(_vm._s(_vm.status_count["rejected"]))]),
                   ]),
                 ]),
@@ -22417,362 +21948,341 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "row mb-4" }, [
-        _c("div", { staticClass: "col-md-12 d-flex justify-content-center" }, [
-          _c("form", { attrs: { action: "", method: "GET" } }, [
-            _c("div", { staticClass: "input-group input-icons" }, [
-              _c("i", { staticClass: "fa fa-search-icon" }),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.filter.query,
-                    expression: "filter.query",
-                  },
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  placeholder: "Search Applicants",
-                  "aria-label": "Search Applicants",
-                  "aria-describedby": "button-addon2",
-                },
-                domProps: { value: _vm.filter.query },
-                on: {
-                  keypress: _vm.setFilter,
-                  keydown: _vm.setFilter,
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.filter, "query", $event.target.value)
+      _c("div", { staticClass: "row" }, [
+        _vm._m(6),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12 mb-3" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("span", { staticClass: "col-md-3 text-right" }, [
+              _vm._v("Set Application Status: "),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "btn-group  col-md-9" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary btn-sm",
+                  attrs: { disabled: !_vm.selected.length },
+                  on: {
+                    click: function ($event) {
+                      return _vm.bulkStatusUpdate("pending")
+                    },
                   },
                 },
-              }),
+                [_vm._v("Unscreened")]
+              ),
               _vm._v(" "),
-              _c("div", { staticClass: "input-group-append" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary btn-sm",
+                  attrs: { disabled: !_vm.selected.length },
+                  on: {
+                    click: function ($event) {
+                      return _vm.bulkStatusUpdate("shortlisted")
+                    },
+                  },
+                },
+                [_vm._v("Shortlisted")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary btn-sm",
+                  attrs: { disabled: !_vm.selected.length },
+                  on: {
+                    click: function ($event) {
+                      return _vm.bulkStatusUpdate("INTERVIEWED")
+                    },
+                  },
+                },
+                [_vm._v("Interviewed")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary btn-sm",
+                  attrs: { disabled: !_vm.selected.length },
+                  on: {
+                    click: function ($event) {
+                      return _vm.bulkStatusUpdate("SELECTEDFORINTERVIEW")
+                    },
+                  },
+                },
+                [_vm._v("Selected")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary btn-sm",
+                  attrs: { disabled: !_vm.selected.length },
+                  on: {
+                    click: function ($event) {
+                      return _vm.bulkStatusUpdate("REJECTED")
+                    },
+                  },
+                },
+                [_vm._v("Rejected")]
+              ),
+            ]),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12 mb-3" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("span", { staticClass: "col-md-3 text-right" }, [
+              _vm._v("Actions: "),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "btn-group col-md-9" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary btn-sm",
+                  attrs: {
+                    disabled: !_vm.selected.length,
+                    "data-toggle": "modal",
+                    "data-target": "#interviewModal",
+                  },
+                },
+                [_vm._v("Schedule Interview")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary btn-sm",
+                  attrs: { disabled: !_vm.selected.length },
+                },
+                [_vm._v("Send Email")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary btn-sm",
+                  attrs: { disabled: !_vm.selected.length },
+                },
+                [_vm._v("Send Message")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary btn-sm",
+                  attrs: { disabled: !_vm.selected.length },
+                  on: {
+                    click: function ($event) {
+                      return _vm.bulkApplicationDelete()
+                    },
+                  },
+                },
+                [_vm._v("Delete")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary btn-sm",
+                  attrs: { disabled: !_vm.selected.length },
+                  on: {
+                    click: function ($event) {
+                      return _vm.bulkCvDownload()
+                    },
+                  },
+                },
+                [_vm._v("Download CV")]
+              ),
+            ]),
+          ]),
+        ]),
+        _vm._v(" "),
+        _vm._m(7),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "d-flex" }, [
+            _c("div", { staticClass: "row mb-1 mr-0" }, [
+              _c(
+                "div",
+                { staticClass: "col-md-12 d-flex justify-content-center" },
+                [
+                  _c("form", { attrs: { action: "", method: "GET" } }, [
+                    _c("div", { staticClass: "input-group input-icons" }, [
+                      _c("i", { staticClass: "fa fa-search-icon" }),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.filter.query,
+                            expression: "filter.query",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          placeholder: "Search Applicants",
+                          "aria-label": "Search Applicants",
+                          "aria-describedby": "button-addon2",
+                        },
+                        domProps: { value: _vm.filter.query },
+                        on: {
+                          keypress: _vm.setFilter,
+                          keydown: _vm.setFilter,
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.filter, "query", $event.target.value)
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "input-group-append" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary rounded-0 ml-2",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function ($event) {
+                                $event.preventDefault()
+                                return _vm.showAdvancedFilter.apply(
+                                  null,
+                                  arguments
+                                )
+                              },
+                            },
+                          },
+                          [
+                            _c("i", { staticClass: "fa fa-filter mr-2" }),
+                            _vm._v(
+                              "Advanced Search\n                                        "
+                            ),
+                          ]
+                        ),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "form-control",
+                      attrs: { type: "hidden", name: "limit", value: "" },
+                    }),
+                  ]),
+                ]
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "btn-group" }, [
+              _c("div", { staticClass: "dropdown" }, [
+                _vm._m(8),
+                _vm._v(" "),
                 _c(
-                  "button",
+                  "div",
                   {
-                    staticClass: "btn btn-primary rounded-0 ml-2",
-                    attrs: { type: "submit" },
-                    on: {
-                      click: function ($event) {
-                        $event.preventDefault()
-                        return _vm.showAdvancedFilter.apply(null, arguments)
-                      },
+                    staticClass: "dropdown-menu scrollable-menu",
+                    attrs: {
+                      role: "menu",
+                      "aria-labelledby": "dropdownMenuButton",
                     },
                   },
                   [
-                    _vm._v(
-                      "\n                                Advanced Search\n                            "
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function ($event) {
+                            $event.preventDefault()
+                            return _vm.setCategoryFilter("")
+                          },
+                        },
+                      },
+                      [_vm._v("All Categories")]
                     ),
-                  ]
+                    _vm._v(" "),
+                    _vm._l(_vm.job_categories, function (category, i) {
+                      return _c(
+                        "a",
+                        {
+                          key: i,
+                          staticClass: "dropdown-item",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function ($event) {
+                              $event.preventDefault()
+                              return _vm.setCategoryFilter(category.id)
+                            },
+                          },
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(category.functional_area) +
+                              "\n                                "
+                          ),
+                        ]
+                      )
+                    }),
+                  ],
+                  2
                 ),
               ]),
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "hidden", name: "limit", value: "" },
-            }),
-          ]),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12 d-flex mb-4" }, [
-          _c("div", { staticClass: "btn-group" }, [
-            _c("div", { staticClass: "dropdown" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary dropdown-toggle rounded-0 mr-2",
-                  attrs: {
-                    type: "button",
-                    disabled: !_vm.selected.length,
-                    "data-toggle": "dropdown",
-                    "aria-expanded": "false",
-                    id: "applicationStatusButton",
-                  },
-                },
-                [
-                  _vm._v(
-                    "\n                            Set Application Status\n                        "
-                  ),
-                ]
-              ),
               _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "dropdown-menu",
-                  attrs: { "aria-labelledby": "dropdownMenuButton" },
-                },
-                [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "dropdown-item",
-                      attrs: { href: "javascript:void(0);" },
-                      on: {
-                        click: function ($event) {
-                          return _vm.bulkStatusUpdate("pending")
-                        },
-                      },
+              _c("div", { staticClass: "dropdown" }, [
+                _vm._m(9),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "dropdown-menu scrollable-menu",
+                    attrs: {
+                      role: "menu",
+                      "aria-labelledby": "dropdownMenuButton",
                     },
-                    [_vm._v("Unscreened")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "dropdown-item",
-                      attrs: { href: "javascript:void(0);" },
-                      on: {
-                        click: function ($event) {
-                          return _vm.bulkStatusUpdate("shortlisted")
-                        },
-                      },
-                    },
-                    [_vm._v("Shortlisted")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "dropdown-item",
-                      attrs: { href: "javascript:void(0);" },
-                      on: {
-                        click: function ($event) {
-                          return _vm.bulkStatusUpdate("INTERVIEWED")
-                        },
-                      },
-                    },
-                    [_vm._v("Interviewed")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "dropdown-item",
-                      attrs: { href: "javascript:void(0);" },
-                      on: {
-                        click: function ($event) {
-                          return _vm.bulkStatusUpdate("SELECTEDFORINTERVIEW")
-                        },
-                      },
-                    },
-                    [_vm._v("Selected")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "dropdown-item",
-                      attrs: { href: "javascript:void(0);" },
-                      on: {
-                        click: function ($event) {
-                          return _vm.bulkStatusUpdate("REJECTED")
-                        },
-                      },
-                    },
-                    [_vm._v("Rejected")]
-                  ),
-                ]
-              ),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "dropdown" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary dropdown-toggle rounded-0",
-                  attrs: {
-                    type: "button",
-                    disabled: !_vm.selected.length,
-                    "data-toggle": "dropdown",
-                    "aria-expanded": "false",
-                    id: "bulkActionButton",
                   },
-                },
-                [
-                  _vm._v(
-                    "\n                            Bulk Action\n                        "
-                  ),
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "dropdown-menu",
-                  attrs: { "aria-labelledby": "dropdownMenuButton" },
-                },
-                [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "dropdown-item",
-                      attrs: {
-                        href: "javascript:void(0)",
-                        "data-toggle": "modal",
-                        "data-target": "#interviewModal",
-                        id: "scheduleInterview",
-                      },
-                    },
-                    [_vm._v("Schedule Interview")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("Send Email")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("Send Message")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "dropdown-item",
-                      attrs: { href: "javascript:void(0)" },
-                      on: {
-                        click: function ($event) {
-                          return _vm.bulkApplicationDelete()
-                        },
-                      },
-                    },
-                    [_vm._v("Delete")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "dropdown-item",
-                      attrs: { href: "javascript:void(0)" },
-                      on: {
-                        click: function ($event) {
-                          return _vm.bulkCvDownload()
-                        },
-                      },
-                    },
-                    [_vm._v("Download CV")]
-                  ),
-                ]
-              ),
-            ]),
-          ]),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "btn-group" }, [
-            _c("div", { staticClass: "dropdown" }, [
-              _vm._m(6),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "dropdown-menu scrollable-menu",
-                  attrs: {
-                    role: "menu",
-                    "aria-labelledby": "dropdownMenuButton",
-                  },
-                },
-                [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "dropdown-item",
-                      attrs: { href: "#" },
-                      on: {
-                        click: function ($event) {
-                          $event.preventDefault()
-                          return _vm.setCategoryFilter("")
-                        },
-                      },
-                    },
-                    [_vm._v("All Categories")]
-                  ),
-                  _vm._v(" "),
-                  _vm._l(_vm.job_categories, function (category, i) {
-                    return _c(
+                  [
+                    _c(
                       "a",
                       {
-                        key: i,
                         staticClass: "dropdown-item",
                         attrs: { href: "#" },
                         on: {
                           click: function ($event) {
                             $event.preventDefault()
-                            return _vm.setCategoryFilter(category.id)
+                            return _vm.setCountryFilter("")
                           },
                         },
                       },
-                      [_vm._v(_vm._s(category.functional_area))]
-                    )
-                  }),
-                ],
-                2
-              ),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "dropdown" }, [
-              _vm._m(7),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "dropdown-menu scrollable-menu",
-                  attrs: {
-                    role: "menu",
-                    "aria-labelledby": "dropdownMenuButton",
-                  },
-                },
-                [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "dropdown-item",
-                      attrs: { href: "#" },
-                      on: {
-                        click: function ($event) {
-                          $event.preventDefault()
-                          return _vm.setCountryFilter("")
-                        },
-                      },
-                    },
-                    [_vm._v("All Countries")]
-                  ),
-                  _vm._v(" "),
-                  _vm._l(_vm.countries, function (country, i) {
-                    return _c(
-                      "a",
-                      {
-                        key: i,
-                        staticClass: "dropdown-item",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function ($event) {
-                            $event.preventDefault()
-                            return _vm.setCountryFilter(country.id)
+                      [_vm._v("All Countries")]
+                    ),
+                    _vm._v(" "),
+                    _vm._l(_vm.countries, function (country, i) {
+                      return _c(
+                        "a",
+                        {
+                          key: i,
+                          staticClass: "dropdown-item",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function ($event) {
+                              $event.preventDefault()
+                              return _vm.setCountryFilter(country.id)
+                            },
                           },
                         },
-                      },
-                      [_vm._v(_vm._s(country.name))]
-                    )
-                  }),
-                ],
-                2
-              ),
+                        [_vm._v(_vm._s(country.name))]
+                      )
+                    }),
+                  ],
+                  2
+                ),
+              ]),
             ]),
           ]),
           _vm._v(" "),
@@ -22957,20 +22467,20 @@ var render = function () {
                               applicant.employe
                                 ? _c("span", [
                                     _vm._v(
-                                      "\n                  " +
+                                      "\n                                  " +
                                         _vm._s(applicant.employe.full_name)
                                     ),
                                     _c("br"),
                                     _vm._v(
-                                      "\n                  Gender/Age: " +
+                                      "\n                                  Gender/Age: " +
                                         _vm._s(applicant.employe.gender) +
                                         ", 23"
                                     ),
                                     _c("br"),
                                     _vm._v(
-                                      "\n                  Email: " +
+                                      "\n                                  Email: " +
                                         _vm._s(applicant.employe.user.email) +
-                                        "\n                "
+                                        "\n                                "
                                     ),
                                   ])
                                 : _vm._e(),
@@ -22990,7 +22500,7 @@ var render = function () {
                               applicant.employe
                                 ? _c("span", [
                                     _vm._v(
-                                      "\n                  Phone1:\n                  " +
+                                      "\n                                  Phone1:\n                                  " +
                                         _vm._s(
                                           applicant.employe.mobile_phone ||
                                             "Not-Available"
@@ -22998,12 +22508,12 @@ var render = function () {
                                     ),
                                     _c("br"),
                                     _vm._v(
-                                      "\n                  Phone2:\n                  " +
+                                      "\n                                  Phone2:\n                                  " +
                                         _vm._s(
                                           applicant.employe.mobile_phone2 ||
                                             "Not-Available"
                                         ) +
-                                        "\n                "
+                                        "\n                                "
                                     ),
                                   ])
                                 : _vm._e(),
@@ -23030,13 +22540,7 @@ var render = function () {
                                 : _vm._e(),
                             ]),
                             _vm._v(" "),
-                            _c("td", [
-                              _vm._v(
-                                "\n                                " +
-                                  _vm._s(applicant.created_at) +
-                                  "\n                            "
-                              ),
-                            ]),
+                            _c("td", [_vm._v(_vm._s(applicant.created_at))]),
                             _vm._v(" "),
                             _c("td", [
                               applicant.employe
@@ -23070,26 +22574,26 @@ var render = function () {
                                           experience.job_category && i == 0
                                             ? _c("span", [
                                                 _vm._v(
-                                                  "\n                      " +
+                                                  "\n                                      " +
                                                     _vm._s(
                                                       experience.job_category
                                                         .functional_area
                                                     ) +
-                                                    ",\n                      " +
+                                                    ",\n                                      " +
                                                     _vm._s(
                                                       experience.working_year +
                                                         _vm.getYearForm(
                                                           experience.working_year
                                                         )
                                                     ) +
-                                                    ",\n                      " +
+                                                    ",\n                                      " +
                                                     _vm._s(
                                                       experience.working_month +
                                                         _vm.getMonthForm(
                                                           experience.working_month
                                                         )
                                                     ) +
-                                                    "\n                    "
+                                                    "\n                                    "
                                                 ),
                                               ])
                                             : _vm._e(),
@@ -23105,12 +22609,12 @@ var render = function () {
                               applicant.employe.education_level
                                 ? _c("span", [
                                     _vm._v(
-                                      "\n                  " +
+                                      "\n                                  " +
                                         _vm._s(
                                           applicant.employe.education_level
                                             .title
                                         ) +
-                                        "\n                "
+                                        "\n                                "
                                     ),
                                   ])
                                 : _vm._e(),
@@ -23128,11 +22632,11 @@ var render = function () {
                                           i == 0
                                             ? _c("span", [
                                                 _vm._v(
-                                                  "\n                      " +
+                                                  "\n                                      " +
                                                     _vm._s(
                                                       item.training.title
                                                     ) +
-                                                    "\n                    "
+                                                    "\n                                    "
                                                 ),
                                               ])
                                             : _vm._e(),
@@ -23156,9 +22660,9 @@ var render = function () {
                                           i == 0
                                             ? _c("span", [
                                                 _vm._v(
-                                                  "\n                      " +
+                                                  "\n                                      " +
                                                     _vm._s(item.language.lang) +
-                                                    "\n                    "
+                                                    "\n                                    "
                                                 ),
                                               ])
                                             : _vm._e(),
@@ -23182,9 +22686,9 @@ var render = function () {
                                           i == 0
                                             ? _c("span", [
                                                 _vm._v(
-                                                  "\n                      " +
+                                                  "\n                                      " +
                                                     _vm._s(item.skill.title) +
-                                                    "\n                    "
+                                                    "\n                                    "
                                                 ),
                                               ])
                                             : _vm._e(),
@@ -23208,11 +22712,11 @@ var render = function () {
                                           i == 0
                                             ? _c("span", [
                                                 _vm._v(
-                                                  "\n                      " +
+                                                  "\n                                      " +
                                                     _vm._s(
                                                       countryPreference.name
                                                     ) +
-                                                    "\n                    "
+                                                    "\n                                    "
                                                 ),
                                               ])
                                             : _vm._e(),
@@ -23236,11 +22740,11 @@ var render = function () {
                                           i == 0
                                             ? _c("span", [
                                                 _vm._v(
-                                                  "\n                      " +
+                                                  "\n                                      " +
                                                     _vm._s(
                                                       categoryPreference.functional_area
                                                     ) +
-                                                    "\n                    "
+                                                    "\n                                    "
                                                 ),
                                               ])
                                             : _vm._e(),
@@ -23384,7 +22888,7 @@ var render = function () {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(8),
+              _vm._m(10),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body pb-0" }, [
                 _c(
@@ -23444,7 +22948,7 @@ var render = function () {
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "row" }, [
-                            _vm._m(9),
+                            _vm._m(11),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-md-6" }, [
                               _vm.filter_saving
@@ -23494,7 +22998,11 @@ var render = function () {
                                     },
                                   },
                                 },
-                                [_vm._v("Reset Filter")]
+                                [
+                                  _vm._v(
+                                    "\n                                                Reset Filter\n                                            "
+                                  ),
+                                ]
                               ),
                             ]),
                           ]),
@@ -23509,7 +23017,7 @@ var render = function () {
                             _c("div", { staticClass: "col-md-6" }, [
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(10),
+                                  _vm._m(12),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c(
@@ -23558,13 +23066,13 @@ var render = function () {
                                 ]),
                               ]),
                               _vm._v(" "),
-                              _vm._m(11),
+                              _vm._m(13),
                               _vm._v(" "),
-                              _vm._m(12),
+                              _vm._m(14),
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(13),
+                                  _vm._m(15),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c("div", { staticClass: "d-flex" }, [
@@ -23622,7 +23130,7 @@ var render = function () {
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(14),
+                                  _vm._m(16),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c(
@@ -23674,7 +23182,7 @@ var render = function () {
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(15),
+                                  _vm._m(17),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c(
@@ -23723,7 +23231,7 @@ var render = function () {
                             _c("div", { staticClass: "col-md-6" }, [
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(16),
+                                  _vm._m(18),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c(
@@ -23740,9 +23248,7 @@ var render = function () {
                                       },
                                       [
                                         _c("option", { attrs: { value: "" } }, [
-                                          _vm._v(
-                                            "\n                                                                Select Application Status\n                                                            "
-                                          ),
+                                          _vm._v("Select Application Status"),
                                         ]),
                                         _vm._v(" "),
                                         _vm._l(
@@ -23777,11 +23283,11 @@ var render = function () {
                                 ]),
                               ]),
                               _vm._v(" "),
-                              _vm._m(17),
+                              _vm._m(19),
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(18),
+                                  _vm._m(20),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c("div", { staticClass: "row" }, [
@@ -23899,7 +23405,7 @@ var render = function () {
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(19),
+                                  _vm._m(21),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c(
@@ -23948,7 +23454,7 @@ var render = function () {
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(20),
+                                  _vm._m(22),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c(
@@ -23997,7 +23503,7 @@ var render = function () {
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(21),
+                                  _vm._m(23),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c(
@@ -24048,7 +23554,7 @@ var render = function () {
                               _vm._v(" "),
                               _c("div", { staticClass: "form-group" }, [
                                 _c("div", { staticClass: "row" }, [
-                                  _vm._m(22),
+                                  _vm._m(24),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "col-md-8" }, [
                                     _c(
@@ -24064,9 +23570,7 @@ var render = function () {
                                       },
                                       [
                                         _c("option", { attrs: { value: "" } }, [
-                                          _vm._v(
-                                            "\n                                                                Select Preferred Country\n                                                            "
-                                          ),
+                                          _vm._v("Select Preferred Country"),
                                         ]),
                                         _vm._v(" "),
                                         _vm._l(
@@ -24171,9 +23675,9 @@ var render = function () {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(23),
+              _vm._m(25),
               _vm._v(" "),
-              _vm._m(24),
+              _vm._m(26),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
                 _c(
@@ -24285,11 +23789,28 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12 text-right" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("strong", { staticClass: "col-md-3" }, [_vm._v("Bulk Actions:")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("strong", [_vm._v("Filters:")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c(
       "button",
       {
-        staticClass:
-          "\n              btn btn-outline-primary\n              dropdown-toggle\n              rounded-0\n              mr-2\n              btn-sm\n            ",
+        staticClass: "btn btn-outline-primary dropdown-toggle rounded-0 mr-2",
         attrs: {
           type: "button",
           id: "",
@@ -24299,7 +23820,7 @@ var staticRenderFns = [
       },
       [
         _c("i", { staticClass: "fa fa-filter mr-2" }),
-        _vm._v("All Job Category\n                        "),
+        _vm._v("All Job Category\n                            "),
       ]
     )
   },
@@ -24310,8 +23831,7 @@ var staticRenderFns = [
     return _c(
       "button",
       {
-        staticClass:
-          "\n              btn btn-outline-primary\n              dropdown-toggle\n              rounded-0\n              mr-2\n              btn-sm\n            ",
+        staticClass: "btn btn-outline-primary  dropdown-toggle rounded-0 mr-2",
         attrs: {
           type: "button",
           "data-toggle": "dropdown",
@@ -24320,7 +23840,7 @@ var staticRenderFns = [
       },
       [
         _c("i", { staticClass: "fa fa-filter mr-2" }),
-        _vm._v("All Countries\n                        "),
+        _vm._v("All Countries\n                            "),
       ]
     )
   },
