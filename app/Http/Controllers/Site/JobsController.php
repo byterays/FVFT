@@ -106,9 +106,11 @@ class JobsController extends Controller
             'view_date' => $date,
             'view_time' => $time,
         ]);
-        if($jobView->wasRecentlyCreated === true){
-            $job->increment('total_views'); // item was not found and created in database;
+        if($jobView->wasRecentlyCreated === true){ // item was not found and created in database;
+            // Job::find($request->job_id)->update(['total_views' => $job->total_views + 1]);
+            $job->increment('total_views'); 
+            return response()->json(['message' => 'View created']);
         }
-        return response()->json(['message' => 'View created']);
+        return response()->json(['message' => 'View Already Created']);
     }
 }
