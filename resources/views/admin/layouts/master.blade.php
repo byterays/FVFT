@@ -337,6 +337,10 @@
         function hideBusySign() {
             $('#ajaxLoader').css('display', 'none');
         }
+
+    $(function(e) {
+        $('.data-table').DataTable();
+    } );
 </script>
 @yield('script')
 </body>
