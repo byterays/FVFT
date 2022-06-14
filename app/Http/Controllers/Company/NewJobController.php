@@ -10,6 +10,7 @@ use App\Models\Job;
 use App\Models\JobCategory;
 use App\Models\JobShift;
 use App\Models\Skill;
+use App\Notifications\NewJob;
 use App\Traits\Site\CompanyMethods;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -275,6 +276,11 @@ class NewJobController extends Controller
                     'draft_date' => $request->saveType == 'save_as_draft' ? date('Y-m-d H:i:s') : null,
                 ]);
                 DB::commit();
+                $notification['msg'] = "New job created";
+                $notification['link'] = route('viewJob', $request->job_id);
+                $notification['detail'] = '';
+                $delay = now()->addSeconds(5);
+                $this->company()->notify((new NewJob($notification))->delay($delay));
                 $msg = $request->saveType == "save_as_draft" ? 'Your job has been saved and you can proceed to approval at any time. Thank you' : 'Your job has been send to admin for verification. Your job will be posted automatically after the verification. Thank you';
                 return response()->json(['msg' => $msg, 'redirectRoute' => route('company.jobs')]);
             } catch(\Exception $e){
