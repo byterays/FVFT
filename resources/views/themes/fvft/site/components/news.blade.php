@@ -11,7 +11,7 @@
                         <div class="card mb-0">
                             <div class="item7-card-img">
                                 <a href="news/{{ $item->slug }}"></a>
-                                @if (!blank($item->feature_img))
+                                @if (!blank($item->feature_img) AND file_exists($item->feature_img))
                                     <img src="{{ asset($item->feature_img) }}" alt="img" class="cover-image">
                                 @else
                                     <img src="{{ asset('/images/defaultimage.jpg') }}" alt="img"
