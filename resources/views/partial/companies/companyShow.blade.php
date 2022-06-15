@@ -19,14 +19,17 @@
         color: #1650e2;
         font-weight: bold;
     }
-
 </style>
 @php
-    $country = DB::table('countries')->where('id', $company->country_id);
-    $state = DB::table('states')->where('id', $company->state_id);
-    $city = DB::table('cities')->where('id', $company->city_id);
+$country = DB::table('countries')->where('id', $company->country_id);
+$state = DB::table('states')->where('id', $company->state_id);
+$city = DB::table('cities')->where('id', $company->city_id);
 
-    $flag = $country->exists() ? $country->first()->emojiU : DB::table('countries')->where('name', 'Nepal')->first()->emojiU;
+$flag = $country->exists()
+    ? $country->first()->emojiU
+    : DB::table('countries')
+        ->where('name', 'Nepal')
+        ->first()->emojiU;
 @endphp
 
 <div class="row">
@@ -34,15 +37,16 @@
         <div class="card m-b-20">
             <div class="card-header">
                 <h3 class="card-title tempcolor">{{ $company->company_name ?? 'Not-Available' }}</h3>
-                <a href="{{ $editRoute }}" class="float-right tempcolor" style="position:absolute; right: 20px;"><i class="fa fa-pencil"></i>&nbsp;Edit Profile</a>
-                {{--<div class="row">--}}
-                    {{--<div class="col-md-6">--}}
-                        {{--<img src="{{ asset($company->company_logo != null ? $company->company_logo : 'images/defaultimage.jpg' ) }}" class="img-fluid" alt="">--}}
-                    {{--</div>--}}
-                    {{--<div class="col-md-6 justify-content-between">--}}
-                        {{--<img src="{{ $country->exists() ? 'https://ipdata.co/flags/'.strtolower($country->first()->iso2).'.png' : asset('images/defaultimage.jpg') }}" style="position:absolute;bottom: 10px;" class="img-fluid" alt="">--}}
-                    {{--</div>--}}
-                {{--</div>--}}
+                <a href="{{ $editRoute }}" class="float-right tempcolor" style="position:absolute; right: 20px;"><i
+                        class="fa fa-pencil"></i>&nbsp;Edit Profile</a>
+                {{-- <div class="row"> --}}
+                {{-- <div class="col-md-6"> --}}
+                {{-- <img src="{{ asset($company->company_logo != null ? $company->company_logo : 'images/defaultimage.jpg' ) }}" class="img-fluid" alt=""> --}}
+                {{-- </div> --}}
+                {{-- <div class="col-md-6 justify-content-between"> --}}
+                {{-- <img src="{{ $country->exists() ? 'https://ipdata.co/flags/'.strtolower($country->first()->iso2).'.png' : asset('images/defaultimage.jpg') }}" style="position:absolute;bottom: 10px;" class="img-fluid" alt=""> --}}
+                {{-- </div> --}}
+                {{-- </div> --}}
             </div>
             <div class="card-body">
                 <div class="row">
@@ -66,7 +70,11 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <img src="{{ asset($company->company_cover) }}" alt="">
+                        @if (!blank($company->company_logo) and file_exists($company->company_logo))
+                            <img src="{{ asset($company->company_logo) }}" alt="{{ $company->company_name }}">
+                        @else
+                            <img src="{{ asset('images/defaultimage.jpg') }}" alt="{{ $company->company_name }}">
+                        @endif
                     </div>
                 </div>
 
@@ -84,10 +92,13 @@
                             <h4 class="tempcolor">{{ strtoupper('Company Basic Information') }}</h4>
                             <div class="mt-5 company_basic_information">
                                 <p>Company Name: <span>{{ $company->company_name }}</span></p>
-                                <p>Industry Category: <span>{{ !empty($company->industry) ? $company->industry->title : '' }}</span></p>
+                                <p>Industry Category:
+                                    <span>{{ !empty($company->industry) ? $company->industry->title : '' }}</span>
+                                </p>
                                 <p>Ownership: <span>{{ $company->ownership }}</span></p>
                                 <p>Operating Since:
-                                    <span>{{ date('Y', strtotime($company->operating_since)) }}</span></p>
+                                    <span>{{ date('Y', strtotime($company->operating_since)) }}</span>
+                                </p>
                                 <p>Number of Employee: <span>{{ $company->no_of_employee }}</span></p>
                             </div>
                         </div>

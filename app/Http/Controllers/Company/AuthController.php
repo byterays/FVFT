@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Traits\Site\ThemeMethods;
 use App\Models\Company;
+use App\Models\CompanyContactPerson;
 use App\Models\User;
 use App\Notifications\NewEmployer;
 
@@ -35,6 +36,12 @@ class AuthController extends Controller
             'company_email' => $data['email'],
             'user_id' => $user->id,
         ]);
+        if(!blank($request->contactPersonName) AND !blank($employe)){
+            CompanyContactPerson::create([
+                'name' => $request->contactPersonName,
+                'company_id' => $employe->id,
+            ]);
+        }
         $notification['msg'] = "New Employer Registered";
         $notification['link'] = route('admin.companies.show', $employe->id);
         $notification['detail']  = '';

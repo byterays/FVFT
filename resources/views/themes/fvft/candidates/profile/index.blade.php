@@ -78,7 +78,7 @@
                                                         <label for="" class="form-label">Date of Birth&nbsp;:</label>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        {{ date('Y F d', strtotime($employ->dob)) }}
+                                                        {{ !blank($employ->dob) ? date('Y F d', strtotime($employ->dob)) : '' }}
                                                     </div>
                                                 </div>
                                             </div>

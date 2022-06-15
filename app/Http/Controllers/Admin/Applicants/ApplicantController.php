@@ -48,17 +48,17 @@ class ApplicantController extends Controller
         $job_preference=EmployJobPreference::where('employ_id',$application->employ_id)->first();
         // dd($candidate->id);
         // dd(User::find($candidate->user_id));
-        return redirect()->route('admin.applicant.indexpage')->with(notifyMsg('success', 'Applicant updated successfully'));
-        // return $this->view('admin.pages.applicants.editadd',[
-        //     'candidate'=>$candidate,
-        //     'job'=>$job,
-        //     'application'=>$application,
-        //     'action'=>"Edit",
-        //     'candidate_user'=>User::find($candidate->user_id),
-        //     'countries'=>$this->countries,
-        //     'job_categories'=>$job_categories,
-        //     'job_preference'=>$job_preference
-        // ]);
+        // return redirect()->route('admin.applicant.indexpage')->with(notifyMsg('success', 'Applicant updated successfully'));
+        return $this->view('admin.pages.applicants.editadd',[
+            'candidate'=>$candidate,
+            'job'=>$job,
+            'application'=>$application,
+            'action'=>"Edit",
+            'candidate_user'=>User::find($candidate->user_id),
+            'countries'=>$this->countries,
+            'job_categories'=>$job_categories,
+            'job_preference'=>$job_preference
+        ]);
     }
     public function save(Request $request){
         $fields=[];
