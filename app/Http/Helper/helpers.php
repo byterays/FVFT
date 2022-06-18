@@ -104,7 +104,7 @@ if(!function_exists('parseDate')){
 
 if(!function_exists('getFormattedDate')){
     function getFormattedDate($date, $format){
-        return !($date != null) ?: date($format, strtotime($date));
+        return $date != null ? date($format, strtotime($date)) : '';
     }
 }
 

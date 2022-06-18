@@ -280,7 +280,7 @@ class NewJobController extends Controller
                 $notification['link'] = route('viewJob', $request->job_id);
                 $notification['detail'] = '';
                 $delay = now()->addSeconds(5);
-                $this->company()->notify((new NewJob($notification))->delay($delay));
+                auth()->user()->notify((new NewJob($notification))->delay($delay));
                 $msg = $request->saveType == "save_as_draft" ? 'Your job has been saved and you can proceed to approval at any time. Thank you' : 'Your job has been send to admin for verification. Your job will be posted automatically after the verification. Thank you';
                 return response()->json(['msg' => $msg, 'redirectRoute' => route('company.jobs')]);
             } catch(\Exception $e){

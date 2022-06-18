@@ -20,7 +20,7 @@ class NewJob extends Notification
 
     public function __construct($notification)
     {
-        $this->notification;
+        $this->notification = $notification;
     }
 
     /**
