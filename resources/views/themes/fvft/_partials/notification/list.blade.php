@@ -32,7 +32,7 @@
                                         <ul class="list-unstyled widget-spec mb-0">
                                             <li class="">
                                                 <i class="fa fa-caret-right {{ blank($notification->read_at) ? 'text-danger' : 'text-primary' }}" aria-hidden="true"></i>
-                                                {{ $notification->data['subject'] ?? 'Subject not available'}}
+                                                {{ array_key_exists('subject', $notification->data) ? $notification->data['subject'] : $notification->data['msg']}}
                                                 @if(isset($notification->data['link']) AND !blank($notification->data['link']))
                                                     <a href="{{ $notification->data['link'] }}" class="ml-4">View</a>
                                                 @endif
@@ -72,7 +72,7 @@
                                         <ul class="list-unstyled widget-spec mb-0">
                                             <li class="">
                                                 <i class="fa fa-caret-right text-danger" aria-hidden="true"></i>
-                                                {{ $unreadNotification->data['subject'] ?? 'Subject not available'}}
+                                                {{ array_key_exists('subject', $notification->data) ? $notification->data['subject'] : $notification->data['msg']}}
                                             </li>
                                         </ul>
                                     </div>

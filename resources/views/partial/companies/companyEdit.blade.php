@@ -219,10 +219,10 @@
                         <div class="col-md-8">
                             <select name="country_id" id="select-country" class="form-control select2-show-search" data-placeholder="Select Country"
                                     value="{{ isset($company->country_id) ? $company->country_id : '' }}"
-                                    onchange="patchStates(this)">
+                                    onchange="patchStates(this);getIsoCode($(this))">
                                 <option value="">{{ __('Select Country') }}</option>
                                 @foreach ($countries as $country)
-                                    <option value="{{ $country->id }}"
+                                    <option value="{{ $country->id }}" data-phonecode="{{ $country->phonecode }}"
                                         {{ $company->country_id == $country->id ? 'selected' : '' }}>
                                         {{ $country->name }}</option>
                                 @endforeach
@@ -274,7 +274,7 @@
                             <label for="phn">{{ __('Company Phone Number') }}</label>
                         </div>
                         <div class="col-md-3">
-                            <select name="dial_code" class="form-control select2-show-search" data-placeholder="ISO">
+                            <select name="dial_code" class="form-control select2-show-search" data-placeholder="ISO" id="dialCode">
                                 <option value="">{{ __('ISO') }}</option>
                                 @foreach ($countries as $country)
                                     <option value="{{ $country->phonecode }}"
@@ -386,7 +386,7 @@
                             <label for="">{{ __('Mobile Number') }}</label>
                         </div>
                         <div class="col-md-3">
-                            <select name="dialcode" class="form-control select2-show-search" data-placeholder="ISO">
+                            <select name="dialcode" class="form-control select2-show-search" data-placeholder="ISO" id="contactIsoCode">
                                 <option value="">{{ __('ISO') }}</option>
                                 @foreach ($countries as $country)
                                     @php

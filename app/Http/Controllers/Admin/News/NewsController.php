@@ -59,7 +59,7 @@ class NewsController extends Controller
             $file = $request->file('feature_img');
             $logoName = time().'.'.$file->getClientOriginalExtension();
             $fields['feature_img'] = $destination.$logoName;
-            $file->move($destination, $logoName);
+            $file->move(public_path($destination), $logoName);
         }
         $news = News::updateOrCreate(['id' => $request->id], $fields);
 

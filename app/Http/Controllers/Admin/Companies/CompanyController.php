@@ -23,15 +23,26 @@ class CompanyController extends Controller
         $this->industries = Industry::get();
     }
     function list(Request $request) {
+        // dd($request->all());
         $companies = Company::when(!blank($request->status), function ($q) use ($request) {
             if ($request->status == 'active') {
                 $q->where('is_active', 1);
             } else if ($request->status == 'inactive') {
                 $q->where('is_active', 0);
             }
-        })->with('industry')->get();
+
+        })->when(!blank($request->country_id), function($q) use($request){
+            $q->where('country_id', $request->country_id);
+        })->when(!blank($request->start) AND blank($request->end), function($q) use($request){
+            $q->where(DB::raw('CAST(created_at as date)'), $request->start);
+        })->when(!blank($request->end) AND blank($request->start), function($q) use($request){
+            $q->where(DB::raw('CAST(created_at as date)'), $request->end);
+        })->when(!blank($request->start) AND !blank($request->end), function($q) use($request){
+            $q->orWhereBetween(DB::raw('CAST(created_at as date)'), [$request->start, $request->end]);
+        }) ->with('industry')->paginate(10);
         return $this->view('admin.pages.companies.list', [
             'companies' => $companies,
+            'countries' => $this->countries,
             // 'companies' => Company::with('industry')->paginate(10),
             // 'companies' => DB::table('companies')->paginate(10)
         ]);

@@ -47,19 +47,19 @@
                                        <!-- Tabs -->
                                        <ul class="nav panel-tabs">
                                            <li class="">
-                                               <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Active']) }}" class="{{ !(request()->job_status=='Active') ?: 'active' }} ml-0">Active</a>
+                                               <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('category_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Active']) }}" class="{{ !(request()->job_status=='Active') ?: 'active' }} ml-0">Active</a>
                                            </li>
                                            <li class="">
-                                               <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Pending']) }}" class="{{ !(request()->job_status=='Pending') ?: 'active' }}">Pending</a>
+                                               <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('category_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Pending']) }}" class="{{ !(request()->job_status=='Pending') ?: 'active' }}">Pending</a>
                                            </li>
                                            <li>
-                                               <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Approved']) }}" class="{{ !(request()->job_status=='Approved') ?: 'active' }}">Approved</a>
+                                               <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('category_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Approved']) }}" class="{{ !(request()->job_status=='Approved') ?: 'active' }}">Approved</a>
                                            </li>
                                            <li>
-                                               <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Published']) }}" class="{{ !(request()->job_status=='Published') ?: 'active' }}">Published</a>
+                                               <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('category_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Published']) }}" class="{{ !(request()->job_status=='Published') ?: 'active' }}">Published</a>
                                            </li>
                                            <li>
-                                               <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('country_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Expired']) }}" class="{{ !(request()->job_status=='Expired') ?: 'active' }}">Expired</a>
+                                               <a href="{{ route('admin.jobs-list', ['title' => request('title', ''), 'category_id' => request('category_id',''), 'employer_id' => request('employer_id',''), 'country_id' => request('country_id',''), 'job_status' => 'Expired']) }}" class="{{ !(request()->job_status=='Expired') ?: 'active' }}">Expired</a>
                                            </li>
                                        </ul>
                                    </div>

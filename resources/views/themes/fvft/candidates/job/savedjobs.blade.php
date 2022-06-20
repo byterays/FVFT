@@ -11,11 +11,18 @@
         .form-control {
             color: #272626 !important;
         }
-
     </style>
+    @php
+    if (checkUserType('candidate')) {
+        $employ_id = App\Models\Employe::where('user_id', \Auth::user()->id)->first()->id;
+        // dd($employ_id);
+    } else {
+        $employ_id = '';
+    }
+    @endphp
     <section>
         <div class="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg"
-             style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
+            style="background: url(&quot;../assets/images/banners/banner2.jpg&quot;) center center;">
             <div class="header-text mb-0">
                 <div class="text-center text-white">
                     <h1 class="">{{ __('Saved Jobs') }}</h1>
@@ -43,7 +50,9 @@
                             <div class="card-body">
                                 @foreach ($saved_jobs as $item)
                                     @if (!blank(data_get($item, 'job')))
-                                        @include('themes.fvft._partials.job.preview-card', ['job' => $item->job])
+                                        @include('themes.fvft._partials.job.preview-card', [
+                                            'job' => $item->job,
+                                        ])
                                     @endif
                                 @endforeach
 
@@ -61,7 +70,7 @@
     {{-- Delete Modal --}}
     <!-- Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white font-weight-bold">
@@ -106,5 +115,35 @@
                 $("#deleteForm").attr("action", "#");
             });
         });
+
+        function savejob(job_id) {
+            var url = "{{ route('candidate.savedjob.saveJob') }}";
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    'job_id': job_id,
+                    'employ_id': '{{ $employ_id }}',
+                },
+                beforeSend: function() {
+                    $(".saveJobButton").attr('disabled', true);
+                },
+                success: function(response) {
+                    if (response.db_error) {
+                        toastr.warning(response.db_error);
+                    } else if (response.error) {
+                        toastr.warning(response.error);
+                    } else if (response.redirectRoute) {
+                        location.href = response.redirectRoute
+                    } else {
+                        toastr.success(response.msg);
+                    }
+                    window.location.reload()
+                },
+                complete: function() {
+                    $(".saveJobButton").attr('disabled', false);
+                },
+            });
+        }
     </script>
 @endsection
