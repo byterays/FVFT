@@ -101,8 +101,8 @@ if (session()->get('delete')) {
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive border-top">
-                        <table class="table table-bordered table-hover mb-0 text-nowrap">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mb-0 text-nowrap data-table">
                             <thead>
                                 <tr>
                                     {{-- <th>#id</th> --}}
@@ -164,9 +164,9 @@ if (session()->get('delete')) {
                             </tbody>
                         </table>
                     </div>
-                    <div class="d-flex justify-content-center mt-3">
-                        {{ $companies->links('vendor.pagination.bootstrap-4') }}
-                    </div>
+                    {{--<div class="d-flex justify-content-center mt-3">--}}
+{{--                        {{ $companies->links('vendor.pagination.bootstrap-4') }}--}}
+                    {{--</div>--}}
                 </div>
             </div>
         </div>

@@ -28,7 +28,7 @@
 		<!--/Breadcrumb-->
 
 	<!--Job listing-->
-    <section class="sptb">
+    <section class="sptb news-section">
         <div class="container">
             <div class="row">
                 <div class="col-xl-8 col-lg-8 col-md-12">
