@@ -12,6 +12,7 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
 
 class CompanyController extends Controller
 {
@@ -22,15 +23,26 @@ class CompanyController extends Controller
         $this->industries = Industry::get();
     }
     function list(Request $request) {
+        // dd($request->all());
         $companies = Company::when(!blank($request->status), function ($q) use ($request) {
             if ($request->status == 'active') {
                 $q->where('is_active', 1);
             } else if ($request->status == 'inactive') {
                 $q->where('is_active', 0);
             }
-        })->with('industry')->paginate(10);
+
+        })->when(!blank($request->country_id), function($q) use($request){
+            $q->where('country_id', $request->country_id);
+        })->when(!blank($request->start) AND blank($request->end), function($q) use($request){
+            $q->where(DB::raw('CAST(created_at as date)'), $request->start);
+        })->when(!blank($request->end) AND blank($request->start), function($q) use($request){
+            $q->where(DB::raw('CAST(created_at as date)'), $request->end);
+        })->when(!blank($request->start) AND !blank($request->end), function($q) use($request){
+            $q->orWhereBetween(DB::raw('CAST(created_at as date)'), [$request->start, $request->end]);
+        }) ->with('industry')->paginate(10);
         return $this->view('admin.pages.companies.list', [
             'companies' => $companies,
+            'countries' => $this->countries,
             // 'companies' => Company::with('industry')->paginate(10),
             // 'companies' => DB::table('companies')->paginate(10)
         ]);
@@ -115,10 +127,17 @@ class CompanyController extends Controller
                 $company->user_id = $user->id;
                 $company->company_name = $request->company_name;
                 if ($request->has('company_logo')) {
-                    $logo = $request->file('company_logo');
-                    $logoName = time() . '_' . $logo->getClientOriginalName();
-                    $company->company_logo = $this->Destination . $logoName;
-                    $logo->move(public_path($this->Destination, 'public'), $logoName);
+
+                    $logo_input = $request->file('company_logo');
+                    $path = $this->Destination.$logo_input->hashName();
+                    $image = Image::make($logo_input->getRealPath());
+                    $image->resize(500, 500, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($path);
+                    $company->company_logo = $path;
+//                    $logoName = time() . '_' . $logo->getClientOriginalName();
+//                    $company->company_logo = $this->Destination . $logoName;
+//                    $logo->move(public_path($this->Destination, 'public'), $logoName);
                 }
                 if ($request->has('company_cover')) {
                     $cover = $request->file('company_cover');
@@ -192,10 +211,18 @@ class CompanyController extends Controller
                 $company_user_id = $company->user_id;
                 $company->company_name = $request->company_name;
                 if ($request->has('company_logo')) {
-                    $logo = $request->file('company_logo');
-                    $logoName = time() . '_' . $logo->getClientOriginalName();
-                    $company->company_logo = $this->Destination . $logoName;
-                    $logo->move(public_path($this->Destination, 'public'), $logoName);
+                    $logo_input = $request->file('company_logo');
+                    $path = $this->Destination.$logo_input->hashName();
+                    $image = Image::make($logo_input->getRealPath());
+                    $image->resize(1000, 1000)->save($path);
+//                    $image->resize(1000, 1000, function ($constraint) {
+//                        $constraint->aspectRatio();
+//                    })->save($path);
+                    $company->company_logo = $path;
+//                    $logo = $request->file('company_logo');
+//                    $logoName = time() . '_' . $logo->getClientOriginalName();
+//                    $company->company_logo = $this->Destination . $logoName;
+//                    $logo->move(public_path($this->Destination, 'public'), $logoName);
                 } else {
                     $company->company_logo = $oldLogo;
                 }
@@ -327,7 +354,12 @@ class CompanyController extends Controller
     public function delete($id)
     {
         $company = Company::find($id);
-        if ($company != null) {
+//        dd($company->delete());
+        if ($company) {
+            $company->company_contact_person()->delete();
+            $company->jobs()->delete();
+            $company->job_applications()->delete();
+            $company->followers()->delete();
             $company->delete();
             return redirect()->back()->with(notifyMsg('success', 'Company deleted successfully'));
         }

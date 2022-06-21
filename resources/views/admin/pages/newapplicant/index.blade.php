@@ -12,7 +12,7 @@
 
     </style>
     <?php
-    use App\Enum\JobApplicationStatus;
+    use App\Enum\ApplicantStatus;
     ?>
     <div class="page-header">
         <h4 class="page-title">Application Management</h4>
@@ -82,19 +82,19 @@
                     </div>
                     <div class="col-md-9">
                         <a href="javascript:void(0)"
-                            onclick="updateBulkApplicantStatus('{{ JobApplicationStatus::PENDING }}');"
+                            onclick="updateBulkApplicantStatus('{{ ApplicantStatus::PENDING }}');"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white">Unscreened</a>
                         <a href="javascript:void(0)"
-                            onclick="updateBulkApplicantStatus('{{ JobApplicationStatus::SHORT_LISTED }}');"
+                            onclick="updateBulkApplicantStatus('{{ ApplicantStatus::SHORTLISTED }}');"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Shortlisted</a>
                         <a href="javascript:void(0)"
-                            onclick="updateBulkApplicantStatus('{{ JobApplicationStatus::INTERVIEWED }}');"
+                            onclick="updateBulkApplicantStatus('{{ ApplicantStatus::INTERVIEWED }}');"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Interviewed</a>
                         <a href="javascript:void(0)"
-                            onclick="updateBulkApplicantStatus('{{ JobApplicationStatus::ACCEPTED }}');"
+                            onclick="updateBulkApplicantStatus('{{ ApplicantStatus::ACCEPTED }}');"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Selected</a>
                         <a href="javascript:void(0)"
-                            onclick="updateBulkApplicantStatus('{{ JobApplicationStatus::REJECTED }}');"
+                            onclick="updateBulkApplicantStatus('{{ ApplicantStatus::REJECTED }}');"
                             class="btn btn-outline-secondary rounded-0 text-dark bg-white ml-2">Rejected</a>
                     </div>
                 </div>
@@ -332,6 +332,8 @@
         <td>
             <a href="{{ route('admin.applicants.edit', $applicant->id) }}"
                 class="text-primary my-auto"><i class="fa fa-edit"></i></a>
+            <a href="{{ route('admin.applicant.viewApplicant', $applicant->id) }}"
+                class="text-primary my-auto"><i class="fa fa-eye"></i></a>
             <a href="{{ route('company.applicant.detail', $applicant->employ_id) }}" data-id="{{ $applicant->id }}" data-action="{{ route('admin.applicants.delete', $applicant->id) }}" data-method="{{ getRouteMethodName('admin.applicants.delete') }}" data-modaltitle="Delete Applicant" data-toggle="modal" data-target="#dataDeleteModal"
                 class="text-danger my-auto"><i class="fa fa-trash-o"></i></a>
         </td>

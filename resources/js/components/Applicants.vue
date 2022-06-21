@@ -162,12 +162,12 @@
                         <div class="btn-group">
                             <div class="dropdown">
                                 <button class="btn btn-outline-primary dropdown-toggle rounded-0 mr-2" type="button" id="" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-filter mr-2"></i>All Job Category
+                                    <i class="fa fa-filter mr-2"></i><span id="categorySelect">All Categories</span>
                                 </button>
-                                <div class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#" @click.prevent="setCategoryFilter('')">All Categories</a>
+                                <div class="dropdown-menu scrollable-menu" ref="categorySelect" role="menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#" @click.prevent="setCategoryFilter('', 'All Categories')">All Categories</a>
                                     <a v-for="(category, i) in job_categories" :key="i" class="dropdown-item" href="#"
-                                       @click.prevent="setCategoryFilter(category.id)">
+                                       @click.prevent="setCategoryFilter(category.id, category.functional_area)">
                                         {{ category.functional_area }}
                                     </a>
                                 </div>
@@ -175,13 +175,13 @@
 
                             <div class="dropdown">
                                 <button class="btn btn-outline-primary  dropdown-toggle rounded-0 mr-2" type="button" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-filter mr-2"></i>All Countries
+                                    <i class="fa fa-filter mr-2"></i><span id="countrySelect">All Countries</span>
                                 </button>
                                 <div class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#" @click.prevent="setCountryFilter('')">All Countries</a>
+                                    <a class="dropdown-item" href="#" @click.prevent="setCountryFilter('', 'All Countries')">All Countries</a>
                                     <a v-for="(country, i) in countries" :key="i"
                                        class="dropdown-item" href="#"
-                                       @click.prevent="setCountryFilter(country.id)">{{ country.name }}</a>
+                                       @click.prevent="setCountryFilter(country.id, country.name)">{{ country.name }}</a>
                                 </div>
                             </div>
 
@@ -781,7 +781,13 @@
                 // selection
                 selected: [],
                 selectAll: false,
+                category: "",
+                country: "",
             };
+        },
+        created() {
+            this.category = "All Categories";
+            this.country = "All Countries";
         },
         mounted() {
             $(document).ready(function () {
@@ -829,6 +835,12 @@
             $("#profileScore").val($("#profileScoreSlider").slider("values", 1) + "%");
             this.getDataSets();
             this.getApplicants();
+
+            var selectedCategory = this.$refs.categorySelect.children;
+            console.log(selectedCategory);
+            if(selectedCategory.length){
+                this.category = selectedCategory[0].value;
+            }
         },
         methods: {
             select() {
@@ -860,12 +872,14 @@
                 this.filter.application_status = status;
                 this.getApplicants();
             },
-            setCategoryFilter(status) {
+            setCategoryFilter(status, categoryName) {
                 this.filter.category = status;
+                $("#categorySelect").html(categoryName)
                 this.getApplicants();
             },
-            setCountryFilter(status) {
+            setCountryFilter(status, countryName) {
                 this.filter.country = status;
+                $("#countrySelect").html(countryName)
                 this.getApplicants();
             },
             async saveFilter() {

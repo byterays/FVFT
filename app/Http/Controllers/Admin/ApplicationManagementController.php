@@ -92,6 +92,14 @@ class ApplicationManagementController extends Controller
         ]);
     }
 
+    public function viewApplicant(Request $request, $id)
+    {
+        $applicant = JobApplication::where('id', $id)->with(['job', 'employe'])->firstOrFail();
+        return $this->view($this->page.'viewapplicant',[
+            'applicant' => $applicant,
+        ]);
+    }
+
     private function __datas()
     {
         $jobapplication = JobApplication::query();

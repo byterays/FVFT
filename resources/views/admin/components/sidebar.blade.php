@@ -61,7 +61,7 @@
                 <i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Applicants</span><i
                     class="angle fa fa-angle-right"></i></a>
             <ul class="slide-menu">
-                <li><a class="slide-item" href="/admin/applicants/">List Applicants</a></li>
+                {{-- <li><a class="slide-item" href="/admin/applicants/">List Applicants</a></li> --}}
                 <li><a class="slide-item" href="{{ route('admin.applicant.indexpage') }}">Application Management</a></li>
                 {{-- <li><a class="slide-item" href="/admin/applicants/new">Add Applicants</a></li> --}}
             </ul>

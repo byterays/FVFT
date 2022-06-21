@@ -74,7 +74,6 @@
         $("#html_content_service")[0].value = escapeHtml($('.ql-editor').html());
     });
     // quill1.setContents(JSON.parse($("#body_id")[0].value))
-    console.log($("#company_service_id")[0].value)
     if ($("#company_service_id")[0].value != '') {
         quill1.setContents(JSON.parse($("#company_service_id")[0].value))
     }
@@ -130,5 +129,13 @@
                 }
             }
         });
+    }
+
+    function getIsoCode(country) {
+        var isocode = $(country).select2().find(":selected").data('phonecode');
+        if (isocode != '') {
+            $("#dialCode").val(isocode).trigger('change');
+            $("#contactIsoCode").val(isocode).trigger('change');
+        }
     }
 </script>

@@ -36,7 +36,7 @@
 
     </style>
     <?php
-    use App\Enum\JobApplicationStatus;
+    use App\Enum\ApplicantStatus;
     ?>
     <div class="page-header">
         <h4 class="page-title">Application Management</h4>
@@ -190,20 +190,20 @@
                                         <select name="application_status" class="form-control select2-show-search"
                                             data-placeholder="Select Application Status" id="ApplicationStatus">
                                             <option value="">Select Application Status</option>
-                                            <option value="{{ JobApplicationStatus::PENDING }}">
-                                                {{ ucfirst(JobApplicationStatus::PENDING) }}</option>
-                                            <option value="{{ JobApplicationStatus::SHORTLISTED }}">
-                                                {{ ucfirst(JobApplicationStatus::SHORTLISTED) }}</option>
-                                            <option value="{{ JobApplicationStatus::SELECTEDFORINTERVIEW }}">
-                                                {{ ucfirst(JobApplicationStatus::SELECTEDFORINTERVIEW) }}</option>
-                                            <option value="{{ JobApplicationStatus::INTERVIEWED }}">
-                                                {{ ucfirst(JobApplicationStatus::INTERVIEWED) }}</option>
-                                            <option value="{{ JobApplicationStatus::ACCEPTED }}">
-                                                {{ ucfirst(JobApplicationStatus::ACCEPTED) }}</option>
-                                            <option value="{{ JobApplicationStatus::REJECTED }}">
-                                                {{ ucfirst(JobApplicationStatus::REJECTED) }}</option>
-                                            <option value="{{ JobApplicationStatus::REDLISTED }}">
-                                                {{ ucfirst(JobApplicationStatus::REDLISTED) }}</option>
+                                            <option value="{{ ApplicantStatus::PENDING }}">
+                                                {{ ucfirst(ApplicantStatus::PENDING) }}</option>
+                                            <option value="{{ ApplicantStatus::SHORTLISTED }}">
+                                                {{ ucfirst(ApplicantStatus::SHORTLISTED) }}</option>
+                                            <option value="{{ ApplicantStatus::SELECTEDFORINTERVIEW }}">
+                                                {{ ucfirst(ApplicantStatus::SELECTEDFORINTERVIEW) }}</option>
+                                            <option value="{{ ApplicantStatus::INTERVIEWED }}">
+                                                {{ ucfirst(ApplicantStatus::INTERVIEWED) }}</option>
+                                            <option value="{{ ApplicantStatus::ACCEPTED }}">
+                                                {{ ucfirst(ApplicantStatus::ACCEPTED) }}</option>
+                                            <option value="{{ ApplicantStatus::REJECTED }}">
+                                                {{ ucfirst(ApplicantStatus::REJECTED) }}</option>
+                                            <option value="{{ ApplicantStatus::REDLISTED }}">
+                                                {{ ucfirst(ApplicantStatus::REDLISTED) }}</option>
                                         </select>
                                     </div>
                                 </div>
