@@ -10,7 +10,7 @@
         @include('themes.fvft.site.components.header')
         	<!--Breadcrumb-->
 		<section>
-			<div class="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg">
+			<div class="bannerimg cover-image bg-background3 news-header" data-image-src="../assets/images/banners/banner2.jpg">
 				<div class="header-text mb-0">
 					<div class="container">
 						<div class="text-center text-white">
@@ -28,16 +28,21 @@
 		<!--/Breadcrumb-->
 
 	<!--Job listing-->
-    <section class="sptb news-section">
+    <section class="sptb news-body">
         <div class="container">
             <div class="row">
                 <div class="col-xl-8 col-lg-8 col-md-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="item7-card-img">
-                                <img src="{{asset("/")}}{{(!blank($news->feature_img) AND file_exists($news->feature_img)) ? $news->feature_img : 'images/defaultimage.jpg'}}" alt="img" class="w-100">
+                                @if (!blank($news->feature_img))
+                                    <img src="{{ asset($news->feature_img) }}" alt="img" class="cover-image">
+                                @else
+                                    <img src="{{ asset('/images/defaultimage.jpg') }}" alt="img"
+                                         class="cover-image">
+                                @endif
                                 <div class="item7-card-text">
-                                    <span class="badge badge-pink">Jobs</span>
+                                    <span class="badge badge-pink">News</span>
                                 </div>
                             </div>
                             <div class="item7-card-desc d-flex mb-2 mt-3">

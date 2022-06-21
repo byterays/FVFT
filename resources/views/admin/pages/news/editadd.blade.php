@@ -47,6 +47,7 @@
                                     <div id="editor" style="min-height: 20rem;">
                                     </div>
                                 </div>
+                                {{--{{dd($news)}}--}}
                                 <div class="form-group">
                                     <label class="form-label">Upload Logo</label>
                                     <input type="file" class="dropify" name="feature_img" data-default-file="{{ isset($news->feature_img) ? asset($news->feature_img) : null }}" data-height="180" data-allowed-file-extensions="jpg png jpeg svg" data-max-file-size="2M">

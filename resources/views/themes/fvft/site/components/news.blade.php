@@ -11,7 +11,7 @@
                         <div class="card mb-0">
                             <div class="item7-card-img">
                                 <a href="news/{{ $item->slug }}"></a>
-                                @if (!blank($item->feature_img) AND file_exists($item->feature_img))
+                                @if (!blank($item->feature_img))
                                     <img src="{{ asset($item->feature_img) }}" alt="img" class="cover-image">
                                 @else
                                     <img src="{{ asset('/images/defaultimage.jpg') }}" alt="img"
@@ -20,10 +20,12 @@
                             </div>
                             <div class="card-body p-4">
                                 <div class="item7-card-desc d-flex mb-2">
-                                    <a href="#"><i
-                                            class="fa fa-calendar-o text-muted mr-2"></i>{{ \Carbon\Carbon::parse($item->updated_at)->diffForhumans() }}</a>
+                                    <a href="#">
+                                        <i class="fa fa-calendar-o text-muted mr-2"></i>
+                                        {{ \Carbon\Carbon::parse($item->updated_at)->diffForhumans() }}
+                                    </a>
                                 </div>
-                                <a href="news/{{ $item->slug }}" class="text-dark">
+                                <a href="news/{{ $item->slug }}" class="text-dark news-header">
                                     <h4 class="font-weight-semibold">{{ $item->title }}</h4>
                                 </a>
                                 <p>{{ Str::limit($item->short_description, 50) }} </p>

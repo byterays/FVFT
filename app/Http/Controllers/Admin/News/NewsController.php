@@ -36,15 +36,17 @@ class NewsController extends Controller
     }
     public function save(Request $request)
     {
-        // dd($request->all());
+//         dd($request->all());
         $validator = Validator::make($request->all(),[
             'title' => ['required'],
             'seo_title' => ['required'],
-            'feature_img' => ['required', 'image', 'mimes:jpeg,jpg,png,svg', 'max:2048'],
+            'feature_img' => ['nullable', 'image', 'mimes:jpeg,jpg,png,svg', 'max:2048'],
         ]);
+
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInput();
         }
+
         $destination = 'uploads/news/';
         $fields = [];
         $request->title ? $fields['title'] = $request->title : null;
@@ -53,14 +55,15 @@ class NewsController extends Controller
         $request->seo_description ? $fields['seo_description'] = $request->seo_description : null;
         $request->html_content ? $fields['html_content'] = $request->html_content : null;
         $request->seo_keywords ? $fields['seo_keywords'] = $request->seo_keywords : null;
-        // $request->slug ? $fields['slug'] = $request->slug : null;
         $request->is_active ? $fields['is_active'] = $request->is_active == "on" ? 1 : 0 : null;
+
         if($request->hasFile('feature_img')){
             $file = $request->file('feature_img');
             $logoName = time().'.'.$file->getClientOriginalExtension();
             $fields['feature_img'] = $destination.$logoName;
             $file->move(public_path($destination), $logoName);
         }
+
         $news = News::updateOrCreate(['id' => $request->id], $fields);
 
         return $this->view('admin.pages.news.editadd', [
@@ -76,7 +79,7 @@ class NewsController extends Controller
                 $news->delete();
                 return redirect()->back()->with(notifyMsg('success', 'News deleted successfully'));
             }
-            return redirect()->back()->with(notifyMsg('error', 'News Not Found'));  
+            return redirect()->back()->with(notifyMsg('error', 'News Not Found'));
             // DB::table('news')->delete($id);
             // return redirect()
             //     ->route('admin.pages.news.list')
