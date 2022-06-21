@@ -41,7 +41,7 @@
                                 <p>Name: <span>{{ $employ->full_name }}</span></p>
                                 <p>Gender: <span>{{ $employ->gender }}</span></p>
                                 <p>Marital Status: <span>{{ $employ->marital_status }}</span></p>
-                                <p>Date of Birth: <span>{{ date('Y F d', strtotime($employ->dob)) }}</span></p>
+                                <p>Date of Birth: <span>{{ !blank($employ->dob) ? date('Y F d', strtotime($employ->dob)) : '' }}</span></p>
                                 <p>Height: <span>{{ $employ->height ? $employ->height . ' CM' : '' }}</span></p>
                                 <p>Weight: <span>{{ $employ->weight ? $employ->weight . ' KG' : '' }}</span></p>
                             </div>

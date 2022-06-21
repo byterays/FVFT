@@ -120,6 +120,13 @@
 													<span class="text-danger">{{ $message }}</span>
 													@enderror
                                                 </div>
+                                                <div class="name">
+                                                    <input type="text" name="contactPersonName">
+                                                    <label>{{ __('Contact Person Name') }}</label>
+													@error('contactPersonName')
+													<span class="text-danger">{{ $message }}</span>
+													@enderror
+                                                </div>
                                                 <div class="mail">
                                                     <input type="email" name="email">
                                                     <label>{{ __('Company Email') }}</label>

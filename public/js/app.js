@@ -2850,8 +2850,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       filterId: "",
       // selection
       selected: [],
-      selectAll: false
+      selectAll: false,
+      category: "",
+      country: ""
     };
+  },
+  created: function created() {
+    this.category = "All Categories";
+    this.country = "All Countries";
   },
   mounted: function mounted() {
     $(document).ready(function () {
@@ -2890,6 +2896,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     $("#profileScore").val($("#profileScoreSlider").slider("values", 1) + "%");
     this.getDataSets();
     this.getApplicants();
+    var selectedCategory = this.$refs.categorySelect.children;
+    console.log(selectedCategory);
+
+    if (selectedCategory.length) {
+      this.category = selectedCategory[0].value;
+    }
   },
   methods: {
     select: function select() {
@@ -2942,12 +2954,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.filter.application_status = status;
       this.getApplicants();
     },
-    setCategoryFilter: function setCategoryFilter(status) {
+    setCategoryFilter: function setCategoryFilter(status, categoryName) {
       this.filter.category = status;
+      $("#categorySelect").html(categoryName);
       this.getApplicants();
     },
-    setCountryFilter: function setCountryFilter(status) {
+    setCountryFilter: function setCountryFilter(status, countryName) {
       this.filter.country = status;
+      $("#countrySelect").html(countryName);
       this.getApplicants();
     },
     saveFilter: function saveFilter() {
@@ -22184,6 +22198,7 @@ var render = function () {
                 _c(
                   "div",
                   {
+                    ref: "categorySelect",
                     staticClass: "dropdown-menu scrollable-menu",
                     attrs: {
                       role: "menu",
@@ -22199,7 +22214,7 @@ var render = function () {
                         on: {
                           click: function ($event) {
                             $event.preventDefault()
-                            return _vm.setCategoryFilter("")
+                            return _vm.setCategoryFilter("", "All Categories")
                           },
                         },
                       },
@@ -22216,7 +22231,10 @@ var render = function () {
                           on: {
                             click: function ($event) {
                               $event.preventDefault()
-                              return _vm.setCategoryFilter(category.id)
+                              return _vm.setCategoryFilter(
+                                category.id,
+                                category.functional_area
+                              )
                             },
                           },
                         },
@@ -22255,7 +22273,7 @@ var render = function () {
                         on: {
                           click: function ($event) {
                             $event.preventDefault()
-                            return _vm.setCountryFilter("")
+                            return _vm.setCountryFilter("", "All Countries")
                           },
                         },
                       },
@@ -22272,7 +22290,10 @@ var render = function () {
                           on: {
                             click: function ($event) {
                               $event.preventDefault()
-                              return _vm.setCountryFilter(country.id)
+                              return _vm.setCountryFilter(
+                                country.id,
+                                country.name
+                              )
                             },
                           },
                         },
@@ -23820,7 +23841,9 @@ var staticRenderFns = [
       },
       [
         _c("i", { staticClass: "fa fa-filter mr-2" }),
-        _vm._v("All Job Category\n                            "),
+        _c("span", { attrs: { id: "categorySelect" } }, [
+          _vm._v("All Categories"),
+        ]),
       ]
     )
   },
@@ -23840,7 +23863,9 @@ var staticRenderFns = [
       },
       [
         _c("i", { staticClass: "fa fa-filter mr-2" }),
-        _vm._v("All Countries\n                            "),
+        _c("span", { attrs: { id: "countrySelect" } }, [
+          _vm._v("All Countries"),
+        ]),
       ]
     )
   },

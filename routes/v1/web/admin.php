@@ -84,6 +84,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
         Route::get('index', [ApplicationManagementController::class, 'index'])->name('admin.applicant.indexpage');
         Route::get('advanced-search', [ApplicationManagementController::class, 'advancedSearch'])->name('admin.applicant.advancedSearch');
+        Route::get('view-applicant/{id}', [ApplicationManagementController::class, 'viewApplicant'])->name('admin.applicant.viewApplicant');
     });
     //Pages Crude
     Route::prefix('pages')->group(function () {

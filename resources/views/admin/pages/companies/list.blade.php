@@ -8,13 +8,13 @@ if (session()->get('delete')) {
 @extends('admin.layouts.master')
 @section('title', 'Companies List')
 @section('main')
+<link rel="stylesheet" href="{{ asset('css/datepicker.min.css') }}">
     <style>
         .status_pane .tab-menu-heading {
             padding: 5px;
             border: none !important;
             border-bottom: 0;
         }
-
     </style>
     @if ($delete)
         @if ($delete['status'] == 'success')
@@ -69,6 +69,33 @@ if (session()->get('delete')) {
                             <div class="col-md-2 col-lg-2">
                                 <a href="{{ route('admin.companies.create') }}" class="btn btn-primary float-right mt-1">
                                     <i class="fe fe-plus mr-2"></i>Add New</a>
+                            </div>
+                            <div class="col-md-12 col-lg-12">
+                                <form action="{{ route('admin.companies.list') }}" method="GET">
+                                    <div class="row">
+                                        <div class="col-md-3 mb-3">
+                                            <select name="country_id" class="form-control">
+                                                <option value="">Select Country</option>
+                                                @foreach ($countries as $country)
+                                                    <option value="{{ $country->id }}"
+                                                        {{ request('country_id') == $country->id ? 'selected' : '' }}>
+                                                        {{ $country->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="input-daterange input-group" id="datepicker">
+                                                <input type="text" class="input-sm form-control" name="start" readonly/>
+                                                <span class="input-group-text" style="padding: 1px 10px;">to</span>
+                                                <input type="text" class="input-sm form-control" name="end" readonly/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="submit" class="btn btn-primary">Filter</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -146,11 +173,20 @@ if (session()->get('delete')) {
     </div>
 @endsection
 @section('script')
+<script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
     <script>
         window.setTimeout(function() {
             $(".flash").fadeTo(500, 0).slideUp(500, function() {
                 $(this).remove();
             });
         }, 5000);
+
+        $(function() {
+            $('#datepicker').datepicker({
+                format: "yyyy-mm-dd",
+                multidate: true,
+                multidateSeparator: "-"
+            });
+        });
     </script>
 @endsection

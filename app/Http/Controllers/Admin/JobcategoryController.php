@@ -16,10 +16,27 @@ class JobcategoryController extends Controller
 
     private $redirectTo = 'admin.job_category.index';
 
-    public function index()
+    public function index(Request $request)
     {
+        $job_categories = JobCategory::query();
+        if ($request->filled('title')) {
+            $job_categories = $job_categories->where('functional_area', 'like', '%' . $request->title . '%');
+        }
+        if($request->filled('status')){
+            if($request->status == 'Active'){
+                $job_categories = $job_categories->where('is_active', 1);
+            } else if($request->status == 'Inactive'){
+                $job_categories = $job_categories->where('is_active', 0);
+            }
+        }
+        $job_categories = $job_categories->latest()->paginate(10)->setPath('');
         return $this->view($this->page.'index', [
-            'job_categories' => JobCategory::latest()->paginate(10),
+            'job_categories' => $job_categories,
+            'pagination' => $job_categories->appends(array(
+                'title' => $request->title,
+                'status' => $request->status
+
+            )),
         ]);
     }
 
