@@ -35,8 +35,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="item7-card-img">
-                                @if (!blank($item->feature_img))
-                                    <img src="{{ asset($item->feature_img) }}" alt="img" class="cover-image">
+                                @if (!blank($news->feature_img))
+                                    <img src="{{ asset($news->feature_img) }}" alt="img" class="cover-image">
                                 @else
                                     <img src="{{ asset('/images/defaultimage.jpg') }}" alt="img"
                                          class="cover-image">
