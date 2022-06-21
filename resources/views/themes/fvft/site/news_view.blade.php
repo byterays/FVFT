@@ -36,7 +36,7 @@
                         <div class="card-body">
                             <div class="item7-card-img">
 {{--                                <img src="{{asset("/")}}{{(!blank($news->feature_img) AND file_exists($news->feature_img)) ? $news->feature_img : 'images/defaultimage.jpg'}}" alt="img" class="w-100">--}}
-                                <img src="{{ (!blank($news->feature_img) ? asset($news->feature_img) : 'images/defaultimage.jpg' }}" alt="img" class="w-100">
+                                <img src="{{ asset("/") }}{{ (!blank($news->feature_img) ? $news->feature_img : 'images/defaultimage.jpg' }}" alt="img" class="w-100">
                                 <div class="item7-card-text">
                                     <span class="badge badge-pink">Jobs</span>
                                 </div>
