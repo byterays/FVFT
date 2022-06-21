@@ -25,7 +25,7 @@
 </div>
 <div class="row">
     <div class="col-lg-12">
-        
+
         <div class="card">
             <div class="card-header d-flex">
                 <h3 class="card-title" style="width: 100%;">News List</h3>
@@ -39,38 +39,28 @@
                     <table class="table table-bordered table-hover mb-0 text-nowrap">
                         <thead>
                             <tr>
-                                {{-- <th>#id</th> --}}
                                 <th>Title</th>
-                                <th>Description</th>
                                 <th>Slug</th>
                                 <th>Is Active</th>
-                                <th>Action</th>
+                                <th style="width: 150px;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($news as $item)
                             <tr>
-                                <td>{{$item->title}}</td>
                                 <td>
-                                    {!! html_entity_decode(str_limit($item->html_content, 100)) !!}
+                                    <a href="{{ route('admin.news.edit', $item->id) }}">{{$item->title}}</a> <br>
+                                    <small>Created at {{ $item->created_at }}</small>
                                 </td>
-                                {{-- <td>
-                                    @php 
-                                    $description = wordwrap($item->short_description, 28);
-                                    $description = explode("\n", $description);
-                                    $description = $description[0] . '...';
-                                    @endphp
-                                    {{$description}}</td> --}}
                                 <td>{{$item->slug}}</td>
                                 <td> @if ($item->is_active)
                                     <i class='fa fa-circle' style='color:green;font-size: 8px; padding:.5rem;'></i>
                                     <span>Active</span>
                                     @else
-                                     <i class='fa fa-circle'style='color:rgb(247, 67, 36); font-size: 8px; padding:.5rem;'></i>Not Active
+                                     <i class='fa fa-circle' style='color:rgb(247, 67, 36); font-size: 8px; padding:.5rem;'></i>Not Active
                                     @endif
                                 </td>
                                 <td>
-                                    {{-- <button class="btn btn-danger" data-toggle="modal" data-target="#largeModal">View modal</button> --}}
                                     <div data-toggle="tooltip" data-original-title="View" style="display: inline-block;">
                                         <a class="btn btn-primary btn-sm text-white mb-1" target="_blank"  href="{{ route('news.details', $item->slug) }}" ><i class="fa fa-eye"></i></a>
                                     </div>

@@ -10,7 +10,7 @@
         @include('themes.fvft.site.components.header')
         	<!--Breadcrumb-->
 		<section>
-			<div class="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg">
+			<div class="bannerimg cover-image bg-background3 news-header" data-image-src="../assets/images/banners/banner2.jpg">
 				<div class="header-text mb-0">
 					<div class="container">
 						<div class="text-center text-white">
@@ -28,7 +28,7 @@
 		<!--/Breadcrumb-->
 
 	<!--Job listing-->
-    <section class="sptb news-section">
+    <section class="sptb news-body">
         <div class="container">
             <div class="row">
                 <div class="col-xl-8 col-lg-8 col-md-12">

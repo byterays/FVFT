@@ -50,32 +50,7 @@
     <link rel="stylesheet" href="{{ asset('css/form_step.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     @if(app()->getLocale() == 'np')
-    <style>
-        @font-face {
-            font-family: vesper_librebold;
-            src: url(/fonts/vesper_libre/VesperLibre-Bold.ttf);
-        }
-        @font-face {
-            font-family: khand;
-            src: url(/fonts/khand/Khand-SemiBold.ttf);
-        }
-        @font-face {
-            font-family: Mukta;
-            src: url(/fonts/Mukta/Mukta-Regular.ttf);
-        }
-
-        .horizontalMenu-list > li > a {
-            font-family: khand, sans-serif;
-            font-size: 15px;
-        }
-        .horizontalMenu-list > li > span > a {
-            font-family: khand, sans-serif;
-        }
-
-        .news-section{
-            font-family: Mukta, sans-serif;
-        }
-    </style>
+        <link rel="stylesheet" href="{{ asset('css/nepali-font.css') }}">
     @endif
     <style>
         .toast-top-container {
