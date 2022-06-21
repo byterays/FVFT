@@ -35,10 +35,14 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="item7-card-img">
-{{--                                <img src="{{asset("/")}}{{(!blank($news->feature_img) AND file_exists($news->feature_img)) ? $news->feature_img : 'images/defaultimage.jpg'}}" alt="img" class="w-100">--}}
-                                <img src="{{ asset("/") }}{{ (!blank($news->feature_img) ? $news->feature_img : 'images/defaultimage.jpg' }}" alt="img" class="w-100">
+                                @if (!blank($item->feature_img))
+                                    <img src="{{ asset($item->feature_img) }}" alt="img" class="cover-image">
+                                @else
+                                    <img src="{{ asset('/images/defaultimage.jpg') }}" alt="img"
+                                         class="cover-image">
+                                @endif
                                 <div class="item7-card-text">
-                                    <span class="badge badge-pink">Jobs</span>
+                                    <span class="badge badge-pink">News</span>
                                 </div>
                             </div>
                             <div class="item7-card-desc d-flex mb-2 mt-3">
