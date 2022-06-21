@@ -40,7 +40,7 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
-                                <th>Slug</th>
+                                {{--<th>Slug</th>--}}
                                 <th>Is Active</th>
                                 <th style="width: 150px;">Action</th>
                             </tr>
@@ -52,7 +52,7 @@
                                     <a href="{{ route('admin.news.edit', $item->id) }}">{{$item->title}}</a> <br>
                                     <small>Created at {{ $item->created_at }}</small>
                                 </td>
-                                <td>{{$item->slug}}</td>
+                                {{--<td>{{$item->slug}}</td>--}}
                                 <td> @if ($item->is_active)
                                     <i class='fa fa-circle' style='color:green;font-size: 8px; padding:.5rem;'></i>
                                     <span>Active</span>
