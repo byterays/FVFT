@@ -55,13 +55,25 @@
             font-family: vesper_librebold;
             src: url(/fonts/vesper_libre/VesperLibre-Bold.ttf);
         }
+        @font-face {
+            font-family: khand;
+            src: url(/fonts/khand/Khand-SemiBold.ttf);
+        }
+        @font-face {
+            font-family: Mukta;
+            src: url(/fonts/Mukta/Mukta-Regular.ttf);
+        }
 
         .horizontalMenu-list > li > a {
-            font-family: vesper_librebold;
+            font-family: khand, sans-serif;
             font-size: 15px;
         }
         .horizontalMenu-list > li > span > a {
-            font-family: vesper_librebold;
+            font-family: khand, sans-serif;
+        }
+
+        .news-section{
+            font-family: Mukta, sans-serif;
         }
     </style>
     @endif
