@@ -19,7 +19,8 @@ class JobsController extends Controller
     use AdminMethods;
     public function __construct()
     {
-        $this->companies = \DB::table('companies')->get();
+        $this->companies = Company::get();
+//        $this->companies = \DB::table('companies')->get();
         $this->experiencelevels = \DB::table('experiencelevels')->get();
         $this->educationlevels = \DB::table('educationlevels')->get();
         $this->job_shifts = \DB::table('job_shifts')->get();
